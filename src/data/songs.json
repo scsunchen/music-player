@@ -1,0 +1,248 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "夜曲",
+      "artist": "周杰伦",
+      "album": "十一月的萧邦",
+      "albumId": 1,
+      "duration": 226,
+      "cover": "https://picsum.photos/seed/song1/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+      "id": 2,
+      "title": "晴天",
+      "artist": "周杰伦",
+      "album": "叶惠美",
+      "albumId": 2,
+      "duration": 269,
+      "cover": "https://picsum.photos/seed/song2/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    {
+      "id": 3,
+      "title": "七里香",
+      "artist": "周杰伦",
+      "album": "七里香",
+      "albumId": 3,
+      "duration": 299,
+      "cover": "https://picsum.photos/seed/song3/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    },
+    {
+      "id": 4,
+      "title": "稻香",
+      "artist": "周杰伦",
+      "album": "魔杰座",
+      "albumId": 4,
+      "duration": 223,
+      "cover": "https://picsum.photos/seed/song4/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+    },
+    {
+      "id": 5,
+      "title": "告白气球",
+      "artist": "周杰伦",
+      "album": "周杰伦的床边故事",
+      "albumId": 5,
+      "duration": 215,
+      "cover": "https://picsum.photos/seed/song5/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+    },
+    {
+      "id": 6,
+      "title": "光年之外",
+      "artist": "邓紫棋",
+      "album": "光年之外",
+      "albumId": 6,
+      "duration": 235,
+      "cover": "https://picsum.photos/seed/song6/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+    },
+    {
+      "id": 7,
+      "title": "泡沫",
+      "artist": "邓紫棋",
+      "album": "Xposed",
+      "albumId": 7,
+      "duration": 252,
+      "cover": "https://picsum.photos/seed/song7/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+    },
+    {
+      "id": 8,
+      "title": "演员",
+      "artist": "薛之谦",
+      "album": "绅士",
+      "albumId": 8,
+      "duration": 280,
+      "cover": "https://picsum.photos/seed/song8/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+    },
+    {
+      "id": 9,
+      "title": "绅士",
+      "artist": "薛之谦",
+      "album": "绅士",
+      "albumId": 8,
+      "duration": 265,
+      "cover": "https://picsum.photos/seed/song9/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+    },
+    {
+      "id": 10,
+      "title": "起风了",
+      "artist": "买辣椒也用券",
+      "album": "起风了",
+      "albumId": 9,
+      "duration": 325,
+      "cover": "https://picsum.photos/seed/song10/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+    },
+    {
+      "id": 11,
+      "title": "平凡之路",
+      "artist": "朴树",
+      "album": "猎户星座",
+      "albumId": 10,
+      "duration": 298,
+      "cover": "https://picsum.photos/seed/song11/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3"
+    },
+    {
+      "id": 12,
+      "title": "那些年",
+      "artist": "胡夏",
+      "album": "那些年",
+      "albumId": 11,
+      "duration": 276,
+      "cover": "https://picsum.photos/seed/song12/300/300",
+      "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+    }
+  ],
+  "albums": [
+    {
+      "id": 1,
+      "name": "十一月的萧邦",
+      "artist": "周杰伦",
+      "cover": "https://picsum.photos/seed/album1/300/300",
+      "songs": [1],
+      "releaseDate": "2005-11-01"
+    },
+    {
+      "id": 2,
+      "name": "叶惠美",
+      "artist": "周杰伦",
+      "cover": "https://picsum.photos/seed/album2/300/300",
+      "songs": [2],
+      "releaseDate": "2003-07-31"
+    },
+    {
+      "id": 3,
+      "name": "七里香",
+      "artist": "周杰伦",
+      "cover": "https://picsum.photos/seed/album3/300/300",
+      "songs": [3],
+      "releaseDate": "2004-08-03"
+    },
+    {
+      "id": 4,
+      "name": "魔杰座",
+      "artist": "周杰伦",
+      "cover": "https://picsum.photos/seed/album4/300/300",
+      "songs": [4],
+      "releaseDate": "2008-10-09"
+    },
+    {
+      "id": 5,
+      "name": "周杰伦的床边故事",
+      "artist": "周杰伦",
+      "cover": "https://picsum.photos/seed/album5/300/300",
+      "songs": [5],
+      "releaseDate": "2016-06-24"
+    },
+    {
+      "id": 6,
+      "name": "光年之外",
+      "artist": "邓紫棋",
+      "cover": "https://picsum.photos/seed/album6/300/300",
+      "songs": [6],
+      "releaseDate": "2016-12-05"
+    },
+    {
+      "id": 7,
+      "name": "Xposed",
+      "artist": "邓紫棋",
+      "cover": "https://picsum.photos/seed/album7/300/300",
+      "songs": [7],
+      "releaseDate": "2012-07-05"
+    },
+    {
+      "id": 8,
+      "name": "绅士",
+      "artist": "薛之谦",
+      "cover": "https://picsum.photos/seed/album8/300/300",
+      "songs": [8, 9],
+      "releaseDate": "2015-06-05"
+    },
+    {
+      "id": 9,
+      "name": "起风了",
+      "artist": "买辣椒也用券",
+      "cover": "https://picsum.photos/seed/album9/300/300",
+      "songs": [10],
+      "releaseDate": "2019-01-15"
+    },
+    {
+      "id": 10,
+      "name": "猎户星座",
+      "artist": "朴树",
+      "cover": "https://picsum.photos/seed/album10/300/300",
+      "songs": [11],
+      "releaseDate": "2017-04-30"
+    },
+    {
+      "id": 11,
+      "name": "那些年",
+      "artist": "胡夏",
+      "cover": "https://picsum.photos/seed/album11/300/300",
+      "songs": [12],
+      "releaseDate": "2011-08-08"
+    }
+  ],
+  "recommendPlaylists": [
+    {
+      "id": 1,
+      "name": "华语经典",
+      "description": "精选华语经典歌曲，带你重温那些年的感动",
+      "cover": "https://picsum.photos/seed/playlist1/300/300",
+      "songs": [1, 2, 3, 11, 12],
+      "playCount": 125680
+    },
+    {
+      "id": 2,
+      "name": "流行热歌",
+      "description": "当下最火的流行歌曲，紧跟音乐潮流",
+      "cover": "https://picsum.photos/seed/playlist2/300/300",
+      "songs": [5, 6, 8, 9, 10],
+      "playCount": 98750
+    },
+    {
+      "id": 3,
+      "name": "治愈系",
+      "description": "温暖治愈的音乐，抚慰疲惫的心灵",
+      "cover": "https://picsum.photos/seed/playlist3/300/300",
+      "songs": [4, 7, 10, 11],
+      "playCount": 76320
+    },
+    {
+      "id": 4,
+      "name": "周杰伦精选",
+      "description": "周杰伦经典歌曲合集",
+      "cover": "https://picsum.photos/seed/playlist4/300/300",
+      "songs": [1, 2, 3, 4, 5],
+      "playCount": 256890
+    }
+  ]
+}
