@@ -119,6 +119,16 @@
       "duration": 276,
       "cover": "https://picsum.photos/seed/song12/300/300",
       "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+    },
+    {
+      "id": 13,
+      "title": "你像风来了又走",
+      "artist": "未知歌手",
+      "album": "你像风来了又走",
+      "albumId": 12,
+      "duration": 240,
+      "cover": "https://picsum.photos/seed/song13/300/300",
+      "audioUrl": "/music-player/audio/你像风来了又走.mp3"
     }
   ],
   "albums": [
@@ -209,6 +219,14 @@
       "cover": "https://picsum.photos/seed/album11/300/300",
       "songs": [12],
       "releaseDate": "2011-08-08"
+    },
+    {
+      "id": 12,
+      "name": "你像风来了又走",
+      "artist": "未知歌手",
+      "cover": "https://picsum.photos/seed/album12/300/300",
+      "songs": [13],
+      "releaseDate": "2026-05-15"
     }
   ],
   "recommendPlaylists": [
