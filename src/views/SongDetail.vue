@@ -232,7 +232,9 @@ watch(() => route.params.id, () => {
   top: 0;
   left: 0;
   right: 0;
-  height: 400px;
+  height: 55vh;
+  min-height: 450px;
+  max-height: 600px;
   z-index: 0;
   overflow: hidden;
 }
@@ -241,8 +243,14 @@ watch(() => route.params.id, () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(40px) brightness(0.4) saturate(1.5);
-  transform: scale(1.2);
+  filter: blur(60px) brightness(0.7) saturate(1.8) contrast(1.1);
+  transform: scale(1.3);
+  animation: bgFloat 20s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+  0%, 100% { transform: scale(1.3) translate(0, 0); }
+  50% { transform: scale(1.35) translate(-1%, -1%); }
 }
 
 .bg-overlay {
@@ -250,10 +258,27 @@ watch(() => route.params.id, () => {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(18, 18, 30, 0.3) 0%,
-    rgba(18, 18, 30, 0.7) 60%,
-    rgba(18, 18, 30, 1) 100%
+    rgba(18, 18, 30, 0.2) 0%,
+    rgba(18, 18, 30, 0.5) 50%,
+    rgba(18, 18, 30, 0.95) 100%
   );
+}
+
+/* 背景光晕效果 */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(102, 126, 234, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 /* 返回按钮 */
