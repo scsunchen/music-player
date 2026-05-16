@@ -65,8 +65,7 @@
     <section class="section songs-two-column">
       <div class="songs-column">
         <div class="section-header">
-          <h2 class="section-title">最新歌曲</h2>
-          <span class="badge-new">NEW</span>
+          <h2 class="section-title">最新歌曲 <span class="badge-new">NEW</span></h2>
         </div>
         <div class="song-list compact">
           <SongItem
@@ -80,7 +79,9 @@
         </div>
       </div>
       <div class="songs-column">
-        <h2 class="section-title">热门歌曲</h2>
+        <div class="section-header">
+          <h2 class="section-title">热门歌曲 <span class="badge-hot">HOT</span></h2>
+        </div>
         <div class="song-list compact">
           <SongItem
             v-for="(song, index) in playerStore.songs.slice(0, 6)"
@@ -332,12 +333,27 @@ const goToLikedSongs = () => {
 }
 
 .badge-new {
-  padding: 2px 8px;
+  display: inline-block;
+  padding: 2px 6px;
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  border-radius: 10px;
+  border-radius: 6px;
   font-size: 10px;
   font-weight: 700;
   color: #fff;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.badge-hot {
+  display: inline-block;
+  padding: 2px 6px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  margin-left: 8px;
+  vertical-align: middle;
 }
 
 .playlist-grid {
@@ -390,22 +406,20 @@ const goToLikedSongs = () => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    align-items: start;
+    align-items: stretch;
   }
 
   .songs-column {
     display: flex;
     flex-direction: column;
-    height: 100%;
+  }
+
+  .songs-column .section-header {
+    flex-shrink: 0;
+    margin-bottom: 16px;
   }
 
   .songs-column .song-list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .songs-column .song-list :deep(.song-item:last-child) {
     flex: 1;
   }
 }
