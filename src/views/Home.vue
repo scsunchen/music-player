@@ -2,27 +2,47 @@
   <div class="home">
     <!-- Banner 区域 -->
     <section class="banner-section">
-      <div class="banner-card daily-card" @click="playDailySongs">
-        <div class="banner-bg"></div>
-        <div class="banner-content">
-          <div class="banner-icon">
-            <svg viewBox="0 0 24 24" width="40" height="40">
-              <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
+      <div class="banner-row">
+        <!-- 每日10首 -->
+        <div class="banner-card daily-card" @click="playDailySongs">
+          <div class="banner-bg"></div>
+          <div class="banner-content">
+            <div class="banner-icon">
+              <svg viewBox="0 0 24 24" width="36" height="36">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div class="banner-text">
+              <h3>每日10首</h3>
+              <p>为你精心挑选</p>
+            </div>
+            <button class="banner-play-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <path fill="currentColor" d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
           </div>
-          <div class="banner-text">
-            <h3>每日10首</h3>
-            <p>为你精心挑选的今日推荐</p>
-          </div>
-          <button class="banner-play-btn">
-            <svg viewBox="0 0 24 24" width="24" height="24">
-              <path fill="currentColor" d="M8 5v14l11-7z"/>
-            </svg>
-          </button>
         </div>
-        <div class="banner-songs-preview">
-          <span v-for="(song, i) in dailySongs.slice(0, 5)" :key="i" class="song-tag">{{ song.title }}</span>
-          <span class="song-tag more">+{{ dailySongs.length - 5 }}</span>
+
+        <!-- 我喜欢 -->
+        <div class="banner-card liked-card" @click="goToLikedSongs">
+          <div class="banner-bg liked-bg"></div>
+          <div class="banner-content">
+            <div class="banner-icon liked-icon">
+              <svg viewBox="0 0 24 24" width="36" height="36">
+                <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <div class="banner-text">
+              <h3>我喜欢</h3>
+              <p>{{ likedCount }} 首收藏</p>
+            </div>
+            <button class="banner-play-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <path fill="currentColor" d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -140,6 +160,16 @@ const playDailySongs = () => {
   }
   playerStore.playPlaylist(playlist)
 }
+
+// 我喜欢歌曲数量
+const likedCount = computed(() => {
+  return playerStore.likedSongs.length
+})
+
+// 跳转到我喜欢列表
+const goToLikedSongs = () => {
+  router.push('/liked')
+}
 </script>
 
 <style scoped>
@@ -151,6 +181,12 @@ const playDailySongs = () => {
 /* Banner 区域 */
 .banner-section {
   margin-bottom: 32px;
+}
+
+.banner-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .banner-card {
@@ -166,11 +202,19 @@ const playDailySongs = () => {
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
 }
 
+.liked-card:hover {
+  box-shadow: 0 12px 40px rgba(245, 87, 108, 0.25);
+}
+
 .banner-bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   opacity: 0.9;
+}
+
+.liked-bg {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b6b 100%);
 }
 
 .banner-bg::before {
@@ -200,6 +244,10 @@ const playDailySongs = () => {
   justify-content: center;
   color: #fff;
   flex-shrink: 0;
+}
+
+.liked-icon {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .banner-text {

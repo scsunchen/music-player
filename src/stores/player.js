@@ -212,9 +212,42 @@ export const usePlayerStore = defineStore('player', () => {
       customPlaylists.value = JSON.parse(saved)
     }
   }
-  
-  // 初始化加载自定义播放列表
+
+  // 我喜欢功能
+  const likedSongs = ref([])
+
+  const loadLikedSongs = () => {
+    const saved = localStorage.getItem('likedSongs')
+    if (saved) {
+      likedSongs.value = JSON.parse(saved)
+    }
+  }
+
+  const saveLikedSongs = () => {
+    localStorage.setItem('likedSongs', JSON.stringify(likedSongs.value))
+  }
+
+  const toggleLikeSong = (songId) => {
+    const index = likedSongs.value.indexOf(songId)
+    if (index > -1) {
+      likedSongs.value.splice(index, 1)
+    } else {
+      likedSongs.value.push(songId)
+    }
+    saveLikedSongs()
+  }
+
+  const isLiked = (songId) => {
+    return likedSongs.value.includes(songId)
+  }
+
+  const getLikedSongsList = () => {
+    return likedSongs.value.map(id => songs.value.find(s => s.id === id)).filter(Boolean)
+  }
+
+  // 初始化加载
   loadCustomPlaylists()
+  loadLikedSongs()
   
   return {
     // 数据
@@ -222,6 +255,7 @@ export const usePlayerStore = defineStore('player', () => {
     albums,
     recommendPlaylists,
     customPlaylists,
+    likedSongs,
     currentSong,
     currentPlaylist,
     currentIndex,
@@ -230,11 +264,11 @@ export const usePlayerStore = defineStore('player', () => {
     duration,
     volume,
     playMode,
-    
+
     // 计算属性
     currentSongInfo,
     progress,
-    
+
     // 方法
     playSong,
     playPlaylist,
@@ -248,6 +282,9 @@ export const usePlayerStore = defineStore('player', () => {
     createPlaylist,
     addToPlaylist,
     removeFromPlaylist,
-    deletePlaylist
+    deletePlaylist,
+    toggleLikeSong,
+    isLiked,
+    getLikedSongsList
   }
 })

@@ -20,6 +20,15 @@
       </p>
     </div>
     <div class="duration" v-if="showDuration">{{ formatDuration(song.duration) }}</div>
+    <button 
+      class="btn-like" 
+      :class="{ liked: isLiked }"
+      @click.stop="toggleLike"
+    >
+      <svg viewBox="0 0 24 24" width="18" height="18">
+        <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </button>
     <button class="btn-play" @click.stop="$emit('play')">
       <svg v-if="!isActive" viewBox="0 0 24 24" width="20" height="20">
         <path fill="currentColor" d="M8 5v14l11-7z"/>
@@ -71,6 +80,14 @@ const playerStore = usePlayerStore()
 const isActive = computed(() => {
   return playerStore.currentSong?.id === props.song.id
 })
+
+const isLiked = computed(() => {
+  return playerStore.isLiked(props.song.id)
+})
+
+const toggleLike = () => {
+  playerStore.toggleLikeSong(props.song.id)
+}
 
 const goToDetail = () => {
   router.push(`/song/${props.song.id}`)
@@ -187,5 +204,37 @@ const formatDuration = (seconds) => {
 .btn-play:hover {
   background: rgba(102, 126, 234, 0.3);
   color: #667eea;
+}
+
+.btn-like {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.song-item:hover .btn-like {
+  opacity: 1;
+}
+
+.btn-like:hover {
+  color: rgba(245, 87, 108, 0.8);
+}
+
+.btn-like.liked {
+  opacity: 1;
+  color: #f5576c;
+}
+
+.btn-like.liked:hover {
+  color: rgba(245, 87, 108, 0.7);
 }
 </style>

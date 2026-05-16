@@ -30,6 +30,11 @@ const routes = [
     path: '/my',
     name: 'MyMusic',
     component: () => import('../views/MyMusic.vue')
+  },
+  {
+    path: '/liked',
+    name: 'LikedSongs',
+    component: () => import('../views/LikedSongs.vue')
   }
 ]
 
