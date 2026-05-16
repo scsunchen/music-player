@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 本地脚本（包含敏感信息，不提交）
+*.sh
