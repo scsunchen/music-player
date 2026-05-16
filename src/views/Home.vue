@@ -61,36 +61,36 @@
       </div>
     </section>
 
-    <!-- 最新歌曲 -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">最新歌曲</h2>
-        <span class="badge-new">NEW</span>
+    <!-- 最新歌曲 & 热门歌曲 -->
+    <section class="section songs-two-column">
+      <div class="songs-column">
+        <div class="section-header">
+          <h2 class="section-title">最新歌曲</h2>
+          <span class="badge-new">NEW</span>
+        </div>
+        <div class="song-list compact">
+          <SongItem
+            v-for="(song, index) in latestSongs"
+            :key="song.id"
+            :song="song"
+            :index="index"
+            :show-index="true"
+            @play="playerStore.playSong(song)"
+          />
+        </div>
       </div>
-      <div class="song-list">
-        <SongItem
-          v-for="(song, index) in latestSongs"
-          :key="song.id"
-          :song="song"
-          :index="index"
-          :show-index="true"
-          @play="playerStore.playSong(song)"
-        />
-      </div>
-    </section>
-
-    <!-- 热门歌曲 -->
-    <section class="section">
-      <h2 class="section-title">热门歌曲</h2>
-      <div class="song-list">
-        <SongItem
-          v-for="(song, index) in playerStore.songs.slice(0, 6)"
-          :key="song.id"
-          :song="song"
-          :index="index"
-          :show-index="true"
-          @play="playerStore.playSong(song)"
-        />
+      <div class="songs-column">
+        <h2 class="section-title">热门歌曲</h2>
+        <div class="song-list compact">
+          <SongItem
+            v-for="(song, index) in playerStore.songs.slice(0, 6)"
+            :key="song.id"
+            :song="song"
+            :index="index"
+            :show-index="true"
+            @play="playerStore.playSong(song)"
+          />
+        </div>
       </div>
     </section>
 
@@ -350,5 +350,37 @@ const goToLikedSongs = () => {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* 两列歌曲布局 */
+.songs-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.songs-column {
+  min-width: 0;
+}
+
+.songs-column .section-title {
+  margin-bottom: 16px;
+}
+
+.song-list.compact :deep(.song-item) {
+  padding: 10px 12px;
+}
+
+.song-list.compact :deep(.cover) {
+  width: 40px;
+  height: 40px;
+}
+
+.song-list.compact :deep(.title) {
+  font-size: 13px;
+}
+
+.song-list.compact :deep(.artist-album) {
+  font-size: 11px;
 }
 </style>
