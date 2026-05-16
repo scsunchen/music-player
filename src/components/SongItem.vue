@@ -11,7 +11,7 @@
       </svg>
     </div>
     <img :src="song.cover" :alt="song.title" class="cover" v-if="showCover" />
-    <div class="info">
+    <div class="info" @click.stop="goToDetail">
       <h4 class="title">{{ song.title }}</h4>
       <p class="artist-album">
         <span class="artist">{{ song.artist }}</span>
@@ -33,6 +33,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 
 const props = defineProps({
@@ -64,11 +65,16 @@ const props = defineProps({
 
 defineEmits(['click', 'play'])
 
+const router = useRouter()
 const playerStore = usePlayerStore()
 
 const isActive = computed(() => {
   return playerStore.currentSong?.id === props.song.id
 })
+
+const goToDetail = () => {
+  router.push(`/song/${props.song.id}`)
+}
 
 const formatDuration = (seconds) => {
   const mins = Math.floor(seconds / 60)
