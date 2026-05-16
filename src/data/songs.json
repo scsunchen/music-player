@@ -123,8 +123,8 @@
     {
       "id": 13,
       "title": "你像风来了又走",
-      "artist": "杨不乖",
-      "album": "你像风来了又走",
+      "artist": "晨晨",
+      "album": "风来的方向",
       "albumId": 12,
       "duration": 240,
       "cover": "https://picsum.photos/seed/song13/300/300",
@@ -222,11 +222,11 @@
     },
     {
       "id": 12,
-      "name": "你像风来了又走",
+      "name": "风来的方向",
       "artist": "晨晨",
       "cover": "https://picsum.photos/seed/album12/300/300",
       "songs": [13],
-      "releaseDate": "2026-05-15"
+      "releaseDate": "2026-05-16"
     }
   ],
   "recommendPlaylists": [
