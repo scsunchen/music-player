@@ -390,6 +390,23 @@ const goToLikedSongs = () => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    align-items: start;
+  }
+
+  .songs-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .songs-column .song-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .songs-column .song-list :deep(.song-item:last-child) {
+    flex: 1;
   }
 }
 </style>
