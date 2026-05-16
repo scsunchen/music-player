@@ -93,6 +93,14 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const nextSong = () => {
+    if (playMode.value === 'repeat') {
+      // 单曲循环：重新播放当前歌曲
+      const audio = initAudio()
+      audio.currentTime = 0
+      audio.play()
+      return
+    }
+
     if (currentPlaylist.value.length === 0) return
     
     if (playMode.value === 'shuffle') {
