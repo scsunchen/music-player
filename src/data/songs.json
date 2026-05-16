@@ -129,6 +129,16 @@
       "duration": 240,
       "cover": "https://picsum.photos/seed/song13/300/300",
       "audioUrl": "/music-player/audio/你像风来了又走.mp3"
+    },
+    {
+      "id": 14,
+      "title": "梦底",
+      "artist": "海来阿木",
+      "album": "梦底",
+      "albumId": 13,
+      "duration": 280,
+      "cover": "https://picsum.photos/seed/song14/300/300",
+      "audioUrl": "/music-player/audio/梦底.mp3"
     }
   ],
   "albums": [
@@ -227,6 +237,15 @@
       "cover": "https://picsum.photos/seed/album12/300/300",
       "songs": [13],
       "releaseDate": "2026-05-16"
+    },
+    {
+      "id": 13,
+      "name": "梦底",
+      "artist": "海来阿木",
+      "cover": "https://picsum.photos/seed/album13/300/300",
+      "songs": [14],
+      "description": "2026年央视春晚原创歌曲，海来阿木作词作曲。原名《来不及》，历经25版打磨，以极简歌词和沧桑烟嗓，唱尽成年人最深的思念与遗憾，从私人执念升华为全民共情的情感之作。",
+      "releaseDate": "2026-02-17"
     }
   ],
   "recommendPlaylists": [
