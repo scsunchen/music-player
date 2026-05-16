@@ -37,6 +37,18 @@ export const usePlayerStore = defineStore('player', () => {
       audioElement.addEventListener('ended', () => {
         nextSong()
       })
+      audioElement.addEventListener('error', (e) => {
+        console.error('音频加载失败:', currentSong.value?.audioUrl, e)
+        isPlaying.value = false
+      })
+      audioElement.addEventListener('canplay', () => {
+        if (isPlaying.value) {
+          audioElement.play().catch(err => {
+            console.error('播放失败:', err)
+            isPlaying.value = false
+          })
+        }
+      })
     }
     return audioElement
   }
@@ -55,8 +67,13 @@ export const usePlayerStore = defineStore('player', () => {
     currentSong.value = song
     audio.src = song.audioUrl
     audio.volume = volume.value
-    audio.play()
-    isPlaying.value = true
+    audio.load() // 先加载
+    audio.play().then(() => {
+      isPlaying.value = true
+    }).catch(err => {
+      console.error('播放失败:', err)
+      isPlaying.value = false
+    })
   }
   
   const playPlaylist = (playlist, startIndex = 0) => {
@@ -86,8 +103,11 @@ export const usePlayerStore = defineStore('player', () => {
       isPlaying.value = false
     } else {
       if (currentSong.value) {
-        audio.play()
-        isPlaying.value = true
+        audio.play().then(() => {
+          isPlaying.value = true
+        }).catch(err => {
+          console.error('恢复播放失败:', err)
+        })
       }
     }
   }

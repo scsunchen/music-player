@@ -33,14 +33,14 @@ watch(() => playerStore.isPlaying, (val) => {
 })
 
 onMounted(() => {
-  // 生成 20 个浮动音符
+  // 生成 20 个浮动音符，确保持续有动画
   const generated = []
   for (let i = 0; i < 20; i++) {
     generated.push({
       id: i,
       x: Math.random() * 100,
-      duration: 3 + Math.random() * 4,
-      delay: Math.random() * 5,
+      duration: 4 + Math.random() * 3, // 4-7秒
+      delay: (i * 0.3) % 5, // 分散启动，确保持续有音符
       size: 12 + Math.random() * 16,
       symbol: symbols[Math.floor(Math.random() * symbols.length)],
       type: types[Math.floor(Math.random() * types.length)]
