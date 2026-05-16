@@ -46,8 +46,42 @@
       </div>
     </div>
 
-    <div class="search-placeholder" v-else>
-      <p>输入关键词搜索歌曲、歌手或专辑</p>
+    <!-- 未搜索时展示歌曲库 -->
+    <div class="library-view" v-else>
+      <!-- 全部歌曲 -->
+      <div class="library-section">
+        <div class="section-header">
+          <h3 class="section-title">全部歌曲</h3>
+          <span class="song-count">共 {{ playerStore.songs.length }} 首</span>
+        </div>
+        <div class="song-list">
+          <SongItem
+            v-for="(song, index) in playerStore.songs"
+            :key="song.id"
+            :song="song"
+            :index="index"
+            :show-index="true"
+            @play="playerStore.playSong(song)"
+          />
+        </div>
+      </div>
+
+      <!-- 全部专辑 -->
+      <div class="library-section">
+        <div class="section-header">
+          <h3 class="section-title">全部专辑</h3>
+          <span class="song-count">共 {{ playerStore.albums.length }} 张</span>
+        </div>
+        <div class="playlist-grid">
+          <PlaylistCard
+            v-for="album in playerStore.albums"
+            :key="album.id"
+            :playlist="album"
+            @click="goToAlbum(album.id)"
+            @play="playAlbum(album)"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -162,10 +196,42 @@ const playAlbum = (album) => {
   overflow: hidden;
 }
 
-.no-results,
-.search-placeholder {
+.no-results {
   text-align: center;
   padding: 48px 24px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* 歌曲库视图 */
+.library-view {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.library-section {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.song-count {
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
 }
 </style>

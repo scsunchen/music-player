@@ -1,5 +1,32 @@
 <template>
   <div class="home">
+    <!-- Banner 区域 -->
+    <section class="banner-section">
+      <div class="banner-card daily-card" @click="playDailySongs">
+        <div class="banner-bg"></div>
+        <div class="banner-content">
+          <div class="banner-icon">
+            <svg viewBox="0 0 24 24" width="40" height="40">
+              <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <div class="banner-text">
+            <h3>每日10首</h3>
+            <p>为你精心挑选的今日推荐</p>
+          </div>
+          <button class="banner-play-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="banner-songs-preview">
+          <span v-for="(song, i) in dailySongs.slice(0, 5)" :key="i" class="song-tag">{{ song.title }}</span>
+          <span class="song-tag more">+{{ dailySongs.length - 5 }}</span>
+        </div>
+      </div>
+    </section>
+
     <!-- 推荐播放列表 -->
     <section class="section">
       <h2 class="section-title">推荐歌单</h2>
@@ -29,44 +56,6 @@
           :show-index="true"
           @play="playerStore.playSong(song)"
         />
-      </div>
-    </section>
-
-    <!-- 每日10首 -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">每日10首</h2>
-        <span class="badge-daily">今日推荐</span>
-      </div>
-      <div class="daily-songs-card">
-        <div class="daily-header">
-          <div class="daily-icon">
-            <svg viewBox="0 0 24 24" width="32" height="32">
-              <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <div class="daily-info">
-            <h3>为你精心挑选</h3>
-            <p>根据你的喜好推荐今日必听</p>
-          </div>
-          <button class="btn-play-all" @click="playDailySongs">
-            <svg viewBox="0 0 24 24" width="20" height="20">
-              <path fill="currentColor" d="M8 5v14l11-7z"/>
-            </svg>
-            播放全部
-          </button>
-        </div>
-        <div class="song-list compact">
-          <SongItem
-            v-for="(song, index) in dailySongs"
-            :key="song.id"
-            :song="song"
-            :index="index"
-            :show-index="true"
-            :show-cover="false"
-            @play="playerStore.playSong(song)"
-          />
-        </div>
       </div>
     </section>
 
@@ -159,6 +148,123 @@ const playDailySongs = () => {
   padding-bottom: 100px;
 }
 
+/* Banner 区域 */
+.banner-section {
+  margin-bottom: 32px;
+}
+
+.banner-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.banner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
+}
+
+.banner-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  opacity: 0.9;
+}
+
+.banner-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.banner-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  z-index: 1;
+}
+
+.banner-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.banner-text {
+  flex: 1;
+}
+
+.banner-text h3 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.banner-text p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.banner-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  color: #667eea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.banner-play-btn:hover {
+  transform: scale(1.1);
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 歌曲标签预览 */
+.banner-songs-preview {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 32px 24px;
+  z-index: 1;
+}
+
+.song-tag {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
+.song-tag.more {
+  background: rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+}
+
 .section {
   margin-bottom: 32px;
 }
@@ -186,15 +292,6 @@ const playDailySongs = () => {
   color: #fff;
 }
 
-.badge-daily {
-  padding: 2px 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  color: #fff;
-}
-
 .playlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -205,75 +302,5 @@ const playDailySongs = () => {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   overflow: hidden;
-}
-
-.song-list.compact :deep(.song-item) {
-  padding: 10px 16px;
-}
-
-/* 每日10首卡片 */
-.daily-songs-card {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-  border-radius: 16px;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  overflow: hidden;
-}
-
-.daily-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.daily-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.daily-info {
-  flex: 1;
-}
-
-.daily-info h3 {
-  margin: 0 0 4px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.daily-info p {
-  margin: 0;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.btn-play-all {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 20px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  flex-shrink: 0;
-}
-
-.btn-play-all:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
 }
 </style>

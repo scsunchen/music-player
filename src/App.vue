@@ -6,7 +6,10 @@
         <svg viewBox="0 0 24 24" width="28" height="28">
           <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
-        <span>Music Player</span>
+        <div class="brand">
+          <span class="brand-name">一起听</span>
+          <span class="brand-tagline">听见时光</span>
+        </div>
       </div>
       <nav class="nav">
         <router-link to="/" class="nav-link" active-class="active">
@@ -92,6 +95,26 @@ body {
 
 .logo svg {
   color: #667eea;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  letter-spacing: 4px;
 }
 
 .nav {
