@@ -352,11 +352,11 @@ const goToLikedSongs = () => {
   overflow: hidden;
 }
 
-/* 两列歌曲布局 */
+/* 两列歌曲布局 - 默认手机端：两行 */
 .songs-two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .songs-column {
@@ -382,5 +382,14 @@ const goToLikedSongs = () => {
 
 .song-list.compact :deep(.artist-album) {
   font-size: 11px;
+}
+
+/* 电脑端：一行两列 */
+@media (min-width: 768px) {
+  .songs-two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
 }
 </style>
