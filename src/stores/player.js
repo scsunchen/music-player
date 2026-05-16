@@ -21,6 +21,45 @@ export const usePlayerStore = defineStore('player', () => {
   const volume = ref(0.8)
   const playMode = ref('list') // list, shuffle, repeat
   
+  // 主题色
+  const themeColor = ref('#667eea')
+
+  const extractColorFromCover = (coverUrl) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      canvas.width = 50
+      canvas.height = 50
+      ctx.drawImage(img, 0, 0, 50, 50)
+      const data = ctx.getImageData(0, 0, 50, 50).data
+      let r = 0, g = 0, b = 0, count = 0
+      for (let i = 0; i < data.length; i += 16) { // sample every 4th pixel
+        r += data[i]
+        g += data[i + 1]
+        b += data[i + 2]
+        count++
+      }
+      r = Math.round(r / count)
+      g = Math.round(g / count)
+      b = Math.round(b / count)
+      // Make color more saturated and darker for background
+      const max = Math.max(r, g, b)
+      const boost = 1.3
+      if (max > 0) {
+        r = Math.min(255, Math.round((r / max) * 180 * boost))
+        g = Math.min(255, Math.round((g / max) * 140 * boost))
+        b = Math.min(255, Math.round((b / max) * 200 * boost))
+      }
+      themeColor.value = `rgb(${r}, ${g}, ${b})`
+    }
+    img.onerror = () => {
+      themeColor.value = '#667eea'
+    }
+    img.src = coverUrl
+  }
+
   // Audio 元素
   let audioElement = null
   
@@ -67,6 +106,7 @@ export const usePlayerStore = defineStore('player', () => {
     currentSong.value = song
     audio.src = song.audioUrl
     audio.volume = volume.value
+    extractColorFromCover(song.cover)
     audio.load() // 先加载
     audio.play().then(() => {
       isPlaying.value = true
@@ -264,6 +304,7 @@ export const usePlayerStore = defineStore('player', () => {
     duration,
     volume,
     playMode,
+    themeColor,
 
     // 计算属性
     currentSongInfo,

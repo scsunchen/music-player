@@ -1,5 +1,6 @@
 <template>
-  <div class="home">
+  <SkeletonLoader v-if="loading" />
+  <div class="home" v-else>
     <!-- Banner 区域 -->
     <section class="banner-section">
       <div class="banner-row">
@@ -112,14 +113,23 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import PlaylistCard from '../components/PlaylistCard.vue'
 import SongItem from '../components/SongItem.vue'
+import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
+
+const loading = ref(true)
+
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 800)
+})
 
 // 最新歌曲（按id倒序，取最新的6首）
 const latestSongs = computed(() => {

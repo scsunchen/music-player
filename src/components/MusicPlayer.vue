@@ -1,5 +1,5 @@
 <template>
-  <div class="music-player" :class="{ playing: playerStore.isPlaying }" v-if="playerStore.currentSong">
+  <div class="music-player" :class="{ playing: playerStore.isPlaying }" :style="{ '--theme-color': playerStore.themeColor }" v-if="playerStore.currentSong">
     <!-- 浮动音符粒子 -->
     <FloatingNotes />
 
@@ -13,14 +13,11 @@
     <!-- 歌曲信息 -->
     <div class="song-info">
       <div class="cover-wrapper">
-        <img 
-          :src="playerStore.currentSong.cover" 
+        <img
+          :src="playerStore.currentSong.cover"
           :alt="playerStore.currentSong.title"
           class="cover"
         />
-        <!-- 封面脉冲光环 -->
-        <div class="cover-pulse" v-if="playerStore.isPlaying"></div>
-        <div class="cover-ring" v-if="playerStore.isPlaying"></div>
       </div>
       <div class="info">
         <h4 class="title">{{ playerStore.currentSong.title }}</h4>
@@ -148,8 +145,8 @@ const seek = (event) => {
 
 /* 播放状态顶部发光边框 */
 .music-player.playing {
-  border-top-color: rgba(102, 126, 234, 0.5);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3), 0 -2px 30px rgba(102, 126, 234, 0.15);
+  border-top-color: var(--theme-color);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3), 0 -2px 30px color-mix(in srgb, var(--theme-color) 15%, transparent);
 }
 
 /* 光波背景 */
@@ -175,7 +172,7 @@ const seek = (event) => {
 .glow-1 {
   width: 200px;
   height: 200px;
-  background: rgba(102, 126, 234, 0.15);
+  background: color-mix(in srgb, var(--theme-color) 15%, transparent);
   top: -100px;
   left: 10%;
   animation: glowDrift1 4s ease-in-out infinite;
@@ -223,6 +220,7 @@ const seek = (event) => {
   z-index: 1;
 }
 
+/* 黑胶唱片封面 */
 .cover-wrapper {
   position: relative;
   width: 56px;
@@ -230,10 +228,48 @@ const seek = (event) => {
   flex-shrink: 0;
 }
 
+.cover-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #1a1a1a 0deg,
+    #333 30deg,
+    #1a1a1a 60deg,
+    #2a2a2a 90deg,
+    #1a1a1a 120deg,
+    #333 150deg,
+    #1a1a1a 180deg,
+    #2a2a2a 210deg,
+    #1a1a1a 240deg,
+    #333 270deg,
+    #1a1a1a 300deg,
+    #2a2a2a 330deg,
+    #1a1a1a 360deg
+  );
+  z-index: 1;
+}
+
+.cover-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  border: 2px solid #333;
+  z-index: 3;
+}
+
 .cover {
   width: 56px;
   height: 56px;
-  border-radius: 8px;
+  border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -242,43 +278,10 @@ const seek = (event) => {
 }
 
 .music-player.playing .cover {
-  transform: scale(1.02);
+  animation: discSpin 8s linear infinite;
 }
 
-/* 封面脉冲光环 */
-.cover-pulse {
-  position: absolute;
-  inset: -4px;
-  border-radius: 12px;
-  border: 2px solid rgba(102, 126, 234, 0.6);
-  animation: coverPulse 2s ease-in-out infinite;
-  z-index: 1;
-}
-
-@keyframes coverPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 0.2;
-  }
-}
-
-/* 封面旋转光环 */
-.cover-ring {
-  position: absolute;
-  inset: -8px;
-  border-radius: 16px;
-  border: 1px solid transparent;
-  border-top-color: rgba(240, 147, 251, 0.5);
-  border-right-color: rgba(102, 126, 234, 0.5);
-  animation: coverSpin 3s linear infinite;
-  z-index: 0;
-}
-
-@keyframes coverSpin {
+@keyframes discSpin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
@@ -298,7 +301,7 @@ const seek = (event) => {
 }
 
 .music-player.playing .title {
-  text-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--theme-color) 30%, transparent);
 }
 
 .artist {
@@ -345,7 +348,7 @@ const seek = (event) => {
 .btn-play {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: var(--theme-color) !important;
   color: #fff !important;
   position: relative;
 }
@@ -355,7 +358,7 @@ const seek = (event) => {
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--theme-color);
   opacity: 0;
   z-index: -1;
   filter: blur(8px);
@@ -374,7 +377,7 @@ const seek = (event) => {
 
 .btn-play:hover {
   transform: scale(1.05);
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+  filter: brightness(1.15);
 }
 
 .btn-mode {
@@ -406,7 +409,7 @@ const seek = (event) => {
 
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--theme-color);
   border-radius: 2px;
   transition: width 0.1s;
   position: relative;
@@ -422,7 +425,7 @@ const seek = (event) => {
   height: 8px;
   background: #fff;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(102, 126, 234, 0.8), 0 0 16px rgba(118, 75, 162, 0.4);
+  box-shadow: 0 0 8px var(--theme-color), 0 0 16px color-mix(in srgb, var(--theme-color) 40%, transparent);
   opacity: 0;
   transition: opacity 0.3s;
 }
