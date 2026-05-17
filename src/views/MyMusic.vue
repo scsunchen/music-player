@@ -666,16 +666,4 @@ const addToPlaylist = (playlistId) => {
 .modal-song-play:hover {
   background: rgba(102, 126, 234, 1);
 }
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.modal-close:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
 </style>
