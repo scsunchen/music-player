@@ -76,6 +76,15 @@ export const usePlayerStore = defineStore('player', () => {
       audioElement.addEventListener('ended', () => {
         nextSong()
       })
+      audioElement.addEventListener('pause', () => {
+        // 当音频暂停时（非用户主动暂停），更新状态
+        if (isPlaying.value && audioElement.ended === false) {
+          // 用户可能通过其他方式暂停了音频
+        }
+      })
+      audioElement.addEventListener('play', () => {
+        isPlaying.value = true
+      })
       audioElement.addEventListener('error', (e) => {
         console.error('音频加载失败:', currentSong.value?.audioUrl, e)
         isPlaying.value = false
@@ -158,17 +167,27 @@ export const usePlayerStore = defineStore('player', () => {
       // 单曲循环：重新播放当前歌曲
       const audio = initAudio()
       audio.currentTime = 0
-      audio.play()
+      audio.play().then(() => {
+        isPlaying.value = true
+      }).catch(err => {
+        console.error('单曲循环播放失败:', err)
+        isPlaying.value = false
+      })
       return
     }
 
-    if (currentPlaylist.value.length === 0) return
-    
+    if (currentPlaylist.value.length === 0) {
+      // 没有播放列表，停止播放
+      isPlaying.value = false
+      return
+    }
+
     if (playMode.value === 'shuffle') {
       const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
       currentIndex.value = randomIndex
       playSong(currentPlaylist.value[randomIndex])
     } else {
+      // 列表循环：播放下一首
       currentIndex.value = (currentIndex.value + 1) % currentPlaylist.value.length
       playSong(currentPlaylist.value[currentIndex.value])
     }
