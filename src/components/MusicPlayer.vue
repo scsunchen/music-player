@@ -11,13 +11,21 @@
     </div>
 
     <!-- 歌曲信息 -->
-    <div class="song-info">
-      <div class="cover-wrapper">
-        <img
-          :src="playerStore.currentSong.cover"
-          :alt="playerStore.currentSong.title"
-          class="cover"
-        />
+    <div class="song-info" @click="goToSongDetail">
+      <div class="cover-wrapper" :class="{ playing: playerStore.isPlaying }">
+        <!-- 黑胶唱片外圈 -->
+        <div class="vinyl-disc">
+          <!-- 唱片纹路 -->
+          <div class="vinyl-grooves"></div>
+          <!-- 封面图 -->
+          <img
+            :src="playerStore.currentSong.cover"
+            :alt="playerStore.currentSong.title"
+            class="cover"
+          />
+          <!-- 中心孔 -->
+          <div class="vinyl-center"></div>
+        </div>
       </div>
       <div class="info">
         <h4 class="title">{{ playerStore.currentSong.title }}</h4>
@@ -84,12 +92,21 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
 import FloatingNotes from './FloatingNotes.vue'
 
 const playerStore = usePlayerStore()
+const router = useRouter()
 const visualizerRef = ref(null)
+
+// 跳转到歌曲详情页
+const goToSongDetail = () => {
+  if (playerStore.currentSong) {
+    router.push(`/song/${playerStore.currentSong.id}`)
+  }
+}
 
 const playModeIcon = computed(() => {
   const icons = {
@@ -226,58 +243,69 @@ const seek = (event) => {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
-.cover-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
+.cover-wrapper:hover {
+  transform: scale(1.05);
+}
+
+/* 黑胶唱片外圈 */
+.vinyl-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    #1a1a1a 0deg,
-    #333 30deg,
-    #1a1a1a 60deg,
-    #2a2a2a 90deg,
-    #1a1a1a 120deg,
-    #333 150deg,
-    #1a1a1a 180deg,
-    #2a2a2a 210deg,
-    #1a1a1a 240deg,
-    #333 270deg,
-    #1a1a1a 300deg,
-    #2a2a2a 330deg,
-    #1a1a1a 360deg
+  background: linear-gradient(145deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 唱片纹路 */
+.vinyl-grooves {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 3px
   );
-  z-index: 1;
 }
 
-.cover-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #1a1a2e;
-  border: 2px solid #333;
-  z-index: 3;
-}
-
+/* 封面图 */
 .cover {
-  width: 56px;
-  height: 56px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 2;
   transition: transform 0.3s;
 }
 
-.music-player.playing .cover {
+/* 中心孔 */
+.vinyl-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0f0f1a;
+  border: 1px solid #333;
+  z-index: 3;
+}
+
+/* 播放时旋转 */
+.cover-wrapper.playing .vinyl-disc {
   animation: discSpin 8s linear infinite;
 }
 
@@ -290,6 +318,16 @@ const seek = (event) => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.info:hover {
+  opacity: 0.8;
+}
+
+.info:hover .title {
+  text-decoration: underline;
 }
 
 .title {

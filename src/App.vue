@@ -82,61 +82,75 @@ body {
   background: rgba(15, 15, 26, 0.9);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 16px 24px;
+  padding: 12px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 20px;
+  gap: 8px;
+  font-size: 18px;
   font-weight: 700;
   color: #fff;
+  flex-shrink: 0;
 }
 
 .logo svg {
   color: #667eea;
+  width: 24px;
+  height: 24px;
 }
 
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .brand-name {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .brand-tagline {
-  font-size: 11px;
+  font-size: 9px;
   color: rgba(255, 255, 255, 0.5);
   font-weight: 400;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
 }
 
 .nav {
   display: flex;
-  gap: 8px;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 20px;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 16px;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   transition: all 0.3s;
+}
+
+.nav-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-link span {
+  display: none;
 }
 
 .nav-link:hover {
@@ -147,6 +161,53 @@ body {
 .nav-link.active {
   color: #fff;
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 16px 24px;
+    gap: 24px;
+  }
+
+  .logo {
+    gap: 10px;
+    font-size: 20px;
+  }
+
+  .logo svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-name {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .brand-tagline {
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+
+  .nav {
+    gap: 8px;
+  }
+
+  .nav-link {
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+
+  .nav-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-link span {
+    display: inline;
+  }
 }
 
 .main {
