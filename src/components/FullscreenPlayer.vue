@@ -647,11 +647,15 @@ const seek = (e) => {
   .fs-body {
     flex-direction: row;
     padding: 0 40px 40px;
-    gap: 40px;
+    gap: 48px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
   }
 
   .fs-left {
-    width: 420px;
+    width: 320px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -662,6 +666,8 @@ const seek = (e) => {
   .fs-right {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    max-width: 400px;
   }
 
   .fs-vinyl-disc {
@@ -736,18 +742,27 @@ const seek = (e) => {
 }
 
 @media (min-width: 1024px) {
+  .fs-body {
+    max-width: 1000px;
+    gap: 64px;
+  }
+
   .fs-left {
-    width: 480px;
+    width: 360px;
   }
 
   .fs-vinyl-disc {
-    width: 360px;
-    height: 360px;
+    width: 320px;
+    height: 320px;
   }
 
   .fs-cover-img {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
+  }
+
+  .fs-right {
+    max-width: 440px;
   }
 }
 </style>
