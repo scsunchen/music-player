@@ -132,6 +132,8 @@ const playSongAt = (index) => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
+  width: fit-content;
+  max-width: 200px;
 }
 
 .play-all-btn:hover {

@@ -107,6 +107,7 @@ export const usePlayerStore = defineStore('player', () => {
     audio.src = song.audioUrl
     audio.volume = volume.value
     extractColorFromCover(song.cover)
+    addToRecent(song.id) // 添加到最近播放
     audio.load() // 先加载
     audio.play().then(() => {
       isPlaying.value = true
@@ -285,10 +286,56 @@ export const usePlayerStore = defineStore('player', () => {
     return likedSongs.value.map(id => songs.value.find(s => s.id === id)).filter(Boolean)
   }
 
+  // 最近播放功能
+  const recentSongs = ref([])
+
+  const loadRecentSongs = () => {
+    const saved = localStorage.getItem('recentSongs')
+    if (saved) {
+      recentSongs.value = JSON.parse(saved)
+    }
+  }
+
+  const saveRecentSongs = () => {
+    localStorage.setItem('recentSongs', JSON.stringify(recentSongs.value.slice(0, 50)))
+  }
+
+  const addToRecent = (songId) => {
+    const index = recentSongs.value.indexOf(songId)
+    if (index > -1) {
+      recentSongs.value.splice(index, 1)
+    }
+    recentSongs.value.unshift(songId)
+    if (recentSongs.value.length > 50) {
+      recentSongs.value.pop()
+    }
+    saveRecentSongs()
+  }
+
+  const getRecentSongsList = () => {
+    return recentSongs.value
+      .map(id => songs.value.find(s => s.id === id))
+      .filter(Boolean)
+  }
+
+  // 歌曲标签分类
+  const genres = computed(() => {
+    const genreSet = new Set()
+    songs.value.forEach(song => {
+      if (song.genre) genreSet.add(song.genre)
+    })
+    return Array.from(genreSet)
+  })
+
+  const getSongsByGenre = (genre) => {
+    return songs.value.filter(s => s.genre === genre)
+  }
+
   // 初始化加载
   loadCustomPlaylists()
   loadLikedSongs()
-  
+  loadRecentSongs()
+
   return {
     // 数据
     songs,
@@ -296,6 +343,7 @@ export const usePlayerStore = defineStore('player', () => {
     recommendPlaylists,
     customPlaylists,
     likedSongs,
+    recentSongs,
     currentSong,
     currentPlaylist,
     currentIndex,
@@ -309,6 +357,7 @@ export const usePlayerStore = defineStore('player', () => {
     // 计算属性
     currentSongInfo,
     progress,
+    genres,
 
     // 方法
     playSong,
@@ -326,6 +375,9 @@ export const usePlayerStore = defineStore('player', () => {
     deletePlaylist,
     toggleLikeSong,
     isLiked,
-    getLikedSongsList
+    getLikedSongsList,
+    addToRecent,
+    getRecentSongsList,
+    getSongsByGenre
   }
 })

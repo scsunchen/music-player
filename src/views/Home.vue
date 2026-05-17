@@ -195,9 +195,17 @@ const goToLikedSongs = () => {
 }
 
 .banner-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .banner-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
 }
 
 .banner-card {
