@@ -43,7 +43,7 @@
     </main>
 
     <!-- 底部播放器 -->
-    <MusicPlayer @open-fullscreen="showFullscreen = true" />
+    <MusicPlayer v-show="!showFullscreen" @open-fullscreen="showFullscreen = true" />
 
     <!-- 全屏播放页 -->
     <FullscreenPlayer :visible="showFullscreen" @close="showFullscreen = false" />

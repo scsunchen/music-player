@@ -2,7 +2,7 @@
   <transition name="fullscreen">
     <div 
       class="fullscreen-player" 
-      v-if="playerStore.currentSong"
+      v-if="visible && playerStore.currentSong"
       @touchstart="onTouchStart"
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"
