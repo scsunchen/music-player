@@ -11,7 +11,7 @@
     </div>
 
     <!-- 歌曲信息 -->
-    <div class="song-info" @click="goToSongDetail">
+    <div class="song-info" @click="openFullscreen">
       <div class="cover-wrapper" :class="{ playing: playerStore.isPlaying }">
         <!-- 黑胶唱片外圈 -->
         <div class="vinyl-disc">
@@ -97,15 +97,15 @@ import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
 import FloatingNotes from './FloatingNotes.vue'
 
+const emit = defineEmits(['open-fullscreen'])
+
 const playerStore = usePlayerStore()
 const router = useRouter()
 const visualizerRef = ref(null)
 
-// 跳转到歌曲详情页
-const goToSongDetail = () => {
-  if (playerStore.currentSong) {
-    router.push(`/song/${playerStore.currentSong.id}`)
-  }
+// 打开全屏播放页
+const openFullscreen = () => {
+  emit('open-fullscreen')
 }
 
 const playModeIcon = computed(() => {

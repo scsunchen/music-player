@@ -43,12 +43,19 @@
     </main>
 
     <!-- 底部播放器 -->
-    <MusicPlayer />
+    <MusicPlayer @open-fullscreen="showFullscreen = true" />
+
+    <!-- 全屏播放页 -->
+    <FullscreenPlayer :visible="showFullscreen" @close="showFullscreen = false" />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import MusicPlayer from './components/MusicPlayer.vue'
+import FullscreenPlayer from './components/FullscreenPlayer.vue'
+
+const showFullscreen = ref(false)
 </script>
 
 <style>
