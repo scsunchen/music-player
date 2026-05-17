@@ -3,9 +3,6 @@
     <div 
       class="fullscreen-player" 
       v-if="visible && playerStore.currentSong"
-      @touchstart="onTouchStart"
-      @touchmove="onTouchMove"
-      @touchend="onTouchEnd"
     >
       <!-- 虚化背景 -->
       <div class="fs-bg">
@@ -14,7 +11,7 @@
       </div>
 
       <!-- 顶部栏 -->
-      <div class="fs-header">
+      <div class="fs-header" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
         <button class="fs-btn-down" @click="close">
           <svg viewBox="0 0 24 24" width="24" height="24">
             <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
@@ -668,6 +665,7 @@ const seek = (e) => {
     flex-direction: column;
     flex: 1;
     max-width: 400px;
+    align-items: center;
   }
 
   .fs-vinyl-disc {
@@ -709,7 +707,8 @@ const seek = (e) => {
   }
 
   .fs-lyrics {
-    padding: 20px 24px 20px 0;
+    width: 100%;
+    padding: 20px 16px;
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
@@ -729,7 +728,7 @@ const seek = (e) => {
   .fs-lyric-line {
     font-size: 17px;
     padding: 12px 0;
-    text-align: left;
+    text-align: center;
   }
 
   .fs-lyric-line.active {
