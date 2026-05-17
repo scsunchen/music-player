@@ -41,11 +41,32 @@
         </svg>
         <span>{{ isCurrentPlaying ? '暂停' : '播放' }}</span>
       </button>
-      <button class="btn-action" @click="playerStore.addToPlaylist?.(song.id)">
+      <button class="btn-action" @click="showAddToPlaylist = true">
         <svg viewBox="0 0 24 24" width="22" height="22">
           <path fill="currentColor" d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
         </svg>
       </button>
+    </div>
+
+    <!-- 添加到歌单弹窗 -->
+    <div class="modal-overlay" v-if="showAddToPlaylist" @click="showAddToPlaylist = false">
+      <div class="modal" @click.stop>
+        <h3 class="modal-title">添加到歌单</h3>
+        <div class="modal-list">
+          <button 
+            v-for="playlist in playerStore.customPlaylists" 
+            :key="playlist.id"
+            class="modal-item"
+            @click="addToPlaylist(playlist.id)"
+          >
+            {{ playlist.name }}
+          </button>
+          <p v-if="playerStore.customPlaylists.length === 0" class="modal-empty">
+            还没有创建歌单，去"我的"页面创建一个吧
+          </p>
+        </div>
+        <button class="modal-close" @click="showAddToPlaylist = false">取消</button>
+      </div>
     </div>
 
     <!-- 歌曲描述 -->
@@ -113,6 +134,7 @@ const playerStore = usePlayerStore()
 const song = ref(null)
 const lyricsRef = ref(null)
 const activeLyricEl = ref(null)
+const showAddToPlaylist = ref(false)
 
 // 解析歌词
 const lyricsLines = computed(() => {
@@ -190,6 +212,14 @@ const handlePlay = () => {
 // 返回
 const goBack = () => {
   router.back()
+}
+
+// 添加到歌单
+const addToPlaylist = (playlistId) => {
+  if (song.value) {
+    playerStore.addToPlaylist(playlistId, song.value.id)
+    showAddToPlaylist.value = false
+  }
 }
 
 // 歌词自动滚动
@@ -539,5 +569,77 @@ watch(() => route.params.id, () => {
   border-radius: 20px;
   color: #fff;
   cursor: pointer;
+}
+
+/* 添加到歌单弹窗 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  width: 90%;
+  max-width: 400px;
+  background: #1a1a2e;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.modal-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.modal-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modal-item {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.modal-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 16px;
+}
+
+.modal-close {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 </style>
