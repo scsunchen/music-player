@@ -31,77 +31,88 @@
         </button>
       </div>
 
-      <!-- 封面区域 -->
-      <div class="fs-cover-area">
-        <div class="fs-vinyl" :class="{ spinning: playerStore.isPlaying }">
-          <div class="fs-vinyl-disc">
-            <div class="fs-vinyl-grooves"></div>
-            <img :src="playerStore.currentSong.cover" class="fs-cover-img" />
-            <div class="fs-vinyl-center"></div>
+      <!-- 主内容区域 -->
+      <div class="fs-body">
+        <!-- 左侧：封面 + 歌曲信息 + 控制 -->
+        <div class="fs-left">
+          <!-- 封面区域 -->
+          <div class="fs-cover-area">
+            <div class="fs-vinyl" :class="{ spinning: playerStore.isPlaying }">
+              <div class="fs-vinyl-disc">
+                <div class="fs-vinyl-grooves"></div>
+                <img :src="playerStore.currentSong.cover" class="fs-cover-img" />
+                <div class="fs-vinyl-center"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 歌曲信息 -->
+          <div class="fs-song-info">
+            <h2 class="fs-title">{{ playerStore.currentSong.title }}</h2>
+            <p class="fs-artist">{{ playerStore.currentSong.artist }} · {{ playerStore.currentSong.album }}</p>
+          </div>
+
+          <!-- 进度条 -->
+          <div class="fs-progress">
+            <span class="fs-time">{{ formatTime(playerStore.currentTime) }}</span>
+            <div class="fs-progress-bar" @click="seek">
+              <div class="fs-progress-fill" :style="{ width: playerStore.progress + '%' }"></div>
+              <div class="fs-progress-thumb" :style="{ left: playerStore.progress + '%' }"></div>
+            </div>
+            <span class="fs-time">{{ formatTime(playerStore.duration) }}</span>
+          </div>
+
+          <!-- 控制按钮 -->
+          <div class="fs-controls">
+            <button 
+              class="fs-ctrl-btn fs-btn-like" 
+              :class="{ liked: playerStore.isLiked(playerStore.currentSong.id) }"
+              @click="playerStore.toggleLikeSong(playerStore.currentSong.id)"
+            >
+              <svg viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </button>
+            <button class="fs-ctrl-btn" @click="playerStore.prevSong">
+              <svg viewBox="0 0 24 24" width="32" height="32">
+                <path fill="currentColor" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+              </svg>
+            </button>
+            <button class="fs-ctrl-btn fs-btn-play" @click="playerStore.togglePlay">
+              <svg v-if="!playerStore.isPlaying" viewBox="0 0 24 24" width="40" height="40">
+                <path fill="currentColor" d="M8 5v14l11-7z"/>
+              </svg>
+              <svg v-else viewBox="0 0 24 24" width="40" height="40">
+                <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+            <button class="fs-ctrl-btn" @click="playerStore.nextSong">
+              <svg viewBox="0 0 24 24" width="32" height="32">
+                <path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+              </svg>
+            </button>
+            <button class="fs-ctrl-btn" @click="playerStore.togglePlayMode" :title="playModeText">
+              {{ playModeIcon }}
+            </button>
           </div>
         </div>
-      </div>
 
-      <!-- 歌曲信息 -->
-      <div class="fs-song-info">
-        <h2 class="fs-title">{{ playerStore.currentSong.title }}</h2>
-        <p class="fs-artist">{{ playerStore.currentSong.artist }} · {{ playerStore.currentSong.album }}</p>
-      </div>
-
-      <!-- 进度条 -->
-      <div class="fs-progress">
-        <span class="fs-time">{{ formatTime(playerStore.currentTime) }}</span>
-        <div class="fs-progress-bar" @click="seek">
-          <div class="fs-progress-fill" :style="{ width: playerStore.progress + '%' }"></div>
-          <div class="fs-progress-thumb" :style="{ left: playerStore.progress + '%' }"></div>
+        <!-- 右侧：歌词 -->
+        <div class="fs-right">
+          <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
+            <p 
+              v-for="(line, index) in lyricsLines" 
+              :key="index"
+              class="fs-lyric-line"
+              :class="{ active: isCurrentLine(index) }"
+              :ref="el => { if (isCurrentLine(index)) activeLyricEl = el }"
+              @click="seekToLyric(line)"
+            >{{ line.text }}</p>
+          </div>
+          <div class="fs-no-lyrics" v-else>
+            <p>暂无歌词</p>
+          </div>
         </div>
-        <span class="fs-time">{{ formatTime(playerStore.duration) }}</span>
-      </div>
-
-      <!-- 控制按钮 -->
-      <div class="fs-controls">
-        <button 
-          class="fs-ctrl-btn fs-btn-like" 
-          :class="{ liked: playerStore.isLiked(playerStore.currentSong.id) }"
-          @click="playerStore.toggleLikeSong(playerStore.currentSong.id)"
-        >
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-        </button>
-        <button class="fs-ctrl-btn" @click="playerStore.prevSong">
-          <svg viewBox="0 0 24 24" width="32" height="32">
-            <path fill="currentColor" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-          </svg>
-        </button>
-        <button class="fs-ctrl-btn fs-btn-play" @click="playerStore.togglePlay">
-          <svg v-if="!playerStore.isPlaying" viewBox="0 0 24 24" width="40" height="40">
-            <path fill="currentColor" d="M8 5v14l11-7z"/>
-          </svg>
-          <svg v-else viewBox="0 0 24 24" width="40" height="40">
-            <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-          </svg>
-        </button>
-        <button class="fs-ctrl-btn" @click="playerStore.nextSong">
-          <svg viewBox="0 0 24 24" width="32" height="32">
-            <path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-          </svg>
-        </button>
-        <button class="fs-ctrl-btn" @click="playerStore.togglePlayMode" :title="playModeText">
-          {{ playModeIcon }}
-        </button>
-      </div>
-
-      <!-- 歌词区域 -->
-      <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
-        <p 
-          v-for="(line, index) in lyricsLines" 
-          :key="index"
-          class="fs-lyric-line"
-          :class="{ active: isCurrentLine(index) }"
-          :ref="el => { if (isCurrentLine(index)) activeLyricEl = el }"
-          @click="seekToLyric(line)"
-        >{{ line.text }}</p>
       </div>
     </div>
   </transition>
@@ -596,24 +607,147 @@ const seek = (e) => {
   opacity: 0;
 }
 
-/* 响应式 */
+/* 主内容区域 - 默认手机：上下布局 */
+.fs-body {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 左侧面板 */
+.fs-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* 右侧歌词面板 */
+.fs-right {
+  display: none;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 无歌词提示 */
+.fs-no-lyrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+}
+
+/* 电脑端：左右布局 */
 @media (min-width: 768px) {
+  .fs-body {
+    flex-direction: row;
+    padding: 0 40px 40px;
+    gap: 40px;
+  }
+
+  .fs-left {
+    width: 420px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fs-right {
+    display: flex;
+    flex-direction: column;
+  }
+
   .fs-vinyl-disc {
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
   }
 
   .fs-cover-img {
-    width: 190px;
-    height: 190px;
+    width: 200px;
+    height: 200px;
+  }
+
+  .fs-cover-area {
+    padding: 0;
+    margin-bottom: 32px;
   }
 
   .fs-title {
-    font-size: 26px;
+    font-size: 28px;
+  }
+
+  .fs-artist {
+    font-size: 15px;
+  }
+
+  .fs-song-info {
+    padding: 0 0 24px;
+  }
+
+  .fs-progress {
+    width: 100%;
+    max-width: 380px;
+    padding: 8px 0 24px;
   }
 
   .fs-controls {
-    gap: 32px;
+    gap: 28px;
+    padding: 0;
+  }
+
+  .fs-lyrics {
+    padding: 20px 24px 20px 0;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .fs-lyric-line {
+    font-size: 17px;
+    padding: 12px 0;
+    text-align: left;
+  }
+
+  .fs-lyric-line.active {
+    font-size: 20px;
+  }
+
+  .fs-no-lyrics {
+    display: flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fs-left {
+    width: 480px;
+  }
+
+  .fs-vinyl-disc {
+    width: 360px;
+    height: 360px;
+  }
+
+  .fs-cover-img {
+    width: 220px;
+    height: 220px;
   }
 }
 </style>
