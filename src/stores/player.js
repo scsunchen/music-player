@@ -117,12 +117,53 @@ export const usePlayerStore = defineStore('player', () => {
     audio.volume = volume.value
     extractColorFromCover(song.cover)
     addToRecent(song.id) // 添加到最近播放
+    updateMediaSession(song) // 更新锁屏控制
     audio.load() // 先加载
     audio.play().then(() => {
       isPlaying.value = true
     }).catch(err => {
       console.error('播放失败:', err)
       isPlaying.value = false
+    })
+  }
+
+  // Media Session API - 锁屏控制
+  const updateMediaSession = (song) => {
+    if (!('mediaSession' in navigator)) return
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song.title,
+      artist: song.artist,
+      album: song.album,
+      artwork: [
+        { src: song.cover, sizes: '512x512', type: 'image/jpeg' }
+      ]
+    })
+
+    navigator.mediaSession.setActionHandler('play', () => {
+      const audio = initAudio()
+      audio.play()
+      isPlaying.value = true
+    })
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+      const audio = initAudio()
+      audio.pause()
+      isPlaying.value = false
+    })
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      prevSong()
+    })
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      nextSong()
+    })
+
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+      const audio = initAudio()
+      audio.currentTime = details.seekTime
+      currentTime.value = details.seekTime
     })
   }
   
