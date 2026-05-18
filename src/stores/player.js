@@ -69,6 +69,7 @@ export const usePlayerStore = defineStore('player', () => {
       audioElement = new Audio()
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
+        updateMediaSessionPosition()
       })
       audioElement.addEventListener('loadedmetadata', () => {
         duration.value = audioElement.duration
@@ -131,40 +132,81 @@ export const usePlayerStore = defineStore('player', () => {
   const updateMediaSession = (song) => {
     if (!('mediaSession' in navigator)) return
 
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: song.title,
-      artist: song.artist,
-      album: song.album,
-      artwork: [
-        { src: song.cover, sizes: '512x512', type: 'image/jpeg' }
-      ]
-    })
+    try {
+      // 确保封面 URL 是绝对路径
+      const coverUrl = song.cover.startsWith('http') 
+        ? song.cover 
+        : window.location.origin + song.cover
 
-    navigator.mediaSession.setActionHandler('play', () => {
-      const audio = initAudio()
-      audio.play()
-      isPlaying.value = true
-    })
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
+        artwork: [
+          { src: coverUrl, sizes: '512x512', type: 'image/jpeg' },
+          { src: coverUrl, sizes: '192x192', type: 'image/jpeg' }
+        ]
+      })
 
-    navigator.mediaSession.setActionHandler('pause', () => {
-      const audio = initAudio()
-      audio.pause()
-      isPlaying.value = false
-    })
+      navigator.mediaSession.setActionHandler('play', () => {
+        const audio = initAudio()
+        audio.play()
+        isPlaying.value = true
+        navigator.mediaSession.playbackState = 'playing'
+      })
 
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      prevSong()
-    })
+      navigator.mediaSession.setActionHandler('pause', () => {
+        const audio = initAudio()
+        audio.pause()
+        isPlaying.value = false
+        navigator.mediaSession.playbackState = 'paused'
+      })
 
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      nextSong()
-    })
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        prevSong()
+      })
 
-    navigator.mediaSession.setActionHandler('seekto', (details) => {
-      const audio = initAudio()
-      audio.currentTime = details.seekTime
-      currentTime.value = details.seekTime
-    })
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        nextSong()
+      })
+
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        const audio = initAudio()
+        const time = details.seekTime || 0
+        audio.currentTime = time
+        currentTime.value = time
+        if (details.fastSeek && 'fastSeek' in audio) {
+          audio.fastSeek(time)
+        }
+      })
+
+      // 初始状态
+      navigator.mediaSession.playbackState = 'playing'
+    } catch (e) {
+      console.log('Media Session 初始化失败:', e)
+    }
+  }
+
+  // 更新 Media Session 播放状态
+  const updateMediaSessionState = () => {
+    if (!('mediaSession' in navigator)) return
+    try {
+      navigator.mediaSession.playbackState = isPlaying.value ? 'playing' : 'paused'
+    } catch (e) {}
+  }
+
+  // 更新 Media Session 进度位置
+  const updateMediaSessionPosition = () => {
+    if (!('mediaSession' in navigator) || !navigator.mediaSession.setPositionState) return
+    try {
+      if (duration.value && isFinite(duration.value)) {
+        navigator.mediaSession.setPositionState({
+          duration: duration.value,
+          playbackRate: 1.0,
+          position: currentTime.value
+        })
+      }
+    } catch (e) {}
   }
   
   const playPlaylist = (playlist, startIndex = 0) => {
@@ -201,6 +243,7 @@ export const usePlayerStore = defineStore('player', () => {
         })
       }
     }
+    updateMediaSessionState()
   }
   
   const nextSong = () => {
