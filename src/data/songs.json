@@ -139,6 +139,56 @@
       "duration": 280,
       "cover": "/music-player/images/梦底.jpg",
       "audioUrl": "/music-player/audio/梦底.mp3"
+    },
+    {
+      "id": 15,
+      "title": "斩思",
+      "artist": "流浪的蛙蛙",
+      "album": "剑网三·同人",
+      "albumId": 14,
+      "duration": 240,
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "audioUrl": "/music-player/audio/[剑三] 斩思 - 流浪的蛙蛙.mp3"
+    },
+    {
+      "id": 16,
+      "title": "恨枉生",
+      "artist": "W.K.,老虎欧巴",
+      "album": "魔道祖师·同人",
+      "albumId": 14,
+      "duration": 240,
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "audioUrl": "/music-player/audio/《魔道祖师》恨枉生（剧情版）————薛洋金光瑶恶友向 - W.K.,老虎欧巴.mp3"
+    },
+    {
+      "id": 17,
+      "title": "说不得",
+      "artist": "橙翼",
+      "album": "剑网三·同人",
+      "albumId": 14,
+      "duration": 240,
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "audioUrl": "/music-player/audio/【佛秀】说不得 - 橙翼.mp3"
+    },
+    {
+      "id": 18,
+      "title": "三苦生",
+      "artist": "小小萱",
+      "album": "剑网三·同人",
+      "albumId": 14,
+      "duration": 240,
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "audioUrl": "/music-player/audio/【剑三】三苦生（剧情版）--小小萱 - 小小萱.mp3"
+    },
+    {
+      "id": 19,
+      "title": "安史·乱世浮殇",
+      "artist": "Walker,卡修Rui,奇然",
+      "album": "剑网三·同人",
+      "albumId": 14,
+      "duration": 240,
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "audioUrl": "/music-player/audio/【剑三】安史·乱世浮殇【剧情版】 - Walker,卡修Rui,奇然.mp3"
     }
   ],
   "albums": [
@@ -147,7 +197,9 @@
       "name": "十一月的萧邦",
       "artist": "周杰伦",
       "cover": "https://picsum.photos/seed/album1/300/300",
-      "songs": [1],
+      "songs": [
+        1
+      ],
       "releaseDate": "2005-11-01"
     },
     {
@@ -155,7 +207,9 @@
       "name": "叶惠美",
       "artist": "周杰伦",
       "cover": "https://picsum.photos/seed/album2/300/300",
-      "songs": [2],
+      "songs": [
+        2
+      ],
       "releaseDate": "2003-07-31"
     },
     {
@@ -163,7 +217,9 @@
       "name": "七里香",
       "artist": "周杰伦",
       "cover": "https://picsum.photos/seed/album3/300/300",
-      "songs": [3],
+      "songs": [
+        3
+      ],
       "releaseDate": "2004-08-03"
     },
     {
@@ -171,7 +227,9 @@
       "name": "魔杰座",
       "artist": "周杰伦",
       "cover": "https://picsum.photos/seed/album4/300/300",
-      "songs": [4],
+      "songs": [
+        4
+      ],
       "releaseDate": "2008-10-09"
     },
     {
@@ -179,7 +237,9 @@
       "name": "周杰伦的床边故事",
       "artist": "周杰伦",
       "cover": "https://picsum.photos/seed/album5/300/300",
-      "songs": [5],
+      "songs": [
+        5
+      ],
       "releaseDate": "2016-06-24"
     },
     {
@@ -187,7 +247,9 @@
       "name": "光年之外",
       "artist": "邓紫棋",
       "cover": "https://picsum.photos/seed/album6/300/300",
-      "songs": [6],
+      "songs": [
+        6
+      ],
       "releaseDate": "2016-12-05"
     },
     {
@@ -195,7 +257,9 @@
       "name": "Xposed",
       "artist": "邓紫棋",
       "cover": "https://picsum.photos/seed/album7/300/300",
-      "songs": [7],
+      "songs": [
+        7
+      ],
       "releaseDate": "2012-07-05"
     },
     {
@@ -203,7 +267,10 @@
       "name": "绅士",
       "artist": "薛之谦",
       "cover": "https://picsum.photos/seed/album8/300/300",
-      "songs": [8, 9],
+      "songs": [
+        8,
+        9
+      ],
       "releaseDate": "2015-06-05"
     },
     {
@@ -211,7 +278,9 @@
       "name": "起风了",
       "artist": "买辣椒也用券",
       "cover": "https://picsum.photos/seed/album9/300/300",
-      "songs": [10],
+      "songs": [
+        10
+      ],
       "releaseDate": "2019-01-15"
     },
     {
@@ -219,7 +288,9 @@
       "name": "猎户星座",
       "artist": "朴树",
       "cover": "https://picsum.photos/seed/album10/300/300",
-      "songs": [11],
+      "songs": [
+        11
+      ],
       "releaseDate": "2017-04-30"
     },
     {
@@ -227,7 +298,9 @@
       "name": "那些年",
       "artist": "胡夏",
       "cover": "https://picsum.photos/seed/album11/300/300",
-      "songs": [12],
+      "songs": [
+        12
+      ],
       "releaseDate": "2011-08-08"
     },
     {
@@ -235,7 +308,9 @@
       "name": "风来的方向",
       "artist": "晨晨",
       "cover": "https://picsum.photos/seed/album12/300/300",
-      "songs": [13],
+      "songs": [
+        13
+      ],
       "releaseDate": "2026-05-16"
     },
     {
@@ -243,9 +318,26 @@
       "name": "梦底",
       "artist": "海来阿木",
       "cover": "/music-player/images/梦底.jpg",
-      "songs": [14],
+      "songs": [
+        14
+      ],
       "description": "2026年央视春晚原创歌曲，海来阿木作词作曲。原名《来不及》，历经25版打磨，以极简歌词和沧桑烟嗓，唱尽成年人最深的思念与遗憾，从私人执念升华为全民共情的情感之作。",
       "releaseDate": "2026-02-17"
+    },
+    {
+      "id": 14,
+      "name": "国风精选",
+      "artist": "群星",
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "songs": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美",
+      "releaseDate": "2026-05-19"
     }
   ],
   "recommendPlaylists": [
@@ -254,7 +346,13 @@
       "name": "华语经典",
       "description": "精选华语经典歌曲，带你重温那些年的感动",
       "cover": "https://picsum.photos/seed/playlist1/300/300",
-      "songs": [1, 2, 3, 11, 12],
+      "songs": [
+        1,
+        2,
+        3,
+        11,
+        12
+      ],
       "playCount": 125680
     },
     {
@@ -262,7 +360,13 @@
       "name": "流行热歌",
       "description": "当下最火的流行歌曲，紧跟音乐潮流",
       "cover": "https://picsum.photos/seed/playlist2/300/300",
-      "songs": [5, 6, 8, 9, 10],
+      "songs": [
+        5,
+        6,
+        8,
+        9,
+        10
+      ],
       "playCount": 98750
     },
     {
@@ -270,7 +374,12 @@
       "name": "治愈系",
       "description": "温暖治愈的音乐，抚慰疲惫的心灵",
       "cover": "https://picsum.photos/seed/playlist3/300/300",
-      "songs": [4, 7, 10, 11],
+      "songs": [
+        4,
+        7,
+        10,
+        11
+      ],
       "playCount": 76320
     },
     {
@@ -278,8 +387,28 @@
       "name": "周杰伦精选",
       "description": "周杰伦经典歌曲合集",
       "cover": "https://picsum.photos/seed/playlist4/300/300",
-      "songs": [1, 2, 3, 4, 5],
+      "songs": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "playCount": 256890
+    },
+    {
+      "id": 5,
+      "name": "国风歌曲",
+      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "songs": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "playCount": 88888
     }
   ]
 }
