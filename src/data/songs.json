@@ -7,7 +7,7 @@
       "album": "你像风来了又走",
       "albumId": 12,
       "duration": 240,
-      "cover": "/music-player/images/covers/song13/300/300",
+      "cover": "/music-player/images/covers/song13.jpg",
       "audioUrl": "/music-player/audio/你像风来了又走.mp3"
     },
     {
@@ -826,7 +826,7 @@
       "id": 1,
       "name": "十一月的萧邦",
       "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album1/300/300",
+      "cover": "/music-player/images/covers/album1.jpg",
       "songs": [],
       "releaseDate": "2005-11-01"
     },
@@ -834,7 +834,7 @@
       "id": 2,
       "name": "叶惠美",
       "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album2/300/300",
+      "cover": "/music-player/images/covers/album2.jpg",
       "songs": [],
       "releaseDate": "2003-07-31"
     },
@@ -842,7 +842,7 @@
       "id": 3,
       "name": "七里香",
       "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album3/300/300",
+      "cover": "/music-player/images/covers/album3.jpg",
       "songs": [],
       "releaseDate": "2004-08-03"
     },
@@ -850,7 +850,7 @@
       "id": 4,
       "name": "魔杰座",
       "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album4/300/300",
+      "cover": "/music-player/images/covers/album4.jpg",
       "songs": [],
       "releaseDate": "2008-10-09"
     },
@@ -858,7 +858,7 @@
       "id": 5,
       "name": "周杰伦的床边故事",
       "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album5/300/300",
+      "cover": "/music-player/images/covers/album5.jpg",
       "songs": [],
       "releaseDate": "2016-06-24"
     },
@@ -866,7 +866,7 @@
       "id": 6,
       "name": "光年之外",
       "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album6/300/300",
+      "cover": "/music-player/images/covers/album6.jpg",
       "songs": [],
       "releaseDate": "2016-12-05"
     },
@@ -874,7 +874,7 @@
       "id": 7,
       "name": "Xposed",
       "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album7/300/300",
+      "cover": "/music-player/images/covers/album7.jpg",
       "songs": [],
       "releaseDate": "2012-07-05"
     },
@@ -882,7 +882,7 @@
       "id": 8,
       "name": "绅士",
       "artist": "薛之谦",
-      "cover": "/music-player/images/covers/album8/300/300",
+      "cover": "/music-player/images/covers/album8.jpg",
       "songs": [],
       "releaseDate": "2015-06-05"
     },
@@ -890,7 +890,7 @@
       "id": 9,
       "name": "起风了",
       "artist": "买辣椒也用券",
-      "cover": "/music-player/images/covers/album9/300/300",
+      "cover": "/music-player/images/covers/album9.jpg",
       "songs": [],
       "releaseDate": "2019-01-15"
     },
@@ -898,7 +898,7 @@
       "id": 10,
       "name": "猎户星座",
       "artist": "朴树",
-      "cover": "/music-player/images/covers/album10/300/300",
+      "cover": "/music-player/images/covers/album10.jpg",
       "songs": [],
       "releaseDate": "2017-04-30"
     },
@@ -906,7 +906,7 @@
       "id": 11,
       "name": "那些年",
       "artist": "胡夏",
-      "cover": "/music-player/images/covers/album11/300/300",
+      "cover": "/music-player/images/covers/album11.jpg",
       "songs": [],
       "releaseDate": "2011-08-08"
     },
@@ -914,7 +914,7 @@
       "id": 12,
       "name": "风来的方向",
       "artist": "晨晨",
-      "cover": "/music-player/images/covers/album12/300/300",
+      "cover": "/music-player/images/covers/album12.jpg",
       "songs": [
         13
       ],
@@ -1037,7 +1037,7 @@
       "id": 1,
       "name": "华语经典",
       "description": "精选华语经典歌曲，带你重温那些年的感动",
-      "cover": "/music-player/images/covers/playlist1/300/300",
+      "cover": "/music-player/images/covers/playlist1.jpg",
       "songs": [],
       "playCount": 125680
     },
@@ -1045,7 +1045,7 @@
       "id": 2,
       "name": "流行热歌",
       "description": "当下最火的流行歌曲，紧跟音乐潮流",
-      "cover": "/music-player/images/covers/playlist2/300/300",
+      "cover": "/music-player/images/covers/playlist2.jpg",
       "songs": [],
       "playCount": 98750
     },
@@ -1053,7 +1053,7 @@
       "id": 3,
       "name": "治愈系",
       "description": "温暖治愈的音乐，抚慰疲惫的心灵",
-      "cover": "/music-player/images/covers/playlist3/300/300",
+      "cover": "/music-player/images/covers/playlist3.jpg",
       "songs": [],
       "playCount": 76320
     },
@@ -1061,7 +1061,7 @@
       "id": 4,
       "name": "周杰伦精选",
       "description": "周杰伦经典歌曲合集",
-      "cover": "/music-player/images/covers/playlist4/300/300",
+      "cover": "/music-player/images/covers/playlist4.jpg",
       "songs": [],
       "playCount": 256890
     },
