@@ -90,14 +90,6 @@ export const usePlayerStore = defineStore('player', () => {
         console.error('音频加载失败:', currentSong.value?.audioUrl, e)
         isPlaying.value = false
       })
-      audioElement.addEventListener('canplay', () => {
-        if (isPlaying.value) {
-          audioElement.play().catch(err => {
-            console.error('播放失败:', err)
-            isPlaying.value = false
-          })
-        }
-      })
     }
     return audioElement
   }
@@ -111,7 +103,16 @@ export const usePlayerStore = defineStore('player', () => {
   })
   
   // 方法
+  let playRequestIndex = 0
+
   const playSong = (song) => {
+    // 参数校验
+    if (!song || !song.audioUrl) {
+      console.error('无效的歌曲对象:', song)
+      return
+    }
+
+    const requestId = ++playRequestIndex
     const audio = initAudio()
     currentSong.value = song
     audio.src = song.audioUrl
@@ -121,10 +122,15 @@ export const usePlayerStore = defineStore('player', () => {
     updateMediaSession(song) // 更新锁屏控制
     audio.load() // 先加载
     audio.play().then(() => {
-      isPlaying.value = true
+      // 只有最新的请求才更新状态，防止快速切换导致竞态
+      if (requestId === playRequestIndex) {
+        isPlaying.value = true
+      }
     }).catch(err => {
-      console.error('播放失败:', err)
-      isPlaying.value = false
+      if (requestId === playRequestIndex) {
+        console.error('播放失败:', err)
+        isPlaying.value = false
+      }
     })
   }
 
