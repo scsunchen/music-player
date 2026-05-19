@@ -1509,6 +1509,96 @@
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/3be21c750cab.mp3"
+    },
+    {
+      "id": 152,
+      "title": "蓝莲花",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/22b8989e42a5.mp3"
+    },
+    {
+      "id": 153,
+      "title": "故乡",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/fbc8a4cb3c22.mp3"
+    },
+    {
+      "id": 154,
+      "title": "曾经的你",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/deed6d493a39.mp3"
+    },
+    {
+      "id": 155,
+      "title": "像风一样自由",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/552fe25faac9.mp3"
+    },
+    {
+      "id": 156,
+      "title": "执着",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/ec181f738cd5.mp3"
+    },
+    {
+      "id": 157,
+      "title": "时光",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/52a1ef28d729.mp3"
+    },
+    {
+      "id": 158,
+      "title": "我的秋天",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/5cc55d824dcb.mp3"
+    },
+    {
+      "id": 159,
+      "title": "救赎之旅",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/bf8a3923db1c.mp3"
+    },
+    {
+      "id": 160,
+      "title": "生活不止眼前的苟且",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 240,
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "audioUrl": "/music-player/audio/53cc8297d764.mp3"
     }
   ],
   "albums": [
@@ -1789,6 +1879,25 @@
         151
       ],
       "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美",
+      "releaseDate": "2026-05-19"
+    },
+    {
+      "id": 16,
+      "name": "许巍",
+      "artist": "许巍",
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "songs": [
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "description": "许巍经典歌曲合集。每个人的心里，都有一首许巍的歌，唱着自由、远方和曾经的梦想。",
       "releaseDate": "2026-05-19"
     }
   ],
