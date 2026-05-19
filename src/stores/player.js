@@ -322,7 +322,7 @@ export const usePlayerStore = defineStore('player', () => {
       id: Date.now(),
       name,
       description: '',
-      cover: 'https://picsum.photos/seed/custom/300/300',
+      cover: '/music-player/images/covers/guofeng.jpg',
       songs: [],
       playCount: 0
     }

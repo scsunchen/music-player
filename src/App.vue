@@ -2,7 +2,7 @@
   <div class="app">
     <!-- 顶部导航 -->
     <header class="header">
-      <div class="logo">
+      <router-link to="/" class="logo">
         <svg viewBox="0 0 24 24" width="28" height="28">
           <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
@@ -10,7 +10,7 @@
           <span class="brand-name">一起听</span>
           <span class="brand-tagline">听见时光</span>
         </div>
-      </div>
+      </router-link>
       <nav class="nav">
         <router-link to="/" class="nav-link" active-class="active">
           <svg viewBox="0 0 24 24" width="20" height="20">
