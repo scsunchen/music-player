@@ -148,7 +148,7 @@
       "albumId": 14,
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/[剑三] 斩思 - 流浪的蛙蛙.mp3"
+      "audioUrl": "/music-player/audio/斩思-流浪的蛙蛙.mp3"
     },
     {
       "id": 16,
@@ -158,7 +158,7 @@
       "albumId": 14,
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/《魔道祖师》恨枉生（剧情版）————薛洋金光瑶恶友向 - W.K.,老虎欧巴.mp3"
+      "audioUrl": "/music-player/audio/恨枉生-W.K.老虎欧巴.mp3"
     },
     {
       "id": 17,
@@ -168,7 +168,7 @@
       "albumId": 14,
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/【佛秀】说不得 - 橙翼.mp3"
+      "audioUrl": "/music-player/audio/说不得-橙翼.mp3"
     },
     {
       "id": 18,
@@ -178,7 +178,7 @@
       "albumId": 14,
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/【剑三】三苦生（剧情版）--小小萱 - 小小萱.mp3"
+      "audioUrl": "/music-player/audio/三苦生-小小萱.mp3"
     },
     {
       "id": 19,
@@ -188,7 +188,7 @@
       "albumId": 14,
       "duration": 240,
       "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/【剑三】安史·乱世浮殇【剧情版】 - Walker,卡修Rui,奇然.mp3"
+      "audioUrl": "/music-player/audio/安史乱世浮殇-Walker卡修Rui奇然.mp3"
     }
   ],
   "albums": [
