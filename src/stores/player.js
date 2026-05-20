@@ -124,6 +124,7 @@ export const usePlayerStore = defineStore('player', () => {
     extractColorFromCover(song.cover)
     addToRecent(song.id) // 添加到最近播放
     updateMediaSession(song) // 更新锁屏控制
+    recordPlay(song) // 记录播放统计
     audio.load() // 先加载
     audio.play().then(() => {
       // 只有最新的请求才更新状态，防止快速切换导致竞态
@@ -482,6 +483,146 @@ export const usePlayerStore = defineStore('player', () => {
       .filter(Boolean)
   }
 
+  // ===== 播放统计 =====
+  const playStats = ref({
+    totalPlays: 0,         // 总播放次数
+    totalDuration: 0,      // 总播放时长（秒）
+    dailyPlays: {},        // 每日播放次数 { "2026-05-20": 5 }
+    songPlays: {},         // 每首歌播放次数 { "152": 10 }
+    artistPlays: {},       // 每个歌手播放次数
+    weekStart: '',         // 本周开始日期
+    weekPlays: 0,          // 本周播放次数
+    weekDuration: 0,       // 本周播放时长
+  })
+
+  const loadPlayStats = () => {
+    const saved = localStorage.getItem('playStats')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        playStats.value = { ...playStats.value, ...parsed }
+      } catch (e) {}
+    }
+    // 检查是否需要重置周统计
+    const today = new Date()
+    const weekStart = getWeekStart(today)
+    if (playStats.value.weekStart !== weekStart) {
+      playStats.value.weekStart = weekStart
+      playStats.value.weekPlays = 0
+      playStats.value.weekDuration = 0
+      savePlayStats()
+    }
+  }
+
+  const savePlayStats = () => {
+    localStorage.setItem('playStats', JSON.stringify(playStats.value))
+  }
+
+  const getWeekStart = (date) => {
+    const d = new Date(date)
+    const day = d.getDay()
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1) // 周一开始
+    const monday = new Date(d.setDate(diff))
+    return monday.toISOString().split('T')[0]
+  }
+
+  const getToday = () => {
+    return new Date().toISOString().split('T')[0]
+  }
+
+  // 记录一次播放
+  const recordPlay = (song) => {
+    const today = getToday()
+    const stats = playStats.value
+
+    stats.totalPlays++
+    stats.totalDuration += song.duration || 0
+
+    // 每日统计
+    stats.dailyPlays[today] = (stats.dailyPlays[today] || 0) + 1
+
+    // 歌曲统计
+    stats.songPlays[song.id] = (stats.songPlays[song.id] || 0) + 1
+
+    // 歌手统计
+    if (song.artist) {
+      stats.artistPlays[song.artist] = (stats.artistPlays[song.artist] || 0) + 1
+    }
+
+    // 本周统计
+    stats.weekPlays++
+    stats.weekDuration += song.duration || 0
+
+    // 只保留最近30天的每日数据
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    const cutoff = thirtyDaysAgo.toISOString().split('T')[0]
+    Object.keys(stats.dailyPlays).forEach(date => {
+      if (date < cutoff) delete stats.dailyPlays[date]
+    })
+
+    savePlayStats()
+  }
+
+  // 获取统计摘要
+  const getStatsSummary = () => {
+    const stats = playStats.value
+    const today = getToday()
+
+    // 今日播放
+    const todayPlays = stats.dailyPlays[today] || 0
+
+    // 最爱歌手（按播放次数排序）
+    const topArtists = Object.entries(stats.artistPlays || {})
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, count]) => ({ name, count }))
+
+    // 最爱歌曲（按播放次数排序）
+    const topSongs = Object.entries(stats.songPlays || {})
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([id, count]) => {
+        const song = songs.value.find(s => s.id === Number(id))
+        return song ? { ...song, playCount: count } : null
+      })
+      .filter(Boolean)
+
+    // 最近7天每日播放
+    const last7Days = []
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      const dateStr = d.toISOString().split('T')[0]
+      last7Days.push({
+        date: dateStr,
+        label: `${d.getMonth() + 1}/${d.getDate()}`,
+        count: stats.dailyPlays[dateStr] || 0
+      })
+    }
+
+    // 格式化时长
+    const formatSeconds = (secs) => {
+      if (secs < 60) return `${secs}秒`
+      if (secs < 3600) return `${Math.floor(secs / 60)}分钟`
+      const hours = Math.floor(secs / 3600)
+      const mins = Math.floor((secs % 3600) / 60)
+      return `${hours}小时${mins}分钟`
+    }
+
+    return {
+      totalPlays: stats.totalPlays,
+      totalDuration: formatSeconds(stats.totalDuration),
+      todayPlays,
+      weekPlays: stats.weekPlays,
+      weekDuration: formatSeconds(stats.weekDuration),
+      topArtists,
+      topSongs,
+      last7Days,
+      likedCount: likedSongs.value.length,
+    }
+  }
+
   // 歌曲标签分类
   const genres = computed(() => {
     const genreSet = new Set()
@@ -499,6 +640,7 @@ export const usePlayerStore = defineStore('player', () => {
   loadCustomPlaylists()
   loadLikedSongs()
   loadRecentSongs()
+  loadPlayStats()
 
   return {
     // 数据
@@ -551,6 +693,8 @@ export const usePlayerStore = defineStore('player', () => {
     getLikedSongsList,
     addToRecent,
     getRecentSongsList,
+    recordPlay,
+    getStatsSummary,
     getSongsByGenre
   }
 })
