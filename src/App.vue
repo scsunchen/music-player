@@ -47,6 +47,9 @@
 
     <!-- 全屏播放页 -->
     <FullscreenPlayer :visible="showFullscreen" @close="showFullscreen = false" />
+    
+    <!-- 播放队列面板 -->
+    <PlayQueue />
   </div>
 </template>
 
@@ -54,6 +57,7 @@
 import { ref } from 'vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import FullscreenPlayer from './components/FullscreenPlayer.vue'
+import PlayQueue from './components/PlayQueue.vue'
 
 const showFullscreen = ref(false)
 </script>

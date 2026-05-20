@@ -29,6 +29,11 @@
         <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
       </svg>
     </button>
+    <button class="btn-queue" @click.stop="addToQueue" title="添加到队列">
+      <svg viewBox="0 0 24 24" width="18" height="18">
+        <path fill="currentColor" d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+      </svg>
+    </button>
     <button class="btn-play" @click.stop="$emit('play')">
       <svg v-if="!isActive" viewBox="0 0 24 24" width="20" height="20">
         <path fill="currentColor" d="M8 5v14l11-7z"/>
@@ -87,6 +92,10 @@ const isLiked = computed(() => {
 
 const toggleLike = () => {
   playerStore.toggleLikeSong(props.song.id)
+}
+
+const addToQueue = () => {
+  playerStore.addToQueue(props.song)
 }
 
 const goToDetail = () => {
@@ -236,5 +245,29 @@ const formatDuration = (seconds) => {
 
 .btn-like.liked:hover {
   color: rgba(245, 87, 108, 0.7);
+}
+
+.btn-queue {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.song-item:hover .btn-queue {
+  opacity: 1;
+}
+
+.btn-queue:hover {
+  color: var(--theme-color, #667eea);
+  background: rgba(102, 126, 234, 0.2);
 }
 </style>

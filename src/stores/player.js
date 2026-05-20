@@ -23,6 +23,10 @@ export const usePlayerStore = defineStore('player', () => {
   
   // 主题色
   const themeColor = ref('#667eea')
+  
+  // 播放队列（独立的待播放列表）
+  const playQueue = ref([])
+  const showQueue = ref(false)
 
   const extractColorFromCover = (coverUrl) => {
     const img = new Image()
@@ -335,6 +339,38 @@ export const usePlayerStore = defineStore('player', () => {
     playMode.value = modes[(currentModeIndex + 1) % modes.length]
   }
   
+  // 播放队列管理
+  const addToQueue = (song) => {
+    if (!playQueue.value.find(s => s.id === song.id)) {
+      playQueue.value.push(song)
+    }
+  }
+  
+  const removeFromQueue = (index) => {
+    playQueue.value.splice(index, 1)
+  }
+  
+  const clearQueue = () => {
+    playQueue.value = []
+  }
+  
+  const playFromQueue = (index) => {
+    if (playQueue.value[index]) {
+      playSong(playQueue.value[index])
+      playQueue.value.splice(index, 1)
+    }
+  }
+  
+  const moveInQueue = (fromIndex, toIndex) => {
+    if (fromIndex === toIndex) return
+    const [item] = playQueue.value.splice(fromIndex, 1)
+    playQueue.value.splice(toIndex, 0, item)
+  }
+  
+  const toggleQueue = () => {
+    showQueue.value = !showQueue.value
+  }
+  
   // 自定义播放列表管理
   const createPlaylist = (name) => {
     const newPlaylist = {
@@ -481,6 +517,8 @@ export const usePlayerStore = defineStore('player', () => {
     volume,
     playMode,
     themeColor,
+    playQueue,
+    showQueue,
 
     // 计算属性
     currentSongInfo,
@@ -497,6 +535,13 @@ export const usePlayerStore = defineStore('player', () => {
     seekTo,
     setVolume,
     togglePlayMode,
+    // 播放队列
+    addToQueue,
+    removeFromQueue,
+    clearQueue,
+    playFromQueue,
+    moveInQueue,
+    toggleQueue,
     createPlaylist,
     addToPlaylist,
     removeFromPlaylist,

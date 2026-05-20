@@ -87,6 +87,14 @@
         @input="playerStore.setVolume($event.target.value)"
       />
     </div>
+    
+    <!-- 队列按钮 -->
+    <button class="btn-queue" @click="playerStore.toggleQueue()" :class="{ active: playerStore.playQueue.length > 0 }">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path fill="currentColor" d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+      </svg>
+      <span v-if="playerStore.playQueue.length > 0" class="queue-badge">{{ playerStore.playQueue.length }}</span>
+    </button>
   </div>
 </template>
 
@@ -497,5 +505,48 @@ const seek = (event) => {
   height: 12px;
   background: #fff;
   border-radius: 50%;
+}
+
+/* 队列按钮 */
+.btn-queue {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.btn-queue:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.btn-queue.active {
+  color: var(--theme-color);
+}
+
+.queue-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: #f5576c;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
