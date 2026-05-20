@@ -822,6 +822,105 @@
       "duration": 240,
       "cover": "/music-player/images/covers/53cc8297d764_cover.jpg",
       "audioUrl": "/music-player/audio/53cc8297d764.mp3"
+    },
+    {
+      "id": 161,
+      "title": "为什么你要伤害一个爱你的人",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/2a389c61057a_cover.png",
+      "audioUrl": "/music-player/audio/2a389c61057a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 162,
+      "title": "伤心的时候可以听情歌",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/d556e7694d1d_cover.png",
+      "audioUrl": "/music-player/audio/d556e7694d1d.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 163,
+      "title": "其实很寂寞",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/12f86bf94a40_cover.png",
+      "audioUrl": "/music-player/audio/12f86bf94a40.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 164,
+      "title": "原谅我一次",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/22a64a173800_cover.png",
+      "audioUrl": "/music-player/audio/22a64a173800.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 165,
+      "title": "只想做你的男人",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/f3f0bb8b22a7_cover.png",
+      "audioUrl": "/music-player/audio/f3f0bb8b22a7.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 166,
+      "title": "得到你的人却得不到你的心",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/adbb36ef488f_cover.png",
+      "audioUrl": "/music-player/audio/adbb36ef488f.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 167,
+      "title": "怀念过去",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/d3e0b64e0c6a_cover.png",
+      "audioUrl": "/music-player/audio/d3e0b64e0c6a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 168,
+      "title": "愚爱",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/ff74bedf17f4_cover.png",
+      "audioUrl": "/music-player/audio/ff74bedf17f4.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 169,
+      "title": "我该怎么做",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 240,
+      "cover": "/music-player/images/covers/071a72aa75ce_cover.png",
+      "audioUrl": "/music-player/audio/071a72aa75ce.mp3",
+      "genre": "pop"
     }
   ],
   "albums": [
@@ -1033,6 +1132,22 @@
       ],
       "description": "许巍经典歌曲合集。每个人的心里，都有一首许巍的歌，唱着自由、远方和曾经的梦想。",
       "releaseDate": "2026-05-19"
+    },
+    {
+      "id": 17,
+      "name": "欢子",
+      "cover": "/music-player/images/covers/huanzi.jpg",
+      "songs": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169
+      ]
     }
   ],
   "recommendPlaylists": [
@@ -1049,7 +1164,17 @@
       "name": "流行热歌",
       "description": "当下最火的流行歌曲，紧跟音乐潮流",
       "cover": "/music-player/images/covers/playlist2.jpg",
-      "songs": [],
+      "songs": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169
+      ],
       "playCount": 98750
     },
     {
