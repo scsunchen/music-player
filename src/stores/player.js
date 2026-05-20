@@ -440,7 +440,9 @@ export const usePlayerStore = defineStore('player', () => {
   
   // 队列持久化
   const savePlayQueue = () => {
-    localStorage.setItem('playQueue', JSON.stringify(playQueue.value))
+    // 只存ID数组，避免数据冗余和格式不一致
+    const ids = playQueue.value.map(s => s.id)
+    localStorage.setItem('playQueue', JSON.stringify(ids))
   }
   
   const loadPlayQueue = () => {
