@@ -6,7 +6,7 @@
       "artist": "晨晨",
       "album": "你像风来了又走",
       "albumId": 12,
-      "duration": 240,
+      "duration": 179,
       "cover": "/music-player/images/covers/song13.jpg",
       "audioUrl": "/music-player/audio/你像风来了又走.mp3"
     },
@@ -16,7 +16,7 @@
       "artist": "海来阿木",
       "album": "梦底",
       "albumId": 13,
-      "duration": 280,
+      "duration": 194,
       "cover": "/music-player/images/梦底.jpg",
       "audioUrl": "/music-player/audio/梦底.mp3",
       "mvUrl": "/music-player/video/mengdi_mv.mp4"
@@ -27,7 +27,7 @@
       "artist": "流浪的蛙蛙",
       "album": "剑网三·同人",
       "albumId": 14,
-      "duration": 240,
+      "duration": 426,
       "cover": "/music-player/images/covers/7b4d38bb9cf9_cover.jpg",
       "audioUrl": "/music-player/audio/7b4d38bb9cf9.mp3"
     },
@@ -37,7 +37,7 @@
       "artist": "W.K.,老虎欧巴",
       "album": "魔道祖师·同人",
       "albumId": 14,
-      "duration": 240,
+      "duration": 286,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/9f54a3a8f073.mp3"
     },
@@ -47,7 +47,7 @@
       "artist": "橙翼",
       "album": "剑网三·同人",
       "albumId": 14,
-      "duration": 240,
+      "duration": 298,
       "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "/music-player/audio/1685cff3aa4f.mp3"
     },
@@ -57,7 +57,7 @@
       "artist": "小小萱",
       "album": "剑网三·同人",
       "albumId": 14,
-      "duration": 240,
+      "duration": 459,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/ad5bb864f8c5.mp3"
     },
@@ -67,7 +67,7 @@
       "artist": "Walker,卡修Rui,奇然",
       "album": "剑网三·同人",
       "albumId": 14,
-      "duration": 240,
+      "duration": 420,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/86d94aa4ad8e.mp3"
     },
@@ -77,7 +77,7 @@
       "artist": "祝贺,枕星烛",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 275,
       "cover": "/music-player/images/covers/c6a7b2c28dde_cover.jpg",
       "audioUrl": "/music-player/audio/c6a7b2c28dde.mp3"
     },
@@ -87,7 +87,7 @@
       "artist": "人衣大人,吾恩",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 343,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/3e40255f3bf6.mp3"
     },
@@ -97,7 +97,7 @@
       "artist": "快递小能手",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 515,
       "cover": "/music-player/images/covers/8cf9db35a270_cover.jpg",
       "audioUrl": "/music-player/audio/8cf9db35a270.mp3"
     },
@@ -107,7 +107,7 @@
       "artist": "古来疯音乐工作室,苍冰",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 351,
       "cover": "/music-player/images/covers/318d048a5c01_cover.jpg",
       "audioUrl": "/music-player/audio/318d048a5c01.mp3"
     },
@@ -117,7 +117,7 @@
       "artist": "慕寒",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 498,
       "cover": "/music-player/images/covers/9da448573d47_cover.jpg",
       "audioUrl": "/music-player/audio/9da448573d47.mp3"
     },
@@ -127,7 +127,7 @@
       "artist": "小曲儿",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 420,
       "cover": "/music-player/images/covers/32bccc1057e7_cover.jpg",
       "audioUrl": "/music-player/audio/32bccc1057e7.mp3"
     },
@@ -137,7 +137,7 @@
       "artist": "Aki阿杰,小曲儿",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 290,
       "cover": "/music-player/images/covers/5b868e161787_cover.jpg",
       "audioUrl": "/music-player/audio/5b868e161787.mp3"
     },
@@ -147,7 +147,7 @@
       "artist": "HITA",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 302,
       "cover": "/music-player/images/covers/f448bb15f956_cover.jpg",
       "audioUrl": "/music-player/audio/f448bb15f956.mp3"
     },
@@ -157,7 +157,7 @@
       "artist": "佑可猫",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 300,
       "cover": "/music-player/images/covers/20092137d798_cover.jpg",
       "audioUrl": "/music-player/audio/20092137d798.mp3"
     },
@@ -167,7 +167,7 @@
       "artist": "忘月幽",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 400,
       "cover": "/music-player/images/covers/c3798e89c035_cover.jpg",
       "audioUrl": "/music-player/audio/c3798e89c035.mp3"
     },
@@ -177,7 +177,7 @@
       "artist": "菜小宝丶",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 282,
       "cover": "/music-player/images/covers/e13abfa87d10_cover.jpg",
       "audioUrl": "/music-player/audio/e13abfa87d10.mp3"
     },
@@ -187,7 +187,7 @@
       "artist": "蔡明希",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 361,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/b6187e1d0d11.mp3"
     },
@@ -197,7 +197,7 @@
       "artist": "蔡翊昇,许多葵",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 360,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/365fdb1ef4d2.mp3"
     },
@@ -207,7 +207,7 @@
       "artist": "那英,孙楠",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 253,
       "cover": "/music-player/images/covers/5b601a952dfd_cover.jpg",
       "audioUrl": "/music-player/audio/5b601a952dfd.mp3"
     },
@@ -217,7 +217,7 @@
       "artist": "灰白",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 445,
       "cover": "/music-player/images/covers/945040a103a3_cover.jpg",
       "audioUrl": "/music-player/audio/945040a103a3.mp3"
     },
@@ -227,7 +227,7 @@
       "artist": "南风ZJN",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 380,
       "cover": "/music-player/images/covers/8f94fc50694b_cover.jpg",
       "audioUrl": "/music-player/audio/8f94fc50694b.mp3"
     },
@@ -237,7 +237,7 @@
       "artist": "慕寒",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 525,
       "cover": "/music-player/images/covers/39636a93d09f_cover.jpg",
       "audioUrl": "/music-player/audio/39636a93d09f.mp3"
     },
@@ -247,7 +247,7 @@
       "artist": "妖痴",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 376,
       "cover": "/music-player/images/covers/aa1762513a33_cover.jpg",
       "audioUrl": "/music-player/audio/aa1762513a33.mp3"
     },
@@ -257,7 +257,7 @@
       "artist": "五色石南叶,慕寒",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 218,
       "cover": "/music-player/images/covers/f53ee9717fe6_cover.jpg",
       "audioUrl": "/music-player/audio/f53ee9717fe6.mp3"
     },
@@ -267,7 +267,7 @@
       "artist": "小曲儿",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 273,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/593a93992047.mp3"
     },
@@ -277,7 +277,7 @@
       "artist": "张承煜,枕星烛",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 580,
       "cover": "/music-player/images/covers/29c28f2557bf_cover.jpg",
       "audioUrl": "/music-player/audio/29c28f2557bf.mp3"
     },
@@ -287,7 +287,7 @@
       "artist": "蔡翊昇,许多葵,Vk",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 333,
       "cover": "/music-player/images/covers/034efe2fe8b1_cover.jpg",
       "audioUrl": "/music-player/audio/034efe2fe8b1.mp3"
     },
@@ -297,7 +297,7 @@
       "artist": "五色石南叶,Aki阿杰",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 420,
       "cover": "/music-player/images/covers/45cdb6fa05d2_cover.jpg",
       "audioUrl": "/music-player/audio/45cdb6fa05d2.mp3"
     },
@@ -307,7 +307,7 @@
       "artist": "CRITTY",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 250,
       "cover": "/music-player/images/covers/2d08f69865c0_cover.jpg",
       "audioUrl": "/music-player/audio/2d08f69865c0.mp3"
     },
@@ -317,7 +317,7 @@
       "artist": "忆语广播剧社",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 317,
       "cover": "/music-player/images/covers/0dbc877330c7_cover.jpg",
       "audioUrl": "/music-player/audio/0dbc877330c7.mp3"
     },
@@ -327,7 +327,7 @@
       "artist": "慕寒",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 386,
       "cover": "/music-player/images/covers/3ac2cb4af029_cover.jpg",
       "audioUrl": "/music-player/audio/3ac2cb4af029.mp3"
     },
@@ -347,7 +347,7 @@
       "artist": "Ryuuku綠空",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 491,
       "cover": "/music-player/images/covers/7e5580b246db_cover.jpg",
       "audioUrl": "/music-player/audio/7e5580b246db.mp3"
     },
@@ -357,7 +357,7 @@
       "artist": "蔡明希",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 484,
       "cover": "/music-player/images/covers/7be6fcc0704b_cover.jpg",
       "audioUrl": "/music-player/audio/7be6fcc0704b.mp3"
     },
@@ -367,7 +367,7 @@
       "artist": "宇桐非,胡雯",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 204,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/fcc6b4f4c094.mp3"
     },
@@ -377,7 +377,7 @@
       "artist": "宇文拂衣",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 394,
       "cover": "/music-player/images/covers/575c39ca06ba_cover.jpg",
       "audioUrl": "/music-player/audio/575c39ca06ba.mp3"
     },
@@ -387,7 +387,7 @@
       "artist": "NL不分",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 524,
       "cover": "/music-player/images/covers/e3e10fa7c198_cover.jpg",
       "audioUrl": "/music-player/audio/e3e10fa7c198.mp3"
     },
@@ -397,7 +397,7 @@
       "artist": "吾恩",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 308,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/e25d0e259734.mp3"
     },
@@ -407,7 +407,7 @@
       "artist": "3F团音乐社",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 204,
       "cover": "/music-player/images/covers/8c755b77d068_cover.jpg",
       "audioUrl": "/music-player/audio/8c755b77d068.mp3"
     },
@@ -417,7 +417,7 @@
       "artist": "NL不分",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 249,
       "cover": "/music-player/images/covers/8cb0bcbbbe86_cover.jpg",
       "audioUrl": "/music-player/audio/8cb0bcbbbe86.mp3"
     },
@@ -437,7 +437,7 @@
       "artist": "Smile_小千",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 241,
       "cover": "/music-player/images/covers/bd851074cac3_cover.jpg",
       "audioUrl": "/music-player/audio/bd851074cac3.mp3"
     },
@@ -447,7 +447,7 @@
       "artist": "CcccEs贰婶,HITA",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 407,
       "cover": "/music-player/images/covers/6a3c9e960ff6_cover.jpg",
       "audioUrl": "/music-player/audio/6a3c9e960ff6.mp3"
     },
@@ -457,7 +457,7 @@
       "artist": "玄觞,华月公子,Smile_小千",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 712,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/5b261e450252.mp3"
     },
@@ -467,7 +467,7 @@
       "artist": "诺晓诗",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 375,
       "cover": "/music-player/images/covers/4335ce0f34f7_cover.jpg",
       "audioUrl": "/music-player/audio/4335ce0f34f7.mp3"
     },
@@ -477,7 +477,7 @@
       "artist": "慕寒,Mario",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 475,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/e2d54a96973d.mp3"
     },
@@ -487,7 +487,7 @@
       "artist": "图特哈蒙,阿杰729,括号君",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 781,
       "cover": "/music-player/images/covers/d8be016fa1c5_cover.jpg",
       "audioUrl": "/music-player/audio/d8be016fa1c5.mp3"
     },
@@ -497,7 +497,7 @@
       "artist": "那英,王菲",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 308,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/837cf029c314.mp3"
     },
@@ -507,7 +507,7 @@
       "artist": "晴愔",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 288,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/c477c1127012.mp3"
     },
@@ -517,7 +517,7 @@
       "artist": "楚曌岚,阿册",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 267,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/3e07832a92c8.mp3"
     },
@@ -527,7 +527,7 @@
       "artist": "刘德华",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 230,
       "cover": "/music-player/images/covers/7a36407c88f2_cover.jpg",
       "audioUrl": "/music-player/audio/7a36407c88f2.mp3"
     },
@@ -537,7 +537,7 @@
       "artist": "小曲儿,小W",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 800,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/3f85953eb3f6.mp3"
     },
@@ -547,7 +547,7 @@
       "artist": "佑可猫",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 258,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/1df60c78fa3e.mp3"
     },
@@ -557,7 +557,7 @@
       "artist": "花世",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 97,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/8edb0d84807e.mp3"
     },
@@ -567,7 +567,7 @@
       "artist": "慕寒,彦Jans",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 964,
       "cover": "/music-player/images/covers/68687c9d92c3_cover.jpg",
       "audioUrl": "/music-player/audio/68687c9d92c3.mp3"
     },
@@ -577,7 +577,7 @@
       "artist": "祖娅纳惜",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 386,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/a2a29175d5bd.mp3"
     },
@@ -587,7 +587,7 @@
       "artist": "网易游戏",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 330,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/8316f0c2dd58.mp3"
     },
@@ -597,7 +597,7 @@
       "artist": "Smile_小千,Walker",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 334,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/4fc4dd360715.mp3"
     },
@@ -607,7 +607,7 @@
       "artist": "东篱,清漪",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 209,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/d8e7892ecb6c.mp3"
     },
@@ -617,7 +617,7 @@
       "artist": "馒头妞,小荣童鞋",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 308,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/2f2e32feb3a2.mp3"
     },
@@ -627,7 +627,7 @@
       "artist": "宁采臣,裂天,张承煜",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 413,
       "cover": "/music-player/images/covers/a1174b583250_cover.jpg",
       "audioUrl": "/music-player/audio/a1174b583250.mp3"
     },
@@ -637,7 +637,7 @@
       "artist": "樱九",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 420,
       "cover": "/music-player/images/covers/9133b87f182d_cover.jpg",
       "audioUrl": "/music-player/audio/9133b87f182d.mp3"
     },
@@ -647,7 +647,7 @@
       "artist": "安九,檀烧",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 216,
       "cover": "/music-player/images/covers/35e67671e1cd_cover.jpg",
       "audioUrl": "/music-player/audio/35e67671e1cd.mp3"
     },
@@ -657,7 +657,7 @@
       "artist": "九渊",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 255,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/c4cae995ee19.mp3"
     },
@@ -667,7 +667,7 @@
       "artist": "文子轩",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 354,
       "cover": "/music-player/images/covers/75db003efb33_cover.jpg",
       "audioUrl": "/music-player/audio/75db003efb33.mp3"
     },
@@ -677,7 +677,7 @@
       "artist": "音频怪物,晃儿",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 272,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/ec1d8c514cce.mp3"
     },
@@ -687,7 +687,7 @@
       "artist": "W.K.,NL不分",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 600,
       "cover": "/music-player/images/covers/6e0e7697afa3_cover.jpg",
       "audioUrl": "/music-player/audio/6e0e7697afa3.mp3"
     },
@@ -697,7 +697,7 @@
       "artist": "Momily",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 253,
       "cover": "/music-player/images/covers/f412a938ec24_cover.jpg",
       "audioUrl": "/music-player/audio/f412a938ec24.mp3"
     },
@@ -707,7 +707,7 @@
       "artist": "满汉全席",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 299,
       "cover": "/music-player/images/covers/0e78d1b3dc3b_cover.jpg",
       "audioUrl": "/music-player/audio/0e78d1b3dc3b.mp3"
     },
@@ -717,7 +717,7 @@
       "artist": "Smile_小千,卡修Rui",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 252,
       "cover": "/music-player/images/covers/guofeng.jpg",
       "audioUrl": "/music-player/audio/b43bc6d5bd61.mp3"
     },
@@ -727,7 +727,7 @@
       "artist": "一天世界JZ",
       "album": "国风精选",
       "albumId": 14,
-      "duration": 240,
+      "duration": 393,
       "cover": "/music-player/images/covers/3be21c750cab_cover.jpg",
       "audioUrl": "/music-player/audio/3be21c750cab.mp3"
     },
@@ -737,7 +737,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 271,
       "cover": "/music-player/images/covers/22b8989e42a5_cover.jpg",
       "audioUrl": "/music-player/audio/22b8989e42a5.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Gx411J7Gx&autoplay=0"
@@ -748,7 +748,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 314,
       "cover": "/music-player/images/covers/fbc8a4cb3c22_cover.jpg",
       "audioUrl": "/music-player/audio/fbc8a4cb3c22.mp3"
     },
@@ -758,7 +758,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 262,
       "cover": "/music-player/images/covers/deed6d493a39_cover.jpg",
       "audioUrl": "/music-player/audio/deed6d493a39.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1ms411Q7vR&autoplay=0"
@@ -769,7 +769,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 222,
       "cover": "/music-player/images/covers/552fe25faac9_cover.png",
       "audioUrl": "/music-player/audio/552fe25faac9.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Nx411n7eJ&autoplay=0"
@@ -780,7 +780,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 279,
       "cover": "/music-player/images/covers/ec181f738cd5_cover.png",
       "audioUrl": "/music-player/audio/ec181f738cd5.mp3"
     },
@@ -790,7 +790,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 305,
       "cover": "/music-player/images/covers/52a1ef28d729_cover.jpg",
       "audioUrl": "/music-player/audio/52a1ef28d729.mp3"
     },
@@ -800,7 +800,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 268,
       "cover": "/music-player/images/covers/5cc55d824dcb_cover.png",
       "audioUrl": "/music-player/audio/5cc55d824dcb.mp3"
     },
@@ -810,7 +810,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 332,
       "cover": "/music-player/images/covers/bf8a3923db1c_cover.jpg",
       "audioUrl": "/music-player/audio/bf8a3923db1c.mp3"
     },
@@ -820,7 +820,7 @@
       "artist": "许巍",
       "album": "许巍",
       "albumId": 16,
-      "duration": 240,
+      "duration": 309,
       "cover": "/music-player/images/covers/53cc8297d764_cover.jpg",
       "audioUrl": "/music-player/audio/53cc8297d764.mp3"
     },
@@ -830,7 +830,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 259,
       "cover": "/music-player/images/covers/2a389c61057a_cover.png",
       "audioUrl": "/music-player/audio/2a389c61057a.mp3",
       "genre": "pop"
@@ -841,7 +841,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 218,
       "cover": "/music-player/images/covers/d556e7694d1d_cover.png",
       "audioUrl": "/music-player/audio/d556e7694d1d.mp3",
       "genre": "pop"
@@ -852,7 +852,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 251,
       "cover": "/music-player/images/covers/12f86bf94a40_cover.png",
       "audioUrl": "/music-player/audio/12f86bf94a40.mp3",
       "genre": "pop"
@@ -863,7 +863,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 284,
       "cover": "/music-player/images/covers/22a64a173800_cover.png",
       "audioUrl": "/music-player/audio/22a64a173800.mp3",
       "genre": "pop"
@@ -874,7 +874,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 277,
       "cover": "/music-player/images/covers/f3f0bb8b22a7_cover.png",
       "audioUrl": "/music-player/audio/f3f0bb8b22a7.mp3",
       "genre": "pop"
@@ -885,7 +885,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 261,
       "cover": "/music-player/images/covers/adbb36ef488f_cover.png",
       "audioUrl": "/music-player/audio/adbb36ef488f.mp3",
       "genre": "pop"
@@ -896,7 +896,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 217,
       "cover": "/music-player/images/covers/d3e0b64e0c6a_cover.png",
       "audioUrl": "/music-player/audio/d3e0b64e0c6a.mp3",
       "genre": "pop"
@@ -907,7 +907,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 272,
       "cover": "/music-player/images/covers/ff74bedf17f4_cover.png",
       "audioUrl": "/music-player/audio/ff74bedf17f4.mp3",
       "genre": "pop"
@@ -918,7 +918,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 255,
       "cover": "/music-player/images/covers/071a72aa75ce_cover.png",
       "audioUrl": "/music-player/audio/071a72aa75ce.mp3",
       "genre": "pop"
@@ -929,7 +929,7 @@
       "artist": "欢子",
       "album": "欢子",
       "albumId": 17,
-      "duration": 240,
+      "duration": 266,
       "cover": "/music-player/images/covers/a1b2c3d4e5f6_cover.png",
       "audioUrl": "/music-player/audio/a1b2c3d4e5f6.mp3",
       "genre": "pop"
