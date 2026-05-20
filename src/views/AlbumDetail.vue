@@ -19,6 +19,12 @@
       </div>
     </div>
 
+    <!-- 专辑介绍 -->
+    <div class="album-desc" v-if="album.description">
+      <h3 class="desc-title">专辑介绍</h3>
+      <p class="desc-text">{{ album.description }}</p>
+    </div>
+
     <div class="song-list">
       <SongItem
         v-for="(song, index) in songs"
@@ -141,6 +147,28 @@ const playSongAt = (index) => {
 .play-all-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+/* 专辑介绍 */
+.album-desc {
+  margin: 0 20px 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.desc-title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.desc-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .song-list {
