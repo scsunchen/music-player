@@ -1,4 +1,4 @@
-const CACHE_NAME = 'music-player-v1'
+const CACHE_NAME = 'music-player-v2'
 
 // 需要缓存的静态资源
 const STATIC_ASSETS = [
@@ -32,6 +32,10 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   // 跳过音频文件（太大，不缓存）
   if (event.request.url.includes('/audio/')) return
+
+  // 跳过非 http(s) 协议请求（chrome-extension、blob、data 等）
+  const url = new URL(event.request.url)
+  if (!['http:', 'https:'].includes(url.protocol)) return
 
   // 跳过 POST 请求
   if (event.request.method !== 'GET') return
