@@ -125,6 +125,8 @@ export const usePlayerStore = defineStore('player', () => {
       // 只有最新的请求才更新状态，防止快速切换导致竞态
       if (requestId === playRequestIndex) {
         isPlaying.value = true
+        // 预加载下一首
+        preloadNextSong()
       }
     }).catch(err => {
       if (requestId === playRequestIndex) {
@@ -132,6 +134,23 @@ export const usePlayerStore = defineStore('player', () => {
         isPlaying.value = false
       }
     })
+  }
+
+  // 预加载下一首歌曲
+  const preloadNextSong = () => {
+    if (currentPlaylist.value.length === 0) return
+    
+    const nextIndex = (currentIndex.value + 1) % currentPlaylist.value.length
+    const nextSong = currentPlaylist.value[nextIndex]
+    
+    if (nextSong && nextSong.audioUrl) {
+      // 创建隐藏的 audio 元素预加载
+      const preloadAudio = new Audio()
+      preloadAudio.preload = 'metadata'
+      preloadAudio.src = nextSong.audioUrl
+      preloadAudio.load()
+      console.log('预加载下一首:', nextSong.title)
+    }
   }
 
   // Media Session API - 锁屏控制

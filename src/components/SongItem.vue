@@ -10,7 +10,7 @@
         <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
       </svg>
     </div>
-    <img :src="song.cover" :alt="song.title" class="cover" v-if="showCover" />
+    <img v-if="showCover" :src="song.cover" :alt="song.title" class="cover" loading="lazy" />
     <div class="info" @click.stop="goToDetail">
       <h4 class="title">{{ song.title }}</h4>
       <p class="artist-album">
