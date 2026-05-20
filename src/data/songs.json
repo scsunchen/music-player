@@ -18,7 +18,8 @@
       "albumId": 13,
       "duration": 280,
       "cover": "/music-player/images/梦底.jpg",
-      "audioUrl": "/music-player/audio/梦底.mp3"
+      "audioUrl": "/music-player/audio/梦底.mp3",
+      "mvUrl": "/music-player/video/mengdi_mv.mp4"
     },
     {
       "id": 15,
