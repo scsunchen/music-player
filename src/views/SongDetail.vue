@@ -41,6 +41,16 @@
         </svg>
         <span>{{ isCurrentPlaying ? '暂停' : '播放' }}</span>
       </button>
+      <button 
+        v-if="song.mvUrl" 
+        class="btn-mv" 
+        @click="showMV = true"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22">
+          <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zM10 8v6l5-3z"/>
+        </svg>
+        <span>MV</span>
+      </button>
       <button class="btn-action" @click="showAddToPlaylist = true">
         <svg viewBox="0 0 24 24" width="22" height="22">
           <path fill="currentColor" d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
@@ -118,12 +128,16 @@
     <p>歌曲不存在</p>
     <button @click="$router.push('/')">返回首页</button>
   </div>
+
+  <!-- MV播放器 -->
+  <MVPlayer :visible="showMV" :song="song" @close="showMV = false" />
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import MVPlayer from '../components/MVPlayer.vue'
 import SongItem from '../components/SongItem.vue'
 import lyricsData from '../data/lyrics.json'
 
@@ -135,6 +149,7 @@ const song = ref(null)
 const lyricsRef = ref(null)
 const activeLyricEl = ref(null)
 const showAddToPlaylist = ref(false)
+const showMV = ref(false)
 
 // 解析歌词
 const lyricsLines = computed(() => {
@@ -446,6 +461,27 @@ watch(() => route.params.id, () => {
 .btn-action:hover {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
+}
+
+.btn-mv {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px;
+  height: 48px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-mv:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 /* 歌曲描述 */

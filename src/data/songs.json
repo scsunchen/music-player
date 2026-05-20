@@ -738,7 +738,8 @@
       "albumId": 16,
       "duration": 240,
       "cover": "/music-player/images/covers/22b8989e42a5_cover.jpg",
-      "audioUrl": "/music-player/audio/22b8989e42a5.mp3"
+      "audioUrl": "/music-player/audio/22b8989e42a5.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Gx411J7Gx&autoplay=0"
     },
     {
       "id": 153,
@@ -758,7 +759,8 @@
       "albumId": 16,
       "duration": 240,
       "cover": "/music-player/images/covers/deed6d493a39_cover.jpg",
-      "audioUrl": "/music-player/audio/deed6d493a39.mp3"
+      "audioUrl": "/music-player/audio/deed6d493a39.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1ms411Q7vR&autoplay=0"
     },
     {
       "id": 155,
@@ -768,7 +770,8 @@
       "albumId": 16,
       "duration": 240,
       "cover": "/music-player/images/covers/552fe25faac9_cover.png",
-      "audioUrl": "/music-player/audio/552fe25faac9.mp3"
+      "audioUrl": "/music-player/audio/552fe25faac9.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Nx411n7eJ&autoplay=0"
     },
     {
       "id": 156,
