@@ -937,9 +937,8 @@
     {
       "id": 171,
       "title": "写不完的温柔",
-      "artist": "欢子",
-      "album": "欢子",
-      "albumId": 17,
+      "artist": "大哥不洗头",
+      "album": "写不完的温柔",
       "duration": 174,
       "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "/music-player/audio/8216a1f3e8f9.mp3",
@@ -1182,8 +1181,7 @@
         167,
         168,
         169,
-        170,
-        171
+        170
       ],
       "description": "欢子经典情歌合集。以独特的嗓音和深情的演绎，唱出爱情中的甜蜜与心酸。《得到你的人却得不到你的心》《原谅我一次》等经典曲目，承载了一代人的情感记忆。"
     }
