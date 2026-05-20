@@ -97,6 +97,11 @@
           <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
         <span>歌词</span>
+        <button class="btn-edit-lyrics" @click="showLyricsEditor = true" title="编辑歌词">
+          <svg viewBox="0 0 24 24" width="14" height="14">
+            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+        </button>
       </div>
       <div class="lyrics-content" ref="lyricsRef">
         <p 
@@ -131,6 +136,13 @@
 
   <!-- MV播放器 -->
   <MVPlayer :visible="showMV" :song="song" @close="showMV = false" />
+
+  <!-- 歌词编辑器 -->
+  <Teleport to="body">
+    <div v-if="showLyricsEditor" class="editor-overlay" @click="showLyricsEditor = false">
+      <LyricsEditor :songId="song.id" @close="showLyricsEditor = false" @save="onLyricsSave" @click.stop />
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
@@ -138,6 +150,7 @@ import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MVPlayer from '../components/MVPlayer.vue'
+import LyricsEditor from '../components/LyricsEditor.vue'
 import SongItem from '../components/SongItem.vue'
 import lyricsData from '../data/lyrics.json'
 
@@ -150,6 +163,7 @@ const lyricsRef = ref(null)
 const activeLyricEl = ref(null)
 const showAddToPlaylist = ref(false)
 const showMV = ref(false)
+const showLyricsEditor = ref(false)
 
 // 解析歌词
 const lyricsLines = computed(() => {
@@ -235,6 +249,13 @@ const addToPlaylist = (playlistId) => {
     playerStore.addToPlaylist(playlistId, song.value.id)
     showAddToPlaylist.value = false
   }
+}
+
+// 歌词保存回调
+const onLyricsSave = (lrcContent) => {
+  // 重新解析歌词
+  lyricsLines.value = parseLyrics(lrcContent)
+  showLyricsEditor.value = false
 }
 
 // 歌词自动滚动
@@ -529,6 +550,26 @@ watch(() => route.params.id, () => {
   font-weight: 600;
 }
 
+.btn-edit-lyrics {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-edit-lyrics:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #667eea;
+}
+
 .lyrics-content {
   max-height: 400px;
   overflow-y: auto;
@@ -677,5 +718,18 @@ watch(() => route.params.id, () => {
 
 .modal-close:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+
+.editor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

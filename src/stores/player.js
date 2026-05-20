@@ -276,6 +276,50 @@ export const usePlayerStore = defineStore('player', () => {
     updateMediaSessionState()
   }
   
+  // ===== 淡入淡出效果 =====
+  const crossfadeDuration = 800 // 淡入淡出时长（毫秒）
+  
+  const fadeOut = (audio) => {
+    return new Promise((resolve) => {
+      const startVolume = audio.volume
+      const startTime = Date.now()
+      
+      const fade = () => {
+        const elapsed = Date.now() - startTime
+        const progress = Math.min(elapsed / crossfadeDuration, 1)
+        audio.volume = startVolume * (1 - progress)
+        
+        if (progress < 1) {
+          requestAnimationFrame(fade)
+        } else {
+          audio.pause()
+          audio.volume = startVolume // 恢复音量
+          resolve()
+        }
+      }
+      
+      requestAnimationFrame(fade)
+    })
+  }
+  
+  const fadeIn = (audio, targetVolume) => {
+    const startTime = Date.now()
+    audio.volume = 0
+    audio.play().catch(() => {})
+    
+    const fade = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / crossfadeDuration, 1)
+      audio.volume = targetVolume * progress
+      
+      if (progress < 1) {
+        requestAnimationFrame(fade)
+      }
+    }
+    
+    requestAnimationFrame(fade)
+  }
+  
   const nextSong = () => {
     if (playMode.value === 'repeat') {
       // 单曲循环：重新播放当前歌曲
@@ -296,15 +340,32 @@ export const usePlayerStore = defineStore('player', () => {
       return
     }
 
-    if (playMode.value === 'shuffle') {
-      const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
-      currentIndex.value = randomIndex
-      playSong(currentPlaylist.value[randomIndex])
-    } else {
-      // 列表循环：播放下一首
-      currentIndex.value = (currentIndex.value + 1) % currentPlaylist.value.length
-      playSong(currentPlaylist.value[currentIndex.value])
-    }
+    // 淡出当前歌曲
+    const currentAudio = initAudio()
+    fadeOut(currentAudio).then(() => {
+      // 播放下一首
+      if (playMode.value === 'shuffle') {
+        const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
+        currentIndex.value = randomIndex
+      } else {
+        currentIndex.value = (currentIndex.value + 1) % currentPlaylist.value.length
+      }
+      
+      const nextSongData = currentPlaylist.value[currentIndex.value]
+      if (nextSongData) {
+        currentSong.value = nextSongData
+        const newAudio = initAudio()
+        newAudio.src = nextSongData.audioUrl
+        extractColorFromCover(nextSongData.cover)
+        addToRecent(nextSongData.id)
+        updateMediaSession(nextSongData)
+        recordPlay(nextSongData)
+        newAudio.load()
+        fadeIn(newAudio, volume.value)
+        isPlaying.value = true
+        preloadNextSong()
+      }
+    })
   }
   
   const prevSong = () => {
@@ -636,11 +697,90 @@ export const usePlayerStore = defineStore('player', () => {
     return songs.value.filter(s => s.genre === genre)
   }
 
+  // ===== 会话恢复 =====
+  const sessionData = ref({
+    songId: null,
+    currentTime: 0,
+    volume: 0.8,
+    playMode: 'list',
+  })
+
+  const saveSession = () => {
+    const data = {
+      songId: currentSong.value?.id || null,
+      currentTime: currentTime.value,
+      volume: volume.value,
+      playMode: playMode.value,
+      savedAt: Date.now()
+    }
+    localStorage.setItem('playerSession', JSON.stringify(data))
+  }
+
+  const loadSession = () => {
+    const saved = localStorage.getItem('playerSession')
+    if (saved) {
+      try {
+        const data = JSON.parse(saved)
+        sessionData.value = data
+        
+        // 恢复音量和播放模式
+        if (data.volume !== undefined) {
+          volume.value = data.volume
+        }
+        if (data.playMode) {
+          playMode.value = data.playMode
+        }
+        
+        // 恢复歌曲（但不自动播放）
+        if (data.songId) {
+          const song = songs.value.find(s => s.id === data.songId)
+          if (song) {
+            currentSong.value = song
+            // 延迟恢复进度（等待 audio 元素初始化）
+            setTimeout(() => {
+              if (data.currentTime > 0) {
+                const audio = initAudio()
+                audio.src = song.audioUrl
+                audio.load()
+                audio.currentTime = data.currentTime
+                currentTime.value = data.currentTime
+              }
+            }, 100)
+          }
+        }
+      } catch (e) {
+        console.error('恢复会话失败:', e)
+      }
+    }
+  }
+
+  // 定期保存会话
+  let saveSessionTimer = null
+  const startSessionSave = () => {
+    if (saveSessionTimer) clearInterval(saveSessionTimer)
+    saveSessionTimer = setInterval(() => {
+      if (currentSong.value) {
+        saveSession()
+      }
+    }, 5000) // 每5秒保存一次
+  }
+
+  // 页面关闭前保存
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeunload', () => {
+      if (currentSong.value) {
+        saveSession()
+      }
+    })
+  }
+
   // 初始化加载
   loadCustomPlaylists()
   loadLikedSongs()
   loadRecentSongs()
   loadPlayStats()
+  loadSession()
+  startSessionSave()
 
   return {
     // 数据

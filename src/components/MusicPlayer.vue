@@ -17,19 +17,26 @@
         <div class="vinyl-disc">
           <!-- 唱片纹路 -->
           <div class="vinyl-grooves"></div>
-          <!-- 封面图 -->
-          <img
-            :src="playerStore.currentSong.cover"
-            :alt="playerStore.currentSong.title"
-            class="cover"
-          />
+          <!-- 封面图（带过渡动画） -->
+          <Transition name="cover-fade" mode="out-in">
+            <img
+              :key="playerStore.currentSong.id"
+              :src="playerStore.currentSong.cover"
+              :alt="playerStore.currentSong.title"
+              class="cover"
+            />
+          </Transition>
           <!-- 中心孔 -->
           <div class="vinyl-center"></div>
         </div>
       </div>
       <div class="info">
-        <h4 class="title">{{ playerStore.currentSong.title }}</h4>
-        <p class="artist">{{ playerStore.currentSong.artist }}</p>
+        <Transition name="text-slide" mode="out-in">
+          <h4 :key="playerStore.currentSong.id" class="title">{{ playerStore.currentSong.title }}</h4>
+        </Transition>
+        <Transition name="text-slide" mode="out-in">
+          <p :key="playerStore.currentSong.id" class="artist">{{ playerStore.currentSong.artist }}</p>
+        </Transition>
       </div>
     </div>
     
@@ -548,5 +555,37 @@ const seek = (event) => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* 封面渐变过渡 */
+.cover-fade-enter-active,
+.cover-fade-leave-active {
+  transition: all 0.4s ease;
+}
+
+.cover-fade-enter-from {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.cover-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* 文字滑动过渡 */
+.text-slide-enter-active,
+.text-slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.text-slide-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.text-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 </style>
