@@ -405,21 +405,25 @@ export const usePlayerStore = defineStore('player', () => {
   const addToQueue = (song) => {
     if (!playQueue.value.find(s => s.id === song.id)) {
       playQueue.value.push(song)
+      savePlayQueue()
     }
   }
   
   const removeFromQueue = (index) => {
     playQueue.value.splice(index, 1)
+    savePlayQueue()
   }
   
   const clearQueue = () => {
     playQueue.value = []
+    savePlayQueue()
   }
   
   const playFromQueue = (index) => {
     if (playQueue.value[index]) {
       playSong(playQueue.value[index])
       playQueue.value.splice(index, 1)
+      savePlayQueue()
     }
   }
   
@@ -427,10 +431,26 @@ export const usePlayerStore = defineStore('player', () => {
     if (fromIndex === toIndex) return
     const [item] = playQueue.value.splice(fromIndex, 1)
     playQueue.value.splice(toIndex, 0, item)
+    savePlayQueue()
   }
   
   const toggleQueue = () => {
     showQueue.value = !showQueue.value
+  }
+  
+  // 队列持久化
+  const savePlayQueue = () => {
+    localStorage.setItem('playQueue', JSON.stringify(playQueue.value))
+  }
+  
+  const loadPlayQueue = () => {
+    const saved = localStorage.getItem('playQueue')
+    if (saved) {
+      try {
+        const ids = JSON.parse(saved)
+        playQueue.value = ids.map(id => songs.value.find(s => s.id === id)).filter(Boolean)
+      } catch (e) {}
+    }
   }
   
   // 自定义播放列表管理
@@ -780,6 +800,7 @@ export const usePlayerStore = defineStore('player', () => {
   loadRecentSongs()
   loadPlayStats()
   loadSession()
+  loadPlayQueue()
   startSessionSave()
 
   return {
