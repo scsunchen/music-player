@@ -143,19 +143,33 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   // 预加载下一首歌曲
+  let preloadAudio = null
+
   const preloadNextSong = () => {
     if (currentPlaylist.value.length === 0) return
     
-    const nextIndex = (currentIndex.value + 1) % currentPlaylist.value.length
-    const nextSong = currentPlaylist.value[nextIndex]
-    
-    if (nextSong && nextSong.audioUrl) {
-      // 创建隐藏的 audio 元素预加载
-      const preloadAudio = new Audio()
-      preloadAudio.preload = 'metadata'
-      preloadAudio.src = nextSong.audioUrl
+    // 销毁旧的预加载元素
+    if (preloadAudio) {
+      preloadAudio.src = ''
       preloadAudio.load()
-      console.log('预加载下一首:', nextSong.title)
+      preloadAudio = null
+    }
+    
+    // 优先预加载队列中的歌曲
+    let targetSong = null
+    if (playQueue.value.length > 0) {
+      targetSong = playQueue.value[0]
+    } else {
+      const nextIndex = (currentIndex.value + 1) % currentPlaylist.value.length
+      targetSong = currentPlaylist.value[nextIndex]
+    }
+    
+    if (targetSong && targetSong.audioUrl) {
+      preloadAudio = new Audio()
+      preloadAudio.preload = 'metadata'
+      preloadAudio.src = targetSong.audioUrl
+      // 只加载元数据（时长等），不下载全部音频数据
+      console.log('预加载:', targetSong.title)
     }
   }
 
