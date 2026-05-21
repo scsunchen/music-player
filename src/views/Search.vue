@@ -11,7 +11,26 @@
           placeholder="搜索歌曲、歌手、专辑"
           class="search-input"
           @input="handleSearch"
+          @keyup.enter="saveSearchHistory"
         />
+      </div>
+    </div>
+
+    <!-- 搜索历史 -->
+    <div class="search-history" v-if="!searchQuery && searchHistory.length > 0">
+      <div class="history-header">
+        <h3 class="history-title">搜索历史</h3>
+        <button class="clear-btn" @click="clearHistory">清空</button>
+      </div>
+      <div class="history-list">
+        <span 
+          v-for="(item, index) in searchHistory" 
+          :key="index"
+          class="history-item"
+          @click="searchQuery = item"
+        >
+          {{ item }}
+        </span>
       </div>
     </div>
 
@@ -87,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SongItem from '../components/SongItem.vue'
@@ -97,10 +116,52 @@ const router = useRouter()
 const playerStore = usePlayerStore()
 
 const searchQuery = ref('')
+const debouncedQuery = ref('')
+let debounceTimer = null
+
+// 搜索历史
+const searchHistory = ref([])
+const MAX_HISTORY = 10
+
+// 加载搜索历史
+const loadSearchHistory = () => {
+  const saved = localStorage.getItem('searchHistory')
+  if (saved) {
+    try {
+      searchHistory.value = JSON.parse(saved)
+    } catch (e) {}
+  }
+}
+
+// 保存搜索历史
+const saveSearchHistory = () => {
+  if (!searchQuery.value.trim()) return
+  const query = searchQuery.value.trim()
+  // 去重并移到最前
+  searchHistory.value = [query, ...searchHistory.value.filter(h => h !== query)].slice(0, MAX_HISTORY)
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory.value))
+}
+
+// 清空搜索历史
+const clearHistory = () => {
+  searchHistory.value = []
+  localStorage.removeItem('searchHistory')
+}
+
+// 初始化加载
+loadSearchHistory()
+
+// 防抖处理搜索输入
+watch(searchQuery, (val) => {
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    debouncedQuery.value = val
+  }, 300)
+})
 
 const filteredSongs = computed(() => {
-  if (!searchQuery.value) return []
-  const query = searchQuery.value.toLowerCase()
+  if (!debouncedQuery.value) return []
+  const query = debouncedQuery.value.toLowerCase()
   return playerStore.songs.filter(song => {
     const title = song.title?.toLowerCase() || ''
     const artist = song.artist?.toLowerCase() || ''
@@ -110,8 +171,8 @@ const filteredSongs = computed(() => {
 })
 
 const filteredAlbums = computed(() => {
-  if (!searchQuery.value) return []
-  const query = searchQuery.value.toLowerCase()
+  if (!debouncedQuery.value) return []
+  const query = debouncedQuery.value.toLowerCase()
   return playerStore.albums.filter(album => {
     const name = album.name?.toLowerCase() || ''
     return name.includes(query)
@@ -195,6 +256,59 @@ const playAlbum = (album) => {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* 搜索历史 */
+.search-history {
+  margin-bottom: 24px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.history-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.clear-btn {
+  padding: 4px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  color: #f5576c;
+}
+
+.history-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-item {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: rgba(102, 126, 234, 0.3);
+  color: #fff;
 }
 
 .no-results {
