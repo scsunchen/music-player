@@ -71,6 +71,7 @@ export const usePlayerStore = defineStore('player', () => {
   const initAudio = () => {
     if (!audioElement) {
       audioElement = new Audio()
+      audioElement.volume = volume.value
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
         updateMediaSessionPosition()
@@ -321,6 +322,14 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const nextSong = () => {
+    // 优先播放队列中的歌曲
+    if (playQueue.value.length > 0) {
+      const queueSong = playQueue.value.shift()
+      savePlayQueue()
+      playSong(queueSong)
+      return
+    }
+
     if (playMode.value === 'repeat') {
       // 单曲循环：重新播放当前歌曲
       const audio = initAudio()
