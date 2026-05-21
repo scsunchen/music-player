@@ -42,7 +42,7 @@
     <!-- 主内容区 -->
     <main class="main">
       <router-view v-slot="{ Component }">
-        <transition name="fade-slide" mode="out-in">
+        <transition name="fade-slide">
           <component :is="Component" />
         </transition>
       </router-view>
