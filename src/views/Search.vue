@@ -101,20 +101,21 @@ const searchQuery = ref('')
 const filteredSongs = computed(() => {
   if (!searchQuery.value) return []
   const query = searchQuery.value.toLowerCase()
-  return playerStore.songs.filter(song => 
-    song.title.toLowerCase().includes(query) ||
-    song.artist.toLowerCase().includes(query) ||
-    song.album.toLowerCase().includes(query)
-  )
+  return playerStore.songs.filter(song => {
+    const title = song.title?.toLowerCase() || ''
+    const artist = song.artist?.toLowerCase() || ''
+    const album = song.album?.toLowerCase() || ''
+    return title.includes(query) || artist.includes(query) || album.includes(query)
+  })
 })
 
 const filteredAlbums = computed(() => {
   if (!searchQuery.value) return []
   const query = searchQuery.value.toLowerCase()
-  return playerStore.albums.filter(album =>
-    album.name.toLowerCase().includes(query) ||
-    album.artist.toLowerCase().includes(query)
-  )
+  return playerStore.albums.filter(album => {
+    const name = album.name?.toLowerCase() || ''
+    return name.includes(query)
+  })
 })
 
 const handleSearch = () => {
