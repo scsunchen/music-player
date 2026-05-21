@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import { usePlayerStore } from '../stores/player'
 
 const props = defineProps({
@@ -139,6 +139,12 @@ watch(() => props.visible, (val) => {
     document.removeEventListener('keydown', handleKeydown)
     document.body.style.overflow = ''
   }
+}, { immediate: true })
+
+// 组件卸载时清理
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+  document.body.style.overflow = ''
 })
 </script>
 
