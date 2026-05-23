@@ -112,7 +112,7 @@ export const usePlayerStore = defineStore('player', () => {
   const initAudio = () => {
     if (!audioElement) {
       audioElement = new Audio()
-      audioElement.preload = 'metadata' // 流式加载：只预加载元数据
+      audioElement.preload = 'auto' // 自动预加载，有助于后台播放
       audioElement.volume = volume.value
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
@@ -988,7 +988,25 @@ export const usePlayerStore = defineStore('player', () => {
   if (typeof document !== 'undefined') {
     document.addEventListener('visibilitychange', handleVisibilityChange)
   }
-  
+
+  // 音频焦点变化处理（安卓后台播放恢复）
+  const handleAudioFocus = () => {
+    const audio = initAudio()
+    // 当音频被其他应用暂停后，尝试恢复播放
+    audio.addEventListener('pause', () => {
+      // 如果 isPlaying 为 true 但音频被暂停，可能是被其他应用抢占
+      if (isPlaying.value && audio.paused && audio.src) {
+        // 延迟尝试恢复，避免频繁请求
+        setTimeout(() => {
+          if (isPlaying.value && audio.paused && audio.src) {
+            audio.play().catch(() => {})
+          }
+        }, 500)
+      }
+    })
+  }
+  handleAudioFocus()
+
   // 初始化加载
   loadCustomPlaylists()
   loadLikedSongs()
