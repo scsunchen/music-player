@@ -28,7 +28,16 @@ export const usePlayerStore = defineStore('player', () => {
   const playQueue = ref([])
   const showQueue = ref(false)
 
+  // 封面颜色缓存
+  const coverColorCache = new Map()
+
   const extractColorFromCover = (coverUrl) => {
+    // 检查缓存
+    if (coverColorCache.has(coverUrl)) {
+      themeColor.value = coverColorCache.get(coverUrl)
+      return
+    }
+
     const img = new Image()
     img.crossOrigin = 'anonymous'
     img.onload = () => {
@@ -56,7 +65,10 @@ export const usePlayerStore = defineStore('player', () => {
         g = Math.min(255, Math.round((g / max) * 140 * boost))
         b = Math.min(255, Math.round((b / max) * 200 * boost))
       }
-      themeColor.value = `rgb(${r}, ${g}, ${b})`
+      const color = `rgb(${r}, ${g}, ${b})`
+      themeColor.value = color
+      // 缓存结果
+      coverColorCache.set(coverUrl, color)
     }
     img.onerror = () => {
       themeColor.value = '#667eea'

@@ -24,6 +24,8 @@
               :src="playerStore.currentSong.cover"
               :alt="playerStore.currentSong.title"
               class="cover"
+              loading="eager"
+              decoding="async"
             />
           </Transition>
           <!-- 中心孔 -->
