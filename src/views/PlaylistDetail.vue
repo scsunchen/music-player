@@ -25,6 +25,7 @@
         :song="song"
         :index="index"
         :show-index="true"
+        :show-cover="false"
         @play="playSongAt(index)"
       />
     </div>
