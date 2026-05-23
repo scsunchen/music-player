@@ -450,6 +450,19 @@ export const usePlayerStore = defineStore('player', () => {
       return
     }
 
+    // 只有一首歌时，直接重新开始播放（不切换）
+    if (currentPlaylist.value.length === 1) {
+      const audio = initAudio()
+      audio.currentTime = 0
+      audio.play().then(() => {
+        isPlaying.value = true
+      }).catch(err => {
+        console.error('播放失败:', err)
+        isPlaying.value = false
+      })
+      return
+    }
+
     // 淡出当前歌曲
     const currentAudio = initAudio()
     fadeOut(currentAudio).then(() => {
@@ -480,6 +493,19 @@ export const usePlayerStore = defineStore('player', () => {
   
   const prevSong = () => {
     if (currentPlaylist.value.length === 0) return
+
+    // 只有一首歌时，直接重新开始播放（不切换）
+    if (currentPlaylist.value.length === 1) {
+      const audio = initAudio()
+      audio.currentTime = 0
+      audio.play().then(() => {
+        isPlaying.value = true
+      }).catch(err => {
+        console.error('播放失败:', err)
+        isPlaying.value = false
+      })
+      return
+    }
     
     if (playMode.value === 'shuffle') {
       const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
