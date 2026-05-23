@@ -110,6 +110,11 @@ export const usePlayerStore = defineStore('player', () => {
     return audioElement
   }
   
+  // 获取 Audio 元素的方法
+  const getAudioElement = () => {
+    return initAudio()
+  }
+
   // 计算属性
   const currentSongInfo = computed(() => currentSong.value)
   
@@ -951,6 +956,7 @@ export const usePlayerStore = defineStore('player', () => {
     seekTo,
     setVolume,
     togglePlayMode,
+    getAudioElement,
     // 播放队列
     addToQueue,
     removeFromQueue,

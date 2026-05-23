@@ -107,7 +107,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
@@ -118,6 +118,18 @@ const emit = defineEmits(['open-fullscreen'])
 const playerStore = usePlayerStore()
 const router = useRouter()
 const visualizerRef = ref(null)
+
+// 连接音频可视化（首次播放时连接）
+let visualizerConnected = false
+watch(() => playerStore.isPlaying, (playing) => {
+  if (playing && !visualizerConnected && visualizerRef.value) {
+    const audio = playerStore.getAudioElement()
+    if (audio) {
+      visualizerRef.value.connectAudio(audio)
+      visualizerConnected = true
+    }
+  }
+})
 
 // 打开全屏播放页
 const openFullscreen = () => {
