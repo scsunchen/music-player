@@ -68,6 +68,17 @@
         </button>
         <!-- 均衡器可视化 -->
         <MusicVisualizer ref="visualizerRef" />
+        <!-- 喜欢按钮 -->
+        <button 
+          class="btn-like" 
+          :class="{ liked: isCurrentLiked }"
+          @click="toggleLikeCurrent"
+          :title="isCurrentLiked ? '取消喜欢' : '喜欢'"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
       </div>
       
       <!-- 进度条 -->
@@ -136,6 +147,18 @@ watch(() => playerStore.isPlaying, (playing) => {
 // 打开全屏播放页
 const openFullscreen = () => {
   emit('open-fullscreen')
+}
+
+// 当前歌曲是否已喜欢
+const isCurrentLiked = computed(() => {
+  return playerStore.currentSong ? playerStore.isLiked(playerStore.currentSong.id) : false
+})
+
+// 切换喜欢状态
+const toggleLikeCurrent = () => {
+  if (playerStore.currentSong) {
+    playerStore.toggleLikeSong(playerStore.currentSong.id)
+  }
 }
 
 const playModeIcon = computed(() => {
@@ -540,6 +563,34 @@ const seek = (event) => {
   height: 12px;
   background: #fff;
   border-radius: 50%;
+}
+
+/* 喜欢按钮 */
+.btn-like {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-like:hover {
+  color: #f5576c;
+  background: rgba(245, 87, 108, 0.15);
+}
+
+.btn-like.liked {
+  color: #f5576c;
+}
+
+.btn-like.liked:hover {
+  color: rgba(245, 87, 108, 0.7);
 }
 
 /* 队列按钮 */
