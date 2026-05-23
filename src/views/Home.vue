@@ -155,10 +155,14 @@ const latestSongs = computed(() => {
   return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 6)
 })
 
-// 每日10首（随机选取10首）
+// 每日10首（随机选取10首）- 使用缓存避免重复计算
+const dailySongsCache = ref([])
 const dailySongs = computed(() => {
-  const shuffled = [...playerStore.songs].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, 10)
+  if (dailySongsCache.value.length === 0 && playerStore.songs.length > 0) {
+    const shuffled = [...playerStore.songs].sort(() => Math.random() - 0.5)
+    dailySongsCache.value = shuffled.slice(0, 10)
+  }
+  return dailySongsCache.value
 })
 
 // 新专辑（包含《风来的方向》，按id倒序）
