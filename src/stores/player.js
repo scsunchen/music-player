@@ -183,6 +183,13 @@ export const usePlayerStore = defineStore('player', () => {
     }
     
     currentSong.value = song
+    
+    // 更新当前播放索引
+    const idx = currentPlaylist.value.findIndex(s => s.id === song.id)
+    if (idx !== -1) {
+      currentIndex.value = idx
+    }
+    
     audio.src = song.audioUrl
     audio.volume = volume.value
     extractColorFromCover(song.cover)
