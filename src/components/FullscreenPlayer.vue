@@ -53,6 +53,7 @@
           <div class="fs-progress">
             <span class="fs-time">{{ formatTime(playerStore.currentTime) }}</span>
             <div class="fs-progress-bar" @click="seek">
+              <div class="fs-buffered-bar" :style="{ width: playerStore.bufferedProgress + '%' }"></div>
               <div class="fs-progress-fill" :style="{ width: playerStore.progress + '%' }"></div>
               <div class="fs-progress-thumb" :style="{ left: playerStore.progress + '%' }"></div>
             </div>
@@ -458,6 +459,18 @@ const seek = (e) => {
   border-radius: 2px;
   position: relative;
   cursor: pointer;
+}
+
+/* 缓冲进度条 */
+.fs-buffered-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .fs-progress-bar:hover {

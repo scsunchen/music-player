@@ -72,6 +72,7 @@
       <div class="progress-container">
         <span class="time">{{ formatTime(playerStore.currentTime) }}</span>
         <div class="progress-bar" @click="seek">
+          <div class="buffered-bar" :style="{ width: playerStore.bufferedProgress + '%' }"></div>
           <div class="progress" :style="{ width: playerStore.progress + '%' }">
             <div class="progress-glow"></div>
           </div>
@@ -460,12 +461,25 @@ const seek = (event) => {
   position: relative;
 }
 
+/* 缓冲进度条 */
+.buffered-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .progress {
   height: 100%;
   background: var(--theme-color);
   border-radius: 2px;
   transition: width 0.1s;
   position: relative;
+  z-index: 1;
 }
 
 /* 进度条发光点 */
