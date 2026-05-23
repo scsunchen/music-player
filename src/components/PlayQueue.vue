@@ -6,10 +6,6 @@
           <div class="queue-header">
             <h3>播放队列</h3>
             <div class="queue-actions">
-              <span class="queue-count">{{ playerStore.playQueue.length }} 首</span>
-              <button v-if="playerStore.playQueue.length > 0" class="btn-clear" @click="playerStore.clearQueue()">
-                清空
-              </button>
               <button class="btn-close" @click="playerStore.toggleQueue()">
                 <svg viewBox="0 0 24 24" width="20" height="20">
                   <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -19,51 +15,87 @@
           </div>
           
           <div class="queue-content">
-            <div v-if="playerStore.playQueue.length === 0" class="queue-empty">
+            <!-- 当前播放列表 -->
+            <div v-if="playerStore.currentPlaylist.length > 0" class="queue-section">
+              <div class="section-label">
+                <span>当前播放列表</span>
+                <span class="section-count">{{ playerStore.currentPlaylist.length }} 首</span>
+              </div>
+              <div class="queue-list">
+                <div 
+                  v-for="(song, index) in playerStore.currentPlaylist" 
+                  :key="'pl-' + song.id"
+                  class="queue-item"
+                  :class="{ 
+                    active: index === playerStore.currentIndex,
+                    playing: index === playerStore.currentIndex && playerStore.isPlaying
+                  }"
+                  @click="playerStore.playSong(song)"
+                >
+                  <div class="item-index">
+                    <span v-if="index !== playerStore.currentIndex">{{ index + 1 }}</span>
+                    <svg v-else viewBox="0 0 24 24" width="16" height="16" class="playing-icon">
+                      <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                    </svg>
+                  </div>
+                  <img :src="song.cover" :alt="song.title" class="queue-cover" loading="lazy" />
+                  <div class="queue-info">
+                    <h4>{{ song.title }}</h4>
+                    <p>{{ song.artist }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 分隔线 -->
+            <div v-if="playerStore.currentPlaylist.length > 0 && playerStore.playQueue.length > 0" class="queue-divider">
+              <span>插队队列 ({{ playerStore.playQueue.length }})</span>
+            </div>
+
+            <!-- 手动添加的队列 -->
+            <div v-if="playerStore.playQueue.length > 0" class="queue-section">
+              <div class="section-label">
+                <span>待播放</span>
+                <button class="btn-clear-small" @click="playerStore.clearQueue()">清空</button>
+              </div>
+              <TransitionGroup name="list" tag="div" class="queue-list">
+                <div 
+                  v-for="(song, index) in playerStore.playQueue" 
+                  :key="'q-' + song.id"
+                  class="queue-item"
+                  draggable="true"
+                  @dragstart="onDragStart(index, $event)"
+                  @dragover.prevent="onDragOver(index, $event)"
+                  @drop="onDrop(index, $event)"
+                  @dragend="onDragEnd"
+                >
+                  <div class="drag-handle">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                      <path fill="currentColor" d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                  </div>
+                  <img :src="song.cover" :alt="song.title" class="queue-cover" loading="lazy" />
+                  <div class="queue-info" @click="playerStore.playFromQueue(index)">
+                    <h4>{{ song.title }}</h4>
+                    <p>{{ song.artist }}</p>
+                  </div>
+                  <button class="btn-remove" @click="playerStore.removeFromQueue(index)">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                  </button>
+                </div>
+              </TransitionGroup>
+            </div>
+
+            <!-- 完全空 -->
+            <div v-if="playerStore.currentPlaylist.length === 0 && playerStore.playQueue.length === 0" class="queue-empty">
               <svg viewBox="0 0 24 24" width="48" height="48">
                 <path fill="currentColor" d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
               </svg>
-              <p>队列是空的</p>
-              <span>点击歌曲的「添加到队列」将歌曲加入队列</span>
+              <p>播放队列为空</p>
+              <span>播放专辑或歌单后，歌曲会显示在这里</span>
             </div>
-            
-            <TransitionGroup v-else name="list" tag="div" class="queue-list">
-              <div 
-                v-for="(song, index) in playerStore.playQueue" 
-                :key="song.id"
-                class="queue-item"
-                draggable="true"
-                @dragstart="onDragStart(index, $event)"
-                @dragover.prevent="onDragOver(index, $event)"
-                @drop="onDrop(index, $event)"
-                @dragend="onDragEnd"
-              >
-                <div class="drag-handle">
-                  <svg viewBox="0 0 24 24" width="16" height="16">
-                    <path fill="currentColor" d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                  </svg>
-                </div>
-                <img :src="song.cover" :alt="song.title" class="queue-cover" loading="lazy" />
-                <div class="queue-info" @click="playerStore.playFromQueue(index)">
-                  <h4>{{ song.title }}</h4>
-                  <p>{{ song.artist }}</p>
-                </div>
-                <button class="btn-remove" @click="playerStore.removeFromQueue(index)">
-                  <svg viewBox="0 0 24 24" width="18" height="18">
-                    <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                  </svg>
-                </button>
-              </div>
-            </TransitionGroup>
-          </div>
-          
-          <div class="queue-footer" v-if="playerStore.playQueue.length > 0">
-            <button class="btn-play-all" @click="playAllQueue">
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                <path fill="currentColor" d="M8 5v14l11-7z"/>
-              </svg>
-              播放全部
-            </button>
           </div>
         </div>
       </div>
@@ -72,6 +104,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { usePlayerStore } from '../stores/player'
 
 const playerStore = usePlayerStore()
@@ -96,20 +129,6 @@ const onDrop = (index, e) => {
 
 const onDragEnd = () => {
   dragIndex.value = -1
-}
-
-const playAllQueue = () => {
-  if (playerStore.playQueue.length > 0) {
-    playerStore.playSong(playerStore.playQueue[0])
-    playerStore.playQueue.shift()
-  }
-}
-</script>
-
-<script>
-import { ref } from 'vue'
-export default {
-  name: 'PlayQueue'
 }
 </script>
 
@@ -156,26 +175,6 @@ export default {
   gap: 12px;
 }
 
-.queue-count {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.btn-clear {
-  padding: 6px 12px;
-  border-radius: 16px;
-  border: none;
-  background: rgba(245, 87, 108, 0.2);
-  color: #f5576c;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-clear:hover {
-  background: rgba(245, 87, 108, 0.3);
-}
-
 .btn-close {
   width: 32px;
   height: 32px;
@@ -199,6 +198,57 @@ export default {
   flex: 1;
   overflow-y: auto;
   padding: 12px;
+}
+
+.queue-section {
+  margin-bottom: 8px;
+}
+
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.section-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-clear-small {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(245, 87, 108, 0.15);
+  color: #f5576c;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-clear-small:hover {
+  background: rgba(245, 87, 108, 0.3);
+}
+
+.queue-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+}
+
+.queue-divider::before,
+.queue-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .queue-empty {
@@ -229,49 +279,71 @@ export default {
 .queue-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .queue-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px;
+  gap: 10px;
+  padding: 8px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  cursor: grab;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
 .queue-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.queue-item:active {
-  cursor: grabbing;
+.queue-item.active {
+  background: rgba(102, 126, 234, 0.15);
+}
+
+.queue-item.active .queue-info h4 {
+  color: #667eea;
+}
+
+.queue-item.playing .playing-icon {
+  color: #667eea;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.item-index {
+  width: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
 }
 
 .drag-handle {
   color: rgba(255, 255, 255, 0.3);
   cursor: grab;
+  flex-shrink: 0;
 }
 
 .queue-cover {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 6px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .queue-info {
   flex: 1;
   min-width: 0;
-  cursor: pointer;
 }
 
 .queue-info h4 {
-  margin: 0 0 4px;
-  font-size: 14px;
+  margin: 0 0 3px;
+  font-size: 13px;
   font-weight: 500;
   color: #fff;
   white-space: nowrap;
@@ -281,8 +353,8 @@ export default {
 
 .queue-info p {
   margin: 0;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .btn-remove {
@@ -298,6 +370,7 @@ export default {
   justify-content: center;
   opacity: 0;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .queue-item:hover .btn-remove {
@@ -307,33 +380,6 @@ export default {
 .btn-remove:hover {
   color: #f5576c;
   background: rgba(245, 87, 108, 0.2);
-}
-
-.queue-footer {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.btn-play-all {
-  width: 100%;
-  padding: 12px;
-  border-radius: 24px;
-  border: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s;
-}
-
-.btn-play-all:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 /* 动画 */
