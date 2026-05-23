@@ -44,7 +44,7 @@ export const usePlayerStore = defineStore('player', () => {
   const isPlaying = ref(false)
   const currentTime = ref(0)
   const duration = ref(0)
-  const volume = ref(0.8)
+  const volume = ref(0.5)
   const playMode = ref('list') // list, shuffle, repeat
   
   // 主题色
