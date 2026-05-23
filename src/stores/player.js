@@ -112,7 +112,7 @@ export const usePlayerStore = defineStore('player', () => {
   const initAudio = () => {
     if (!audioElement) {
       audioElement = new Audio()
-      audioElement.preload = 'auto' // 自动预加载，有助于后台播放
+      audioElement.preload = 'metadata' // 流式加载：只预加载元数据
       audioElement.volume = volume.value
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
