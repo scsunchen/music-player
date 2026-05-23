@@ -60,12 +60,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { usePlayerStore } from './stores/player'
 import MusicPlayer from './components/MusicPlayer.vue'
 import FullscreenPlayer from './components/FullscreenPlayer.vue'
 import PlayQueue from './components/PlayQueue.vue'
 
+const router = useRouter()
+const playerStore = usePlayerStore()
 const showFullscreen = ref(false)
+
+// 处理分享链接
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const shareType = urlParams.get('share')
+  const shareId = urlParams.get('id')
+
+  if (shareType && shareId) {
+    if (shareType === 'song') {
+      const songId = parseInt(shareId)
+      const song = playerStore.songs.find(s => s.id === songId)
+      if (song) {
+        playerStore.playSong(song)
+        router.push(`/song/${songId}`)
+      }
+    } else if (shareType === 'playlist') {
+      const playlistId = parseInt(shareId)
+      router.push(`/playlist/${playlistId}`)
+    }
+
+    // 清理 URL 参数
+    window.history.replaceState({}, document.title, window.location.pathname)
+  }
+})
 </script>
 
 <style>

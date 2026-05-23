@@ -9,12 +9,20 @@
           <span>{{ songs.length }} 首歌曲</span>
           <span v-if="playlist.playCount"> · {{ formatCount(playlist.playCount) }} 次播放</span>
         </p>
-        <button class="play-all-btn" @click="playAll">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M8 5v14l11-7z"/>
-          </svg>
-          播放全部
-        </button>
+        <div class="actions">
+          <button class="play-all-btn" @click="playAll">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M8 5v14l11-7z"/>
+            </svg>
+            播放全部
+          </button>
+          <button class="btn-share" @click="openShare">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+            </svg>
+            分享
+          </button>
+        </div>
       </div>
     </div>
 
@@ -29,17 +37,28 @@
         @play="playSongAt(index)"
       />
     </div>
+
+    <!-- 分享弹窗 -->
+    <ShareModal
+      v-if="playlist"
+      :visible="showShare"
+      type="playlist"
+      :data="playlist"
+      @close="showShare = false"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SongItem from '../components/SongItem.vue'
+import ShareModal from '../components/ShareModal.vue'
 
 const route = useRoute()
 const playerStore = usePlayerStore()
+const showShare = ref(false)
 
 const playlist = computed(() => {
   const id = parseInt(route.params.id)
@@ -71,6 +90,10 @@ const playSongAt = (index) => {
   if (playlist.value) {
     playerStore.playPlaylist(playlist.value, index)
   }
+}
+
+const openShare = () => {
+  showShare.value = true
 }
 </script>
 
@@ -120,6 +143,12 @@ const playSongAt = (index) => {
   color: rgba(255, 255, 255, 0.4);
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .play-all-btn {
   display: inline-flex;
   align-items: center;
@@ -134,12 +163,30 @@ const playSongAt = (index) => {
   cursor: pointer;
   transition: all 0.3s;
   width: fit-content;
-  max-width: 200px;
 }
 
 .play-all-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-share:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .song-list {
