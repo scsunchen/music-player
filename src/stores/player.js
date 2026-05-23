@@ -819,6 +819,63 @@ export const usePlayerStore = defineStore('player', () => {
     })
   }
 
+  // ==================== 后台播放支持 ====================
+  
+  // Wake Lock 防止屏幕关闭
+  let wakeLock = null
+  
+  const requestWakeLock = async () => {
+    if ('wakeLock' in navigator && isPlaying.value) {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen')
+        console.log('Wake Lock 已获取')
+        wakeLock.addEventListener('release', () => {
+          console.log('Wake Lock 已释放')
+        })
+      } catch (err) {
+        console.error('获取 Wake Lock 失败:', err)
+      }
+    }
+  }
+  
+  const releaseWakeLock = () => {
+    if (wakeLock) {
+      wakeLock.release()
+      wakeLock = null
+    }
+  }
+  
+  // 页面可见性变化处理
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      // 页面进入后台，获取 Wake Lock 保持播放
+      if (isPlaying.value) {
+        requestWakeLock()
+      }
+    } else {
+      // 页面回到前台，释放 Wake Lock
+      releaseWakeLock()
+      // 恢复 AudioContext（如果被暂停）
+      if (audioElement && audioElement.paused && isPlaying.value) {
+        audioElement.play().catch(() => {})
+      }
+    }
+  }
+  
+  // 监听播放状态变化，自动管理 Wake Lock
+  watch(isPlaying, (playing) => {
+    if (playing && !document.hidden) {
+      requestWakeLock()
+    } else if (!playing) {
+      releaseWakeLock()
+    }
+  })
+  
+  // 注册页面可见性监听
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+  }
+  
   // 初始化加载
   loadCustomPlaylists()
   loadLikedSongs()
