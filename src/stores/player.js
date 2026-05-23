@@ -67,10 +67,14 @@ export const usePlayerStore = defineStore('player', () => {
   // Audio 元素
   let audioElement = null
   
+  // 流式加载缓冲进度
+  const bufferedProgress = ref(0)
+  
   // 初始化 Audio 元素
   const initAudio = () => {
     if (!audioElement) {
       audioElement = new Audio()
+      audioElement.preload = 'metadata' // 流式加载：只预加载元数据
       audioElement.volume = volume.value
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
@@ -78,6 +82,13 @@ export const usePlayerStore = defineStore('player', () => {
       })
       audioElement.addEventListener('loadedmetadata', () => {
         duration.value = audioElement.duration
+      })
+      // 缓冲进度更新
+      audioElement.addEventListener('progress', () => {
+        if (audioElement.buffered.length > 0) {
+          const bufferedEnd = audioElement.buffered.end(audioElement.buffered.length - 1)
+          bufferedProgress.value = (bufferedEnd / audioElement.duration) * 100
+        }
       })
       audioElement.addEventListener('ended', () => {
         nextSong()
@@ -119,6 +130,10 @@ export const usePlayerStore = defineStore('player', () => {
 
     const requestId = ++playRequestIndex
     const audio = initAudio()
+    
+    // 重置缓冲进度
+    bufferedProgress.value = 0
+    
     currentSong.value = song
     audio.src = song.audioUrl
     audio.volume = volume.value
@@ -126,20 +141,35 @@ export const usePlayerStore = defineStore('player', () => {
     addToRecent(song.id) // 添加到最近播放
     updateMediaSession(song) // 更新锁屏控制
     recordPlay(song) // 记录播放统计
-    audio.load() // 先加载
-    audio.play().then(() => {
-      // 只有最新的请求才更新状态，防止快速切换导致竞态
+    
+    // 流式加载：等待可以播放时立即开始
+    const onCanPlay = () => {
+      audio.removeEventListener('canplay', onCanPlay)
       if (requestId === playRequestIndex) {
-        isPlaying.value = true
-        // 预加载下一首
-        preloadNextSong()
+        audio.play().then(() => {
+          if (requestId === playRequestIndex) {
+            isPlaying.value = true
+            // 预加载下一首
+            preloadNextSong()
+          }
+        }).catch(err => {
+          if (requestId === playRequestIndex) {
+            console.error('播放失败:', err)
+            isPlaying.value = false
+          }
+        })
       }
-    }).catch(err => {
-      if (requestId === playRequestIndex) {
-        console.error('播放失败:', err)
-        isPlaying.value = false
+    }
+    
+    audio.addEventListener('canplay', onCanPlay)
+    
+    // 超时处理：如果3秒内无法播放，尝试直接播放
+    setTimeout(() => {
+      audio.removeEventListener('canplay', onCanPlay)
+      if (requestId === playRequestIndex && audio.paused) {
+        audio.play().catch(() => {})
       }
-    })
+    }, 3000)
   }
 
   // 预加载下一首歌曲
@@ -904,6 +934,7 @@ export const usePlayerStore = defineStore('player', () => {
     themeColor,
     playQueue,
     showQueue,
+    bufferedProgress,
 
     // 计算属性
     currentSongInfo,
