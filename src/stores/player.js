@@ -139,6 +139,11 @@ export const usePlayerStore = defineStore('player', () => {
     // 重置缓冲进度
     bufferedProgress.value = 0
     
+    // 先暂停当前播放，避免 play() 冲突
+    if (!audio.paused) {
+      audio.pause()
+    }
+    
     currentSong.value = song
     audio.src = song.audioUrl
     audio.volume = volume.value
@@ -147,23 +152,27 @@ export const usePlayerStore = defineStore('player', () => {
     updateMediaSession(song) // 更新锁屏控制
     recordPlay(song) // 记录播放统计
     
-    // 流式加载：等待可以播放时立即开始
+    let played = false
+    
+    const doPlay = () => {
+      if (played || requestId !== playRequestIndex) return
+      played = true
+      audio.play().then(() => {
+        if (requestId === playRequestIndex) {
+          isPlaying.value = true
+          preloadNextSong()
+        }
+      }).catch(err => {
+        if (requestId === playRequestIndex) {
+          console.error('播放失败:', err)
+          isPlaying.value = false
+        }
+      })
+    }
+    
     const onCanPlay = () => {
       audio.removeEventListener('canplay', onCanPlay)
-      if (requestId === playRequestIndex) {
-        audio.play().then(() => {
-          if (requestId === playRequestIndex) {
-            isPlaying.value = true
-            // 预加载下一首
-            preloadNextSong()
-          }
-        }).catch(err => {
-          if (requestId === playRequestIndex) {
-            console.error('播放失败:', err)
-            isPlaying.value = false
-          }
-        })
-      }
+      doPlay()
     }
     
     audio.addEventListener('canplay', onCanPlay)
@@ -171,9 +180,7 @@ export const usePlayerStore = defineStore('player', () => {
     // 超时处理：如果3秒内无法播放，尝试直接播放
     setTimeout(() => {
       audio.removeEventListener('canplay', onCanPlay)
-      if (requestId === playRequestIndex && audio.paused) {
-        audio.play().catch(() => {})
-      }
+      doPlay()
     }, 3000)
   }
 
@@ -891,7 +898,7 @@ export const usePlayerStore = defineStore('player', () => {
       // 页面回到前台，释放 Wake Lock
       releaseWakeLock()
       // 恢复 AudioContext（如果被暂停）
-      if (audioElement && audioElement.paused && isPlaying.value) {
+      if (audioElement && audioElement.paused && isPlaying.value && audioElement.src) {
         audioElement.play().catch(() => {})
       }
     }
