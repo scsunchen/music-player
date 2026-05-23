@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import songData from '../data/songs.json'
 
 export const usePlayerStore = defineStore('player', () => {
