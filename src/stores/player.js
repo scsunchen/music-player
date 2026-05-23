@@ -2,6 +2,32 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import songData from '../data/songs.json'
 
+// 异步保存工具函数（不阻塞主线程）
+const pendingSaves = new Map()
+const saveAsync = (key, data, delay = 100) => {
+  // 合并同一 key 的多次保存请求
+  pendingSaves.set(key, { data, delay })
+  
+  // 使用 requestIdleCallback 或 setTimeout fallback
+  const doSave = () => {
+    const pending = pendingSaves.get(key)
+    if (pending) {
+      try {
+        localStorage.setItem(key, JSON.stringify(pending.data))
+        pendingSaves.delete(key)
+      } catch (e) {
+        console.warn('localStorage 保存失败:', e)
+      }
+    }
+  }
+  
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(doSave, { timeout: 2000 })
+  } else {
+    setTimeout(doSave, delay)
+  }
+}
+
 export const usePlayerStore = defineStore('player', () => {
   // 数据
   const songs = ref(songData.songs)
@@ -519,7 +545,7 @@ export const usePlayerStore = defineStore('player', () => {
   const savePlayQueue = () => {
     // 只存ID数组，避免数据冗余和格式不一致
     const ids = playQueue.value.map(s => s.id)
-    localStorage.setItem('playQueue', JSON.stringify(ids))
+    saveAsync('playQueue', ids)
   }
   
   const loadPlayQueue = () => {
@@ -569,7 +595,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const saveCustomPlaylists = () => {
-    localStorage.setItem('customPlaylists', JSON.stringify(customPlaylists.value))
+    saveAsync('customPlaylists', customPlaylists.value)
   }
   
   const loadCustomPlaylists = () => {
@@ -590,7 +616,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   const saveLikedSongs = () => {
-    localStorage.setItem('likedSongs', JSON.stringify(likedSongs.value))
+    saveAsync('likedSongs', likedSongs.value)
   }
 
   const toggleLikeSong = (songId) => {
@@ -622,7 +648,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   const saveRecentSongs = () => {
-    localStorage.setItem('recentSongs', JSON.stringify(recentSongs.value.slice(0, 50)))
+    saveAsync('recentSongs', recentSongs.value.slice(0, 50))
   }
 
   const addToRecent = (songId) => {
@@ -675,7 +701,7 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   const savePlayStats = () => {
-    localStorage.setItem('playStats', JSON.stringify(playStats.value))
+    saveAsync('playStats', playStats.value)
   }
 
   const getWeekStart = (date) => {
@@ -812,7 +838,7 @@ export const usePlayerStore = defineStore('player', () => {
       playMode: playMode.value,
       savedAt: Date.now()
     }
-    localStorage.setItem('playerSession', JSON.stringify(data))
+    saveAsync('playerSession', data)
   }
 
   const loadSession = () => {
