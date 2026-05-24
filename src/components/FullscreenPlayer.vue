@@ -171,8 +171,12 @@ const close = () => {
 // 跳转详情页
 const goToDetail = () => {
   if (playerStore.currentSong) {
-    router.push(`/song/${playerStore.currentSong.id}`)
+    const songId = playerStore.currentSong.id
     emit('close')
+    // 等待全屏关闭动画完成后再跳转
+    setTimeout(() => {
+      router.push(`/song/${songId}`)
+    }, 300)
   }
 }
 
