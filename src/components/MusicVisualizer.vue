@@ -152,7 +152,7 @@ const connectAudio = (audioElement) => {
   }
 }
 
-defineExpose({ connectAudio })
+defineExpose({ connectAudio, getAnalyser: () => analyser })
 </script>
 
 <style scoped>

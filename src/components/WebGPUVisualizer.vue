@@ -13,6 +13,10 @@ const props = defineProps({
   themeColor: {
     type: String,
     default: '#667eea'
+  },
+  analyser: {
+    type: Object,
+    default: null
   }
 })
 
@@ -264,16 +268,8 @@ const initWebGPU = async () => {
     primitive: { topology: 'point-list' }
   })
 
-  // 获取音频分析器
-  const audio = playerStore.getAudioElement ? playerStore.getAudioElement() : null
-  if (audio && !analyser) {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-    const source = audioContext.createMediaElementSource(audio)
-    analyser = audioContext.createAnalyser()
-    analyser.fftSize = 128
-    source.connect(analyser)
-    analyser.connect(audioContext.destination)
-  }
+  // 使用父组件传入的 analyser（避免重复创建 AudioContext）
+  analyser = props.analyser
 
   // 开始渲染循环
   startRenderLoop(audioBuffer)

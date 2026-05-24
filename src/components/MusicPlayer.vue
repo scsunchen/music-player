@@ -78,12 +78,14 @@
           </svg>
         </button>
         <!-- WebGPU 可视化（优先）或 Canvas 可视化 -->
+        <!-- MusicVisualizer 始终渲染（隐藏），负责 AudioContext 连接 -->
+        <MusicVisualizer ref="visualizerRef" :style="{ display: webgpuSupported ? 'none' : '' }" />
         <WebGPUVisualizer 
           v-if="webgpuSupported" 
           :themeColor="playerStore.themeColor"
+          :analyser="visualizerAnalyser"
           class="webgpu-viz"
         />
-        <MusicVisualizer v-else ref="visualizerRef" />
         <!-- 喜欢按钮 -->
         <button 
           class="btn-like" 
@@ -179,6 +181,11 @@ watch(() => playerStore.isPlaying, (playing) => {
       visualizerConnected = true
     }
   }
+})
+
+// 获取 MusicVisualizer 的 analyser（供 WebGPU 使用）
+const visualizerAnalyser = computed(() => {
+  return visualizerRef.value?.getAnalyser?.() || null
 })
 
 // 打开全屏播放页
