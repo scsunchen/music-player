@@ -58,17 +58,32 @@ const checkWebGPUSupport = async () => {
 
 // 初始化 WebGPU
 const initWebGPU = async () => {
-  if (!canvasRef.value || !device) return
+  if (!canvasRef.value || !device) {
+    console.log('WebGPU: canvas 或 device 不可用')
+    return
+  }
 
   const canvas = canvasRef.value
   const container = containerRef.value
   
+  // 等待容器有尺寸
+  if (!container.clientWidth || !container.clientHeight) {
+    console.log('WebGPU: 容器尺寸为 0，延迟初始化')
+    setTimeout(initWebGPU, 100)
+    return
+  }
+  
   // 设置 canvas 尺寸
   const dpr = Math.min(window.devicePixelRatio, 2)
-  canvas.width = container.clientWidth * dpr
-  canvas.height = container.clientHeight * dpr
-  canvas.style.width = container.clientWidth + 'px'
-  canvas.style.height = container.clientHeight + 'px'
+  const width = Math.max(container.clientWidth, 60)
+  const height = Math.max(container.clientHeight, 36)
+  
+  canvas.width = width * dpr
+  canvas.height = height * dpr
+  canvas.style.width = width + 'px'
+  canvas.style.height = height + 'px'
+  
+  console.log('WebGPU: canvas 尺寸', width, height)
 
   // 获取 WebGPU 上下文
   context = canvas.getContext('webgpu')
@@ -220,9 +235,21 @@ const initWebGPU = async () => {
   `
 
   // 创建着色器模块
-  const computeModule = device.createShaderModule({ code: computeShaderCode })
-  const vertexModule = device.createShaderModule({ code: vertexShaderCode })
-  const fragmentModule = device.createShaderModule({ code: fragmentShaderCode })
+  const createShaderModule = (code, label) => {
+    const module = device.createShaderModule({ code, label })
+    // 检查编译错误
+    const compilationInfo = module.getCompilationInfo()
+    compilationInfo.then(info => {
+      if (info.messages.length > 0) {
+        console.error(`WebGPU ${label} 着色器编译错误:`, info.messages)
+      }
+    })
+    return module
+  }
+  
+  const computeModule = createShaderModule(computeShaderCode, 'compute')
+  const vertexModule = createShaderModule(vertexShaderCode, 'vertex')
+  const fragmentModule = createShaderModule(fragmentShaderCode, 'fragment')
 
   // 创建计算管线
   computePipeline = device.createComputePipeline({
@@ -277,12 +304,17 @@ const initWebGPU = async () => {
 
 // 渲染循环
 const startRenderLoop = (audioBuffer) => {
+  console.log('WebGPU: 开始渲染循环')
   const audioData = new Float32Array(64)
   const uniformData = new Float32Array(8)
   let startTime = Date.now()
+  let frameCount = 0
 
   const render = () => {
-    if (!device || !context) return
+    if (!device || !context) {
+      console.log('WebGPU: 设备或上下文丢失')
+      return
+    }
 
     const time = (Date.now() - startTime) * 0.001
     const intensity = playerStore.isPlaying ? 1.0 : 0.3
