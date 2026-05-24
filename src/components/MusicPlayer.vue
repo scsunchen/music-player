@@ -95,10 +95,17 @@
       <!-- 进度条 -->
       <div class="progress-container">
         <span class="time">{{ formatTime(playerStore.currentTime) }}</span>
-        <div class="progress-bar" @click="seek">
+        <div 
+          class="progress-bar" 
+          @click="seek"
+          @touchstart.prevent="onTouchStart"
+          @touchmove.prevent="onTouchMove"
+          @touchend="onTouchEnd"
+        >
           <div class="buffered-bar" :style="{ width: playerStore.bufferedProgress + '%' }"></div>
           <div class="progress" :style="{ width: playerStore.progress + '%' }">
             <div class="progress-glow"></div>
+            <div class="progress-handle" :class="{ dragging: isDragging }"></div>
           </div>
         </div>
         <span class="time">{{ formatTime(playerStore.duration) }}</span>
@@ -199,9 +206,30 @@ const formatTime = (seconds) => {
 
 const seek = (event) => {
   const rect = event.currentTarget.getBoundingClientRect()
-  const percent = (event.clientX - rect.left) / rect.width
+  // 支持鼠标和触摸事件
+  const clientX = event.touches ? event.touches[0].clientX : event.clientX
+  const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
   const time = percent * playerStore.duration
   playerStore.seekTo(time)
+}
+
+// 触摸拖动状态
+const isDragging = ref(false)
+
+const onTouchStart = (event) => {
+  isDragging.value = true
+  seek(event)
+}
+
+const onTouchMove = (event) => {
+  if (isDragging.value) {
+    event.preventDefault()
+    seek(event)
+  }
+}
+
+const onTouchEnd = () => {
+  isDragging.value = false
 }
 </script>
 
@@ -546,6 +574,33 @@ const seek = (event) => {
 }
 
 .music-player.playing .progress-glow {
+  opacity: 1;
+}
+
+/* 进度条滑块手柄（移动端更易拖动） */
+.progress-handle {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--theme-color), 0 0 16px color-mix(in srgb, var(--theme-color) 40%, transparent);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: grab;
+}
+
+.progress-handle.dragging {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.2);
+  cursor: grabbing;
+}
+
+.progress-bar:active .progress-handle,
+.progress-bar:hover .progress-handle {
   opacity: 1;
 }
 
