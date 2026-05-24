@@ -77,13 +77,8 @@
             <path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
           </svg>
         </button>
-        <!-- WebGPU 可视化（优先）或 Canvas 可视化 -->
-        <WebGPUVisualizer 
-          v-if="webgpuSupported" 
-          :themeColor="playerStore.themeColor"
-          class="webgpu-viz"
-        />
-        <MusicVisualizer v-else ref="visualizerRef" />
+        <!-- 均衡器可视化 -->
+        <MusicVisualizer ref="visualizerRef" />
         <!-- 喜欢按钮 -->
         <button 
           class="btn-like" 
@@ -143,27 +138,13 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
-import WebGPUVisualizer from './WebGPUVisualizer.vue'
 import FloatingNotes from './FloatingNotes.vue'
 
 const emit = defineEmits(['open-fullscreen'])
-
-// WebGPU 支持检测
-const webgpuSupported = ref(false)
-onMounted(async () => {
-  if ('gpu' in navigator) {
-    try {
-      const adapter = await navigator.gpu.requestAdapter()
-      webgpuSupported.value = !!adapter
-    } catch {
-      webgpuSupported.value = false
-    }
-  }
-})
 
 const playerStore = usePlayerStore()
 const router = useRouter()
@@ -719,15 +700,6 @@ const onTouchEnd = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* WebGPU 可视化样式 */
-.webgpu-viz {
-  width: 60px;
-  height: 36px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
 }
 
 /* 封面渐变过渡 */
