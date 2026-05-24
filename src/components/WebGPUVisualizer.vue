@@ -153,7 +153,7 @@ const initWebGPU = async () => {
       particle.y = wave1 + wave2 + wave3 + audioValue * 0.5;
       
       // 添加一些随机扰动
-      let noise = sin(idx as f32 * 0.1 + time) * 0.02 * intensity;
+      let noise = sin(f32(idx) * 0.1 + time) * 0.02 * intensity;
       particle.y += noise;
       
       particles[idx] = particle;
