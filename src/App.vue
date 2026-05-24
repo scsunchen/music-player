@@ -293,4 +293,79 @@ body {
   opacity: 0;
   transform: translateY(-12px);
 }
+
+/* ==================== View Transitions API 样式 ==================== */
+
+/* 默认过渡：淡入淡出 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 向左滑动（进入右侧页面） */
+html[data-transition="left"] ::view-transition-old(root) {
+  animation: slide-out-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-transition="left"] ::view-transition-new(root) {
+  animation: slide-in-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 向右滑动（进入左侧页面） */
+html[data-transition="right"] ::view-transition-old(root) {
+  animation: slide-out-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-transition="right"] ::view-transition-new(root) {
+  animation: slide-in-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 缩放入场（进入详情页） */
+html[data-transition="in"] ::view-transition-old(root) {
+  animation: fade-out 0.3s ease;
+}
+
+html[data-transition="in"] ::view-transition-new(root) {
+  animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 关键帧动画 */
+@keyframes slide-out-left {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-30%); opacity: 0; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(30%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-out-right {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(30%); opacity: 0; }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-30%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* 不支持 View Transitions 的浏览器回退 */
+@supports not (view-transition-name: none) {
+  .fade-slide-enter-active,
+  .fade-slide-leave-active {
+    transition: all 0.3s ease;
+  }
+}
 </style>
