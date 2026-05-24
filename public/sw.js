@@ -1,4 +1,4 @@
-const CACHE_NAME = 'music-player-v3'
+const CACHE_NAME = 'music-player-v4'
 
 // 需要缓存的静态资源
 const STATIC_ASSETS = [
