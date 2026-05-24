@@ -19,8 +19,8 @@
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
     <script>
-      // 注册 Service Worker
-      if ('serviceWorker' in navigator) {
+      // 注册 Service Worker（仅生产环境）
+      if ('serviceWorker' in navigator && !window.location.hostname.includes('localhost')) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/music-player/sw.js')
             .then((reg) => {
