@@ -423,6 +423,15 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const nextSong = () => {
+    // 调试日志
+    console.log('nextSong 被调用', {
+      queueLength: playQueue.value.length,
+      playlistLength: currentPlaylist.value.length,
+      currentIndex: currentIndex.value,
+      playMode: playMode.value,
+      currentSong: currentSong.value?.title
+    })
+    
     // 优先播放队列中的歌曲
     if (playQueue.value.length > 0) {
       const queueSong = playQueue.value.shift()
@@ -446,12 +455,14 @@ export const usePlayerStore = defineStore('player', () => {
 
     if (currentPlaylist.value.length === 0) {
       // 没有播放列表，停止播放
+      console.log('播放列表为空，停止播放')
       isPlaying.value = false
       return
     }
 
     // 只有一首歌时，直接重新开始播放（不切换）
     if (currentPlaylist.value.length === 1) {
+      console.log('只有一首歌，重新开始播放')
       const audio = initAudio()
       audio.currentTime = 0
       audio.play().then(() => {
