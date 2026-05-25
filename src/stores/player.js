@@ -189,6 +189,10 @@ export const usePlayerStore = defineStore('player', () => {
     if (idx !== -1) {
       currentIndex.value = idx
     }
+    // 确保 currentIndex 在有效范围内
+    if (currentIndex.value >= currentPlaylist.value.length) {
+      currentIndex.value = 0
+    }
     
     audio.src = song.audioUrl
     audio.volume = volume.value
@@ -979,8 +983,8 @@ export const usePlayerStore = defineStore('player', () => {
     } else {
       // 页面回到前台，释放 Wake Lock
       releaseWakeLock()
-      // 恢复 AudioContext（如果被暂停）
-      if (audioElement && audioElement.paused && isPlaying.value && audioElement.src) {
+      // 恢复播放（仅当音频未结束且非用户主动暂停时）
+      if (audioElement && audioElement.paused && isPlaying.value && audioElement.src && !audioElement.ended) {
         audioElement.play().catch(() => {})
       }
     }
