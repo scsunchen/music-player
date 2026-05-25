@@ -129,7 +129,7 @@ export const usePlayerStore = defineStore('player', () => {
         }
       })
       audioElement.addEventListener('ended', () => {
-        nextSong()
+        nextSong(true)
       })
       audioElement.addEventListener('pause', () => {
         // 当音频暂停时（非用户主动暂停），更新状态
@@ -426,9 +426,10 @@ export const usePlayerStore = defineStore('player', () => {
     requestAnimationFrame(fade)
   }
   
-  const nextSong = () => {
+  const nextSong = (isAutoPlay = false) => {
     // 调试日志
     console.log('nextSong 被调用', {
+      isAutoPlay,
       queueLength: playQueue.value.length,
       playlistLength: currentPlaylist.value.length,
       currentIndex: currentIndex.value,
@@ -444,8 +445,8 @@ export const usePlayerStore = defineStore('player', () => {
       return
     }
 
-    if (playMode.value === 'repeat') {
-      // 单曲循环：重新播放当前歌曲
+    // 单曲循环：仅自动播放时循环，手动点击"下一首"正常切歌
+    if (playMode.value === 'repeat' && isAutoPlay) {
       const audio = initAudio()
       audio.currentTime = 0
       audio.play().then(() => {
