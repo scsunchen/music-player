@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import songData from '../data/songs.json'
+import { resolveUrl } from '../utils/baseUrl'
 
 // 异步保存工具函数（不阻塞主线程）
 const pendingSaves = new Map()
@@ -29,10 +30,30 @@ const saveAsync = (key, data, delay = 100) => {
 }
 
 export const usePlayerStore = defineStore('player', () => {
-  // 数据
-  const songs = ref(songData.songs)
-  const albums = ref(songData.albums)
-  const recommendPlaylists = ref(songData.recommendPlaylists)
+  // 数据（动态替换资源路径，支持任意部署目录）
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  const resolvePaths = (data) => {
+    if (Array.isArray(data)) {
+      return data.map(item => resolvePaths(item))
+    }
+    if (data && typeof data === 'object') {
+      const result = {}
+      for (const [key, value] of Object.entries(data)) {
+        // 替换以 /music-player/ 开头的硬编码路径
+        if (typeof value === 'string' && value.startsWith('/music-player/')) {
+          result[key] = resolveUrl(value.replace('/music-player/', ''))
+        } else {
+          result[key] = resolvePaths(value)
+        }
+      }
+      return result
+    }
+    return data
+  }
+  
+  const songs = ref(resolvePaths(songData.songs))
+  const albums = ref(resolvePaths(songData.albums))
+  const recommendPlaylists = ref(resolvePaths(songData.recommendPlaylists))
   
   // 自定义播放列表
   const customPlaylists = ref([])
@@ -613,7 +634,7 @@ export const usePlayerStore = defineStore('player', () => {
       id: Date.now(),
       name,
       description: '',
-      cover: '/music-player/images/covers/guofeng.jpg',
+      cover: resolveUrl('images/covers/guofeng.jpg'),
       songs: [],
       playCount: 0
     }

@@ -60,6 +60,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { resolveUrl } from '../utils/baseUrl'
 
 const props = defineProps({
   visible: Boolean,
@@ -89,24 +90,24 @@ const shareData = computed(() => {
     return {
       title: props.data.title || '未知歌曲',
       subtitle: props.data.artist || '未知歌手',
-      image: props.data.cover || '/music-player/images/default-cover.jpg'
+      image: props.data.cover || resolveUrl('images/default-cover.jpg')
     }
   } else {
     return {
       title: props.data.name || '未知歌单',
       subtitle: `${props.data.songs?.length || 0} 首歌曲`,
-      image: props.data.cover || '/music-player/images/default-cover.jpg'
+      image: props.data.cover || resolveUrl('images/default-cover.jpg')
     }
   }
 })
 
 // 生成分享链接
 const shareUrl = computed(() => {
-  const baseUrl = window.location.origin + '/music-player/'
+  const base = window.location.origin + (import.meta.env.BASE_URL || '/')
   if (props.type === 'song') {
-    return `${baseUrl}?share=song&id=${props.data.id}`
+    return `${base}?share=song&id=${props.data.id}`
   } else {
-    return `${baseUrl}?share=playlist&id=${props.data.id}`
+    return `${base}?share=playlist&id=${props.data.id}`
   }
 })
 
