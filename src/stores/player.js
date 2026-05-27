@@ -134,7 +134,8 @@ export const usePlayerStore = defineStore('player', () => {
     if (!audioElement) {
       audioElement = new Audio()
       audioElement.preload = 'metadata' // 流式加载：只预加载元数据
-      audioElement.volume = volume.value
+      // 确保音量在有效范围 0-1
+      audioElement.volume = Math.max(0, Math.min(1, volume.value))
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
         updateMediaSessionPosition()
@@ -564,8 +565,10 @@ export const usePlayerStore = defineStore('player', () => {
   
   const setVolume = (val) => {
     const audio = initAudio()
-    volume.value = val
-    audio.volume = val
+    // 限制音量范围 0-1
+    const clampedVal = Math.max(0, Math.min(1, val))
+    volume.value = clampedVal
+    audio.volume = clampedVal
   }
   
   const togglePlayMode = () => {
@@ -918,9 +921,9 @@ export const usePlayerStore = defineStore('player', () => {
         const data = JSON.parse(saved)
         sessionData.value = data
         
-        // 恢复音量和播放模式
+        // 恢复音量和播放模式（限制音量范围 0-1）
         if (data.volume !== undefined) {
-          volume.value = data.volume
+          volume.value = Math.max(0, Math.min(1, data.volume))
         }
         if (data.playMode) {
           playMode.value = data.playMode
