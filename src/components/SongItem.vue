@@ -34,8 +34,8 @@
         <path fill="currentColor" d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
       </svg>
     </button>
-    <button class="btn-play" @click.stop="$emit('play')">
-      <svg v-if="!isActive" viewBox="0 0 24 24" width="20" height="20">
+    <button class="btn-play" @click.stop="handlePlayClick">
+      <svg v-if="!isActive || !playerStore.isPlaying" viewBox="0 0 24 24" width="20" height="20">
         <path fill="currentColor" d="M8 5v14l11-7z"/>
       </svg>
       <svg v-else viewBox="0 0 24 24" width="20" height="20">
@@ -77,7 +77,7 @@ const props = defineProps({
   }
 })
 
-defineEmits(['click', 'play'])
+const emit = defineEmits(['click', 'play'])
 
 const router = useRouter()
 const playerStore = usePlayerStore()
@@ -85,6 +85,16 @@ const playerStore = usePlayerStore()
 const isActive = computed(() => {
   return playerStore.currentSong?.id === props.song.id
 })
+
+const handlePlayClick = () => {
+  if (isActive.value && playerStore.isPlaying) {
+    // 当前歌曲正在播放，暂停
+    playerStore.togglePlay()
+  } else {
+    // 播放歌曲
+    emit('play')
+  }
+}
 
 const isLiked = computed(() => {
   return playerStore.isLiked(props.song.id)
