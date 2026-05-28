@@ -166,7 +166,6 @@ import { usePlayerStore } from '../stores/player'
 import MVPlayer from '../components/MVPlayer.vue'
 import LyricsEditor from '../components/LyricsEditor.vue'
 import SongItem from '../components/SongItem.vue'
-import lyricsData from '../data/lyrics.json'
 import ShareModal from '../components/ShareModal.vue'
 
 const route = useRoute()
@@ -184,7 +183,7 @@ const showShare = ref(false)
 // 解析歌词
 const lyricsLines = computed(() => {
   if (!song.value) return []
-  const raw = lyricsData[song.value.id]?.lyrics || ''
+  const raw = playerStore.lyricsData[song.value.id]?.lyrics || ''
   return raw.split('\n')
     .filter(line => line.trim())
     .map(line => {
