@@ -28,65 +28,65 @@ const saveAsync = (key, data, delay = 100) => {
   }
 }
 
-// 数据加载状态
-const dataLoaded = ref(false)
-const dataLoadError = ref(null)
-
-// 歌词数据
-const lyricsData = ref({})
-
-// 运行时加载歌曲和歌词数据（从 public/data/ 目录）
-const loadSongData = async () => {
-  try {
-    const baseUrl = import.meta.env.BASE_URL || '/'
-    const resolvePaths = (data) => {
-      if (Array.isArray(data)) {
-        return data.map(item => resolvePaths(item))
-      }
-      if (data && typeof data === 'object') {
-        const result = {}
-        for (const [key, value] of Object.entries(data)) {
-          if (typeof value === 'string' && value.startsWith('/music-player/')) {
-            result[key] = resolveUrl(value.replace('/music-player/', ''))
-          } else {
-            result[key] = resolvePaths(value)
-          }
-        }
-        return result
-      }
-      return data
-    }
-
-    // 并行加载歌曲数据和歌词数据
-    const [songsRes, lyricsRes] = await Promise.all([
-      fetch(resolveUrl('data/songs.json')),
-      fetch(resolveUrl('data/lyrics.json')).catch(() => null)
-    ])
-
-    if (!songsRes.ok) throw new Error(`加载歌曲数据失败: ${songsRes.status}`)
-    const songData = await songsRes.json()
-
-    songs.value = resolvePaths(songData.songs)
-    albums.value = resolvePaths(songData.albums)
-    recommendPlaylists.value = resolvePaths(songData.recommendPlaylists)
-
-    // 加载歌词（允许失败）
-    if (lyricsRes && lyricsRes.ok) {
-      lyricsData.value = await lyricsRes.json()
-    }
-
-    dataLoaded.value = true
-  } catch (e) {
-    console.error('加载歌曲数据失败:', e)
-    dataLoadError.value = e.message
-  }
-}
-
 export const usePlayerStore = defineStore('player', () => {
   // 数据（运行时从 JSON 文件加载）
   const songs = ref([])
   const albums = ref([])
   const recommendPlaylists = ref([])
+
+  // 歌词数据
+  const lyricsData = ref({})
+
+  // 数据加载状态
+  const dataLoaded = ref(false)
+  const dataLoadError = ref(null)
+
+  // 运行时加载歌曲和歌词数据（从 public/data/ 目录）
+  const loadSongData = async () => {
+    try {
+      const baseUrl = import.meta.env.BASE_URL || '/'
+      const resolvePaths = (data) => {
+        if (Array.isArray(data)) {
+          return data.map(item => resolvePaths(item))
+        }
+        if (data && typeof data === 'object') {
+          const result = {}
+          for (const [key, value] of Object.entries(data)) {
+            if (typeof value === 'string' && value.startsWith('/music-player/')) {
+              result[key] = resolveUrl(value.replace('/music-player/', ''))
+            } else {
+              result[key] = resolvePaths(value)
+            }
+          }
+          return result
+        }
+        return data
+      }
+
+      // 并行加载歌曲数据和歌词数据
+      const [songsRes, lyricsRes] = await Promise.all([
+        fetch(resolveUrl('data/songs.json')),
+        fetch(resolveUrl('data/lyrics.json')).catch(() => null)
+      ])
+
+      if (!songsRes.ok) throw new Error(`加载歌曲数据失败: ${songsRes.status}`)
+      const songData = await songsRes.json()
+
+      songs.value = resolvePaths(songData.songs)
+      albums.value = resolvePaths(songData.albums)
+      recommendPlaylists.value = resolvePaths(songData.recommendPlaylists)
+
+      // 加载歌词（允许失败）
+      if (lyricsRes && lyricsRes.ok) {
+        lyricsData.value = await lyricsRes.json()
+      }
+
+      dataLoaded.value = true
+    } catch (e) {
+      console.error('加载歌曲数据失败:', e)
+      dataLoadError.value = e.message
+    }
+  }
   
   // 自定义播放列表
   const customPlaylists = ref([])
