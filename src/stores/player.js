@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import songData from '../data/songs.json'
 import { resolveUrl } from '../utils/baseUrl'
 
 // 异步保存工具函数（不阻塞主线程）
@@ -29,31 +28,53 @@ const saveAsync = (key, data, delay = 100) => {
   }
 }
 
-export const usePlayerStore = defineStore('player', () => {
-  // 数据（动态替换资源路径，支持任意部署目录）
-  const baseUrl = import.meta.env.BASE_URL || '/'
-  const resolvePaths = (data) => {
-    if (Array.isArray(data)) {
-      return data.map(item => resolvePaths(item))
-    }
-    if (data && typeof data === 'object') {
-      const result = {}
-      for (const [key, value] of Object.entries(data)) {
-        // 替换以 /music-player/ 开头的硬编码路径
-        if (typeof value === 'string' && value.startsWith('/music-player/')) {
-          result[key] = resolveUrl(value.replace('/music-player/', ''))
-        } else {
-          result[key] = resolvePaths(value)
-        }
+// 数据加载状态
+const dataLoaded = ref(false)
+const dataLoadError = ref(null)
+
+// 运行时加载歌曲数据（从 public/data/songs.json）
+const loadSongData = async () => {
+  try {
+    const url = resolveUrl('data/songs.json')
+    const response = await fetch(url)
+    if (!response.ok) throw new Error(`加载歌曲数据失败: ${response.status}`)
+    const songData = await response.json()
+    
+    // 动态替换资源路径
+    const baseUrl = import.meta.env.BASE_URL || '/'
+    const resolvePaths = (data) => {
+      if (Array.isArray(data)) {
+        return data.map(item => resolvePaths(item))
       }
-      return result
+      if (data && typeof data === 'object') {
+        const result = {}
+        for (const [key, value] of Object.entries(data)) {
+          if (typeof value === 'string' && value.startsWith('/music-player/')) {
+            result[key] = resolveUrl(value.replace('/music-player/', ''))
+          } else {
+            result[key] = resolvePaths(value)
+          }
+        }
+        return result
+      }
+      return data
     }
-    return data
+    
+    songs.value = resolvePaths(songData.songs)
+    albums.value = resolvePaths(songData.albums)
+    recommendPlaylists.value = resolvePaths(songData.recommendPlaylists)
+    dataLoaded.value = true
+  } catch (e) {
+    console.error('加载歌曲数据失败:', e)
+    dataLoadError.value = e.message
   }
-  
-  const songs = ref(resolvePaths(songData.songs))
-  const albums = ref(resolvePaths(songData.albums))
-  const recommendPlaylists = ref(resolvePaths(songData.recommendPlaylists))
+}
+
+export const usePlayerStore = defineStore('player', () => {
+  // 数据（运行时从 JSON 文件加载）
+  const songs = ref([])
+  const albums = ref([])
+  const recommendPlaylists = ref([])
   
   // 自定义播放列表
   const customPlaylists = ref([])
@@ -1111,6 +1132,11 @@ export const usePlayerStore = defineStore('player', () => {
     getRecentSongsList,
     recordPlay,
     getStatsSummary,
-    getSongsByGenre
+    getSongsByGenre,
+
+    // 数据加载
+    loadSongData,
+    dataLoaded,
+    dataLoadError
   }
 })
