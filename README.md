@@ -10,9 +10,9 @@
 
 ### 🎵 核心播放功能
 - **歌曲播放** — 支持播放、暂停、上一首、下一首
-- **播放模式** — 列表循环、单曲循环、随机播放
+- **播放模式** — 列表循环、单曲循环（仅自动播放时循环）、随机播放
 - **进度控制** — 可拖拽进度条，显示当前时间/总时长
-- **音量调节** — 滑块调节音量大小（默认50%）
+- **音量调节** — 滑块调节音量大小（默认50%，范围限制0-1）
 - **锁屏控制** — Media Session API 支持锁屏显示歌曲信息和控制按钮
 - **播放队列** — 显示当前播放列表和手动添加的插队队列
 
@@ -72,6 +72,7 @@
 - **缓存优先策略** — Service Worker 缓存优先，减少网络请求
 - **图片懒加载** — 列表图片按需加载
 - **歌曲缓存** — 每日推荐歌曲结果缓存，避免重复计算
+- **运行时数据加载** — 歌曲和歌词数据运行时 fetch 加载，不打包进 JS
 
 ## 📁 项目结构
 
@@ -81,6 +82,9 @@ music-player/
 │   ├── audio/              # 音频文件（UUID命名）
 │   ├── images/
 │   │   └── covers/         # 封面图片（已压缩）
+│   ├── data/
+│   │   ├── songs.json     # 歌曲数据（运行时加载）
+│   │   └── lyrics.json    # 歌词数据（运行时加载）
 │   ├── pwa-icons/          # PWA 图标
 │   ├── manifest.json       # PWA 配置
 │   └── sw.js               # Service Worker（缓存优先）
@@ -92,6 +96,8 @@ music-player/
 │   │   ├── FloatingNotes.vue     # 浮动音符
 │   │   ├── PlayQueue.vue         # 播放队列面板
 │   │   ├── SongItem.vue          # 歌曲列表项
+│   │   ├── ShareModal.vue        # 分享弹窗
+│   │   ├── LyricsEditor.vue      # 歌词编辑器
 │   │   └── SkeletonLoader.vue    # 骨架屏
 │   ├── views/              # 页面
 │   │   ├── Home.vue          # 首页
@@ -103,14 +109,15 @@ music-player/
 │   │   ├── Love520.vue       # 520专题
 │   │   ├── MyMusic.vue       # 我的音乐
 │   │   └── Stats.vue         # 播放统计
-│   ├── stores/             # 状态管理
-│   │   └── player.js       # 播放器状态
-│   ├── data/               # 静态数据
-│   │   ├── songs.json      # 歌曲数据
-│   │   └── lyrics.json     # 歌词数据
+│   ├── stores/
+│   │   └── player.js       # 播放器状态（含运行时数据加载）
+│   ├── utils/
+│   │   └── baseUrl.js       # 全局路径工具（支持自定义部署路径）
 │   ├── router/             # 路由配置
 │   ├── App.vue             # 根组件
 │   └── main.js             # 入口文件
+├── deploy-dist.sh          # Bash 部署脚本
+├── deploy-dist.ps1         # PowerShell 部署脚本
 ├── index.html
 ├── vite.config.js
 └── package.json
@@ -126,6 +133,18 @@ npm install
 ### 开发模式
 ```bash
 npm run dev
+```
+
+### HTTPS 开发模式
+```bash
+# Linux / Mac
+HTTPS=true npm run dev
+
+# Windows PowerShell
+$env:HTTPS="true"; npm run dev
+
+# Windows CMD
+set HTTPS=true && npm run dev
 ```
 
 ### 构建生产版本
@@ -147,9 +166,46 @@ npm run preview
 - **Netlify** — 自动部署
 - **任何静态服务器**
 
+### 自定义部署路径
+
+修改 `vite.config.js` 中的 `BASE_URL`：
+
+```javascript
+const BASE_URL = process.env.BASE_URL || '/music-player/'
+```
+
+```bash
+# 根目录部署
+BASE_URL=/ npm run build
+
+# 子目录部署
+npm run build
+
+# 任意路径
+BASE_URL=/app/player/ npm run build
+```
+
+所有资源路径（JS、CSS、图片、音频、歌词）会自动适配，无需手动修改。
+
+### 构建并推送到指定分支
+
+```bash
+# Bash（Linux / Mac）
+./deploy-dist.sh [分支名] [BASE_URL]
+
+# 示例：推送到 dist 分支
+./deploy-dist.sh dist /music-player/
+
+# 示例：根目录部署推送到 gh-pages
+./deploy-dist.sh gh-pages /
+
+# PowerShell（Windows）
+.\deploy-dist.ps1 [分支名] [BASE_URL]
+```
+
 ### GitHub Pages 部署
 
-1. 修改 `vite.config.js` 中的 `base` 为你的仓库名
+1. 修改 `vite.config.js` 中的 `BASE_URL`
 2. 构建项目：`npm run build`
 3. 部署 `dist` 目录
 
@@ -209,10 +265,13 @@ npm run preview
 
 ### 添加新歌曲
 
+歌曲和歌词数据已改为**运行时加载**，更新数据**无需重新打包**：
+
 1. 将音频文件放入 `public/audio/`（建议使用 UUID 命名避免特殊字符）
-2. 在 `src/data/songs.json` 中添加歌曲信息
-3. 在 `src/data/lyrics.json` 中添加歌词（可选）
-4. 封面图片可从 MP3 ID3 标签提取或手动添加到 `public/images/covers/`
+2. 编辑 `public/data/songs.json` 添加歌曲信息
+3. 编辑 `public/data/lyrics.json` 添加歌词（可选）
+4. 封面图片添加到 `public/images/covers/`
+5. **直接替换服务器上的 `dist/data/` 目录即可，刷新页面生效**
 
 ### 歌曲数据格式
 
@@ -228,6 +287,11 @@ npm run preview
   "audioUrl": "/music-player/audio/22b8989e42a5.mp3"
 }
 ```
+
+> `audioUrl` 支持多种格式：
+> - 相对路径：`/music-player/audio/song.mp3`（自动适配部署路径）
+> - HTTP/HTTPS：`https://cdn.example.com/song.mp3`
+> - Blob URL：`blob:https://example.com/xxx`
 
 ### 歌词格式
 
@@ -245,11 +309,15 @@ npm run preview
 - [x] 快速喜欢功能
 - [x] 真实音频频谱
 - [x] 缓冲进度显示
+- [x] 歌词编辑器
+- [x] 自定义部署路径
+- [x] 运行时数据加载（无需打包即可更新歌曲）
+- [x] HTTPS 开发模式
+- [x] 单曲循环仅自动播放时生效
 - [ ] 键盘快捷键支持
 - [ ] 定时关闭功能
 - [ ] 歌手页面
 - [ ] 更多节日专题
-- [ ] 歌词编辑器
 
 ## 📄 开源协议
 
