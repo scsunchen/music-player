@@ -1041,9 +1041,15 @@ export const usePlayerStore = defineStore('player', () => {
     } else {
       // 页面回到前台，释放 Wake Lock
       releaseWakeLock()
-      // 恢复播放（仅当音频未结束且非用户主动暂停时）
-      if (audioElement && audioElement.paused && isPlaying.value && audioElement.src && !audioElement.ended) {
-        audioElement.play().catch(() => {})
+      // 恢复播放：仅当音频存在、未结束、非用户主动暂停、且当前时间未到末尾时
+      if (audioElement && audioElement.paused && isPlaying.value && audioElement.src) {
+        // 检查音频是否真的需要恢复（排除已结束、已切换歌曲等情况）
+        const duration = audioElement.duration || 0
+        const currentTime = audioElement.currentTime || 0
+        const isNearEnd = duration > 0 && currentTime >= duration - 0.5
+        if (!audioElement.ended && !isNearEnd && currentTime < duration) {
+          audioElement.play().catch(() => {})
+        }
       }
     }
   }
