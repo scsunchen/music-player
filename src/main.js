@@ -9,9 +9,9 @@ const pinia = createPinia()
 app.use(pinia)
 app.use(router)
 
-// 初始化：运行时加载歌曲数据
+app.mount('#app')
+
+// 初始化：mount 之后再使用 store
 import { usePlayerStore } from './stores/player'
 const playerStore = usePlayerStore()
 playerStore.loadSongData()
-
-app.mount('#app')
