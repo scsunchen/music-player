@@ -167,6 +167,7 @@ export const usePlayerStore = defineStore('player', () => {
     if (!audioElement) {
       audioElement = new Audio()
       audioElement.preload = 'metadata' // 流式加载：只预加载元数据
+      audioElement.crossOrigin = 'anonymous' // 允许 Web Audio API 跨域分析频谱
       // 确保音量在有效范围 0-1
       audioElement.volume = Math.max(0, Math.min(1, volume.value))
       audioElement.addEventListener('timeupdate', () => {
@@ -203,6 +204,13 @@ export const usePlayerStore = defineStore('player', () => {
         isPlaying.value = true
       })
       audioElement.addEventListener('error', (e) => {
+        // CORS 导致加载失败时，移除 crossOrigin 重试
+        if (audioElement.crossOrigin && !audioElement.src.startsWith('blob:')) {
+          console.warn('CORS 加载失败，移除 crossOrigin 重试:', currentSong.value?.audioUrl)
+          audioElement.crossOrigin = null
+          audioElement.load()
+          return
+        }
         console.error('音频加载失败:', currentSong.value?.audioUrl, e)
         isPlaying.value = false
       })
