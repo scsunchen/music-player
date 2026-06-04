@@ -184,6 +184,13 @@ export const usePlayerStore = defineStore('player', () => {
         }
       })
       audioElement.addEventListener('ended', () => {
+        // 防抖：避免 Chrome 页签激活时恢复播放导致误触发 ended
+        // 如果音频实际播放时间不足 1 秒就 ended，说明不是正常播放完毕，跳过
+        const playedDuration = audioElement.currentTime || 0
+        if (playedDuration < 1 && audioElement.duration > 10) {
+          console.log('ended 事件被忽略（播放时间过短，可能是页签恢复触发）')
+          return
+        }
         nextSong(true)
       })
       audioElement.addEventListener('pause', () => {
