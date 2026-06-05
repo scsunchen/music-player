@@ -1,0 +1,146 @@
+{
+  "category": "pop",
+  "songs": [
+    {
+      "id": 13,
+      "title": "你像风来了又走",
+      "artist": "晨晨",
+      "album": "你像风来了又走",
+      "albumId": 12,
+      "duration": 179,
+      "cover": "/music-player/images/covers/song13.jpg",
+      "audioUrl": "https://scsunchen.github.io/music-player/audio/%E4%BD%A0%E5%83%8F%E9%A3%8E%E6%9D%A5%E4%BA%86%E5%8F%88%E8%B5%B0.mp3"
+    },
+    {
+      "id": 14,
+      "title": "梦底",
+      "artist": "海来阿木",
+      "album": "梦底",
+      "albumId": 13,
+      "duration": 194,
+      "cover": "/music-player/images/梦底.jpg",
+      "audioUrl": "/music-player/audio/梦底.mp3",
+      "mvUrl": "/music-player/video/mengdi_mv.mp4"
+    },
+    {
+      "id": 161,
+      "title": "为什么你要伤害一个爱你的人",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 259,
+      "cover": "/music-player/images/covers/2a389c61057a_cover.png",
+      "audioUrl": "/music-player/audio/2a389c61057a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 162,
+      "title": "伤心的时候可以听情歌",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 218,
+      "cover": "/music-player/images/covers/d556e7694d1d_cover.png",
+      "audioUrl": "/music-player/audio/d556e7694d1d.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 163,
+      "title": "其实很寂寞",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 251,
+      "cover": "/music-player/images/covers/12f86bf94a40_cover.png",
+      "audioUrl": "/music-player/audio/12f86bf94a40.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 164,
+      "title": "原谅我一次",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 284,
+      "cover": "/music-player/images/covers/22a64a173800_cover.png",
+      "audioUrl": "/music-player/audio/22a64a173800.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 165,
+      "title": "只想做你的男人",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 277,
+      "cover": "/music-player/images/covers/f3f0bb8b22a7_cover.png",
+      "audioUrl": "/music-player/audio/f3f0bb8b22a7.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 166,
+      "title": "得到你的人却得不到你的心",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 261,
+      "cover": "/music-player/images/covers/adbb36ef488f_cover.png",
+      "audioUrl": "/music-player/audio/adbb36ef488f.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 167,
+      "title": "怀念过去",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 217,
+      "cover": "/music-player/images/covers/d3e0b64e0c6a_cover.png",
+      "audioUrl": "/music-player/audio/d3e0b64e0c6a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 168,
+      "title": "愚爱",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 272,
+      "cover": "/music-player/images/covers/ff74bedf17f4_cover.png",
+      "audioUrl": "/music-player/audio/ff74bedf17f4.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 169,
+      "title": "我该怎么做",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 255,
+      "cover": "/music-player/images/covers/071a72aa75ce_cover.png",
+      "audioUrl": "/music-player/audio/071a72aa75ce.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 170,
+      "title": "心痛2009",
+      "artist": "欢子",
+      "album": "欢子",
+      "albumId": 17,
+      "duration": 266,
+      "cover": "/music-player/images/covers/a1b2c3d4e5f6_cover.png",
+      "audioUrl": "/music-player/audio/a1b2c3d4e5f6.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 171,
+      "title": "写不完的温柔",
+      "artist": "大哥不洗头",
+      "album": "写不完的温柔",
+      "duration": 174,
+      "cover": "/music-player/images/covers/default_cover.jpg",
+      "audioUrl": "/music-player/audio/8216a1f3e8f9.mp3",
+      "genre": "pop"
+    }
+  ]
+}
