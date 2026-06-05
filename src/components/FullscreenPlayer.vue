@@ -651,9 +651,12 @@ const seek = (e) => {
 
 /* 右侧歌词面板 */
 .fs-right {
-  display: none;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 0;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* 无歌词提示 */
