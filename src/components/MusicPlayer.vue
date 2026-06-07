@@ -155,14 +155,14 @@ const playerStore = usePlayerStore()
 const router = useRouter()
 const visualizerRef = ref(null)
 
-// 连接音频可视化（首次播放时连接）
-let visualizerConnected = false
+// 连接音频可视化（音频元素变化时重新连接）
+let lastConnectedAudio = null
 watch(() => playerStore.isPlaying, (playing) => {
-  if (playing && !visualizerConnected && visualizerRef.value) {
+  if (playing && visualizerRef.value) {
     const audio = playerStore.getAudioElement()
-    if (audio) {
+    if (audio && audio !== lastConnectedAudio) {
       visualizerRef.value.connectAudio(audio)
-      visualizerConnected = true
+      lastConnectedAudio = audio
     }
   }
 })
