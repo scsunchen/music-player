@@ -61,7 +61,8 @@ const playerStore = usePlayerStore()
 const showShare = ref(false)
 
 const playlist = computed(() => {
-  const id = parseInt(route.params.id)
+  const id = parseInt(route?.params?.id)
+  if (!id || isNaN(id)) return null
   return playerStore.recommendPlaylists.find(p => p.id === id) ||
          playerStore.customPlaylists.find(p => p.id === id)
 })

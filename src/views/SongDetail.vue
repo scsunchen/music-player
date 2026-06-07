@@ -239,7 +239,8 @@ const isCurrentLine = (index) => {
 
 // 加载歌曲
 const loadSong = () => {
-  const id = parseInt(route.params.id)
+  const id = parseInt(route?.params?.id)
+  if (!id || isNaN(id)) { song.value = null; return }
   song.value = playerStore.songs.find(s => s.id === id) || null
 }
 
@@ -297,7 +298,7 @@ onMounted(() => {
   loadSong()
 })
 
-watch(() => route.params.id, () => {
+watch(() => route?.params?.id, () => {
   loadSong()
   nextTick(() => {
     window.scrollTo(0, 0)
