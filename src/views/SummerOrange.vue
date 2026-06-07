@@ -837,8 +837,9 @@ const toggleLike = (id) => {
 
 .footer-sub {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .footer-wave {
