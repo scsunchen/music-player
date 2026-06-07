@@ -180,7 +180,7 @@ export const usePlayerStore = defineStore('player', () => {
         currentTime.value = audioElement.currentTime
         updateMediaSessionPosition()
         // 无缝播放：接近结束时开始交叉淡入淡出
-        if (seamlessPlay.value && audioElement.duration > 0) {
+        if (seamlessPlay.value && audioElement.duration > crossfadeDuration * 2) {
           const remaining = audioElement.duration - audioElement.currentTime
           if (remaining <= crossfadeDuration && remaining > 0 && !nextAudioElement) {
             startCrossfade()
@@ -476,7 +476,7 @@ export const usePlayerStore = defineStore('player', () => {
     audioElement.addEventListener('timeupdate', () => {
       currentTime.value = audioElement.currentTime
       updateMediaSessionPosition()
-      if (seamlessPlay.value && audioElement.duration > 0) {
+      if (seamlessPlay.value && audioElement.duration > crossfadeDuration * 2) {
         const remaining = audioElement.duration - audioElement.currentTime
         if (remaining <= crossfadeDuration && remaining > 0 && !nextAudioElement) {
           startCrossfade()
@@ -537,6 +537,10 @@ export const usePlayerStore = defineStore('player', () => {
       nextAudioElement.src = ''
       nextAudioElement.load()
       nextAudioElement = null
+    }
+    // 恢复当前音频音量（交叉淡入可能被中断）
+    if (audioElement) {
+      audioElement.volume = volume.value
     }
   }
 
