@@ -155,17 +155,19 @@ const playerStore = usePlayerStore()
 const router = useRouter()
 const visualizerRef = ref(null)
 
-// 连接音频可视化（音频元素变化时重新连接）
+// 连接音频可视化（歌曲或播放状态变化时检查是否需要重连）
 let lastConnectedAudio = null
-watch(() => playerStore.isPlaying, (playing) => {
-  if (playing && visualizerRef.value) {
+const tryConnectVisualizer = () => {
+  if (playerStore.isPlaying && visualizerRef.value) {
     const audio = playerStore.getAudioElement()
     if (audio && audio !== lastConnectedAudio) {
       visualizerRef.value.connectAudio(audio)
       lastConnectedAudio = audio
     }
   }
-})
+}
+watch(() => playerStore.isPlaying, tryConnectVisualizer)
+watch(() => playerStore.currentSong?.id, tryConnectVisualizer)
 
 // 打开全屏播放页
 const openFullscreen = () => {
