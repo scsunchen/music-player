@@ -46,18 +46,18 @@
           </div>
         </div>
 
-        <!-- 520 专题 -->
-        <div class="banner-card love-card" @click="goToLove520">
-          <div class="banner-bg love-bg"></div>
+        <!-- 夏日专题 -->
+        <div class="banner-card summer-card" @click="goToSummer">
+          <div class="banner-bg summer-bg"></div>
           <div class="banner-content">
-            <div class="banner-icon love-icon">
-              <span style="font-size: 28px;">💕</span>
+            <div class="banner-icon summer-icon">
+              <span style="font-size: 28px;">🍊</span>
             </div>
             <div class="banner-text">
-              <h3>520 爱你</h3>
-              <p>甜蜜爱情专题</p>
+              <h3>橘子味的夏天</h3>
+              <p>清甜 · 日落氛围感</p>
             </div>
-            <button class="banner-play-btn love-play-btn">
+            <button class="banner-play-btn summer-play-btn">
               <svg viewBox="0 0 24 24" width="20" height="20">
                 <path fill="currentColor" d="M8 5v14l11-7z"/>
               </svg>
@@ -205,9 +205,9 @@ const goToLikedSongs = () => {
   router.push('/liked')
 }
 
-// 跳转到 520 专题
-const goToLove520 = () => {
-  router.push('/520')
+// 跳转到夏日专题
+const goToSummer = () => {
+  router.push('/summer')
 }
 </script>
 
@@ -264,21 +264,21 @@ const goToLove520 = () => {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b6b 100%);
 }
 
-.love-bg {
-  background: linear-gradient(135deg, #ffeaa7 0%, #fd79a8 50%, #e17055 100%);
+.summer-bg {
+  background: linear-gradient(135deg, #ffd8a6 0%, #ffb74d 50%, #ff8a65 100%);
 }
 
-.love-card:hover {
-  box-shadow: 0 12px 40px rgba(253, 121, 168, 0.3);
+.summer-card:hover {
+  box-shadow: 0 12px 40px rgba(255, 138, 101, 0.3);
 }
 
-.love-icon {
+.summer-icon {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.love-play-btn {
+.summer-play-btn {
   background: rgba(255, 255, 255, 0.95);
-  color: #fd79a8;
+  color: #ff8a65;
 }
 
 .banner-bg::before {

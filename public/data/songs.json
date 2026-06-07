@@ -1009,6 +1009,171 @@
       "cover": "/music-player/images/covers/2bdd58f70288_cover.jpg",
       "audioUrl": "/music-player/audio/2bdd58f70288.mp3",
       "genre": "pop"
+    },
+    {
+      "id": 200,
+      "title": "橘子味的夏天",
+      "artist": "新地",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 201,
+      "title": "橘子汽水",
+      "artist": "南拳妈妈",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 202,
+      "title": "橙",
+      "artist": "筠野",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 203,
+      "title": "波子汽水",
+      "artist": "Bomb 比尔 / LBI 利比",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 204,
+      "title": "青柠",
+      "artist": "徐秉龙 / 桃十五",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 205,
+      "title": "夏日漱石",
+      "artist": "橘子海",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 206,
+      "title": "落日橘子糖",
+      "artist": "达布希勒图",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 207,
+      "title": "贩卖日落",
+      "artist": "蓝心羽",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 208,
+      "title": "橘海",
+      "artist": "巴邓顿珠 / 你的大表哥曲甲",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 209,
+      "title": "夏天的风",
+      "artist": "温岚",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 210,
+      "title": "园游会",
+      "artist": "周杰伦",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 211,
+      "title": "他夏了夏天",
+      "artist": "苏打绿",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 212,
+      "title": "日落大道",
+      "artist": "梁博",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 213,
+      "title": "夏日的颜色",
+      "artist": "Fine 乐团",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
+    },
+    {
+      "id": 214,
+      "title": "星空剪影",
+      "artist": "蓝心羽",
+      "album": "橘子味的夏天",
+      "albumId": 19,
+      "duration": 0,
+      "cover": "",
+      "audioUrl": "",
+      "genre": "pop"
     }
   ],
   "albums": [
@@ -1263,6 +1428,29 @@
         175,
         176,
         177
+      ]
+    },
+    {
+      "id": 19,
+      "name": "橘子味的夏天",
+      "cover": "",
+      "description": "夏天是橘子汽水冒起的气泡，是黄昏染遍天空的橘粉，是晚风里轻轻晃动的旋律。这张歌单装满了暖橙色调的温柔与甜，适合傍晚散步、窗边发呆、和喜欢的人共享耳机。",
+      "songs": [
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214
       ]
     }
   ],
