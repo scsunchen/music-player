@@ -59,6 +59,11 @@
             <path fill="currentColor" d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z"/>
           </svg>
         </button>
+        <button class="btn-seamless" @click="playerStore.toggleSeamless" :title="playerStore.seamlessPlay ? '关闭无缝播放' : '开启无缝播放'" :class="{ active: playerStore.seamlessPlay }">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+          </svg>
+        </button>
         <button class="btn-prev" @click="playerStore.prevSong">
           <svg viewBox="0 0 24 24" width="24" height="24">
             <path fill="currentColor" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
@@ -150,17 +155,19 @@ const playerStore = usePlayerStore()
 const router = useRouter()
 const visualizerRef = ref(null)
 
-// 连接音频可视化（首次播放时连接）
-let visualizerConnected = false
-watch(() => playerStore.isPlaying, (playing) => {
-  if (playing && !visualizerConnected && visualizerRef.value) {
+// 连接音频可视化（歌曲或播放状态变化时检查是否需要重连）
+let lastConnectedAudio = null
+const tryConnectVisualizer = () => {
+  if (playerStore.isPlaying && visualizerRef.value) {
     const audio = playerStore.getAudioElement()
-    if (audio) {
+    if (audio && audio !== lastConnectedAudio) {
       visualizerRef.value.connectAudio(audio)
-      visualizerConnected = true
+      lastConnectedAudio = audio
     }
   }
-})
+}
+watch(() => playerStore.isPlaying, tryConnectVisualizer)
+watch(() => playerStore.currentSong?.id, tryConnectVisualizer)
 
 // 打开全屏播放页
 const openFullscreen = () => {
@@ -512,6 +519,17 @@ const onTouchEnd = () => {
 
 .btn-mode {
   font-size: 18px;
+}
+
+.btn-seamless {
+  font-size: 18px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.btn-seamless.active {
+  opacity: 1;
+  color: #667eea;
 }
 
 /* 进度条 */

@@ -1,9 +1,10 @@
-const CACHE_NAME = 'music-player-v3'
+const CACHE_NAME = 'music-player-v5'
 
-// 需要缓存的静态资源
+// 动态计算基础路径（基于 SW 所在位置）
+const BASE = new URL('.', self.location.href).pathname
 const STATIC_ASSETS = [
-  '/music-player/',
-  '/music-player/index.html'
+  BASE,
+  BASE + 'index.html'
 ]
 
 // 安装时预缓存

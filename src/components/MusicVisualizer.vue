@@ -139,9 +139,22 @@ const draw = () => {
   }
 }
 
-// 连接音频源（全局只连接一次）
+// 连接音频源
 const connectAudio = (audioElement) => {
-  if (!audioContext || !analyser || audioSourceConnected) return
+  if (!audioContext || !analyser) return
+  
+  // 如果已经连接过同一个 audio 元素，跳过
+  if (audioSourceConnected && sourceNode && sourceNode.mediaElement === audioElement) return
+  
+  // 如果连接了不同的 audio 元素（无缝播放切换后），需要断开旧的
+  if (audioSourceConnected && sourceNode) {
+    try {
+      sourceNode.disconnect()
+    } catch (e) {}
+    audioSourceConnected = false
+    sourceNode = null
+  }
+  
   try {
     sourceNode = audioContext.createMediaElementSource(audioElement)
     sourceNode.connect(analyser)

@@ -131,7 +131,6 @@
 import { ref, computed, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
-import lyricsData from '../data/lyrics.json'
 
 const props = defineProps({
   visible: Boolean
@@ -183,7 +182,7 @@ const goToDetail = () => {
 // 歌词解析
 const lyricsLines = computed(() => {
   if (!playerStore.currentSong) return []
-  const raw = lyricsData[playerStore.currentSong.id]?.lyrics || ''
+  const raw = playerStore.lyricsData[playerStore.currentSong.id]?.lyrics || ''
   return raw.split('\n')
     .filter(line => line.trim())
     .map(line => {
@@ -652,9 +651,12 @@ const seek = (e) => {
 
 /* 右侧歌词面板 */
 .fs-right {
-  display: none;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 0;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* 无歌词提示 */

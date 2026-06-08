@@ -1,0 +1,98 @@
+{
+  "category": "xuwei",
+  "songs": [
+    {
+      "id": 152,
+      "title": "蓝莲花",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 271,
+      "cover": "/music-player/images/covers/22b8989e42a5_cover.jpg",
+      "audioUrl": "/music-player/audio/22b8989e42a5.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Gx411J7Gx&autoplay=0"
+    },
+    {
+      "id": 153,
+      "title": "故乡",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 314,
+      "cover": "/music-player/images/covers/fbc8a4cb3c22_cover.jpg",
+      "audioUrl": "/music-player/audio/fbc8a4cb3c22.mp3"
+    },
+    {
+      "id": 154,
+      "title": "曾经的你",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 262,
+      "cover": "/music-player/images/covers/deed6d493a39_cover.jpg",
+      "audioUrl": "/music-player/audio/deed6d493a39.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1ms411Q7vR&autoplay=0"
+    },
+    {
+      "id": 155,
+      "title": "像风一样自由",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 222,
+      "cover": "/music-player/images/covers/552fe25faac9_cover.png",
+      "audioUrl": "/music-player/audio/552fe25faac9.mp3",
+      "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Nx411n7eJ&autoplay=0"
+    },
+    {
+      "id": 156,
+      "title": "执着",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 279,
+      "cover": "/music-player/images/covers/ec181f738cd5_cover.png",
+      "audioUrl": "/music-player/audio/ec181f738cd5.mp3"
+    },
+    {
+      "id": 157,
+      "title": "时光",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 305,
+      "cover": "/music-player/images/covers/52a1ef28d729_cover.jpg",
+      "audioUrl": "/music-player/audio/52a1ef28d729.mp3"
+    },
+    {
+      "id": 158,
+      "title": "我的秋天",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 268,
+      "cover": "/music-player/images/covers/5cc55d824dcb_cover.png",
+      "audioUrl": "/music-player/audio/5cc55d824dcb.mp3"
+    },
+    {
+      "id": 159,
+      "title": "救赎之旅",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 332,
+      "cover": "/music-player/images/covers/bf8a3923db1c_cover.jpg",
+      "audioUrl": "/music-player/audio/bf8a3923db1c.mp3"
+    },
+    {
+      "id": 160,
+      "title": "生活不止眼前的苟且",
+      "artist": "许巍",
+      "album": "许巍",
+      "albumId": 16,
+      "duration": 309,
+      "cover": "/music-player/images/covers/53cc8297d764_cover.jpg",
+      "audioUrl": "/music-player/audio/53cc8297d764.mp3"
+    }
+  ]
+}

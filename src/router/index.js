@@ -61,6 +61,11 @@ const routes = [
     component: () => import('../views/Love520.vue')
   },
   {
+    path: '/summer',
+    name: 'SummerOrange',
+    component: () => import('../views/SummerOrange.vue')
+  },
+  {
     path: '/stats',
     name: 'Stats',
     component: () => import('../views/Stats.vue')
@@ -80,18 +85,25 @@ router.beforeEach((to, from, next) => {
     return
   }
   
-  // 设置过渡方向类名
-  const direction = getTransitionDirection(to, from)
-  document.documentElement.setAttribute('data-transition', direction)
-  
-  // 使用 View Transitions API
-  const transition = document.startViewTransition(() => {
+  try {
+    // 设置过渡方向类名
+    const direction = getTransitionDirection(to, from)
+    document.documentElement.setAttribute('data-transition', direction)
+    
+    // 使用 View Transitions API
+    const transition = document.startViewTransition(() => {
+      next()
+    })
+    
+    transition.finished.then(() => {
+      document.documentElement.removeAttribute('data-transition')
+    }).catch(() => {
+      document.documentElement.removeAttribute('data-transition')
+    })
+  } catch (e) {
+    // View Transitions 失败，直接跳转
     next()
-  })
-  
-  transition.finished.then(() => {
-    document.documentElement.removeAttribute('data-transition')
-  })
+  }
 })
 
 export default router

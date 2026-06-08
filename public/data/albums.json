@@ -1,0 +1,257 @@
+{
+  "albums": [
+    {
+      "id": 1,
+      "name": "十一月的萧邦",
+      "artist": "周杰伦",
+      "cover": "/music-player/images/covers/album1.jpg",
+      "songs": [],
+      "releaseDate": "2005-11-01",
+      "description": "周杰伦2005年发行的音乐专辑，融合古典与流行，收录《夜曲》《发如雪》等经典曲目，是华语乐坛里程碑式的作品。"
+    },
+    {
+      "id": 2,
+      "name": "叶惠美",
+      "artist": "周杰伦",
+      "cover": "/music-player/images/covers/album2.jpg",
+      "songs": [],
+      "releaseDate": "2003-07-31",
+      "description": "周杰伦2003年发行的音乐专辑，以母亲的名字命名。收录《以父之名》《晴天》《东风破》等传世经典，被公认为周杰伦最具艺术性的专辑。"
+    },
+    {
+      "id": 3,
+      "name": "七里香",
+      "artist": "周杰伦",
+      "cover": "/music-player/images/covers/album3.jpg",
+      "songs": [],
+      "releaseDate": "2004-08-03",
+      "description": "周杰伦2004年发行的音乐专辑，收录《七里香》《借口》《园游会》等歌曲，充满夏日浪漫气息，是周杰伦最具代表性的专辑之一。"
+    },
+    {
+      "id": 4,
+      "name": "魔杰座",
+      "artist": "周杰伦",
+      "cover": "/music-player/images/covers/album4.jpg",
+      "songs": [],
+      "releaseDate": "2008-10-09",
+      "description": "周杰伦2008年发行的音乐专辑，收录《稻香》《说好的幸福呢》《给我一首歌的时间》等，风格多元，展现音乐才华。"
+    },
+    {
+      "id": 5,
+      "name": "周杰伦的床边故事",
+      "artist": "周杰伦",
+      "cover": "/music-player/images/covers/album5.jpg",
+      "songs": [],
+      "releaseDate": "2016-06-24",
+      "description": "周杰伦2016年发行的音乐专辑，以童话故事为概念，收录《告白气球》《前世情人》《不该》等，充满温暖与想象力。"
+    },
+    {
+      "id": 6,
+      "name": "光年之外",
+      "artist": "邓紫棋",
+      "cover": "/music-player/images/covers/album6.jpg",
+      "songs": [],
+      "releaseDate": "2016-12-05",
+      "description": "邓紫棋为电影《太空旅客》演唱的主题曲，以太空为意象诉说跨越时空的爱情，MV在YouTube突破2亿播放量。"
+    },
+    {
+      "id": 7,
+      "name": "Xposed",
+      "artist": "邓紫棋",
+      "cover": "/music-player/images/covers/album7.jpg",
+      "songs": [],
+      "releaseDate": "2012-07-05",
+      "description": "邓紫棋2012年发行的音乐专辑，展现其强大的创作和演唱实力，收录《泡沫》《潜意识的残酷》等经典作品。"
+    },
+    {
+      "id": 8,
+      "name": "绅士",
+      "artist": "薛之谦",
+      "cover": "/music-player/images/covers/album8.jpg",
+      "songs": [],
+      "releaseDate": "2015-06-05",
+      "description": "薛之谦2015年发行的音乐专辑，收录《绅士》《演员》《一半》等歌曲，以细腻的情感表达和独特的嗓音打动了无数听众。"
+    },
+    {
+      "id": 9,
+      "name": "起风了",
+      "artist": "买辣椒也用券",
+      "cover": "/music-player/images/covers/album9.jpg",
+      "songs": [],
+      "releaseDate": "2019-01-15",
+      "description": "买辣椒也用券2019年发行的翻唱单曲，改编自高桥优《ヤキモチ》，以温柔嗓音诠释青春与遗憾，成为年度现象级歌曲。"
+    },
+    {
+      "id": 10,
+      "name": "猎户星座",
+      "artist": "朴树",
+      "cover": "/music-player/images/covers/album10.jpg",
+      "songs": [],
+      "releaseDate": "2017-04-30",
+      "description": "朴树2017年发行的音乐专辑，距上一张专辑14年之久。收录《平凡之路》《清白之年》《达尼亚》等，充满对人生的思考与感悟。"
+    },
+    {
+      "id": 11,
+      "name": "那些年",
+      "artist": "胡夏",
+      "cover": "/music-player/images/covers/album11.jpg",
+      "songs": [],
+      "releaseDate": "2011-08-08",
+      "description": "胡夏为电影《那些年，我们一起追的女孩》演唱的主题曲，以纯净嗓音唱出青春的悸动与遗憾，成为华语乐坛经典情歌。"
+    },
+    {
+      "id": 12,
+      "name": "风来的方向",
+      "artist": "晨晨",
+      "cover": "/music-player/images/covers/album12.jpg",
+      "songs": [
+        13
+      ],
+      "releaseDate": "2026-05-16",
+      "description": "晨晨2026年发行的原创音乐专辑，以清新温暖的曲风，描绘生活中的美好瞬间。"
+    },
+    {
+      "id": 13,
+      "name": "梦底",
+      "artist": "海来阿木",
+      "cover": "/music-player/images/梦底.jpg",
+      "songs": [
+        14
+      ],
+      "description": "2026年央视春晚原创歌曲，海来阿木作词作曲。原名《来不及》，历经25版打磨，以极简歌词和沧桑烟嗓，唱尽成年人最深的思念与遗憾，从私人执念升华为全民共情的情感之作。",
+      "releaseDate": "2026-02-17"
+    },
+    {
+      "id": 14,
+      "name": "国风精选",
+      "artist": "群星",
+      "cover": "/music-player/images/covers/guofeng.jpg",
+      "songs": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151
+      ],
+      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美",
+      "releaseDate": "2026-05-19"
+    },
+    {
+      "id": 16,
+      "name": "许巍",
+      "artist": "许巍",
+      "cover": "/music-player/images/covers/xuwei.jpg",
+      "songs": [
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "description": "许巍经典歌曲合集。每个人的心里，都有一首许巍的歌，唱着自由、远方和曾经的梦想。",
+      "releaseDate": "2026-05-19"
+    },
+    {
+      "id": 17,
+      "name": "欢子",
+      "cover": "/music-player/images/covers/huanzi.jpg",
+      "songs": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170
+      ],
+      "description": "欢子经典情歌合集。以独特的嗓音和深情的演绎，唱出爱情中的甜蜜与心酸。《得到你的人却得不到你的心》《原谅我一次》等经典曲目，承载了一代人的情感记忆。"
+    },
+    {
+      "id": 18,
+      "name": "凤凰传奇",
+      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
+      "description": "凤凰传奇经典歌曲合集。玲花高亢嘹亮的嗓音与曾毅独特的说唱风格完美融合，开创了民族流行音乐的新纪元。从《奢香夫人》到《最炫民族风》，每一首都是传唱不衰的经典。",
+      "songs": [
+        172,
+        173,
+        174,
+        175,
+        176,
+        177
+      ]
+    }
+  ]
+}

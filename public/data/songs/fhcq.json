@@ -1,0 +1,71 @@
+{
+  "category": "fhcq",
+  "songs": [
+    {
+      "id": 172,
+      "title": "奢香夫人",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 260,
+      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
+      "audioUrl": "/music-player/audio/32d37eb29697.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 173,
+      "title": "我从草原来",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 220,
+      "cover": "/music-player/images/covers/bed156103642_cover.png",
+      "audioUrl": "/music-player/audio/bed156103642.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 174,
+      "title": "指间沙",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 223,
+      "cover": "/music-player/images/covers/ca6ab3a2b20a_cover.jpg",
+      "audioUrl": "/music-player/audio/ca6ab3a2b20a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 175,
+      "title": "最炫民族风",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 284,
+      "cover": "/music-player/images/covers/559f5dbc8cae_cover.jpg",
+      "audioUrl": "/music-player/audio/559f5dbc8cae.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 176,
+      "title": "等爱的玫瑰",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 288,
+      "cover": "/music-player/images/covers/e588a1745e61_cover.png",
+      "audioUrl": "/music-player/audio/e588a1745e61.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 177,
+      "title": "郎的诱惑",
+      "artist": "凤凰传奇",
+      "album": "凤凰传奇",
+      "albumId": 18,
+      "duration": 221,
+      "cover": "/music-player/images/covers/2bdd58f70288_cover.jpg",
+      "audioUrl": "/music-player/audio/2bdd58f70288.mp3",
+      "genre": "pop"
+    }
+  ]
+}

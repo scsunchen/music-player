@@ -50,7 +50,8 @@ const route = useRoute()
 const playerStore = usePlayerStore()
 
 const album = computed(() => {
-  const id = parseInt(route.params.id)
+  const id = parseInt(route?.params?.id)
+  if (!id || isNaN(id)) return null
   return playerStore.albums.find(a => a.id === id)
 })
 
