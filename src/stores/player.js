@@ -1322,7 +1322,12 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   // 音频焦点变化处理（安卓后台播放恢复）
+  // 注意：此功能在桌面端可能导致页签切换时自动播放，已改为仅在移动端生效
   const handleAudioFocus = () => {
+    // 仅在移动设备上启用自动恢复（桌面端页签切换不应自动播放）
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    if (!isMobile) return
+
     const audio = initAudio()
     // 当音频被其他应用暂停后，尝试恢复播放
     audio.addEventListener('pause', () => {
