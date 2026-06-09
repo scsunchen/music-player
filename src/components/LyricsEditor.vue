@@ -88,7 +88,8 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { usePlayerStore } from '../stores/player'
-import lyricsData from '../data/lyrics.json'
+
+const lyricsData = ref({})
 
 const props = defineProps({
   songId: {
@@ -138,8 +139,15 @@ const formatTime = (seconds) => {
 }
 
 // 加载歌词
-onMounted(() => {
-  const songLyrics = lyricsData[props.songId]
+onMounted(async () => {
+  try {
+    const res = await fetch('/music-player/data/lyrics.json')
+    lyricsData.value = await res.json()
+  } catch (e) {
+    console.warn('加载歌词数据失败:', e)
+  }
+
+  const songLyrics = lyricsData.value[props.songId]
   if (songLyrics?.lyrics) {
     lyricsLines.value = parseLyrics(songLyrics.lyrics)
   }
