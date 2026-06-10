@@ -101,12 +101,6 @@ export const usePlayerStore = defineStore('player', () => {
   const volume = ref(0.5)
   const playMode = ref('list') // list, shuffle, repeat
   
-  // 无缝播放
-  const seamlessPlay = ref(false) // 开关
-  const crossfadeDuration = 5 // 交叉淡入淡出时长（秒）
-  let nextAudioElement = null // 下一首音频元素
-  let crossfadeTimer = null // 淡入淡出定时器
-  
   // 主题色
   const themeColor = ref('#667eea')
   
@@ -179,13 +173,6 @@ export const usePlayerStore = defineStore('player', () => {
       audioElement.addEventListener('timeupdate', () => {
         currentTime.value = audioElement.currentTime
         updateMediaSessionPosition()
-        // 无缝播放：接近结束时开始交叉淡入淡出
-        if (seamlessPlay.value && audioElement.duration > crossfadeDuration * 2) {
-          const remaining = audioElement.duration - audioElement.currentTime
-          if (remaining <= crossfadeDuration && remaining > 0 && !nextAudioElement) {
-            startCrossfade()
-          }
-        }
       })
       audioElement.addEventListener('loadedmetadata', () => {
         duration.value = audioElement.duration
@@ -253,9 +240,6 @@ export const usePlayerStore = defineStore('player', () => {
       console.error('无效的歌曲对象:', song)
       return
     }
-
-    // 清理正在进行的无缝播放
-    cleanupCrossfade()
 
     const requestId = ++playRequestIndex
     const audio = initAudio()
@@ -347,215 +331,6 @@ export const usePlayerStore = defineStore('player', () => {
       preloadAudio.src = targetSong.audioUrl
       // 只加载元数据（时长等），不下载全部音频数据
       console.log('预加载:', targetSong.title)
-    }
-  }
-
-  // 无缝播放：获取下一首歌曲
-  const getNextSong = () => {
-    if (currentPlaylist.value.length === 0) return null
-    
-    // 单曲循环模式：不进行无缝播放（回到开头即可）
-    if (playMode.value === 'repeat') return null
-    
-    if (playQueue.value.length > 0) {
-      return playQueue.value[0]
-    } else if (playMode.value === 'shuffle') {
-      const nextIndex = Math.floor(Math.random() * currentPlaylist.value.length)
-      return currentPlaylist.value[nextIndex]
-    } else {
-      const nextIndex = (currentIndex.value + 1) % currentPlaylist.value.length
-      return currentPlaylist.value[nextIndex]
-    }
-  }
-
-  // 无缝播放：开始交叉淡入淡出
-  const startCrossfade = () => {
-    const nextSong = getNextSong()
-    if (!nextSong || !nextSong.audioUrl) return
-    
-    console.log('无缝播放：开始交叉淡入淡出', nextSong.title)
-    
-    // 创建新的音频元素
-    nextAudioElement = new Audio()
-    nextAudioElement.crossOrigin = 'anonymous'
-    nextAudioElement.volume = 0
-    nextAudioElement.src = nextSong.audioUrl
-    
-    // 等待加载完成
-    nextAudioElement.addEventListener('canplay', () => {
-      if (!nextAudioElement) return
-      
-      nextAudioElement.play().then(() => {
-        // 开始交叉淡入淡出
-        performCrossfade(nextSong)
-      }).catch(err => {
-        console.error('无缝播放：下一首播放失败', err)
-        cleanupCrossfade()
-      })
-    }, { once: true })
-    
-    // 加载音频
-    nextAudioElement.load()
-  }
-
-  // 无缝播放：执行交叉淡入淡出
-  const performCrossfade = (nextSong) => {
-    const steps = 20 // 淡出步数
-    const stepDuration = (crossfadeDuration * 1000) / steps
-    let currentStep = 0
-    
-    crossfadeTimer = setInterval(() => {
-      currentStep++
-      const progress = currentStep / steps
-      
-      // 当前歌曲音量逐渐降低
-      if (audioElement) {
-        audioElement.volume = Math.max(0, volume.value * (1 - progress))
-      }
-      
-      // 下一首音量逐渐升高
-      if (nextAudioElement) {
-        nextAudioElement.volume = Math.min(volume.value, volume.value * progress)
-      }
-      
-      // 淡入淡出完成
-      if (currentStep >= steps) {
-        clearInterval(crossfadeTimer)
-        crossfadeTimer = null
-        
-        // 切换到下一首
-        completeCrossfade(nextSong)
-      }
-    }, stepDuration)
-  }
-
-  // 无缝播放：完成切换
-  const completeCrossfade = (nextSongData) => {
-    // 停止旧音频
-    if (audioElement) {
-      audioElement.pause()
-      audioElement.src = ''
-      audioElement.load()
-    }
-    
-    // 新音频成为当前音频
-    audioElement = nextAudioElement
-    nextAudioElement = null
-    
-    // 恢复音量
-    audioElement.volume = volume.value
-    
-    // 如果来自播放队列，从队列中移除
-    if (playQueue.value.length > 0 && playQueue.value[0].id === nextSongData.id) {
-      playQueue.value.shift()
-      savePlayQueue()
-    }
-    
-    // 更新状态
-    currentSong.value = nextSongData
-    const idx = currentPlaylist.value.findIndex(s => s.id === nextSongData.id)
-    currentIndex.value = idx !== -1 ? idx : currentIndex.value
-    isPlaying.value = true
-    
-    // 重新绑定事件
-    bindAudioEvents()
-    
-    // 更新其他状态
-    extractColorFromCover(nextSongData.cover)
-    addToRecent(nextSongData.id)
-    updateMediaSession(nextSongData)
-    recordPlay(nextSongData)
-    
-    console.log('无缝播放：已切换到', nextSongData.title)
-  }
-
-  // 无缝播放：重新绑定音频事件
-  const bindAudioEvents = () => {
-    if (!audioElement) return
-    
-    audioElement.addEventListener('timeupdate', () => {
-      currentTime.value = audioElement.currentTime
-      updateMediaSessionPosition()
-      if (seamlessPlay.value && audioElement.duration > crossfadeDuration * 2) {
-        const remaining = audioElement.duration - audioElement.currentTime
-        if (remaining <= crossfadeDuration && remaining > 0 && !nextAudioElement) {
-          startCrossfade()
-        }
-      }
-    })
-    
-    audioElement.addEventListener('loadedmetadata', () => {
-      duration.value = audioElement.duration
-    })
-    
-    audioElement.addEventListener('progress', () => {
-      if (audioElement.buffered.length > 0) {
-        const bufferedEnd = audioElement.buffered.end(audioElement.buffered.length - 1)
-        bufferedProgress.value = (bufferedEnd / audioElement.duration) * 100
-      }
-    })
-    
-    audioElement.addEventListener('ended', () => {
-      const playedDuration = audioElement.currentTime || 0
-      if (playedDuration < 1 && audioElement.duration > 10) {
-        console.log('ended 事件被忽略（播放时间过短）')
-        return
-      }
-      // 无缝播放模式下，不触发 nextSong，因为已经通过交叉淡入淡出切换了
-      if (!seamlessPlay.value) {
-        nextSong(true)
-      }
-    })
-    
-    audioElement.addEventListener('play', () => {
-      isPlaying.value = true
-    })
-    
-    audioElement.addEventListener('pause', () => {
-      // 仅更新状态，不处理
-    })
-    
-    audioElement.addEventListener('error', (e) => {
-      if (audioElement.crossOrigin && !audioElement.src.startsWith('blob:')) {
-        audioElement.crossOrigin = null
-        audioElement.load()
-        return
-      }
-      console.error('音频加载失败:', currentSong.value?.audioUrl, e)
-      isPlaying.value = false
-    })
-  }
-
-  // 无缝播放：清理（函数声明，可被提前调用）
-  function cleanupCrossfade() {
-    if (crossfadeTimer) {
-      clearInterval(crossfadeTimer)
-      crossfadeTimer = null
-    }
-    if (nextAudioElement) {
-      nextAudioElement.pause()
-      nextAudioElement.src = ''
-      nextAudioElement.load()
-      nextAudioElement = null
-    }
-    // 恢复当前音频音量（交叉淡入可能被中断）
-    if (audioElement) {
-      audioElement.volume = volume.value
-    }
-  }
-
-  // 切换无缝播放开关
-  const toggleSeamless = () => {
-    seamlessPlay.value = !seamlessPlay.value
-    // 关闭时清理正在进行的 crossfade
-    if (!seamlessPlay.value) {
-      cleanupCrossfade()
-    }
-    // 保存到 localStorage
-    try {
-      localStorage.setItem('seamlessPlay', JSON.stringify(seamlessPlay.value))
-    } catch (e) {
-      console.warn('保存无缝播放设置失败:', e)
     }
   }
 
@@ -661,7 +436,6 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const togglePlay = () => {
-    cleanupCrossfade()
     const audio = initAudio()
     if (isPlaying.value) {
       audio.pause()
@@ -723,7 +497,6 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const nextSong = (isAutoPlay = false) => {
-    cleanupCrossfade()
     // 调试日志
     console.log('nextSong 被调用', {
       isAutoPlay,
@@ -805,7 +578,6 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const prevSong = () => {
-    cleanupCrossfade()
     if (currentPlaylist.value.length === 0) return
 
     // 只有一首歌时，直接重新开始播放（不切换）
@@ -834,7 +606,6 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const seekTo = (time) => {
-    cleanupCrossfade()
     const audio = initAudio()
     audio.currentTime = time
     currentTime.value = time
@@ -846,10 +617,6 @@ export const usePlayerStore = defineStore('player', () => {
     const clampedVal = Math.max(0, Math.min(1, val))
     volume.value = clampedVal
     audio.volume = clampedVal
-    // 同步无缝播放的下一首音频音量
-    if (nextAudioElement) {
-      nextAudioElement.volume = clampedVal
-    }
   }
   
   const togglePlayMode = () => {
@@ -1190,7 +957,6 @@ export const usePlayerStore = defineStore('player', () => {
       currentTime: currentTime.value,
       volume: volume.value,
       playMode: playMode.value,
-      seamlessPlay: seamlessPlay.value,
       savedAt: Date.now()
     }
     saveAsync('playerSession', data)
@@ -1209,10 +975,6 @@ export const usePlayerStore = defineStore('player', () => {
         }
         if (data.playMode) {
           playMode.value = data.playMode
-        }
-        // 恢复无缝播放设置
-        if (data.seamlessPlay !== undefined) {
-          seamlessPlay.value = data.seamlessPlay
         }
         
         // 恢复歌曲（但不自动播放）
@@ -1414,10 +1176,6 @@ export const usePlayerStore = defineStore('player', () => {
     loadSongData,
     dataLoaded,
     dataLoadError,
-    lyricsData,
-
-    // 无缝播放
-    seamlessPlay,
-    toggleSeamless
+    lyricsData
   }
 })
