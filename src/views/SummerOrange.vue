@@ -232,7 +232,7 @@ const playSong = (song) => {
 }
 
 const toggleLike = (id) => {
-  playerStore.toggleLike(id)
+  playerStore.toggleLikeSong(id)
 }
 </script>
 
