@@ -452,61 +452,7 @@ export const usePlayerStore = defineStore('player', () => {
     updateMediaSessionState()
   }
   
-  // ===== 淡入淡出效果 =====
-  const fadeOutDuration = 800 // 淡入淡出时长（毫秒）
-  
-  const fadeOut = (audio) => {
-    return new Promise((resolve) => {
-      const startVolume = audio.volume
-      const startTime = Date.now()
-      
-      const fade = () => {
-        const elapsed = Date.now() - startTime
-        const progress = Math.min(elapsed / fadeOutDuration, 1)
-        audio.volume = startVolume * (1 - progress)
-        
-        if (progress < 1) {
-          requestAnimationFrame(fade)
-        } else {
-          audio.pause()
-          audio.volume = startVolume // 恢复音量
-          resolve()
-        }
-      }
-      
-      requestAnimationFrame(fade)
-    })
-  }
-  
-  const fadeIn = (audio, targetVolume) => {
-    const startTime = Date.now()
-    audio.volume = 0
-    audio.play().catch(() => {})
-    
-    const fade = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / fadeOutDuration, 1)
-      audio.volume = targetVolume * progress
-      
-      if (progress < 1) {
-        requestAnimationFrame(fade)
-      }
-    }
-    
-    requestAnimationFrame(fade)
-  }
-  
   const nextSong = (isAutoPlay = false) => {
-    // 调试日志
-    console.log('nextSong 被调用', {
-      isAutoPlay,
-      queueLength: playQueue.value.length,
-      playlistLength: currentPlaylist.value.length,
-      currentIndex: currentIndex.value,
-      playMode: playMode.value,
-      currentSong: currentSong.value?.title
-    })
-    
     // 优先播放队列中的歌曲
     if (playQueue.value.length > 0) {
       const queueSong = playQueue.value.shift()
@@ -529,15 +475,12 @@ export const usePlayerStore = defineStore('player', () => {
     }
 
     if (currentPlaylist.value.length === 0) {
-      // 没有播放列表，停止播放
-      console.log('播放列表为空，停止播放')
       isPlaying.value = false
       return
     }
 
     // 只有一首歌时，直接重新开始播放（不切换）
     if (currentPlaylist.value.length === 1) {
-      console.log('只有一首歌，重新开始播放')
       const audio = initAudio()
       audio.currentTime = 0
       audio.play().then(() => {
@@ -549,32 +492,18 @@ export const usePlayerStore = defineStore('player', () => {
       return
     }
 
-    // 淡出当前歌曲
-    const currentAudio = initAudio()
-    fadeOut(currentAudio).then(() => {
-      // 播放下一首
-      if (playMode.value === 'shuffle') {
-        const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
-        currentIndex.value = randomIndex
-      } else {
-        currentIndex.value = (currentIndex.value + 1) % currentPlaylist.value.length
-      }
-      
-      const nextSongData = currentPlaylist.value[currentIndex.value]
-      if (nextSongData) {
-        currentSong.value = nextSongData
-        const newAudio = initAudio()
-        newAudio.src = nextSongData.audioUrl
-        extractColorFromCover(nextSongData.cover)
-        addToRecent(nextSongData.id)
-        updateMediaSession(nextSongData)
-        recordPlay(nextSongData)
-        newAudio.load()
-        fadeIn(newAudio, volume.value)
-        isPlaying.value = true
-        preloadNextSong()
-      }
-    })
+    // 切到下一首
+    if (playMode.value === 'shuffle') {
+      const randomIndex = Math.floor(Math.random() * currentPlaylist.value.length)
+      currentIndex.value = randomIndex
+    } else {
+      currentIndex.value = (currentIndex.value + 1) % currentPlaylist.value.length
+    }
+
+    const nextSongData = currentPlaylist.value[currentIndex.value]
+    if (nextSongData) {
+      playSong(nextSongData)
+    }
   }
   
   const prevSong = () => {
