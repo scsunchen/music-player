@@ -310,7 +310,7 @@ const seek = (e) => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&display=swap');
+/* 本地字体栈，不依赖 Google Fonts */
 
 .fullscreen-player {
   position: fixed;
@@ -320,7 +320,7 @@ const seek = (e) => {
   flex-direction: column;
   background: #07070f;
   overflow: hidden;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 }
 
 /* ===== 动态氛围背景 ===== */
@@ -595,7 +595,7 @@ const seek = (e) => {
 }
 
 .fs-title {
-  font-family: 'Playfair Display', serif;
+  font-family: Georgia, 'Times New Roman', 'PingFang SC', 'Songti SC', serif;
   font-size: 26px;
   font-weight: 800;
   line-height: 1.2;

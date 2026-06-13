@@ -185,14 +185,14 @@ const formatDuration = (seconds) => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800&display=swap');
+/* 本地字体栈，不依赖 Google Fonts */
 
 .album-page {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
   color: #fff;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 }
 
 /* ===== 大气背景 ===== */
@@ -406,7 +406,7 @@ const formatDuration = (seconds) => {
 }
 
 .hero__title {
-  font-family: 'Playfair Display', serif;
+  font-family: Georgia, 'Times New Roman', 'PingFang SC', 'Songti SC', serif;
   font-size: 36px;
   font-weight: 800;
   line-height: 1.15;
@@ -464,7 +464,6 @@ const formatDuration = (seconds) => {
   color: #fff;
   font-size: 15px;
   font-weight: 600;
-  font-family: 'DM Sans', sans-serif;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.35);
@@ -490,7 +489,6 @@ const formatDuration = (seconds) => {
   color: rgba(255, 255, 255, 0.7);
   font-size: 15px;
   font-weight: 500;
-  font-family: 'DM Sans', sans-serif;
   cursor: pointer;
   transition: all 0.3s;
   backdrop-filter: blur(10px);
@@ -540,7 +538,7 @@ const formatDuration = (seconds) => {
 }
 
 .description__quote {
-  font-family: 'Playfair Display', serif;
+  font-family: Georgia, 'Times New Roman', 'PingFang SC', 'Songti SC', serif;
   font-size: 64px;
   line-height: 0.6;
   color: var(--accent, #667eea);
