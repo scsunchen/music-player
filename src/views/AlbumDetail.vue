@@ -144,7 +144,9 @@ const accentColor = ref('#667eea')
 onMounted(() => {
   if (album.value?.cover) {
     const img = new Image()
-    img.crossOrigin = 'anonymous'
+    if (album.value.cover.startsWith('http')) {
+      img.crossOrigin = 'anonymous'
+    }
     img.src = album.value.cover
     img.onload = () => {
       try {

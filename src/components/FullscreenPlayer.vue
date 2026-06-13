@@ -142,7 +142,10 @@ const accentColor = ref('#667eea')
 const extractColor = () => {
   if (!playerStore.currentSong?.cover) return
   const img = new Image()
-  img.crossOrigin = 'anonymous'
+  // 仅对远程 URL 设置 crossOrigin，本地图片不需要
+  if (playerStore.currentSong.cover.startsWith('http')) {
+    img.crossOrigin = 'anonymous'
+  }
   img.src = playerStore.currentSong.cover
   img.onload = () => {
     try {
@@ -152,7 +155,12 @@ const extractColor = () => {
       ctx.drawImage(img, 0, 0, 1, 1)
       const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
       accentColor.value = `rgb(${r}, ${g}, ${b})`
-    } catch (e) {}
+    } catch (e) {
+      console.warn('主题色提取失败:', e)
+    }
+  }
+  img.onerror = () => {
+    console.warn('封面图片加载失败:', playerStore.currentSong.cover)
   }
 }
 
