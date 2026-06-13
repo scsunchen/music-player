@@ -134,6 +134,11 @@ const songs = computed(() => {
   ).filter(Boolean)
 })
 
+// 页面加载时滚动到顶部
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
 // 从封面提取主题色（简单实现）
 const accentColor = ref('#667eea')
 onMounted(() => {
