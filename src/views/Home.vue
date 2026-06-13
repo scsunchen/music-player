@@ -486,8 +486,15 @@ const playAlbum = (album) => playerStore.playAlbum(album)
 .playlist-scroll::-webkit-scrollbar { display: none; }
 
 .playlist-scroll :deep(.playlist-card) {
-  min-width: 160px;
+  width: 180px;
   flex-shrink: 0;
+}
+
+/* 移动端封面固定 150x150 */
+.playlist-scroll :deep(.cover-wrapper) {
+  width: 156px;
+  height: 156px;
+  aspect-ratio: auto;
 }
 
 /* 歌曲网格 */
@@ -614,13 +621,27 @@ const playAlbum = (album) => playerStore.playAlbum(album)
   }
 
   .playlist-scroll :deep(.playlist-card) {
-    min-width: 180px;
+    width: 220px;
+  }
+
+  .playlist-scroll :deep(.cover-wrapper) {
+    width: 196px;
+    height: 196px;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-section {
     max-height: 520px;
+  }
+
+  .playlist-scroll :deep(.playlist-card) {
+    width: 260px;
+  }
+
+  .playlist-scroll :deep(.cover-wrapper) {
+    width: 236px;
+    height: 236px;
   }
 
   .hero-title {
