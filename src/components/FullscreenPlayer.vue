@@ -669,6 +669,13 @@ const seek = (e) => {
   font-size: 16px;
 }
 
+/* 移动端隐藏歌词 */
+@media (max-width: 767px) {
+  .fs-right {
+    display: none;
+  }
+}
+
 /* 电脑端：左右布局 */
 @media (min-width: 768px) {
   .fs-body {
