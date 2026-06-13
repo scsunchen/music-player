@@ -11,6 +11,7 @@
       </div>
     </div>
     <h4 class="name">{{ playlist.name }}</h4>
+    <p class="description" v-if="playlist.description">{{ playlist.description }}</p>
     <p class="meta">
       <span v-if="playlist.playCount">{{ formatCount(playlist.playCount) }} 次播放</span>
       <span v-else>{{ playlist.songs?.length || 0 }} 首歌曲</span>
@@ -43,6 +44,8 @@ const formatCount = (count) => {
   padding: 12px;
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .playlist-card:hover {
@@ -54,7 +57,9 @@ const formatCount = (count) => {
   position: relative;
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
   aspect-ratio: 1;
+  flex-shrink: 0;
 }
 
 .cover {
@@ -97,18 +102,34 @@ const formatCount = (count) => {
 }
 
 .name {
-  margin: 10px 0 2px;
+  margin: 10px 0 4px;
   font-size: 14px;
   font-weight: 600;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3;
+  min-height: 18px;
+}
+
+.description {
+  margin: 0 0 2px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+  min-height: 17px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .meta {
   margin: 0;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
+  line-height: 1.3;
+  min-height: 14px;
 }
 </style>
