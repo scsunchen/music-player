@@ -42,7 +42,7 @@ info.txt 详细说明:
         说明: 工具会根据歌曲名匹配文件夹中的音频文件（.mp3/.flac 等）
 
     格式二: URL 模式（直接指定远程音频地址）
-        url:歌曲名|歌手|专辑|流派|封面URL
+        url:音频地址|歌曲名|歌手|专辑|流派|封面URL|MV URL
 
         示例:
         url:https://example.com/music/qingtian.mp3|周杰伦|叶惠美|pop|https://example.com/cover/qingtian.jpg
@@ -53,12 +53,19 @@ info.txt 详细说明:
         - 封面URL 可选，留空则使用默认封面
         - 歌词不可用（远程模式暂不支持歌词）
 
+    封面URL 支持:
+        - 本地文件模式也支持封面URL（第5个字段）
+        - 优先级: info.txt URL > 本地同名图片 > 默认封面
+        - URL 支持 http/https，会自动下载到本地
+
     混合使用:
         可以在同一个 info.txt 中混合使用两种格式:
-        # 本地文件
-        晴天|周杰伦|叶惠美|pop
+        # 本地文件（带远程封面）
+        晴天|周杰伦|叶惠美|pop|https://example.com/cover/qingtian.jpg
+        # 本地文件（无封面，使用本地同名图片）
+        江南|林俊杰|第二天堂|pop
         # 远程URL
-        url:https://example.com/music/new_song.mp3|新歌手|新专辑|pop|https://example.com/cover.jpg
+        url:https://example.com/music/new_song.mp3|新歌|歌手|专辑|pop|https://example.com/cover.jpg
 
     注意:
         - 以 # 开头的行为注释
@@ -142,12 +149,12 @@ def parse_info_file(info_path):
     """
     解析 info.txt 文件，返回两种数据:
     
-    1. local_meta: {歌曲名: {artist, album, genre}}  -- 本地文件的元数据补充
-    2. url_songs: [{title, artist, album, genre, audioUrl, coverUrl}]  -- URL 导入的歌曲
+    1. local_meta: {歌曲名: {artist, album, genre, coverUrl}}  -- 本地文件的元数据补充
+    2. url_songs: [{title, artist, album, genre, audioUrl, coverUrl, mvUrl}]  -- URL 导入的歌曲
     
     格式:
-        本地: 歌曲名|歌手|专辑|流派
-        URL:  url:音频地址|歌曲名|歌手|专辑|流派|封面URL
+        本地: 歌曲名|歌手|专辑|流派|封面URL
+        URL:  url:音频地址|歌曲名|歌手|专辑|流派|封面URL|MV URL
     """
     local_meta = {}
     url_songs = []
@@ -189,8 +196,8 @@ def parse_info_file(info_path):
                 })
             else:
                 # === 本地文件模式 ===
-                # 歌曲名|歌手|专辑|流派
-                # 或: 歌手 - 歌曲名|专辑|流派
+                # 歌曲名|歌手|专辑|流派|封面URL
+                # 或: 歌手 - 歌曲名|专辑|流派|封面URL
                 if len(parts) < 2:
                     print(f"警告: 第{line_num}行格式不正确，跳过: {line}")
                     continue
@@ -208,7 +215,8 @@ def parse_info_file(info_path):
                 local_meta[title] = {
                     'artist': artist,
                     'album': parts[2].strip() if len(parts) > 2 else '',
-                    'genre': parts[3].strip() if len(parts) > 3 else ''
+                    'genre': parts[3].strip() if len(parts) > 3 else '',
+                    'coverUrl': parts[4].strip() if len(parts) > 4 else ''
                 }
     
     return local_meta, url_songs
@@ -296,11 +304,13 @@ def process_local_song(source_dir, audio_file, local_meta, args, next_id, album_
     title, artist = parse_filename(audio_file)
     
     # info.txt 覆盖
+    info_cover_url = ""  # info.txt 中指定的封面URL
     if title in local_meta:
         meta = local_meta[title]
         artist = meta.get('artist') or artist
         album_name = meta.get('album') or args.album_name or ''
         genre = meta.get('genre') or args.genre or ''
+        info_cover_url = meta.get('coverUrl', '')
     else:
         album_name = args.album_name or ''
         genre = args.genre or ''
@@ -320,16 +330,37 @@ def process_local_song(source_dir, audio_file, local_meta, args, next_id, album_
     if not args.dry_run:
         shutil.copy2(audio_path, AUDIO_DIR / new_audio_name)
     
-    # 处理封面
-    cover_path = find_cover(source_dir, audio_name)
-    if cover_path:
-        cover_ext = cover_path.suffix
-        new_cover_name = f"{file_hash}_cover{cover_ext}"
-        if not args.dry_run:
-            shutil.copy2(cover_path, COVER_DIR / new_cover_name)
-        cover_url = f"/music-player/images/covers/{new_cover_name}"
+    # 处理封面（优先级: info.txt URL > 本地同名图片 > 默认封面）
+    cover_url = "/music-player/images/covers/default_cover.jpg"
+    
+    # 1. 先检查 info.txt 中是否指定了封面URL
+    if info_cover_url:
+        if info_cover_url.startswith('http'):
+            # 远程URL，下载到本地
+            cover_ext = '.jpg'
+            if '.png' in info_cover_url:
+                cover_ext = '.png'
+            new_cover_name = f"{file_hash}_cover{cover_ext}"
+            if not args.dry_run:
+                print(f"  下载封面: {info_cover_url}")
+                if download_file(info_cover_url, COVER_DIR / new_cover_name):
+                    cover_url = f"/music-player/images/covers/{new_cover_name}"
+                else:
+                    cover_url = "/music-player/images/covers/default_cover.jpg"
+            else:
+                cover_url = f"/music-player/images/covers/{new_cover_name}"
+        else:
+            # 本地路径
+            cover_url = info_cover_url
     else:
-        cover_url = "/music-player/images/covers/default_cover.jpg"
+        # 2. 查找同名的本地封面图片
+        cover_path = find_cover(source_dir, audio_name)
+        if cover_path:
+            cover_ext = cover_path.suffix
+            new_cover_name = f"{file_hash}_cover{cover_ext}"
+            if not args.dry_run:
+                shutil.copy2(cover_path, COVER_DIR / new_cover_name)
+            cover_url = f"/music-player/images/covers/{new_cover_name}"
     
     # 处理歌词
     lyrics_path = find_lyrics(source_dir, audio_name)
