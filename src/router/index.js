@@ -66,6 +66,26 @@ const routes = [
     component: () => import('../views/SummerOrange.vue')
   },
   {
+    path: '/songs',
+    name: 'AllSongs',
+    component: () => import('../views/AllSongs.vue')
+  },
+  {
+    path: '/hot',
+    name: 'HotSongs',
+    component: () => import('../views/HotSongs.vue')
+  },
+  {
+    path: '/playlists',
+    name: 'AllPlaylists',
+    component: () => import('../views/AllPlaylists.vue')
+  },
+  {
+    path: '/albums',
+    name: 'AllAlbums',
+    component: () => import('../views/AllAlbums.vue')
+  },
+  {
     path: '/stats',
     name: 'Stats',
     component: () => import('../views/Stats.vue')

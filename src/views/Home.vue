@@ -69,7 +69,10 @@
 
     <!-- 推荐播放列表 -->
     <section class="section">
-      <h2 class="section-title">推荐歌单</h2>
+      <div class="section-header">
+        <h2 class="section-title">推荐歌单</h2>
+        <router-link to="/playlists" class="see-all">查看全部 ›</router-link>
+      </div>
       <div class="playlist-grid">
         <PlaylistCard
           v-for="playlist in playerStore.recommendPlaylists"
@@ -86,6 +89,7 @@
       <div class="songs-column">
         <div class="section-header">
           <h2 class="section-title">最新歌曲 <span class="badge-new">NEW</span></h2>
+          <router-link to="/songs" class="see-all">查看全部 ›</router-link>
         </div>
         <div class="song-list compact">
           <SongItem
@@ -101,6 +105,7 @@
       <div class="songs-column">
         <div class="section-header">
           <h2 class="section-title">热门歌曲 <span class="badge-hot">HOT</span></h2>
+          <router-link to="/hot" class="see-all">查看全部 ›</router-link>
         </div>
         <div class="song-list compact">
           <SongItem
@@ -117,7 +122,10 @@
 
     <!-- 新专辑 -->
     <section class="section">
-      <h2 class="section-title">新专辑</h2>
+      <div class="section-header">
+        <h2 class="section-title">新专辑</h2>
+        <router-link to="/albums" class="see-all">查看全部 ›</router-link>
+      </div>
       <div class="playlist-grid">
         <PlaylistCard
           v-for="album in latestAlbums"
@@ -384,8 +392,19 @@ const goToSummer = () => {
 .section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   margin-bottom: 16px;
+}
+
+.see-all {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.see-all:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .section-title {
