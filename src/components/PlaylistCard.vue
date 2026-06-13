@@ -11,7 +11,6 @@
       </div>
     </div>
     <h4 class="name">{{ playlist.name }}</h4>
-    <p class="description" v-if="playlist.description">{{ playlist.description }}</p>
     <p class="meta">
       <span v-if="playlist.playCount">{{ formatCount(playlist.playCount) }} 次播放</span>
       <span v-else>{{ playlist.songs?.length || 0 }} 首歌曲</span>
@@ -98,23 +97,13 @@ const formatCount = (count) => {
 }
 
 .name {
-  margin: 12px 0 4px;
+  margin: 10px 0 2px;
   font-size: 14px;
   font-weight: 600;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.description {
-  margin: 0 0 4px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .meta {
