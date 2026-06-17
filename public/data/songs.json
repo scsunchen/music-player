@@ -1017,7 +1017,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1028,7 +1028,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1039,7 +1039,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1050,7 +1050,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1061,7 +1061,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1072,7 +1072,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1083,7 +1083,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1094,7 +1094,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1105,7 +1105,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1116,7 +1116,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1127,7 +1127,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1138,7 +1138,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1149,7 +1149,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1160,7 +1160,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1171,7 +1171,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "",
+      "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     }
@@ -1433,7 +1433,7 @@
     {
       "id": 19,
       "name": "橘子味的夏天",
-      "cover": "",
+      "cover": "/music-player/images/covers/summer_orange_cover.jpg",
       "description": "夏天是橘子汽水冒起的气泡，是黄昏染遍天空的橘粉，是晚风里轻轻晃动的旋律。这张歌单装满了暖橙色调的温柔与甜，适合傍晚散步、窗边发呆、和喜欢的人共享耳机。",
       "songs": [
         200,

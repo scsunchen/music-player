@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/Home.vue')
   },
   {
+    path: '/home-old',
+    name: 'HomeOld',
+    component: () => import('../views/HomeOld.vue')
+  },
+  {
     path: '/search',
     name: 'Search',
     component: () => import('../views/Search.vue')
@@ -64,6 +69,26 @@ const routes = [
     path: '/summer',
     name: 'SummerOrange',
     component: () => import('../views/SummerOrange.vue')
+  },
+  {
+    path: '/songs',
+    name: 'AllSongs',
+    component: () => import('../views/AllSongs.vue')
+  },
+  {
+    path: '/hot',
+    name: 'HotSongs',
+    component: () => import('../views/HotSongs.vue')
+  },
+  {
+    path: '/playlists',
+    name: 'AllPlaylists',
+    component: () => import('../views/AllPlaylists.vue')
+  },
+  {
+    path: '/albums',
+    name: 'AllAlbums',
+    component: () => import('../views/AllAlbums.vue')
   },
   {
     path: '/stats',

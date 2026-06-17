@@ -561,6 +561,13 @@ watch(() => route?.params?.id, () => {
   margin: 0 24px 32px;
 }
 
+/* 移动端隐藏歌词 */
+@media (max-width: 767px) {
+  .lyrics-section {
+    display: none;
+  }
+}
+
 .lyrics-header {
   display: flex;
   align-items: center;
