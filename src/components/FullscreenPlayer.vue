@@ -819,6 +819,7 @@ const seek = (e) => {
 
 .fs-lyric-line.active {
   color: #fff;
+  font-size: 18px;
   font-weight: 600;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
@@ -871,6 +872,7 @@ const seek = (e) => {
 
   .fs-left {
     width: 400px;
+    min-width: 400px;
     flex-shrink: 0;
     justify-content: center;
     padding: 0;
@@ -891,6 +893,7 @@ const seek = (e) => {
     display: flex;
     flex: 1;
     max-width: 420px;
+    min-width: 0;
     margin-top: 0;
   }
 
@@ -901,6 +904,7 @@ const seek = (e) => {
   }
 
   .fs-lyric-line { font-size: 16px; padding: 12px 0; }
+  .fs-lyric-line.active { font-size: 20px; }
 }
 
 @media (min-width: 1024px) {
