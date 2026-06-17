@@ -819,7 +819,6 @@ const seek = (e) => {
 
 .fs-lyric-line.active {
   color: #fff;
-  font-size: 18px;
   font-weight: 600;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
@@ -902,7 +901,6 @@ const seek = (e) => {
   }
 
   .fs-lyric-line { font-size: 16px; padding: 12px 0; }
-  .fs-lyric-line.active { font-size: 20px; }
 }
 
 @media (min-width: 1024px) {
