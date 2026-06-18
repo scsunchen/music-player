@@ -866,7 +866,6 @@ const seek = (e) => {
     gap: 48px;
     max-width: 1000px;
     margin: 0 auto;
-    justify-content: center;
     overflow-y: hidden;
   }
 
