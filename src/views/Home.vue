@@ -169,7 +169,7 @@ const heroItems = [
     label: '每日推荐',
     title: '每日10首',
     desc: '为你精心挑选，发现好音乐',
-    cover: '/music-player/images/covers/guofeng.jpg',
+    cover: '/music-player/images/covers/daily_hero.jpg',
     action: () => playDailySongs(),
     link: '/songs'
   },
