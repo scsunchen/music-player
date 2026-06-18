@@ -158,10 +158,18 @@ onMounted(() => { setTimeout(() => { loading.value = false }, 800) })
 // Hero 轮播数据
 const heroItems = [
   {
+    label: '热门推荐',
+    title: '凤凰传奇',
+    desc: '国民组合 · 经典传唱 · 激情澎湃',
+    cover: '/music-player/images/covers/fenghuang_chuanqi_hero.jpg',
+    action: () => router.push('/search?q=凤凰传奇'),
+    link: '/search?q=凤凰传奇'
+  },
+  {
     label: '每日推荐',
     title: '每日10首',
     desc: '为你精心挑选，发现好音乐',
-    cover: '/music-player/images/covers/guofeng.jpg',
+    cover: '/music-player/images/covers/daily_hero.jpg',
     action: () => playDailySongs(),
     link: '/songs'
   },

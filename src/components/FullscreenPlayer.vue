@@ -872,6 +872,7 @@ const seek = (e) => {
 
   .fs-left {
     width: 400px;
+    min-width: 400px;
     flex-shrink: 0;
     justify-content: center;
     padding: 0;
@@ -892,6 +893,7 @@ const seek = (e) => {
     display: flex;
     flex: 1;
     max-width: 420px;
+    min-width: 0;
     margin-top: 0;
   }
 

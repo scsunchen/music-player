@@ -17,6 +17,7 @@
         <span class="artist">{{ song.artist }}</span>
         <span class="separator" v-if="showAlbum"> - </span>
         <span class="album" v-if="showAlbum">{{ song.album }}</span>
+        <span class="lyrics-badge" v-if="hasLyrics" title="有歌词">词</span>
       </p>
     </div>
     <div class="duration" v-if="showDuration">{{ formatDuration(song.duration) }}</div>
@@ -98,6 +99,11 @@ const handlePlayClick = () => {
 
 const isLiked = computed(() => {
   return playerStore.isLiked(props.song.id)
+})
+
+const hasLyrics = computed(() => {
+  const data = playerStore.lyricsData[props.song.id]
+  return data && data.lyrics && data.lyrics.trim().length > 0
 })
 
 const toggleLike = () => {
@@ -192,6 +198,24 @@ const formatDuration = (seconds) => {
 
 .separator {
   margin: 0 4px;
+}
+
+.lyrics-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  padding: 0 5px;
+  height: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(102, 126, 234, 0.8);
+  background: rgba(102, 126, 234, 0.12);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 3px;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .duration {
