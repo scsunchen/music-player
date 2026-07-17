@@ -1,116 +1,99 @@
 <template>
-  <div class="skeleton">
-    <!-- Hero 大图骨架 -->
-    <div class="skeleton-hero">
-      <div class="skeleton-hero-content">
-        <div class="skeleton-hero-label"></div>
-        <div class="skeleton-hero-title"></div>
-        <div class="skeleton-hero-title" style="width: 60%"></div>
-        <div class="skeleton-hero-desc"></div>
-        <div class="skeleton-hero-actions">
-          <div class="skeleton-btn-lg"></div>
-          <div class="skeleton-btn-sm"></div>
+  <div class="skeleton-immersive">
+    <!-- 氛围背景骨架 -->
+    <div class="sk-atmosphere"></div>
+
+    <!-- 内容骨架 -->
+    <div class="sk-content">
+      <!-- 正在播放骨架 -->
+      <div class="sk-np">
+        <div class="sk-np-label"></div>
+        <div class="sk-np-card">
+          <div class="sk-np-cover"></div>
+          <div class="sk-np-info">
+            <div class="sk-np-title"></div>
+            <div class="sk-np-artist"></div>
+          </div>
+          <div class="sk-np-btn"></div>
         </div>
       </div>
-      <div class="skeleton-hero-dots">
-        <div class="skeleton-dot active"></div>
-        <div class="skeleton-dot"></div>
-        <div class="skeleton-dot"></div>
-      </div>
-    </div>
 
-    <!-- 快捷入口骨架 -->
-    <div class="skeleton-quick">
-      <div class="skeleton-quick-card" v-for="i in 4" :key="i">
-        <div class="skeleton-quick-icon"></div>
-        <div class="skeleton-quick-name"></div>
+      <!-- 快捷操作骨架 -->
+      <div class="sk-chips">
+        <div class="sk-chip" v-for="i in 4" :key="i" :style="{ width: chipWidths[i-1] }"></div>
       </div>
-    </div>
 
-    <!-- 推荐歌单骨架 -->
-    <div class="skeleton-section">
-      <div class="skeleton-section-header">
-        <div class="skeleton-section-title"></div>
-        <div class="skeleton-see-all"></div>
-      </div>
-      <div class="skeleton-scroll">
-        <div class="skeleton-playlist-card" v-for="i in 5" :key="i">
-          <div class="skeleton-playlist-cover"></div>
-          <div class="skeleton-playlist-name"></div>
-          <div class="skeleton-playlist-meta"></div>
+      <!-- 推荐歌单骨架 -->
+      <div class="sk-section">
+        <div class="sk-section-header">
+          <div class="sk-section-title"></div>
+          <div class="sk-see-all"></div>
+        </div>
+        <div class="sk-scroll">
+          <div class="sk-scroll-card" v-for="i in 5" :key="i">
+            <div class="sk-scroll-cover"></div>
+            <div class="sk-scroll-name"></div>
+            <div class="sk-scroll-count"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 新专辑骨架 -->
-    <div class="skeleton-section">
-      <div class="skeleton-section-header">
-        <div class="skeleton-section-title"></div>
-        <div class="skeleton-see-all"></div>
-      </div>
-      <div class="skeleton-scroll">
-        <div class="skeleton-playlist-card" v-for="i in 5" :key="i">
-          <div class="skeleton-playlist-cover"></div>
-          <div class="skeleton-playlist-name"></div>
-          <div class="skeleton-playlist-meta"></div>
+      <!-- 最近歌曲骨架 -->
+      <div class="sk-section">
+        <div class="sk-section-header">
+          <div class="sk-section-title"></div>
+          <div class="sk-see-all"></div>
         </div>
-      </div>
-    </div>
-
-    <!-- 最新歌曲骨架 -->
-    <div class="skeleton-section">
-      <div class="skeleton-section-header">
-        <div class="skeleton-section-title"></div>
-        <div class="skeleton-see-all"></div>
-      </div>
-      <div class="skeleton-song-grid">
-        <div class="skeleton-song-card" v-for="i in 4" :key="i">
-          <div class="skeleton-song-cover"></div>
-          <div class="skeleton-song-title"></div>
-          <div class="skeleton-song-artist"></div>
+        <div class="sk-list">
+          <div class="sk-list-item" v-for="i in 5" :key="i">
+            <div class="sk-list-cover"></div>
+            <div class="sk-list-meta">
+              <div class="sk-list-title"></div>
+              <div class="sk-list-artist"></div>
+            </div>
+            <div class="sk-list-dur"></div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- 热门歌曲骨架 -->
-    <div class="skeleton-section">
-      <div class="skeleton-section-header">
-        <div class="skeleton-section-title"></div>
-        <div class="skeleton-see-all"></div>
-      </div>
-      <div class="skeleton-song-list">
-        <div class="skeleton-song-row" v-for="i in 5" :key="i"></div>
       </div>
     </div>
   </div>
 </template>
 
+<script setup>
+const chipWidths = ['90px', '72px', '84px', '84px']
+</script>
+
 <style scoped>
-/* 骨架屏基础样式 */
-.skeleton {
-  background: #07070f;
+.skeleton-immersive {
+  position: relative;
   min-height: 100vh;
+  background: #0a0a0a;
+}
+
+/* 氛围背景 */
+.sk-atmosphere {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(102, 126, 234, 0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 70%, rgba(102, 126, 234, 0.04) 0%, transparent 50%),
+              linear-gradient(180deg, rgba(10,10,10,0.5) 0%, #0a0a0a 100%);
+  pointer-events: none;
+}
+
+.sk-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
 }
 
 /* 闪光动画 */
-.skeleton-hero-label,
-.skeleton-hero-title,
-.skeleton-hero-desc,
-.skeleton-btn-lg,
-.skeleton-btn-sm,
-.skeleton-dot,
-.skeleton-quick-icon,
-.skeleton-quick-name,
-.skeleton-section-title,
-.skeleton-see-all,
-.skeleton-playlist-cover,
-.skeleton-playlist-name,
-.skeleton-playlist-meta,
-.skeleton-song-cover,
-.skeleton-song-title,
-.skeleton-song-artist,
-.skeleton-song-row {
-  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+.sk-np-label, .sk-np-cover, .sk-np-title, .sk-np-artist, .sk-np-btn,
+.sk-chip, .sk-section-title, .sk-see-all,
+.sk-scroll-cover, .sk-scroll-name, .sk-scroll-count,
+.sk-list-cover, .sk-list-title, .sk-list-artist, .sk-list-dur {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -120,245 +103,217 @@
   100% { background-position: -200% 0; }
 }
 
-/* ===== Hero 大图骨架 ===== */
-.skeleton-hero {
-  position: relative;
-  height: 55vh;
-  min-height: 380px;
-  max-height: 520px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 24px 32px;
-  background: linear-gradient(180deg, rgba(7,7,15,0.3) 0%, rgba(7,7,15,0.85) 75%, #07070f 100%);
+/* 正在播放 */
+.sk-np {
+  margin-bottom: 40px;
 }
 
-.skeleton-hero-label {
-  width: 100px;
-  height: 24px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-.skeleton-hero-title {
-  width: 80%;
-  height: 36px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-
-.skeleton-hero-desc {
-  width: 60%;
-  height: 18px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-
-.skeleton-hero-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.skeleton-btn-lg {
-  width: 120px;
-  height: 44px;
-  border-radius: 22px;
-}
-
-.skeleton-btn-sm {
+.sk-np-label {
   width: 90px;
-  height: 44px;
-  border-radius: 22px;
-}
-
-.skeleton-hero-dots {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.skeleton-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.skeleton-dot.active {
-  width: 24px;
+  height: 10px;
   border-radius: 4px;
-}
-
-/* ===== 快捷入口骨架 ===== */
-.skeleton-quick {
-  display: flex;
-  gap: 12px;
-  padding: 20px 24px;
-  overflow-x: auto;
-}
-
-.skeleton-quick-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 12px;
-  min-width: 80px;
-}
-
-.skeleton-quick-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-}
-
-.skeleton-quick-name {
-  width: 60px;
-  height: 12px;
-  border-radius: 4px;
-}
-
-/* ===== 内容区块骨架 ===== */
-.skeleton-section {
-  padding: 16px 24px;
-}
-
-.skeleton-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 16px;
 }
 
-.skeleton-section-title {
+.sk-np-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 20px;
+}
+
+.sk-np-cover {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.sk-np-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sk-np-title {
+  width: 60%;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.sk-np-artist {
+  width: 40%;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.sk-np-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 快捷操作 */
+.sk-chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.sk-chip {
+  height: 40px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+
+/* 区块 */
+.sk-section {
+  margin-bottom: 48px;
+}
+
+.sk-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sk-section-title {
   width: 100px;
   height: 22px;
   border-radius: 6px;
 }
 
-.skeleton-see-all {
-  width: 60px;
-  height: 14px;
+.sk-see-all {
+  width: 40px;
+  height: 12px;
   border-radius: 4px;
 }
 
-/* 横向滚动卡片 */
-.skeleton-scroll {
+/* 横向滚动 */
+.sk-scroll {
   display: flex;
   gap: 16px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-.skeleton-playlist-card {
-  min-width: 160px;
+.sk-scroll-card {
   flex-shrink: 0;
+  width: 150px;
 }
 
-.skeleton-playlist-cover {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  margin-bottom: 10px;
+.sk-scroll-cover {
+  width: 150px;
+  height: 150px;
+  border-radius: 16px;
+  margin-bottom: 12px;
 }
 
-.skeleton-playlist-name {
+.sk-scroll-name {
   width: 80%;
   height: 14px;
   border-radius: 4px;
   margin-bottom: 4px;
 }
 
-.skeleton-playlist-meta {
-  width: 50%;
+.sk-scroll-count {
+  width: 40%;
   height: 11px;
   border-radius: 3px;
 }
 
-/* 歌曲网格 */
-.skeleton-song-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+/* 列表 */
+.sk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.skeleton-song-cover {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  margin-bottom: 8px;
+.sk-list-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
 }
 
-.skeleton-song-title {
-  width: 80%;
+.sk-list-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.sk-list-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sk-list-title {
+  width: 70%;
   height: 14px;
   border-radius: 4px;
-  margin-bottom: 2px;
 }
 
-.skeleton-song-artist {
-  width: 50%;
+.sk-list-artist {
+  width: 40%;
   height: 12px;
   border-radius: 3px;
 }
 
-/* 歌曲列表 */
-.skeleton-song-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.sk-list-dur {
+  width: 30px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
-.skeleton-song-row {
-  height: 56px;
-  border-radius: 8px;
-}
-
-/* ===== 桌面端 ===== */
+/* 桌面端 */
 @media (min-width: 768px) {
-  .skeleton-hero {
-    height: 50vh;
-    max-height: 480px;
-    padding: 0 48px 40px;
+  .sk-content {
+    padding: 60px 40px;
+    max-width: 960px;
   }
 
-  .skeleton-hero-title {
-    height: 44px;
+  .sk-np-cover {
+    width: 88px;
+    height: 88px;
   }
 
-  .skeleton-quick {
-    padding: 24px 48px;
-    justify-content: center;
-    gap: 16px;
+  .sk-scroll-card {
+    width: 170px;
   }
 
-  .skeleton-quick-card {
-    min-width: 100px;
-    padding: 20px 16px;
-  }
-
-  .skeleton-section {
-    padding: 20px 48px;
-  }
-
-  .skeleton-playlist-card {
-    min-width: 180px;
-  }
-
-  .skeleton-song-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+  .sk-scroll-cover {
+    width: 170px;
+    height: 170px;
   }
 }
 
 @media (min-width: 1024px) {
-  .skeleton-hero {
-    max-height: 520px;
+  .sk-content {
+    max-width: 1040px;
   }
 
-  .skeleton-song-grid {
-    grid-template-columns: repeat(5, 1fr);
+  .sk-np-cover {
+    width: 96px;
+    height: 96px;
+  }
+
+  .sk-scroll-card {
+    width: 180px;
+  }
+
+  .sk-scroll-cover {
+    width: 180px;
+    height: 180px;
   }
 }
 </style>
