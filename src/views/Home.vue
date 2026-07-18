@@ -257,11 +257,7 @@ const openFullscreen = () => {
 }
 
 const togglePlay = () => {
-  if (playerStore.isPlaying) {
-    playerStore.pause()
-  } else {
-    playerStore.play()
-  }
+  playerStore.togglePlay()
 }
 
 const playDailySongs = () => {
@@ -467,6 +463,7 @@ const formatTime = (seconds) => {
   color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
   flex-shrink: 0;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .np-card:hover .np-play-icon {
