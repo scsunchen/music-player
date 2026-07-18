@@ -107,56 +107,59 @@
         </div>
       </section>
 
-      <!-- 最近歌曲 -->
-      <section class="content-section">
-        <div class="section-header">
-          <h3 class="section-title">新歌速递</h3>
-          <router-link to="/songs" class="see-all">全部</router-link>
-        </div>
-        <div class="recent-list">
-          <div
-            v-for="song in recentSongs"
-            :key="song.id"
-            class="recent-item"
-            @click="playerStore.playSong(song)"
-          >
-            <div class="recent-cover">
-              <img :src="song.cover" :alt="song.title" loading="lazy" />
-            </div>
-            <div class="recent-meta">
-              <span class="recent-title">{{ song.title }}</span>
-              <span class="recent-artist">{{ song.artist }}</span>
-            </div>
-            <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+      <!-- 新歌 + 热门 双栏 -->
+      <div class="dual-column">
+        <!-- 新歌速递 -->
+        <section class="content-section">
+          <div class="section-header">
+            <h3 class="section-title">新歌速递</h3>
+            <router-link to="/songs" class="see-all">全部</router-link>
           </div>
-        </div>
-      </section>
+          <div class="recent-list">
+            <div
+              v-for="song in recentSongs"
+              :key="song.id"
+              class="recent-item"
+              @click="playerStore.playSong(song)"
+            >
+              <div class="recent-cover">
+                <img :src="song.cover" :alt="song.title" loading="lazy" />
+              </div>
+              <div class="recent-meta">
+                <span class="recent-title">{{ song.title }}</span>
+                <span class="recent-artist">{{ song.artist }}</span>
+              </div>
+              <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+            </div>
+          </div>
+        </section>
 
-      <!-- 热门歌曲 -->
-      <section class="content-section">
-        <div class="section-header">
-          <h3 class="section-title">热门歌曲</h3>
-          <router-link to="/hot" class="see-all">全部</router-link>
-        </div>
-        <div class="hot-list">
-          <div
-            v-for="(song, i) in hotSongs"
-            :key="song.id"
-            class="hot-item"
-            @click="playerStore.playSong(song)"
-          >
-            <span class="hot-rank" :class="{ top3: i < 3 }">{{ i + 1 }}</span>
-            <div class="recent-cover">
-              <img :src="song.cover" :alt="song.title" loading="lazy" />
-            </div>
-            <div class="recent-meta">
-              <span class="recent-title">{{ song.title }}</span>
-              <span class="recent-artist">{{ song.artist }}</span>
-            </div>
-            <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+        <!-- 热门歌曲 -->
+        <section class="content-section">
+          <div class="section-header">
+            <h3 class="section-title">热门歌曲</h3>
+            <router-link to="/hot" class="see-all">全部</router-link>
           </div>
-        </div>
-      </section>
+          <div class="hot-list">
+            <div
+              v-for="(song, i) in hotSongs"
+              :key="song.id"
+              class="hot-item"
+              @click="playerStore.playSong(song)"
+            >
+              <span class="hot-rank" :class="{ top3: i < 3 }">{{ i + 1 }}</span>
+              <div class="recent-cover">
+                <img :src="song.cover" :alt="song.title" loading="lazy" />
+              </div>
+              <div class="recent-meta">
+                <span class="recent-title">{{ song.title }}</span>
+                <span class="recent-artist">{{ song.artist }}</span>
+              </div>
+              <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <!-- 底部空间 -->
       <div class="bottom-space"></div>
@@ -250,6 +253,7 @@ const formatTime = (seconds) => {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  will-change: auto;
 }
 
 .atmo-bg-img {
@@ -260,6 +264,9 @@ const formatTime = (seconds) => {
   filter: blur(60px) saturate(1.4) brightness(0.35);
   transform: scale(1.2);
   transition: background-image 2s ease;
+  /* GPU 加速，避免滚动重绘 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .atmo-gradient {
@@ -313,9 +320,9 @@ const formatTime = (seconds) => {
 .content-layer {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 40px 32px;
 }
 
 /* ===== 正在播放 ===== */
@@ -497,8 +504,8 @@ const formatTime = (seconds) => {
 }
 
 .qk-chip:hover svg {
-  opacity: 1;
-}
+    opacity: 1;
+  }
 
 /* ===== 内容区块 ===== */
 .content-section {
@@ -506,10 +513,23 @@ const formatTime = (seconds) => {
   animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* 双栏容器 */
+.dual-column {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.dual-column .content-section {
+  margin-bottom: 0;
+  animation: none;
+}
+
 .content-section:nth-child(3) { animation-delay: 0.3s; }
 .content-section:nth-child(4) { animation-delay: 0.4s; }
-.content-section:nth-child(5) { animation-delay: 0.5s; }
-.content-section:nth-child(6) { animation-delay: 0.6s; }
+.content-section:nth-child(5) { animation-delay: 0.6s; }
 
 .section-header {
   display: flex;
@@ -727,8 +747,8 @@ const formatTime = (seconds) => {
 /* ===== 桌面端 ===== */
 @media (min-width: 768px) {
   .content-layer {
-    padding: 60px 40px;
-    max-width: 960px;
+    padding: 60px 48px;
+    max-width: 1400px;
   }
 
   .np-card {
@@ -760,12 +780,12 @@ const formatTime = (seconds) => {
   }
 
   .glass-card {
-    width: 170px;
+    width: 190px;
   }
 
   .glass-card-cover {
-    width: 170px;
-    height: 170px;
+    width: 190px;
+    height: 190px;
   }
 
   .section-title {
@@ -773,9 +793,10 @@ const formatTime = (seconds) => {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .content-layer {
-    max-width: 1040px;
+    padding: 60px 64px;
+    max-width: 1600px;
   }
 
   .np-cover {
@@ -784,12 +805,23 @@ const formatTime = (seconds) => {
   }
 
   .glass-card {
-    width: 180px;
+    width: 210px;
   }
 
   .glass-card-cover {
-    width: 180px;
-    height: 180px;
+    width: 210px;
+    height: 210px;
+  }
+
+  /* 宽屏双栏并排 */
+  .dual-column {
+    flex-direction: row;
+    gap: 48px;
+  }
+
+  .dual-column .content-section {
+    flex: 1;
+    min-width: 0;
   }
 }
 </style>
