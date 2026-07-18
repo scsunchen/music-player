@@ -36,6 +36,16 @@ const routes = [
     component: () => import('../views/HomeV2.vue')
   },
   {
+    path: '/home-immersive',
+    name: 'HomeImmersive',
+    component: () => import('../views/HomeImmersive.vue')
+  },
+  {
+    path: '/home-dashboard',
+    name: 'HomeDashboard',
+    component: () => import('../views/HomeDashboard.vue')
+  },
+  {
     path: '/search',
     name: 'Search',
     component: () => import('../views/Search.vue')
