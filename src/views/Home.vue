@@ -195,7 +195,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
@@ -245,11 +245,19 @@ const latestAlbums = computed(() => {
   return [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 6)
 })
 
-// 检查是否有歌词
-const hasLyrics = (songId) => {
-  const data = playerStore.lyricsData?.[songId]
-  return data && data.lyrics && data.lyrics.trim().length > 0
-}
+// 歌词可用性缓存（避免模板中重复计算）
+const lyricsMap = computed(() => {
+  const map = {}
+  if (playerStore.lyricsData) {
+    for (const songId in playerStore.lyricsData) {
+      const data = playerStore.lyricsData[songId]
+      map[songId] = data && data.lyrics && data.lyrics.trim().length > 0
+    }
+  }
+  return map
+})
+
+const hasLyrics = (songId) => lyricsMap.value[songId] || false
 
 // 操作
 const openFullscreen = () => {
@@ -326,8 +334,8 @@ const formatTime = (seconds) => {
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.12;
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
   animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
@@ -336,7 +344,6 @@ const formatTime = (seconds) => {
   height: 400px;
   top: -100px;
   right: -100px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.5);
 }
 
 .atmo-orb-2 {
@@ -344,7 +351,6 @@ const formatTime = (seconds) => {
   height: 300px;
   bottom: 20%;
   left: -80px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.3);
   animation-delay: -6s;
 }
 
@@ -417,8 +423,7 @@ const formatTime = (seconds) => {
   position: absolute;
   inset: -4px;
   border-radius: 18px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.2);
-  filter: blur(12px);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.25);
   z-index: -1;
 }
 
