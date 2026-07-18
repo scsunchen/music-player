@@ -1,143 +1,113 @@
 <template>
   <SkeletonLoader v-if="loading" />
-  <div class="home-new" v-else>
-    <!-- Hero 大图区域 -->
-    <section class="hero-section">
-      <div class="hero-bg">
-        <img :src="heroCover" class="hero-img" />
-        <div class="hero-overlay"></div>
-        <div class="hero-vignette"></div>
-      </div>
-      <div class="hero-content">
-        <div class="hero-label">
-          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-          {{ heroLabel }}
-        </div>
-        <h1 class="hero-title">{{ heroTitle }}</h1>
-        <p class="hero-desc">{{ heroDesc }}</p>
-        <div class="hero-actions">
-          <button class="hero-play-btn" @click="playHero">
-            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-            <span>立即播放</span>
-          </button>
-          <button class="hero-more-btn" @click="goToHero">
-            <span>查看详情</span>
-          </button>
-        </div>
-      </div>
-      <!-- Hero 切换指示器 -->
-      <div class="hero-indicators">
-        <span v-for="(item, i) in heroItems" :key="i" class="hero-dot" :class="{ active: heroIndex === i }" @click="heroIndex = i"></span>
-      </div>
-    </section>
+  <div class="editorial" v-else>
+    <!-- 顶部装饰线 -->
+    <div class="top-rule"></div>
 
-    <!-- 快捷入口 -->
-    <section class="quick-access">
-      <div class="quick-card" @click="playDailySongs">
-        <div class="quick-icon daily">
-          <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        </div>
-        <span class="quick-name">每日10首</span>
-      </div>
-      <div class="quick-card" @click="goToLikedSongs">
-        <div class="quick-icon liked">
-          <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        </div>
-        <span class="quick-name">我喜欢</span>
-      </div>
-      <div class="quick-card" @click="goToSummer">
-        <div class="quick-icon summer">
-          <span style="font-size: 22px;">🍊</span>
-        </div>
-        <span class="quick-name">橘子味的夏天</span>
-      </div>
-      <div class="quick-card" @click="router.push('/stats')">
-        <div class="quick-icon stats">
-          <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-        </div>
-        <span class="quick-name">听歌统计</span>
-      </div>
-    </section>
+    <div class="ed-container">
 
-    <!-- 推荐歌单 -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title">推荐歌单</h2>
-        <router-link to="/playlists" class="see-all">查看全部 ›</router-link>
-      </div>
-      <div class="playlist-scroll">
-        <PlaylistCard
-          v-for="playlist in playerStore.recommendPlaylists"
-          :key="playlist.id"
-          :playlist="playlist"
-          @click="goToPlaylist(playlist.id)"
-          @play="playPlaylist(playlist)"
-        />
-      </div>
-    </section>
-
-    <!-- 新专辑 -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title">新专辑</h2>
-        <router-link to="/albums" class="see-all">查看全部 ›</router-link>
-      </div>
-      <div class="playlist-scroll">
-        <PlaylistCard
-          v-for="album in latestAlbums"
-          :key="album.id"
-          :playlist="album"
-          @click="goToAlbum(album.id)"
-          @play="playAlbum(album)"
-        />
-      </div>
-    </section>
-
-    <!-- 最新歌曲 -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title">最新歌曲</h2>
-        <router-link to="/songs" class="see-all">查看全部 ›</router-link>
-      </div>
-      <div class="song-grid">
-        <div
-          v-for="song in latestSongs"
-          :key="song.id"
-          class="song-card"
-          @click="playerStore.playSong(song)"
-        >
-          <div class="song-card-cover">
-            <img :src="song.cover" :alt="song.title" />
-            <div class="song-card-play">
-              <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+      <!-- 首屏：不对称双栏 -->
+      <section class="hero-editorial">
+        <div class="hero-text">
+          <div class="ed-greeting">{{ greeting }}</div>
+          <h1 class="ed-headline">今日推荐</h1>
+          <p class="ed-lead">
+            每天为你精选不同风格的音乐，让耳朵发现新的可能。
+          </p>
+          <div class="ed-play-all" @click="playDailySongs">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <span>播放每日推荐</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="ed-featured-cover" @click="router.push('/summer')">
+            <img :src="featuredCover" :alt="featuredTitle" />
+            <div class="ed-cover-overlay">
+              <span class="ed-cover-label">FEATURED</span>
             </div>
           </div>
-          <p class="song-card-title">{{ song.title }}</p>
-          <p class="song-card-artist">{{ song.artist }}</p>
+          <p class="ed-caption">{{ featuredTitle }} · {{ featuredArtist }}</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 热门歌曲 -->
-    <section class="content-section">
-      <div class="section-header">
-        <h2 class="section-title">热门歌曲</h2>
-        <router-link to="/hot" class="see-all">查看全部 ›</router-link>
+      <!-- 分隔装饰 -->
+      <div class="ed-divider">
+        <span class="ed-divider-diamond"></span>
       </div>
-      <div class="song-list-wrap">
-        <SongItem
-          v-for="(song, index) in hotSongs"
-          :key="song.id"
-          :song="song"
-          :index="index"
-          :show-index="true"
-          @play="playerStore.playSong(song)"
-        />
-      </div>
-    </section>
 
-    <!-- 底部留白 -->
-    <div class="footer-space"></div>
+      <!-- 推荐歌单 -->
+      <section class="ed-section">
+        <div class="ed-section-header">
+          <h2 class="ed-section-title">歌单精选</h2>
+          <router-link to="/playlists" class="ed-section-link">浏览全部</router-link>
+        </div>
+        <div class="ed-playlist-grid">
+          <div
+            v-for="playlist in playerStore.recommendPlaylists"
+            :key="playlist.id"
+            class="ed-playlist"
+            @click="router.push(`/playlist/${playlist.id}`)"
+          >
+            <div class="ed-playlist-cover">
+              <img :src="playlist.cover" :alt="playlist.name" loading="lazy" />
+            </div>
+            <div class="ed-playlist-info">
+              <h4 class="ed-playlist-name">{{ playlist.name }}</h4>
+              <span class="ed-playlist-count">{{ playlist.songs?.length || 0 }} 首</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 最近歌曲 - 杂志列表风格 -->
+      <section class="ed-section">
+        <div class="ed-section-header">
+          <h2 class="ed-section-title">最近歌曲</h2>
+          <router-link to="/songs" class="ed-section-link">全部歌曲</router-link>
+        </div>
+        <div class="ed-song-list">
+          <div
+            v-for="(song, i) in recentSongs"
+            :key="song.id"
+            class="ed-song-row"
+            @click="playerStore.playSong(song)"
+          >
+            <span class="ed-song-num">{{ String(i + 1).padStart(2, '0') }}</span>
+            <div class="ed-song-cover">
+              <img :src="song.cover" :alt="song.title" loading="lazy" />
+            </div>
+            <div class="ed-song-meta">
+              <span class="ed-song-title">{{ song.title }}</span>
+              <span class="ed-song-artist">{{ song.artist }}</span>
+            </div>
+            <span class="ed-song-album" v-if="song.album">{{ song.album }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 快捷入口 -->
+      <section class="ed-section">
+        <div class="ed-shortcuts">
+          <div class="ed-shortcut" @click="router.push('/liked')">
+            <span class="ed-shortcut-title">我喜欢</span>
+            <span class="ed-shortcut-desc">{{ likedCount }} 首收藏</span>
+          </div>
+          <div class="ed-shortcut-divider"></div>
+          <div class="ed-shortcut" @click="router.push('/stats')">
+            <span class="ed-shortcut-title">听歌统计</span>
+            <span class="ed-shortcut-desc">了解你的音乐品味</span>
+          </div>
+          <div class="ed-shortcut-divider"></div>
+          <div class="ed-shortcut" @click="router.push('/summer')">
+            <span class="ed-shortcut-title">橘子味的夏天</span>
+            <span class="ed-shortcut-desc">15 首精选</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部留白 -->
+      <div class="ed-footer-space"></div>
+    </div>
   </div>
 </template>
 
@@ -145,519 +115,468 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
-import PlaylistCard from '../components/PlaylistCard.vue'
-import SongItem from '../components/SongItem.vue'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
 
 const loading = ref(true)
-onMounted(() => { setTimeout(() => { loading.value = false }, 800) })
+onMounted(() => { setTimeout(() => { loading.value = false }, 500) })
 
-// Hero 轮播数据
-const heroItems = [
-  {
-    label: '热门推荐',
-    title: '凤凰传奇',
-    desc: '国民组合 · 经典传唱 · 激情澎湃',
-    cover: '/music-player/images/covers/fenghuang_chuanqi_hero.jpg',
-    action: () => router.push('/search?q=凤凰传奇'),
-    link: '/search?q=凤凰传奇'
-  },
-  {
-    label: '每日推荐',
-    title: '每日10首',
-    desc: '为你精心挑选，发现好音乐',
-    cover: '/music-player/images/covers/daily_hero.jpg',
-    action: () => playDailySongs(),
-    link: '/songs'
-  },
-  {
-    label: '专题歌单',
-    title: '橘子味的夏天',
-    desc: '清甜 · 日落氛围感 · 15首精选',
-    cover: '/music-player/images/covers/summer_orange_cover.jpg',
-    action: () => goToSummer(),
-    link: '/summer'
-  },
-  {
-    label: '精选专辑',
-    title: '风来的方向',
-    desc: '温暖治愈，听见风的声音',
-    cover: '/music-player/images/covers/32d37eb29697_cover.jpg',
-    action: () => goToAlbum(18),
-    link: '/album/18'
-  }
-]
+const greeting = computed(() => {
+  const h = new Date().getHours()
+  if (h < 6) return '深夜好'
+  if (h < 12) return '早安'
+  if (h < 18) return '午安'
+  return '晚安'
+})
 
-const heroIndex = ref(0)
-const heroItem = computed(() => heroItems[heroIndex.value])
-const heroCover = computed(() => heroItem.value.cover)
-const heroLabel = computed(() => heroItem.value.label)
-const heroTitle = computed(() => heroItem.value.title)
-const heroDesc = computed(() => heroItem.value.desc)
+const featuredCover = '/music-player/images/covers/summer_orange_cover.jpg'
+const featuredTitle = '橘子味的夏天'
+const featuredArtist = '清甜 · 日落氛围感'
 
-// 自动轮播
-let heroTimer = null
-const startHeroTimer = () => {
-  heroTimer = setInterval(() => {
-    heroIndex.value = (heroIndex.value + 1) % heroItems.length
-  }, 6000)
-}
-onMounted(startHeroTimer)
+const recentSongs = computed(() => {
+  return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 6)
+})
 
-const playHero = () => { heroItem.value.action() }
-const goToHero = () => { router.push(heroItem.value.link) }
+const likedCount = computed(() => playerStore.getStatsSummary()?.likedCount || 0)
 
-// 快捷入口
 const playDailySongs = () => {
   const shuffled = [...playerStore.songs].sort(() => Math.random() - 0.5)
-  playerStore.playPlaylist({ id: 'daily', name: '每日10首', songs: shuffled.slice(0, 10).map(s => s.id) })
+  playerStore.playPlaylist({ id: 'daily', name: '每日推荐', songs: shuffled.slice(0, 10).map(s => s.id) })
 }
-const goToLikedSongs = () => router.push('/liked')
-const goToSummer = () => router.push('/summer')
-
-// 数据
-const latestSongs = computed(() => [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 8))
-const hotSongs = computed(() => playerStore.songs.slice(0, 6))
-const latestAlbums = computed(() => [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 5))
-
-const goToPlaylist = (id) => router.push(`/playlist/${id}`)
-const goToAlbum = (id) => router.push(`/album/${id}`)
-const playPlaylist = (playlist) => playerStore.playPlaylist(playlist)
-const playAlbum = (album) => playerStore.playAlbum(album)
 </script>
 
 <style scoped>
-.home-new {
-  padding-bottom: 100px;
-  background: #07070f;
+.editorial {
   min-height: 100vh;
+  background: #f7f5f0;
+  color: #1a1a1a;
+  font-family: Georgia, 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  padding-bottom: 100px;
 }
 
-/* ===== Hero 大图区域 ===== */
-.hero-section {
-  position: relative;
-  height: 55vh;
-  min-height: 380px;
-  max-height: 520px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero-img {
+/* ===== 顶部装饰线 ===== */
+.top-rule {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 8s ease;
-  animation: heroZoom 8s ease-in-out infinite alternate;
+  height: 3px;
+  background: #c8b99a;
 }
 
-@keyframes heroZoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+/* ===== 容器 ===== */
+.ed-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 32px;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(7, 7, 15, 0.1) 0%,
-    rgba(7, 7, 15, 0.3) 40%,
-    rgba(7, 7, 15, 0.85) 75%,
-    #07070f 100%
-  );
+/* ===== 首屏双栏 ===== */
+.hero-editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 56px 0 48px;
+  align-items: start;
+  animation: editorialFadeIn 1s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-vignette {
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  padding: 0 24px 32px;
-  animation: heroContentIn 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes heroContentIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 14px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+.ed-greeting {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 3px;
+  color: #c8b99a;
   text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.hero-title {
-  margin: 0 0 8px;
-  font-size: 36px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.15;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
-
-.hero-desc {
-  margin: 0 0 20px;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 300;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.hero-play-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  background: #fff;
-  border: none;
-  border-radius: 28px;
-  color: #07070f;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
-}
-
-.hero-more-btn {
-  padding: 14px 24px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 28px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.hero-more-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-/* Hero 指示器 */
-.hero-indicators {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 2;
-}
-
-.hero-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.hero-dot.active {
-  background: #fff;
-  width: 24px;
-  border-radius: 4px;
-}
-
-/* ===== 快捷入口 ===== */
-.quick-access {
-  display: flex;
-  gap: 12px;
-  padding: 20px 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.quick-access::-webkit-scrollbar { display: none; }
-
-.quick-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 12px;
-  min-width: 80px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.quick-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-}
-
-.quick-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-}
-
-.quick-icon.daily { background: linear-gradient(135deg, #667eea, #764ba2); }
-.quick-icon.liked { background: linear-gradient(135deg, #f093fb, #f5576c); }
-.quick-icon.summer { background: linear-gradient(135deg, #ffd8a6, #ff8a65); }
-.quick-icon.stats { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-
-.quick-name {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  white-space: nowrap;
-}
-
-/* ===== 内容区块 ===== */
-.content-section {
-  padding: 16px 24px;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 16px;
 }
 
-.section-title {
-  margin: 0;
-  font-size: 20px;
+.ed-headline {
+  margin: 0 0 20px;
+  font-size: 48px;
   font-weight: 700;
-  color: #fff;
+  color: #1a1a1a;
+  line-height: 1.1;
+  letter-spacing: -1px;
 }
 
-.see-all {
+.ed-lead {
+  margin: 0 0 28px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.7;
+  max-width: 340px;
+}
+
+.ed-play-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #1a1a1a;
+  border: none;
+  border-radius: 6px;
+  color: #f7f5f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.see-all:hover {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* 横向滚动歌单 */
-.playlist-scroll {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 8px;
-}
-
-.playlist-scroll::-webkit-scrollbar { display: none; }
-
-.playlist-scroll :deep(.playlist-card) {
-  width: 180px;
-  flex-shrink: 0;
-}
-
-/* 移动端封面固定 150x150 */
-.playlist-scroll :deep(.cover-wrapper) {
-  width: 156px;
-  height: 156px;
-  aspect-ratio: auto;
-}
-
-/* 歌曲网格 */
-.song-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.song-card {
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
 }
 
-.song-card:hover {
-  transform: translateY(-4px);
+.ed-play-all:hover {
+  background: #333;
+  transform: translateY(-1px);
 }
 
-.song-card-cover {
+.ed-play-all svg {
+  opacity: 0.8;
+}
+
+/* 封面 */
+.hero-visual {
+  animation: editorialFadeIn 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ed-featured-cover {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.song-card-cover img {
+.ed-featured-cover:hover {
+  transform: scale(1.02);
+}
+
+.ed-featured-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s;
 }
 
-.song-card:hover .song-card-cover img {
-  transform: scale(1.05);
-}
-
-.song-card-play {
+.ed-cover-overlay {
   position: absolute;
-  inset: 0;
+  bottom: 12px;
+  left: 12px;
+}
+
+.ed-cover-label {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #f7f5f0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+.ed-caption {
+  margin: 12px 0 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ===== 分隔线 ===== */
+.ed-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.3s;
+  padding: 16px 0 40px;
 }
 
-.song-card:hover .song-card-play {
-  opacity: 1;
+.ed-divider-diamond {
+  width: 6px;
+  height: 6px;
+  background: #c8b99a;
+  transform: rotate(45deg);
 }
 
-.song-card-play svg {
-  width: 40px;
-  height: 40px;
-  color: #fff;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+/* ===== 区块 ===== */
+.ed-section {
+  margin-bottom: 56px;
+  animation: editorialFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.song-card-title {
-  margin: 0 0 2px;
+.ed-section:nth-child(4) { animation-delay: 0.4s; }
+.ed-section:nth-child(5) { animation-delay: 0.5s; }
+.ed-section:nth-child(6) { animation-delay: 0.6s; }
+
+.ed-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ed-section-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+}
+
+.ed-section-link {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+.ed-section-link:hover {
+  color: #1a1a1a;
+}
+
+/* ===== 歌单网格 ===== */
+.ed-playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.ed-playlist {
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ed-playlist:hover {
+  transform: translateY(-4px);
+}
+
+.ed-playlist-cover {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ed-playlist-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ed-playlist:hover .ed-playlist-cover img {
+  transform: scale(1.04);
+}
+
+.ed-playlist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ed-playlist-name {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ed-playlist-count {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* ===== 歌曲列表 ===== */
+.ed-song-list {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ed-song-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ed-song-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.ed-song-num {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #bbb;
+  width: 20px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.ed-song-cover {
+  width: 44px;
+  height: 44px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ed-song-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ed-song-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ed-song-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: #1a1a1a;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.song-card-artist {
-  margin: 0;
+.ed-song-artist {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
+  color: #999;
+}
+
+.ed-song-album {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #ccc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 160px;
 }
 
-/* 歌曲列表 */
-.song-list-wrap {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  overflow: hidden;
+/* ===== 快捷入口 ===== */
+.ed-shortcuts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 28px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.footer-space {
-  height: 40px;
+.ed-shortcut {
+  flex: 1;
+  text-align: center;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-radius: 4px;
+}
+
+.ed-shortcut:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.ed-shortcut-title {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.ed-shortcut-desc {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  color: #aaa;
+}
+
+.ed-shortcut-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.ed-footer-space {
+  height: 60px;
+}
+
+/* ===== 动画 ===== */
+@keyframes editorialFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== 桌面端 ===== */
-@media (min-width: 768px) {
-  .hero-section {
-    height: 50vh;
-    max-height: 480px;
+@media (max-width: 768px) {
+  .editorial {
+    padding-bottom: 100px;
   }
 
-  .hero-title {
-    font-size: 44px;
+  .ed-container {
+    padding: 0 20px;
   }
 
-  .hero-content {
-    padding: 0 48px 40px;
-    max-width: 900px;
+  .hero-editorial {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 0 32px;
   }
 
-  .quick-access {
-    padding: 24px 48px;
-    justify-content: center;
+  .ed-headline {
+    font-size: 36px;
+  }
+
+  .ed-playlist-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
-  .quick-card {
-    min-width: 100px;
-    padding: 20px 16px;
+  .ed-song-album {
+    display: none;
   }
 
-  .content-section {
-    padding: 20px 48px;
+  .ed-shortcuts {
+    flex-direction: column;
+    gap: 0;
   }
 
-  .song-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .playlist-scroll :deep(.playlist-card) {
-    width: 220px;
-  }
-
-  .playlist-scroll :deep(.cover-wrapper) {
-    width: 196px;
-    height: 196px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-section {
-    max-height: 520px;
-  }
-
-  .playlist-scroll :deep(.playlist-card) {
-    width: 260px;
-  }
-
-  .playlist-scroll :deep(.cover-wrapper) {
-    width: 236px;
-    height: 236px;
-  }
-
-  .hero-title {
-    font-size: 52px;
-  }
-
-  .song-grid {
-    grid-template-columns: repeat(5, 1fr);
+  .ed-shortcut-divider {
+    width: 40px;
+    height: 1px;
+    margin: 0 auto;
   }
 }
 </style>
