@@ -26,8 +26,9 @@
             <p class="np-artist">{{ playerStore.currentSong.artist }}</p>
             <p class="np-album">{{ playerStore.currentSong.album }}</p>
           </div>
-          <div class="np-play-icon">
-            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          <div class="np-play-icon" @click.stop="togglePlay">
+            <svg viewBox="0 0 24 24" width="20" height="20" v-if="!playerStore.isPlaying"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <svg viewBox="0 0 24 24" width="20" height="20" v-else><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </div>
         </div>
       </section>
@@ -120,16 +121,27 @@
               v-for="song in recentSongs"
               :key="song.id"
               class="recent-item"
-              @click="playerStore.playSong(song)"
             >
-              <div class="recent-cover">
+              <div class="recent-cover" @click="playerStore.playSong(song)">
                 <img :src="song.cover" :alt="song.title" loading="lazy" />
+                <div class="recent-play-btn" @click.stop="playerStore.playSong(song)">
+                  <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+                </div>
               </div>
-              <div class="recent-meta">
+              <div class="recent-meta" @click="playerStore.playSong(song)">
                 <span class="recent-title">{{ song.title }}</span>
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>
-              <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+              <div class="recent-actions">
+                <button
+                  class="like-btn"
+                  :class="{ liked: playerStore.isLiked(song.id) }"
+                  @click.stop="playerStore.toggleLikeSong(song.id)"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
+                <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+              </div>
             </div>
           </div>
         </section>
@@ -145,17 +157,28 @@
               v-for="(song, i) in hotSongs"
               :key="song.id"
               class="hot-item"
-              @click="playerStore.playSong(song)"
             >
               <span class="hot-rank" :class="{ top3: i < 3 }">{{ i + 1 }}</span>
-              <div class="recent-cover">
+              <div class="recent-cover" @click="playerStore.playSong(song)">
                 <img :src="song.cover" :alt="song.title" loading="lazy" />
+                <div class="recent-play-btn" @click.stop="playerStore.playSong(song)">
+                  <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+                </div>
               </div>
-              <div class="recent-meta">
+              <div class="recent-meta" @click="playerStore.playSong(song)">
                 <span class="recent-title">{{ song.title }}</span>
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>
-              <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+              <div class="recent-actions">
+                <button
+                  class="like-btn"
+                  :class="{ liked: playerStore.isLiked(song.id) }"
+                  @click.stop="playerStore.toggleLikeSong(song.id)"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
+                <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+              </div>
             </div>
           </div>
         </section>
@@ -221,6 +244,14 @@ const latestAlbums = computed(() => {
 // 操作
 const openFullscreen = () => {
   playerStore.isFullscreen = true
+}
+
+const togglePlay = () => {
+  if (playerStore.isPlaying) {
+    playerStore.pause()
+  } else {
+    playerStore.play()
+  }
 }
 
 const playDailySongs = () => {
@@ -639,12 +670,16 @@ const formatTime = (seconds) => {
   gap: 14px;
   padding: 10px 14px;
   border-radius: 12px;
-  cursor: pointer;
   transition: all 0.3s;
 }
 
 .recent-item:hover {
   background: rgba(255, 255, 255, 0.05);
+}
+
+.recent-item:hover .recent-play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .recent-cover {
@@ -654,6 +689,8 @@ const formatTime = (seconds) => {
   overflow: hidden;
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.03);
+  position: relative;
+  cursor: pointer;
 }
 
 .recent-cover img {
@@ -662,12 +699,30 @@ const formatTime = (seconds) => {
   object-fit: cover;
 }
 
+.recent-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
 .recent-meta {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  cursor: pointer;
 }
 
 .recent-title {
@@ -683,6 +738,33 @@ const formatTime = (seconds) => {
   font-size: 12px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.35);
+}
+
+.recent-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.like-btn:hover {
+  color: rgba(245, 87, 108, 0.7);
+  transform: scale(1.15);
+}
+
+.like-btn.liked {
+  color: #f5576c;
 }
 
 .recent-duration {
