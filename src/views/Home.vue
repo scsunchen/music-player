@@ -83,10 +83,34 @@
         </div>
       </section>
 
+      <!-- 新专辑 -->
+      <section class="content-section">
+        <div class="section-header">
+          <h3 class="section-title">新专辑</h3>
+          <router-link to="/albums" class="see-all">全部</router-link>
+        </div>
+        <div class="horizontal-scroll">
+          <div
+            v-for="album in latestAlbums"
+            :key="album.id"
+            class="glass-card"
+            @click="router.push(`/album/${album.id}`)"
+          >
+            <div class="glass-card-cover">
+              <img :src="album.cover" :alt="album.name" loading="lazy" />
+            </div>
+            <div class="glass-card-info">
+              <span class="glass-card-name">{{ album.name }}</span>
+              <span class="glass-card-count">{{ album.songs?.length || 0 }} 首</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 最近歌曲 -->
       <section class="content-section">
         <div class="section-header">
-          <h3 class="section-title">最近歌曲</h3>
+          <h3 class="section-title">新歌速递</h3>
           <router-link to="/songs" class="see-all">全部</router-link>
         </div>
         <div class="recent-list">
@@ -96,6 +120,32 @@
             class="recent-item"
             @click="playerStore.playSong(song)"
           >
+            <div class="recent-cover">
+              <img :src="song.cover" :alt="song.title" loading="lazy" />
+            </div>
+            <div class="recent-meta">
+              <span class="recent-title">{{ song.title }}</span>
+              <span class="recent-artist">{{ song.artist }}</span>
+            </div>
+            <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 热门歌曲 -->
+      <section class="content-section">
+        <div class="section-header">
+          <h3 class="section-title">热门歌曲</h3>
+          <router-link to="/hot" class="see-all">全部</router-link>
+        </div>
+        <div class="hot-list">
+          <div
+            v-for="(song, i) in hotSongs"
+            :key="song.id"
+            class="hot-item"
+            @click="playerStore.playSong(song)"
+          >
+            <span class="hot-rank" :class="{ top3: i < 3 }">{{ i + 1 }}</span>
             <div class="recent-cover">
               <img :src="song.cover" :alt="song.title" loading="lazy" />
             </div>
@@ -152,9 +202,17 @@ const dynamicStyle = computed(() => {
   }
 })
 
-// 最近歌曲
+// 最近歌曲（新歌速递）
 const recentSongs = computed(() => {
   return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 6)
+})
+
+// 热门歌曲
+const hotSongs = computed(() => playerStore.songs.slice(0, 8))
+
+// 新专辑
+const latestAlbums = computed(() => {
+  return [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 6)
 })
 
 // 操作
@@ -450,6 +508,8 @@ const formatTime = (seconds) => {
 
 .content-section:nth-child(3) { animation-delay: 0.3s; }
 .content-section:nth-child(4) { animation-delay: 0.4s; }
+.content-section:nth-child(5) { animation-delay: 0.5s; }
+.content-section:nth-child(6) { animation-delay: 0.6s; }
 
 .section-header {
   display: flex;
@@ -611,6 +671,41 @@ const formatTime = (seconds) => {
   color: rgba(255, 255, 255, 0.25);
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
+}
+
+/* ===== 热门歌曲排名 ===== */
+.hot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hot-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hot-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.hot-rank {
+  width: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.hot-rank.top3 {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
 }
 
 .bottom-space {
