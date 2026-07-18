@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <!-- 顶部导航 -->
-    <header class="header">
+    <header class="header" :style="headerStyle">
       <router-link to="/" class="logo">
         <svg viewBox="0 0 24 24" width="28" height="28">
           <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from './stores/player'
 import MusicPlayer from './components/MusicPlayer.vue'
@@ -70,6 +70,19 @@ import PlayQueue from './components/PlayQueue.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 const showFullscreen = ref(false)
+
+// 导航栏动态色
+const headerStyle = computed(() => {
+  const color = playerStore.themeColor || '#667eea'
+  const r = parseInt(color.slice(1, 3), 16)
+  const g = parseInt(color.slice(3, 5), 16)
+  const b = parseInt(color.slice(5, 7), 16)
+  return {
+    '--nav-r': r,
+    '--nav-g': g,
+    '--nav-b': b,
+  }
+})
 
 // 处理分享链接
 onMounted(() => {
@@ -124,9 +137,10 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(15, 15, 26, 0.9);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding: 12px 16px;
   display: flex;
   justify-content: space-between;
@@ -142,10 +156,11 @@ body {
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .logo svg {
-  color: #667eea;
+  color: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.9);
   width: 24px;
   height: 24px;
 }
@@ -165,7 +180,7 @@ body {
 
 .brand-tagline {
   font-size: 9px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.35);
   font-weight: 400;
   letter-spacing: 2px;
 }
@@ -181,9 +196,9 @@ body {
   align-items: center;
   gap: 4px;
   padding: 6px 10px;
-  border-radius: 16px;
+  border-radius: 10px;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.45);
   font-size: 12px;
   font-weight: 500;
   transition: all 0.3s;
@@ -199,18 +214,19 @@ body {
 }
 
 .nav-link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-link.active {
   color: #fff;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  background: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.15);
+  border: 1px solid rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.1);
 }
 
 @media (min-width: 768px) {
   .header {
-    padding: 16px 24px;
+    padding: 14px 32px;
     gap: 24px;
   }
 
@@ -235,19 +251,19 @@ body {
   }
 
   .nav {
-    gap: 8px;
+    gap: 6px;
   }
 
   .nav-link {
     gap: 6px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
   }
 
   .nav-link svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .nav-link span {
