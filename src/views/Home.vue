@@ -133,6 +133,8 @@
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>
               <div class="recent-actions">
+                <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
+                <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
                 <button
                   class="like-btn"
                   :class="{ liked: playerStore.isLiked(song.id) }"
@@ -146,7 +148,7 @@
           </div>
         </section>
 
-        <!-- 热门歌曲 -->
+      <!-- 热门歌曲 -->
         <section class="content-section">
           <div class="section-header">
             <h3 class="section-title">热门歌曲</h3>
@@ -170,6 +172,8 @@
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>
               <div class="recent-actions">
+                <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
+                <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
                 <button
                   class="like-btn"
                   :class="{ liked: playerStore.isLiked(song.id) }"
@@ -240,6 +244,12 @@ const hotSongs = computed(() => playerStore.songs.slice(0, 8))
 const latestAlbums = computed(() => {
   return [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 6)
 })
+
+// 检查是否有歌词
+const hasLyrics = (songId) => {
+  const data = playerStore.lyricsData?.[songId]
+  return data && data.lyrics && data.lyrics.trim().length > 0
+}
 
 // 操作
 const openFullscreen = () => {
@@ -743,8 +753,34 @@ const formatTime = (seconds) => {
 .recent-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
+}
+
+/* 标签徽章 */
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  height: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.tag-badge.lyrics {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+}
+
+.tag-badge.mv {
+  color: rgba(255, 138, 101, 0.8);
+  background: rgba(255, 138, 101, 0.1);
+  border: 1px solid rgba(255, 138, 101, 0.15);
 }
 
 .like-btn {
