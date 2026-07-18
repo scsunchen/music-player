@@ -1,0 +1,58 @@
+{
+  "name": "我的收藏歌单",
+  "description": "本地导入的歌单示例 - 仅当前浏览器可见",
+  "cover": "/music-player/images/covers/default_playlist.jpg",
+  "songs": [
+    {
+      "id": 9001,
+      "title": "晴天",
+      "artist": "周杰伦",
+      "album": "十一月的萧邦",
+      "albumId": 1,
+      "duration": 269,
+      "cover": "/music-player/images/covers/song1.jpg",
+      "audioUrl": "/music-player/audio/song1.mp3"
+    },
+    {
+      "id": 9002,
+      "title": "七里香",
+      "artist": "周杰伦",
+      "album": "七里香",
+      "albumId": 2,
+      "duration": 299,
+      "cover": "/music-player/images/covers/song2.jpg",
+      "audioUrl": "/music-player/audio/song2.mp3",
+      "mvUrl": "/music-player/video/mv2.mp4"
+    },
+    {
+      "id": 9003,
+      "title": "夜曲",
+      "artist": "周杰伦",
+      "album": "十一月的萧邦",
+      "albumId": 1,
+      "duration": 225,
+      "cover": "/music-player/images/covers/song3.jpg",
+      "audioUrl": "/music-player/audio/song3.mp3"
+    },
+    {
+      "id": 9004,
+      "title": "蓝莲花",
+      "artist": "许巍",
+      "album": "时光·漫步",
+      "albumId": 4,
+      "duration": 326,
+      "cover": "/music-player/images/covers/song5.jpg",
+      "audioUrl": "/music-player/audio/song5.mp3"
+    },
+    {
+      "id": 9005,
+      "title": "Example Remote Song",
+      "artist": "Demo Artist",
+      "album": "Demo Album",
+      "albumId": 0,
+      "duration": 200,
+      "cover": "/music-player/images/covers/default_playlist.jpg",
+      "audioUrl": "https://example.com/audio/demo.mp3"
+    }
+  ]
+}

@@ -26,9 +26,8 @@
             <p class="np-artist">{{ playerStore.currentSong.artist }}</p>
             <p class="np-album">{{ playerStore.currentSong.album }}</p>
           </div>
-          <div class="np-play-icon" @click.stop="togglePlay">
-            <svg viewBox="0 0 24 24" width="20" height="20" v-if="!playerStore.isPlaying"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-            <svg viewBox="0 0 24 24" width="20" height="20" v-else><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <div class="np-play-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
       </section>
@@ -84,109 +83,30 @@
         </div>
       </section>
 
-      <!-- 新专辑 -->
+      <!-- 最近歌曲 -->
       <section class="content-section">
         <div class="section-header">
-          <h3 class="section-title">新专辑</h3>
-          <router-link to="/albums" class="see-all">全部</router-link>
+          <h3 class="section-title">最近歌曲</h3>
+          <router-link to="/songs" class="see-all">全部</router-link>
         </div>
-        <div class="horizontal-scroll">
+        <div class="recent-list">
           <div
-            v-for="album in latestAlbums"
-            :key="album.id"
-            class="glass-card"
-            @click="router.push(`/album/${album.id}`)"
+            v-for="song in recentSongs"
+            :key="song.id"
+            class="recent-item"
+            @click="playerStore.playSong(song)"
           >
-            <div class="glass-card-cover">
-              <img :src="album.cover" :alt="album.name" loading="lazy" />
+            <div class="recent-cover">
+              <img :src="song.cover" :alt="song.title" loading="lazy" />
             </div>
-            <div class="glass-card-info">
-              <span class="glass-card-name">{{ album.name }}</span>
-              <span class="glass-card-count">{{ album.songs?.length || 0 }} 首</span>
+            <div class="recent-meta">
+              <span class="recent-title">{{ song.title }}</span>
+              <span class="recent-artist">{{ song.artist }}</span>
             </div>
+            <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
           </div>
         </div>
       </section>
-
-      <!-- 新歌 + 热门 双栏 -->
-      <div class="dual-column">
-        <!-- 新歌速递 -->
-        <section class="content-section">
-          <div class="section-header">
-            <h3 class="section-title">新歌速递</h3>
-            <router-link to="/songs" class="see-all">全部</router-link>
-          </div>
-          <div class="recent-list">
-            <div
-              v-for="song in recentSongs"
-              :key="song.id"
-              class="recent-item"
-            >
-              <div class="recent-cover" @click="playerStore.playSong(song)">
-                <img :src="song.cover" :alt="song.title" loading="lazy" />
-                <div class="recent-play-btn" @click.stop="playerStore.playSong(song)">
-                  <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="recent-meta" @click="router.push(`/song/${song.id}`)">
-                <span class="recent-title">{{ song.title }}</span>
-                <span class="recent-artist">{{ song.artist }}</span>
-              </div>
-              <div class="recent-actions">
-                <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
-                <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
-                <button
-                  class="like-btn"
-                  :class="{ liked: playerStore.isLiked(song.id) }"
-                  @click.stop="playerStore.toggleLikeSong(song.id)"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      <!-- 热门歌曲 -->
-        <section class="content-section">
-          <div class="section-header">
-            <h3 class="section-title">热门歌曲</h3>
-            <router-link to="/hot" class="see-all">全部</router-link>
-          </div>
-          <div class="hot-list">
-            <div
-              v-for="(song, i) in hotSongs"
-              :key="song.id"
-              class="hot-item"
-            >
-              <span class="hot-rank" :class="{ top3: i < 3 }">{{ i + 1 }}</span>
-              <div class="recent-cover" @click="playerStore.playSong(song)">
-                <img :src="song.cover" :alt="song.title" loading="lazy" />
-                <div class="recent-play-btn" @click.stop="playerStore.playSong(song)">
-                  <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="recent-meta" @click="router.push(`/song/${song.id}`)">
-                <span class="recent-title">{{ song.title }}</span>
-                <span class="recent-artist">{{ song.artist }}</span>
-              </div>
-              <div class="recent-actions">
-                <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
-                <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
-                <button
-                  class="like-btn"
-                  :class="{ liked: playerStore.isLiked(song.id) }"
-                  @click.stop="playerStore.toggleLikeSong(song.id)"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </button>
-                <span class="recent-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
 
       <!-- 底部空间 -->
       <div class="bottom-space"></div>
@@ -195,7 +115,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
@@ -232,40 +152,14 @@ const dynamicStyle = computed(() => {
   }
 })
 
-// 最近歌曲（新歌速递）
+// 最近歌曲
 const recentSongs = computed(() => {
   return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 6)
 })
 
-// 热门歌曲
-const hotSongs = computed(() => playerStore.songs.slice(0, 8))
-
-// 新专辑
-const latestAlbums = computed(() => {
-  return [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 6)
-})
-
-// 歌词可用性缓存（避免模板中重复计算）
-const lyricsMap = computed(() => {
-  const map = {}
-  if (playerStore.lyricsData) {
-    for (const songId in playerStore.lyricsData) {
-      const data = playerStore.lyricsData[songId]
-      map[songId] = data && data.lyrics && data.lyrics.trim().length > 0
-    }
-  }
-  return map
-})
-
-const hasLyrics = (songId) => lyricsMap.value[songId] || false
-
 // 操作
 const openFullscreen = () => {
   playerStore.isFullscreen = true
-}
-
-const togglePlay = () => {
-  playerStore.togglePlay()
 }
 
 const playDailySongs = () => {
@@ -298,7 +192,6 @@ const formatTime = (seconds) => {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  will-change: auto;
 }
 
 .atmo-bg-img {
@@ -309,9 +202,6 @@ const formatTime = (seconds) => {
   filter: blur(60px) saturate(1.4) brightness(0.35);
   transform: scale(1.2);
   transition: background-image 2s ease;
-  /* GPU 加速，避免滚动重绘 */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .atmo-gradient {
@@ -334,8 +224,8 @@ const formatTime = (seconds) => {
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
-  opacity: 1;
+  filter: blur(80px);
+  opacity: 0.12;
   animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
@@ -344,6 +234,7 @@ const formatTime = (seconds) => {
   height: 400px;
   top: -100px;
   right: -100px;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.5);
 }
 
 .atmo-orb-2 {
@@ -351,6 +242,7 @@ const formatTime = (seconds) => {
   height: 300px;
   bottom: 20%;
   left: -80px;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.3);
   animation-delay: -6s;
 }
 
@@ -363,9 +255,9 @@ const formatTime = (seconds) => {
 .content-layer {
   position: relative;
   z-index: 1;
-  max-width: 1400px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 40px 32px;
+  padding: 40px 24px;
 }
 
 /* ===== 正在播放 ===== */
@@ -423,7 +315,8 @@ const formatTime = (seconds) => {
   position: absolute;
   inset: -4px;
   border-radius: 18px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.25);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.2);
+  filter: blur(12px);
   z-index: -1;
 }
 
@@ -468,7 +361,6 @@ const formatTime = (seconds) => {
   color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
   flex-shrink: 0;
   transition: all 0.3s;
-  cursor: pointer;
 }
 
 .np-card:hover .np-play-icon {
@@ -547,8 +439,8 @@ const formatTime = (seconds) => {
 }
 
 .qk-chip:hover svg {
-    opacity: 1;
-  }
+  opacity: 1;
+}
 
 /* ===== 内容区块 ===== */
 .content-section {
@@ -556,23 +448,8 @@ const formatTime = (seconds) => {
   animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* 双栏容器 */
-.dual-column {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  margin-bottom: 48px;
-  animation: fadeUp 0.8s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.dual-column .content-section {
-  margin-bottom: 0;
-  animation: none;
-}
-
 .content-section:nth-child(3) { animation-delay: 0.3s; }
 .content-section:nth-child(4) { animation-delay: 0.4s; }
-.content-section:nth-child(5) { animation-delay: 0.6s; }
 
 .section-header {
   display: flex;
@@ -682,16 +559,12 @@ const formatTime = (seconds) => {
   gap: 14px;
   padding: 10px 14px;
   border-radius: 12px;
+  cursor: pointer;
   transition: all 0.3s;
 }
 
 .recent-item:hover {
   background: rgba(255, 255, 255, 0.05);
-}
-
-.recent-item:hover .recent-play-btn {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
 }
 
 .recent-cover {
@@ -701,8 +574,6 @@ const formatTime = (seconds) => {
   overflow: hidden;
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.03);
-  position: relative;
-  cursor: pointer;
 }
 
 .recent-cover img {
@@ -711,30 +582,12 @@ const formatTime = (seconds) => {
   object-fit: cover;
 }
 
-.recent-play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
 .recent-meta {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  cursor: pointer;
 }
 
 .recent-title {
@@ -752,100 +605,12 @@ const formatTime = (seconds) => {
   color: rgba(255, 255, 255, 0.35);
 }
 
-.recent-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* 标签徽章 */
-.tag-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
-  height: 16px;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.tag-badge.lyrics {
-  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
-  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
-}
-
-.tag-badge.mv {
-  color: rgba(255, 138, 101, 0.8);
-  background: rgba(255, 138, 101, 0.1);
-  border: 1px solid rgba(255, 138, 101, 0.15);
-}
-
-.like-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.2);
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-.like-btn:hover {
-  color: rgba(245, 87, 108, 0.7);
-  transform: scale(1.15);
-}
-
-.like-btn.liked {
-  color: #f5576c;
-}
-
 .recent-duration {
   font-size: 12px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.25);
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
-}
-
-/* ===== 热门歌曲排名 ===== */
-.hot-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.hot-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.hot-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.hot-rank {
-  width: 20px;
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  flex-shrink: 0;
-}
-
-.hot-rank.top3 {
-  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
 }
 
 .bottom-space {
@@ -867,8 +632,8 @@ const formatTime = (seconds) => {
 /* ===== 桌面端 ===== */
 @media (min-width: 768px) {
   .content-layer {
-    padding: 60px 48px;
-    max-width: 1400px;
+    padding: 60px 40px;
+    max-width: 960px;
   }
 
   .np-card {
@@ -900,12 +665,12 @@ const formatTime = (seconds) => {
   }
 
   .glass-card {
-    width: 190px;
+    width: 170px;
   }
 
   .glass-card-cover {
-    width: 190px;
-    height: 190px;
+    width: 170px;
+    height: 170px;
   }
 
   .section-title {
@@ -913,10 +678,9 @@ const formatTime = (seconds) => {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .content-layer {
-    padding: 60px 64px;
-    max-width: 1600px;
+    max-width: 1040px;
   }
 
   .np-cover {
@@ -925,23 +689,12 @@ const formatTime = (seconds) => {
   }
 
   .glass-card {
-    width: 210px;
+    width: 180px;
   }
 
   .glass-card-cover {
-    width: 210px;
-    height: 210px;
-  }
-
-  /* 宽屏双栏并排 */
-  .dual-column {
-    flex-direction: row;
-    gap: 48px;
-  }
-
-  .dual-column .content-section {
-    flex: 1;
-    min-width: 0;
+    width: 180px;
+    height: 180px;
   }
 }
 </style>
