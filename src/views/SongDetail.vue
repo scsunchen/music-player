@@ -1,66 +1,127 @@
 <template>
-  <div class="song-detail" v-if="song">
-    <!-- 虚化封面背景 -->
-    <div class="hero-bg">
-      <img :src="song.cover" :alt="song.title" class="bg-image" />
-      <div class="bg-overlay"></div>
+  <div class="immersive-song" :style="dynamicStyle" v-if="song">
+    <!-- 轻量氛围背景 -->
+    <div class="atmosphere">
+      <div class="atmo-bg-img" :style="{ backgroundImage: `url(${song.cover})` }"></div>
+      <div class="atmo-gradient"></div>
+      <div class="atmo-orb atmo-orb-1"></div>
     </div>
 
-    <!-- 返回按钮 -->
-    <button class="btn-back" @click="goBack">
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-      </svg>
-    </button>
+    <div class="content-layer">
+      <!-- 头部 -->
+      <header class="page-header">
+        <button class="btn-back" @click="$router.back()">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <div class="header-info">
+          <span class="header-label">SONG</span>
+          <h1 class="header-title">{{ song.title }}</h1>
+        </div>
+      </header>
 
-    <!-- 歌曲信息区域 -->
-    <div class="song-hero">
-      <div class="cover-container">
-        <img :src="song.cover" :alt="song.title" class="cover-image" />
-        <div class="cover-glow" v-if="playerStore.isPlaying && playerStore.currentSong?.id === song.id"></div>
-      </div>
-      <div class="song-meta">
-        <h1 class="song-title">{{ song.title }}</h1>
-        <p class="song-artist">{{ song.artist }}</p>
-        <p class="song-album">{{ song.album }}</p>
-      </div>
-    </div>
+      <!-- 歌曲 Hero -->
+      <section class="song-hero">
+        <div class="hero-cover">
+          <img :src="song.cover" :alt="song.title" />
+          <div class="hero-cover-glow" v-if="playerStore.isPlaying && playerStore.currentSong?.id === song.id"></div>
+        </div>
+        <div class="hero-meta">
+          <h2 class="hero-title">{{ song.title }}</h2>
+          <p class="hero-artist">{{ song.artist }}</p>
+          <p class="hero-album">{{ song.album }}</p>
+          <div class="hero-tags">
+            <span class="hero-tag" v-if="song.duration">{{ formatTime(song.duration) }}</span>
+            <span class="hero-tag lyrics" v-if="hasLyrics">词</span>
+            <span class="hero-tag mv" v-if="song.mvUrl">MV</span>
+            <button
+              class="hero-like-btn"
+              :class="{ liked: playerStore.isLiked(song.id) }"
+              @click="playerStore.toggleLikeSong(song.id)"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
 
-    <!-- 操作按钮 -->
-    <div class="actions">
-      <button 
-        class="btn-play-main" 
-        :class="{ playing: playerStore.isPlaying && playerStore.currentSong?.id === song.id }"
-        @click="handlePlay"
-      >
-        <svg v-if="!isCurrentPlaying" viewBox="0 0 24 24" width="28" height="28">
-          <path fill="currentColor" d="M8 5v14l11-7z"/>
-        </svg>
-        <svg v-else viewBox="0 0 24 24" width="28" height="28">
-          <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-        </svg>
-        <span>{{ isCurrentPlaying ? '暂停' : '播放' }}</span>
-      </button>
-      <button 
-        v-if="song.mvUrl" 
-        class="btn-mv" 
-        @click="showMV = true"
-      >
-        <svg viewBox="0 0 24 24" width="22" height="22">
-          <path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zM10 8v6l5-3z"/>
-        </svg>
-        <span>MV</span>
-      </button>
-      <button class="btn-action" @click="showAddToPlaylist = true">
-        <svg viewBox="0 0 24 24" width="22" height="22">
-          <path fill="currentColor" d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
-        </svg>
-      </button>
-      <button class="btn-action" @click="openShare">
-        <svg viewBox="0 0 24 24" width="22" height="22">
-          <path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-        </svg>
-      </button>
+      <!-- 操作按钮 -->
+      <div class="actions">
+        <button
+          class="btn-play-main"
+          @click="handlePlay"
+        >
+          <svg v-if="!isCurrentPlaying" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          <svg v-else viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>{{ isCurrentPlaying ? '暂停' : '播放' }}</span>
+        </button>
+        <button v-if="song.mvUrl" class="btn-action" @click="showMV = true" title="观看 MV">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zM10 8v6l5-3z"/></svg>
+        </button>
+        <button class="btn-action" @click="showAddToPlaylist = true" title="添加到歌单">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/></svg>
+        </button>
+        <button class="btn-action" @click="openShare" title="分享">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+        </button>
+      </div>
+
+      <!-- 歌曲简介 -->
+      <section class="desc-section" v-if="albumInfo?.description">
+        <div class="section-header">
+          <h3 class="section-title">歌曲简介</h3>
+        </div>
+        <div class="desc-card">
+          <p class="desc-text">{{ albumInfo.description }}</p>
+        </div>
+      </section>
+
+      <!-- 歌词 -->
+      <section class="lyrics-section" v-if="lyricsLines.length > 0">
+        <div class="section-header">
+          <h3 class="section-title">歌词</h3>
+        </div>
+        <div class="lyrics-card">
+          <p
+            v-for="(line, index) in lyricsLines"
+            :key="index"
+            class="lyric-line"
+            :class="{ active: isCurrentLine(index) }"
+          >{{ line.text }}</p>
+        </div>
+      </section>
+
+      <!-- 相关歌曲 -->
+      <section class="related-section" v-if="relatedSongs.length > 0">
+        <div class="section-header">
+          <h3 class="section-title">相关歌曲</h3>
+          <span class="section-count">{{ relatedSongs.length }} 首</span>
+        </div>
+        <div class="song-list">
+          <div
+            v-for="s in relatedSongs"
+            :key="s.id"
+            class="song-item"
+          >
+            <div class="song-cover" @click="playerStore.playSong(s)">
+              <img :src="s.cover" :alt="s.title" loading="lazy" />
+              <div class="song-cover-play">
+                <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="song-meta" @click="router.push(`/song/${s.id}`)">
+                <span class="song-title">{{ s.title }}</span>
+              <span class="song-artist">{{ s.artist }}</span>
+            </div>
+            <div class="song-actions">
+              <span class="tag-badge lyrics" v-if="hasLyricsFor(s.id)">词</span>
+              <span class="tag-badge mv" v-if="s.mvUrl">MV</span>
+              <span class="song-duration" v-if="s.duration">{{ formatTime(s.duration) }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="bottom-space"></div>
     </div>
 
     <!-- 添加到歌单弹窗 -->
@@ -68,86 +129,35 @@
       <div class="modal" @click.stop>
         <h3 class="modal-title">添加到歌单</h3>
         <div class="modal-list">
-          <button 
-            v-for="playlist in playerStore.customPlaylists" 
+          <button
+            v-for="playlist in playerStore.customPlaylists"
             :key="playlist.id"
             class="modal-item"
             @click="addToPlaylist(playlist.id)"
           >
-            {{ playlist.name }}
+            <img :src="playlist.cover" class="modal-item-cover" />
+            <span>{{ playlist.name }}</span>
           </button>
           <p v-if="playerStore.customPlaylists.length === 0" class="modal-empty">
-            还没有创建歌单，去"我的"页面创建一个吧
+            还没有创建歌单
           </p>
         </div>
         <button class="modal-close" @click="showAddToPlaylist = false">取消</button>
       </div>
     </div>
-
-    <!-- 歌曲描述 -->
-    <div class="song-description" v-if="albumInfo?.description">
-      <div class="desc-header">
-        <svg viewBox="0 0 24 24" width="16" height="16">
-          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-        </svg>
-        <span>歌曲简介</span>
-      </div>
-      <p class="desc-text">{{ albumInfo.description }}</p>
-    </div>
-
-    <!-- 歌词区域 -->
-    <div class="lyrics-section" v-if="lyricsLines.length > 0">
-      <div class="lyrics-header">
-        <svg viewBox="0 0 24 24" width="16" height="16">
-          <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-        </svg>
-        <span>歌词</span>
-        <button class="btn-edit-lyrics" @click="showLyricsEditor = true" title="编辑歌词">
-          <svg viewBox="0 0 24 24" width="14" height="14">
-            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-          </svg>
-        </button>
-      </div>
-      <div class="lyrics-content" ref="lyricsRef">
-        <p 
-          v-for="(line, index) in lyricsLines" 
-          :key="index"
-          class="lyric-line"
-          :class="{ active: isCurrentLine(index) }"
-          :ref="el => { if (isCurrentLine(index)) activeLyricEl = el }"
-        >{{ line.text }}</p>
-        <p v-if="lyricsLines.length === 0" class="no-lyrics">暂无歌词</p>
-      </div>
-    </div>
-
-    <!-- 相关歌曲 -->
-    <div class="related-section" v-if="relatedSongs.length > 0">
-      <h3 class="section-title">相关歌曲</h3>
-      <div class="song-list">
-        <SongItem
-          v-for="s in relatedSongs"
-          :key="s.id"
-          :song="s"
-          @play="playerStore.playSong(s)"
-        />
-      </div>
-    </div>
   </div>
 
+  <!-- 不存在 -->
   <div class="not-found" v-else>
-    <p>歌曲不存在</p>
-    <button @click="$router.push('/')">返回首页</button>
+    <div class="not-found-icon">
+      <svg viewBox="0 0 24 24" width="40" height="40"><path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+    </div>
+    <p class="not-found-text">歌曲不存在</p>
+    <button class="not-found-btn" @click="$router.push('/')">返回首页</button>
   </div>
 
   <!-- MV播放器 -->
   <MVPlayer :visible="showMV" :song="song" @close="showMV = false" />
-
-  <!-- 歌词编辑器 -->
-  <Teleport to="body">
-    <div v-if="showLyricsEditor" class="editor-overlay" @click="showLyricsEditor = false">
-      <LyricsEditor :songId="song.id" @close="showLyricsEditor = false" @save="onLyricsSave" @click.stop />
-    </div>
-  </Teleport>
 
   <!-- 分享弹窗 -->
   <ShareModal
@@ -164,8 +174,6 @@ import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MVPlayer from '../components/MVPlayer.vue'
-import LyricsEditor from '../components/LyricsEditor.vue'
-import SongItem from '../components/SongItem.vue'
 import ShareModal from '../components/ShareModal.vue'
 
 const route = useRoute()
@@ -173,14 +181,32 @@ const router = useRouter()
 const playerStore = usePlayerStore()
 
 const song = ref(null)
-const lyricsRef = ref(null)
-const activeLyricEl = ref(null)
 const showAddToPlaylist = ref(false)
 const showMV = ref(false)
-const showLyricsEditor = ref(false)
 const showShare = ref(false)
 
-// 解析歌词
+const dynamicStyle = computed(() => {
+  const color = playerStore.themeColor || '#667eea'
+  return {
+    '--dynamic-r': parseInt(color.slice(1, 3), 16),
+    '--dynamic-g': parseInt(color.slice(3, 5), 16),
+    '--dynamic-b': parseInt(color.slice(5, 7), 16),
+  }
+})
+
+const lyricsMap = computed(() => {
+  const map = {}
+  if (playerStore.lyricsData) {
+    for (const id in playerStore.lyricsData) {
+      const d = playerStore.lyricsData[id]
+      map[id] = d && d.lyrics && d.lyrics.trim().length > 0
+    }
+  }
+  return map
+})
+const hasLyrics = computed(() => song.value ? lyricsMap.value[song.value.id] || false : false)
+const hasLyricsFor = (id) => lyricsMap.value[id] || false
+
 const lyricsLines = computed(() => {
   if (!song.value) return []
   const raw = playerStore.lyricsData[song.value.id]?.lyrics || ''
@@ -202,13 +228,11 @@ const lyricsLines = computed(() => {
     .filter(Boolean)
 })
 
-// 专辑信息
 const albumInfo = computed(() => {
   if (!song.value) return null
   return playerStore.albums.find(a => a.id === song.value.albumId)
 })
 
-// 相关歌曲（同专辑）
 const relatedSongs = computed(() => {
   if (!song.value) return []
   const album = playerStore.albums.find(a => a.id === song.value.albumId)
@@ -219,32 +243,26 @@ const relatedSongs = computed(() => {
     .slice(0, 5)
 })
 
-// 是否正在播放当前歌曲
 const isCurrentPlaying = computed(() => {
   return playerStore.isPlaying && playerStore.currentSong?.id === song.value?.id
 })
 
-// 判断当前歌词行
 const isCurrentLine = (index) => {
   if (!playerStore.isPlaying || lyricsLines.value.length === 0) return false
   const currentTime = playerStore.currentTime
   const current = lyricsLines.value[index]
   const next = lyricsLines.value[index + 1]
   if (!current) return false
-  if (next) {
-    return currentTime >= current.time && currentTime < next.time
-  }
+  if (next) return currentTime >= current.time && currentTime < next.time
   return currentTime >= current.time
 }
 
-// 加载歌曲
 const loadSong = () => {
   const id = parseInt(route?.params?.id)
   if (!id || isNaN(id)) { song.value = null; return }
   song.value = playerStore.songs.find(s => s.id === id) || null
 }
 
-// 播放/暂停
 const handlePlay = () => {
   if (!song.value) return
   if (isCurrentPlaying.value) {
@@ -254,12 +272,6 @@ const handlePlay = () => {
   }
 }
 
-// 返回
-const goBack = () => {
-  router.back()
-}
-
-// 添加到歌单
 const addToPlaylist = (playlistId) => {
   if (song.value) {
     playerStore.addToPlaylist(playlistId, song.value.id)
@@ -267,232 +279,310 @@ const addToPlaylist = (playlistId) => {
   }
 }
 
-// 打开分享
 const openShare = () => {
   showShare.value = true
 }
 
-// 歌词保存回调
-const onLyricsSave = (lrcContent) => {
-  // 重新解析歌词
-  lyricsLines.value = parseLyrics(lrcContent)
-  showLyricsEditor.value = false
+const formatTime = (s) => {
+  const m = Math.floor(s / 60)
+  const sec = s % 60
+  return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
-// 歌词自动滚动
-watch(() => playerStore.currentTime, () => {
-  if (activeLyricEl.value && lyricsRef.value) {
-    const container = lyricsRef.value
-    const el = activeLyricEl.value
-    const containerRect = container.getBoundingClientRect()
-    const elRect = el.getBoundingClientRect()
-    const offset = elRect.top - containerRect.top - containerRect.height / 3
-    container.scrollTo({
-      top: container.scrollTop + offset,
-      behavior: 'smooth'
-    })
-  }
-})
-
-onMounted(() => {
-  loadSong()
-})
+onMounted(() => loadSong())
 
 watch(() => route?.params?.id, () => {
   loadSong()
-  nextTick(() => {
-    window.scrollTo(0, 0)
-  })
+  nextTick(() => window.scrollTo(0, 0))
 })
 </script>
 
 <style scoped>
-.song-detail {
-  min-height: 100vh;
-  padding-bottom: 100px;
+.immersive-song {
   position: relative;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+  padding-bottom: 100px;
+  overflow-x: hidden;
 }
 
-/* 虚化封面背景 */
-.hero-bg {
+/* 轻量氛围背景 */
+.atmosphere {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 55vh;
-  min-height: 450px;
-  max-height: 600px;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.bg-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(60px) brightness(0.7) saturate(1.8) contrast(1.1);
-  transform: scale(1.3);
-  animation: bgFloat 20s ease-in-out infinite;
-}
-
-@keyframes bgFloat {
-  0%, 100% { transform: scale(1.3) translate(0, 0); }
-  50% { transform: scale(1.35) translate(-1%, -1%); }
-}
-
-.bg-overlay {
-  position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(18, 18, 30, 0.2) 0%,
-    rgba(18, 18, 30, 0.5) 50%,
-    rgba(18, 18, 30, 0.95) 100%
-  );
-}
-
-/* 背景光晕效果 */
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 60%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(102, 126, 234, 0.15) 0%,
-    transparent 70%
-  );
+  z-index: 0;
   pointer-events: none;
 }
 
-/* 返回按钮 */
+.atmo-bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) brightness(0.4) saturate(1.5);
+  transform: scale(1.4);
+  opacity: 0.6;
+  backface-visibility: hidden;
+}
+
+.atmo-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 15%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.1) 0%, #0a0a0a 55%);
+}
+
+.atmo-orb {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.08);
+  animation: orbFloat 14s ease-in-out infinite alternate;
+}
+
+.atmo-orb-1 {
+  width: 350px;
+  height: 350px;
+  top: -100px;
+  left: -80px;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(25px, -30px) scale(1.06); }
+}
+
+/* 内容层 */
+.content-layer {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 32px 0;
+}
+
+@media (min-width: 768px) {
+  .content-layer { padding: 48px 48px 0; }
+}
+@media (min-width: 1200px) {
+  .content-layer { padding: 48px 64px 0; max-width: 1000px; }
+}
+
+/* 页头 */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
 .btn-back {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 100;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
-  border: none;
-  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .btn-back:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* 歌曲信息 */
-.song-hero {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80px 24px 24px;
-}
-
-.cover-container {
-  position: relative;
-  margin-bottom: 24px;
-}
-
-.cover-image {
-  width: 220px;
-  height: 220px;
-  border-radius: 20px;
-  object-fit: cover;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-}
-
-.cover-glow {
-  position: absolute;
-  inset: -8px;
-  border-radius: 28px;
-  border: 2px solid rgba(102, 126, 234, 0.4);
-  animation: coverPulse 2s ease-in-out infinite;
-}
-
-@keyframes coverPulse {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.04); opacity: 0.2; }
-}
-
-.song-meta {
-  text-align: center;
-}
-
-.song-title {
-  margin: 0 0 8px;
-  font-size: 24px;
-  font-weight: 700;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
-.song-artist {
-  margin: 0 0 4px;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
+.header-info {
+  flex: 1;
+  min-width: 0;
 }
 
-.song-album {
+.header-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.7);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.header-title {
   margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hero */
+.song-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.hero-cover {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+  .hero-cover { width: 240px; height: 240px; }
+}
+
+.hero-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-cover-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 26px;
+  border: 2px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.4);
+  animation: coverPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes coverPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.03); opacity: 0.15; }
+}
+
+.hero-meta {
+  text-align: center;
+}
+
+.hero-title {
+  margin: 0 0 6px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.hero-artist {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-album {
+  margin: 0 0 12px;
   font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.hero-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
+}
+
+.hero-tag.lyrics {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  border-color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+}
+
+.hero-tag.mv {
+  color: rgba(255, 138, 101, 0.8);
+  background: rgba(255, 138, 101, 0.1);
+  border-color: rgba(255, 138, 101, 0.15);
+}
+
+.hero-like-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(245, 87, 108, 0.06);
+  border: 1px solid rgba(245, 87, 108, 0.1);
+  color: rgba(255, 255, 255, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hero-like-btn:hover {
+  background: rgba(245, 87, 108, 0.15);
+  color: rgba(245, 87, 108, 0.8);
+  transform: scale(1.1);
+}
+
+.hero-like-btn.liked {
+  color: #f5576c;
+  background: rgba(245, 87, 108, 0.15);
+  border-color: rgba(245, 87, 108, 0.2);
 }
 
 /* 操作按钮 */
 .actions {
-  position: relative;
-  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  padding: 0 24px 32px;
+  gap: 12px;
+  margin-bottom: 40px;
 }
 
 .btn-play-main {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 36px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 28px;
-  color: #fff;
-  font-size: 15px;
+  padding: 14px 32px;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.25);
+  border-radius: 100px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .btn-play-main:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-}
-
-.btn-play-main.playing {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.25);
+  transform: translateY(-1px);
 }
 
 .btn-action {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -501,186 +591,268 @@ watch(() => route?.params?.id, () => {
 }
 
 .btn-action:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
 }
 
-.btn-mv {
+/* 区块 */
+.section-header {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 20px;
-  height: 48px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
   color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
 }
 
-.btn-mv:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+.section-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
 }
 
-/* 歌曲描述 */
-.song-description {
-  position: relative;
-  z-index: 1;
-  margin: 0 24px 24px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.05);
+/* 歌曲简介 */
+.desc-section {
+  margin-bottom: 36px;
+}
+
+.desc-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.desc-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  font-weight: 600;
+  padding: 20px;
 }
 
 .desc-text {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.45);
 }
 
-/* 歌词区域 */
+/* 歌词 */
 .lyrics-section {
-  position: relative;
-  z-index: 1;
-  margin: 0 24px 32px;
+  margin-bottom: 36px;
 }
 
-/* 移动端隐藏歌词 */
-@media (max-width: 767px) {
-  .lyrics-section {
-    display: none;
-  }
-}
-
-.lyrics-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.btn-edit-lyrics {
-  margin-left: auto;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  border: none;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.btn-edit-lyrics:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #667eea;
-}
-
-.lyrics-content {
-  max-height: 400px;
+.lyrics-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 20px 24px;
+  max-height: 500px;
   overflow-y: auto;
-  padding: 16px 0;
-  scroll-behavior: smooth;
 }
 
-.lyrics-content::-webkit-scrollbar {
+.lyrics-card::-webkit-scrollbar {
   width: 4px;
 }
 
-.lyrics-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+.lyrics-card::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
 }
 
 .lyric-line {
   margin: 0;
-  padding: 10px 16px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.35);
-  transition: all 0.4s ease;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.3);
   border-radius: 8px;
+  transition: all 0.3s;
 }
 
 .lyric-line.active {
-  color: #fff;
-  font-size: 17px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.95);
   font-weight: 600;
-  background: rgba(102, 126, 234, 0.1);
-}
-
-.no-lyrics {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.3);
-  padding: 40px 0;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.08);
 }
 
 /* 相关歌曲 */
 .related-section {
-  position: relative;
-  z-index: 1;
-  margin: 0 24px;
-}
-
-.section-title {
-  margin: 0 0 16px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #fff;
+  margin-bottom: 20px;
 }
 
 .song-list {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
+.song-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.song-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.song-item:hover .song-cover-play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.song-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+}
+
+.song-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-cover-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.song-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.song-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.song-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  height: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.tag-badge.lyrics {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+}
+
+.tag-badge.mv {
+  color: rgba(255, 138, 101, 0.8);
+  background: rgba(255, 138, 101, 0.1);
+  border: 1px solid rgba(255, 138, 101, 0.15);
+}
+
+.song-duration {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.25);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.bottom-space {
+  height: 40px;
+}
+
+/* 不存在 */
 .not-found {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  color: rgba(255, 255, 255, 0.5);
-  gap: 16px;
+  text-align: center;
 }
 
-.not-found button {
-  padding: 10px 24px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
+.not-found-icon {
+  width: 80px;
+  height: 80px;
   border-radius: 20px;
-  color: #fff;
-  cursor: pointer;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
 }
 
-/* 添加到歌单弹窗 */
+.not-found-text {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.not-found-btn {
+  padding: 12px 28px;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.12);
+  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.2);
+  border-radius: 100px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.not-found-btn:hover {
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.2);
+}
+
+/* 弹窗 */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -690,8 +862,9 @@ watch(() => route?.params?.id, () => {
 .modal {
   width: 90%;
   max-width: 400px;
-  background: #1a1a2e;
-  border-radius: 16px;
+  background: #141416;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
   padding: 24px;
 }
 
@@ -709,55 +882,56 @@ watch(() => route?.params?.id, () => {
 
 .modal-item {
   width: 100%;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: none;
-  border-radius: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
   color: #fff;
   font-size: 14px;
   text-align: left;
   cursor: pointer;
-  margin-bottom: 8px;
-  transition: background 0.2s;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
 }
 
 .modal-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  border-color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+}
+
+.modal-item-cover {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .modal-empty {
   text-align: center;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.3);
   padding: 16px;
+  margin: 0;
 }
 
 .modal-close {
   width: 100%;
   padding: 12px;
   margin-top: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .modal-close:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.editor-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 1999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
 }
 </style>

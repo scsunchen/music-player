@@ -145,7 +145,7 @@ export const usePlayerStore = defineStore('player', () => {
         g = Math.min(255, Math.round((g / max) * 140 * boost))
         b = Math.min(255, Math.round((b / max) * 200 * boost))
       }
-      const color = `rgb(${r}, ${g}, ${b})`
+      const color = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')
       themeColor.value = color
       // 缓存结果
       coverColorCache.set(coverUrl, color)
@@ -614,7 +614,7 @@ export const usePlayerStore = defineStore('player', () => {
       id: Date.now(),
       name,
       description: '',
-      cover: resolveUrl('images/covers/guofeng.jpg'),
+      cover: resolveUrl('images/covers/default_playlist.jpg'),
       songs: [],
       playCount: 0
     }
@@ -622,7 +622,36 @@ export const usePlayerStore = defineStore('player', () => {
     saveCustomPlaylists()
     return newPlaylist
   }
-  
+
+  // 导入歌单（从 JSON 文件）
+  const importPlaylist = (playlistData) => {
+    const imported = {
+      id: Date.now(),
+      name: playlistData.name || '导入歌单',
+      description: playlistData.description || '',
+      cover: playlistData.cover || resolveUrl('images/covers/default_playlist.jpg'),
+      songs: [],
+      playCount: 0,
+      imported: true,
+      importedSongs: (playlistData.songs || []).map(s => ({
+        id: s.id || Date.now() + Math.random(),
+        title: s.title || '未知歌曲',
+        artist: s.artist || '未知歌手',
+        album: s.album || '',
+        albumId: s.albumId || 0,
+        duration: s.duration || 0,
+        cover: s.cover || resolveUrl('images/covers/default_playlist.jpg'),
+        audioUrl: s.audioUrl || '',
+        mvUrl: s.mvUrl || '',
+      }))
+    }
+    // 将导入的歌曲ID加入songs数组，同时存储歌曲数据
+    imported.songs = imported.importedSongs.map(s => s.id)
+    customPlaylists.value.push(imported)
+    saveCustomPlaylists()
+    return imported
+  }
+
   const addToPlaylist = (playlistId, songId) => {
     const playlist = customPlaylists.value.find(p => p.id === playlistId)
     if (playlist && !playlist.songs.includes(songId)) {
@@ -1089,6 +1118,7 @@ export const usePlayerStore = defineStore('player', () => {
     moveInQueue,
     toggleQueue,
     createPlaylist,
+    importPlaylist,
     addToPlaylist,
     removeFromPlaylist,
     deletePlaylist,

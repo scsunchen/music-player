@@ -128,7 +128,7 @@
                   <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div class="recent-meta" @click="playerStore.playSong(song)">
+              <div class="recent-meta" @click="router.push(`/song/${song.id}`)">
                 <span class="recent-title">{{ song.title }}</span>
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>
@@ -167,7 +167,7 @@
                   <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div class="recent-meta" @click="playerStore.playSong(song)">
+              <div class="recent-meta" @click="router.push(`/song/${song.id}`)">
                 <span class="recent-title">{{ song.title }}</span>
                 <span class="recent-artist">{{ song.artist }}</span>
               </div>

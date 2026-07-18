@@ -36,7 +36,7 @@
               <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-          <div class="song-meta" @click="playSong(song)">
+          <div class="song-meta" @click="router.push(`/song/${song.id}`)">
             <span class="song-title">{{ song.title }}</span>
             <span class="song-artist">{{ song.artist }}</span>
           </div>
@@ -313,8 +313,6 @@ const formatTime = (s) => {
   opacity: 0;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
-}
-
 .song-meta {
   flex: 1;
   min-width: 0;
