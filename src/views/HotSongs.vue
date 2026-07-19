@@ -314,6 +314,8 @@ const formatTime = (s) => {
   opacity: 0;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+}
+
 .song-meta {
   flex: 1;
   min-width: 0;
