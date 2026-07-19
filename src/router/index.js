@@ -7,7 +7,7 @@ const supportsViewTransitions = () => {
 
 // 页面切换方向（用于不同方向的动画）
 const getTransitionDirection = (to, from) => {
-  const routes = ['/', '/search', '/my', '/stats', '/liked', '/520']
+  const routes = ['/', '/search', '/my', '/stats', '/season']
   const toIndex = routes.indexOf(to.path)
   const fromIndex = routes.indexOf(from.path)
   
@@ -76,14 +76,9 @@ const routes = [
     component: () => import('../views/LikedSongs.vue')
   },
   {
-    path: '/520',
-    name: 'Love520',
-    component: () => import('../views/Love520.vue')
-  },
-  {
-    path: '/summer',
-    name: 'SummerOrange',
-    component: () => import('../views/SummerOrange.vue')
+    path: '/season',
+    name: 'Seasonal',
+    component: () => import('../views/SeasonalPage.vue')
   },
   {
     path: '/songs',

@@ -36,6 +36,12 @@
           </svg>
           <span>统计</span>
         </router-link>
+        <router-link to="/season" class="nav-link nav-link-season" active-class="active">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+          <span>季节</span>
+        </router-link>
       </nav>
     </header>
 
