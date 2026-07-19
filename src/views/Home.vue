@@ -58,6 +58,10 @@
           <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
           <span>黄金年代</span>
         </div>
+        <div class="qk-chip" @click="router.push('/ringtones')">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+          <span>怀旧经典</span>
+        </div>
         <div class="qk-chip" @click="router.push('/stats')">
           <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
           <span>听歌统计</span>
@@ -240,7 +244,7 @@ const dynamicStyle = computed(() => {
 
 // 最近歌曲（新歌速递）
 const recentSongs = computed(() => {
-  return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 6)
+  return [...playerStore.songs].sort((a, b) => b.id - a.id).slice(0, 8)
 })
 
 // 热门歌曲
