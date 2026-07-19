@@ -25,11 +25,6 @@
           <p class="fs-header-label">正在播放</p>
           <p class="fs-header-title">{{ playerStore.currentSong.title }}</p>
         </div>
-        <button class="fs-btn-more" @click="goToDetail">
-          <svg viewBox="0 0 24 24" width="22" height="22">
-            <path fill="currentColor" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-          </svg>
-        </button>
       </div>
 
       <!-- 主内容区域 -->
@@ -110,7 +105,7 @@
         <!-- 右侧：歌词 -->
         <div class="fs-right">
           <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
-            <p v-for="(line, index) in lyricsLines" :key="index" class="fs-lyric-line" :class="{ active: isCurrentLine(index) }" :ref="el => { if (isCurrentLine(index)) activeLyricEl = el }" @click="seekToLyric(line)">{{ line.text }}</p>
+            <p v-for="(line, index) in lyricsLines" :key="index" class="fs-lyric-line" :class="{ active: index === activeLineIndex }" @click="seekToLyric(line)">{{ line.text }}</p>
           </div>
           <div class="fs-no-lyrics" v-else>
             <p>暂无歌词</p>
@@ -123,49 +118,24 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
 
 const props = defineProps({ visible: Boolean })
 const emit = defineEmits(['close'])
 
-const router = useRouter()
 const playerStore = usePlayerStore()
 const lyricsRef = ref(null)
-const activeLyricEl = ref(null)
 const visualizerRef = ref(null)
 const particleCanvas = ref(null)
-const accentColor = ref('#667eea')
 
-// 主题色提取
-const extractColor = () => {
-  if (!playerStore.currentSong?.cover) return
-  const img = new Image()
-  // 仅对远程 URL 设置 crossOrigin，本地图片不需要
-  if (playerStore.currentSong.cover.startsWith('http')) {
-    img.crossOrigin = 'anonymous'
-  }
-  img.src = playerStore.currentSong.cover
-  img.onload = () => {
-    try {
-      const canvas = document.createElement('canvas')
-      canvas.width = 1; canvas.height = 1
-      const ctx = canvas.getContext('2d')
-      ctx.drawImage(img, 0, 0, 1, 1)
-      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
-      accentColor.value = `rgb(${r}, ${g}, ${b})`
-    } catch (e) {
-      console.warn('主题色提取失败:', e)
-    }
-  }
-  img.onerror = () => {
-    console.warn('封面图片加载失败:', playerStore.currentSong.cover)
-  }
-}
+// 直接同步 store 的 themeColor，避免两套颜色提取逻辑导致闪烁
+const accentColor = computed(() => playerStore.themeColor || '#667eea')
 
-watch(() => playerStore.currentSong?.id, extractColor)
-onMounted(extractColor)
+// 切歌时重置歌词滚动位置
+watch(() => playerStore.currentSong?.id, () => {
+  lastScrolledIndex = -1
+})
 
 // 连接频谱可视化
 watch(() => playerStore.isPlaying, (val) => {
@@ -198,7 +168,7 @@ const resizeParticles = () => {
 
 const createParticles = () => {
   particles = []
-  const count = window.innerWidth < 768 ? 30 : 60
+  const count = window.innerWidth < 768 ? 20 : 35
   for (let i = 0; i < count; i++) {
     particles.push({
       x: Math.random() * window.innerWidth,
@@ -245,6 +215,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (particleAnimId) cancelAnimationFrame(particleAnimId)
+  if (scrollRafId) cancelAnimationFrame(scrollRafId)
   window.removeEventListener('resize', resizeParticles)
 })
 
@@ -260,13 +231,6 @@ const onTouchEnd = () => {
 
 const close = () => emit('close')
 
-const goToDetail = () => {
-  if (playerStore.currentSong) {
-    emit('close')
-    setTimeout(() => router.push(`/song/${playerStore.currentSong.id}`), 300)
-  }
-}
-
 // 歌词
 const lyricsLines = computed(() => {
   if (!playerStore.currentSong) return []
@@ -281,24 +245,54 @@ const lyricsLines = computed(() => {
   }).filter(Boolean)
 })
 
-const isCurrentLine = (index) => {
-  if (!playerStore.isPlaying || lyricsLines.value.length === 0) return false
-  const current = lyricsLines.value[index]
-  const next = lyricsLines.value[index + 1]
-  if (!current) return false
-  return next ? playerStore.currentTime >= current.time && playerStore.currentTime < next.time : playerStore.currentTime >= current.time
-}
+// 预计算 activeLineIndex，避免每行调用 isCurrentLine
+const activeLineIndex = computed(() => {
+  const lines = lyricsLines.value
+  if (!playerStore.isPlaying || lines.length === 0) return -1
+  const t = playerStore.currentTime
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (t >= lines[i].time) return i
+  }
+  return -1
+})
 
 const seekToLyric = (line) => { if (line?.time !== undefined) playerStore.seekTo(line.time) }
 
-watch(() => playerStore.currentTime, () => {
-  if (activeLyricEl.value && lyricsRef.value) {
-    const container = lyricsRef.value
-    const el = activeLyricEl.value
-    const offset = el.offsetTop - container.clientHeight / 2 + el.clientHeight / 2
-    container.scrollTo({ top: offset, behavior: 'smooth' })
+// 用 RAF 手动插值滚动，比 scrollTo smooth 更丝滑
+let lastScrolledIndex = -1
+let scrollRafId = null
+const scrollTarget = { current: 0 }
+
+const smoothScrollLyrics = () => {
+  if (scrollRafId) cancelAnimationFrame(scrollRafId)
+  const container = lyricsRef.value
+  if (!container) return
+  const idx = activeLineIndex.value
+  if (idx < 0 || idx === lastScrolledIndex) return
+  lastScrolledIndex = idx
+
+  const targetEl = container.children[idx]
+  if (!targetEl) return
+  const targetScroll = targetEl.offsetTop - container.clientHeight / 2 + targetEl.clientHeight / 2
+  // 启动新动画前，同步当前位置
+  scrollTarget.current = container.scrollTop
+
+  const step = () => {
+    // 每帧重新计算剩余距离的 15%，真正的指数缓动，永不发散
+    const remaining = targetScroll - scrollTarget.current
+    scrollTarget.current += remaining * 0.15
+    container.scrollTop = scrollTarget.current
+    if (Math.abs(remaining) < 0.5) {
+      container.scrollTop = targetScroll
+      scrollTarget.current = targetScroll
+      return
+    }
+    scrollRafId = requestAnimationFrame(step)
   }
-})
+  scrollRafId = requestAnimationFrame(step)
+}
+
+watch(activeLineIndex, smoothScrollLyrics)
 
 const playModeText = computed(() => ({ list: '列表循环', repeat: '单曲循环', shuffle: '随机播放' }[playerStore.playMode] || '列表循环'))
 
@@ -362,27 +356,27 @@ const seek = (e) => {
 .fs-atmosphere__orbs .fs-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  background: transparent !important;
   opacity: 0.12;
   animation: orbFloat 25s ease-in-out infinite;
 }
 
 .fs-orb--1 {
   width: 500px; height: 500px;
-  background: var(--accent, #667eea);
+  box-shadow: 0 0 120px 60px var(--accent, #667eea);
   top: -15%; left: -10%;
 }
 
 .fs-orb--2 {
   width: 350px; height: 350px;
-  background: #764ba2;
+  box-shadow: 0 0 100px 50px #764ba2;
   bottom: 5%; right: -8%;
   animation-delay: -8s;
 }
 
 .fs-orb--3 {
   width: 250px; height: 250px;
-  background: #f093fb;
+  box-shadow: 0 0 80px 40px #f093fb;
   top: 60%; left: 50%;
   animation-delay: -16s;
   opacity: 0.06;
@@ -399,6 +393,7 @@ const seek = (e) => {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  will-change: transform;
 }
 
 /* ===== 顶部栏 ===== */
@@ -515,8 +510,8 @@ const seek = (e) => {
 .fs-vinyl-glow {
   position: absolute;
   inset: -15%;
-  background: var(--accent, #667eea);
-  filter: blur(50px);
+  background: transparent;
+  box-shadow: 0 0 80px 40px var(--accent, #667eea);
   opacity: 0.2;
   border-radius: 50%;
   transition: opacity 0.5s;
@@ -788,13 +783,14 @@ const seek = (e) => {
   flex-direction: column;
   flex: 1;
   min-width: 0;
-  width: 100%;
+  overflow: hidden;
   margin-top: 16px;
 }
 
 .fs-lyrics {
   flex: 1;
   overflow-y: auto;
+  position: relative;
   padding: 8px 32px 32px;
   mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
@@ -805,12 +801,13 @@ const seek = (e) => {
 .fs-lyric-line {
   margin: 0;
   padding: 10px 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.22);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: center;
   cursor: pointer;
+  will-change: transform, color;
 }
 
 .fs-lyric-line:hover {
@@ -819,7 +816,7 @@ const seek = (e) => {
 
 .fs-lyric-line.active {
   color: #fff;
-  font-size: 18px;
+  transform: scale(1.12);
   font-weight: 600;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
@@ -849,9 +846,8 @@ const seek = (e) => {
   opacity: 0;
 }
 
-/* ===== 移动端隐藏歌词 ===== */
+/* ===== 移动端优化 ===== */
 @media (max-width: 767px) {
-  .fs-right { display: none; }
   .fs-vinyl-wrap { width: 240px; height: 240px; }
   .fs-cover-img { width: 145px; height: 145px; }
   .fs-title { font-size: 22px; }
@@ -864,7 +860,8 @@ const seek = (e) => {
     flex-direction: row;
     padding: 0 40px 40px;
     gap: 48px;
-    max-width: 1000px;
+    width: 1000px;
+    max-width: calc(100vw - 80px);
     margin: 0 auto;
     overflow-y: hidden;
   }
@@ -872,6 +869,7 @@ const seek = (e) => {
   .fs-left {
     width: 400px;
     min-width: 400px;
+    max-width: 400px;
     flex-shrink: 0;
     justify-content: center;
     padding: 0;
@@ -890,9 +888,10 @@ const seek = (e) => {
 
   .fs-right {
     display: flex;
-    flex: 1;
-    max-width: 420px;
-    min-width: 0;
+    width: 452px;
+    min-width: 452px;
+    max-width: 452px;
+    overflow: hidden;
     margin-top: 0;
   }
 
@@ -903,14 +902,14 @@ const seek = (e) => {
   }
 
   .fs-lyric-line { font-size: 16px; padding: 12px 0; }
-  .fs-lyric-line.active { font-size: 20px; }
+  .fs-lyric-line.active { transform: scale(1.15); }
 }
 
 @media (min-width: 1024px) {
-  .fs-body { max-width: 1100px; gap: 64px; }
-  .fs-left { width: 440px; }
+  .fs-body { width: 1100px; max-width: calc(100vw - 80px); gap: 64px; }
+  .fs-left { width: 440px; min-width: 440px; max-width: 440px; }
   .fs-vinyl-wrap { width: 340px; height: 340px; }
   .fs-cover-img { width: 210px; height: 210px; }
-  .fs-right { max-width: 460px; }
+  .fs-right { width: 492px; min-width: 492px; max-width: 492px; }
 }
 </style>

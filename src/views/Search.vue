@@ -87,6 +87,9 @@
                 >
                   <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </button>
+                <button class="add-btn" @click.stop="showAddModal(song)" title="添加到歌单">
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </button>
                 <span class="song-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
               </div>
             </div>
@@ -197,6 +200,32 @@
 
       <div class="bottom-space"></div>
     </div>
+
+    <!-- 添加到歌单弹窗 -->
+    <div class="modal-overlay" v-if="showModal" @click="closeModal">
+      <div class="modal" @click.stop>
+        <h3 class="modal-title">添加到歌单</h3>
+        <div class="modal-list">
+          <button
+            v-for="playlist in playerStore.customPlaylists"
+            :key="playlist.id"
+            class="modal-item"
+            :class="{ disabled: playlist.songs.includes(selectedSong?.id) }"
+            @click="addToPlaylist(playlist.id)"
+          >
+            <img :src="playlist.cover" class="modal-item-cover" />
+            <div class="modal-item-info">
+              <span>{{ playlist.name }}</span>
+              <span v-if="playlist.songs.includes(selectedSong?.id)" class="modal-item-hint">已添加</span>
+            </div>
+          </button>
+          <p v-if="playerStore.customPlaylists.length === 0" class="modal-empty">
+            请先创建一个歌单
+          </p>
+        </div>
+        <button class="modal-close" @click="closeModal">取消</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -301,6 +330,33 @@ const formatTime = (s) => {
   const sec = s % 60
   return `${m}:${sec.toString().padStart(2, '0')}`
 }
+
+// 添加到歌单弹窗
+const showModal = ref(false)
+const selectedSong = ref(null)
+const showAddModal = (song) => {
+  selectedSong.value = song
+  showModal.value = true
+}
+const closeModal = () => {
+  showModal.value = false
+  selectedSong.value = null
+}
+const addToPlaylist = (playlistId) => {
+  if (selectedSong.value) {
+    playerStore.addToPlaylist(playlistId, selectedSong.value.id)
+    closeModal()
+  }
+}
+
+// 防抖处理搜索输入
+watch(searchQuery, (val) => {
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    debouncedQuery.value = val
+  }, 300)
+})
+
 </script>
 
 <style scoped>
@@ -326,14 +382,16 @@ const formatTime = (s) => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(10,10,10,0.2) 0%, #0a0a0a 35%);
+    radial-gradient(ellipse at 20% 20%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%);
 }
 
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 100px 30px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.06);
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
   animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
@@ -783,5 +841,112 @@ const formatTime = (s) => {
 
 .bottom-space {
   height: 40px;
+}
+
+/* ===== 添加到歌单按钮 ===== */
+.add-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+.add-btn:hover {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
+}
+
+/* ===== 添加到歌单弹窗 ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #1a1a1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  max-width: 90vw;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+.modal-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.modal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+}
+.modal-item:hover {
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  border-color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+}
+.modal-item.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.modal-item-cover {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.modal-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.modal-item-hint {
+  font-size: 11px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.6);
+}
+.modal-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 13px;
+  padding: 20px 0;
+}
+.modal-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
 }
 </style>

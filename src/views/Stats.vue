@@ -57,102 +57,104 @@
           </div>
         </section>
 
-        <!-- 最近7天播放趋势 -->
-        <section class="section">
-          <div class="section-header">
-            <h3 class="section-title">最近 7 天</h3>
-          </div>
-          <div class="chart-card">
-            <div class="bar-chart">
+        <!-- 中间行：7天趋势 + 本周概览 -->
+        <div class="stats-row">
+          <section class="section section-grow">
+            <div class="section-header">
+              <h3 class="section-title">最近 7 天</h3>
+            </div>
+            <div class="chart-card">
+              <div class="bar-chart">
+                <div
+                  v-for="day in stats.last7Days"
+                  :key="day.date"
+                  class="bar-item"
+                >
+                  <div class="bar-wrapper">
+                    <div class="bar" :style="{ height: getBarHeight(day.count) + '%' }">
+                      <span v-if="day.count > 0" class="bar-count">{{ day.count }}</span>
+                    </div>
+                  </div>
+                  <span class="bar-label">{{ day.label }}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <h3 class="section-title">本周概览</h3>
+            </div>
+            <div class="week-grid">
+              <div class="week-card">
+                <span class="week-label">播放次数</span>
+                <span class="week-value">{{ stats.weekPlays }} 次</span>
+              </div>
+              <div class="week-card">
+                <span class="week-label">播放时长</span>
+                <span class="week-value">{{ stats.weekDuration }}</span>
+              </div>
+              <div class="week-card">
+                <span class="week-label">收藏歌曲</span>
+                <span class="week-value">{{ stats.likedCount }} 首</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- 下面行：最爱歌手 + 单曲循环榜 -->
+        <div class="stats-row">
+          <section class="section" v-if="stats.topArtists.length > 0">
+            <div class="section-header">
+              <h3 class="section-title">最爱歌手</h3>
+            </div>
+            <div class="artist-list">
               <div
-                v-for="day in stats.last7Days"
-                :key="day.date"
-                class="bar-item"
+                v-for="(artist, index) in stats.topArtists"
+                :key="artist.name"
+                class="artist-item"
               >
-                <div class="bar-wrapper">
-                  <div class="bar" :style="{ height: getBarHeight(day.count) + '%' }">
-                    <span v-if="day.count > 0" class="bar-count">{{ day.count }}</span>
+                <span class="artist-rank" :class="{ top3: index < 3 }">{{ index + 1 }}</span>
+                <div class="artist-info">
+                  <span class="artist-name">{{ artist.name }}</span>
+                  <div class="artist-bar-bg">
+                    <div
+                      class="artist-bar"
+                      :style="{ width: (artist.count / stats.topArtists[0].count * 100) + '%' }"
+                    ></div>
                   </div>
                 </div>
-                <span class="bar-label">{{ day.label }}</span>
+                <span class="artist-count">{{ artist.count }} 次</span>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- 本周概览 -->
-        <section class="section">
-          <div class="section-header">
-            <h3 class="section-title">本周概览</h3>
-          </div>
-          <div class="week-grid">
-            <div class="week-card">
-              <span class="week-label">播放次数</span>
-              <span class="week-value">{{ stats.weekPlays }} 次</span>
+          <section class="section" v-if="stats.topSongs.length > 0">
+            <div class="section-header">
+              <h3 class="section-title">单曲循环榜</h3>
             </div>
-            <div class="week-card">
-              <span class="week-label">播放时长</span>
-              <span class="week-value">{{ stats.weekDuration }}</span>
-            </div>
-            <div class="week-card">
-              <span class="week-label">收藏歌曲</span>
-              <span class="week-value">{{ stats.likedCount }} 首</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- 最爱歌手 -->
-        <section class="section" v-if="stats.topArtists.length > 0">
-          <div class="section-header">
-            <h3 class="section-title">最爱歌手</h3>
-          </div>
-          <div class="artist-list">
-            <div
-              v-for="(artist, index) in stats.topArtists"
-              :key="artist.name"
-              class="artist-item"
-            >
-              <span class="artist-rank" :class="{ top3: index < 3 }">{{ index + 1 }}</span>
-              <div class="artist-info">
-                <span class="artist-name">{{ artist.name }}</span>
-                <div class="artist-bar-bg">
-                  <div
-                    class="artist-bar"
-                    :style="{ width: (artist.count / stats.topArtists[0].count * 100) + '%' }"
-                  ></div>
+            <div class="song-list">
+              <div
+                v-for="(song, index) in stats.topSongs"
+                :key="song.id"
+                class="song-item"
+              >
+                <span class="song-rank" :class="{ top3: index < 3 }">{{ index + 1 }}</span>
+                <div class="song-cover" @click="playerStore.playSong(song)">
+                  <img :src="song.cover" :alt="song.title" loading="lazy" />
+                  <div class="song-cover-play">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+                  </div>
                 </div>
-              </div>
-              <span class="artist-count">{{ artist.count }} 次</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- 单曲循环榜 -->
-        <section class="section" v-if="stats.topSongs.length > 0">
-          <div class="section-header">
-            <h3 class="section-title">单曲循环榜</h3>
-          </div>
-          <div class="song-list">
-            <div
-              v-for="(song, index) in stats.topSongs"
-              :key="song.id"
-              class="song-item"
-            >
-              <span class="song-rank" :class="{ top3: index < 3 }">{{ index + 1 }}</span>
-              <div class="song-cover" @click="playerStore.playSong(song)">
-                <img :src="song.cover" :alt="song.title" loading="lazy" />
-                <div class="song-cover-play">
-                  <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+                <div class="song-meta" @click="router.push(`/song/${song.id}`)">
+                  <span class="song-title">{{ song.title }}</span>
+                  <span class="song-artist">{{ song.artist }}</span>
                 </div>
+                <span class="song-play-count">{{ song.playCount }} 次</span>
               </div>
-              <div class="song-meta" @click="router.push(`/song/${song.id}`)">
-                <span class="song-title">{{ song.title }}</span>
-                <span class="song-artist">{{ song.artist }}</span>
-              </div>
-              <span class="song-play-count">{{ song.playCount }} 次</span>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </template>
 
       <div class="bottom-space"></div>
@@ -212,16 +214,17 @@ const getBarHeight = (count) => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 30% 5%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.07) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 85%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.04) 0%, transparent 40%),
-    linear-gradient(180deg, rgba(10,10,10,0.15) 0%, #0a0a0a 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%);
 }
 
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 100px 30px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.06);
-  animation: orbFloat 14s ease-in-out infinite alternate;
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
+  animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
 .atmo-orb-1 {
@@ -256,8 +259,29 @@ const getBarHeight = (count) => {
 @media (min-width: 768px) {
   .content-layer { padding: 48px 48px 0; }
 }
-@media (min-width: 1200px) {
-  .content-layer { padding: 48px 64px 0; max-width: 1000px; }
+@media (min-width: 1024px) {
+  .content-layer { max-width: 1400px; padding: 48px 64px 0; }
+}
+
+/* 宽屏并排行 */
+.stats-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .stats-row {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .stats-row .section {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  .stats-row .section-grow {
+    flex: 1.6;
+  }
 }
 
 /* 页头 */

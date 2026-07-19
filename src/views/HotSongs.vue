@@ -130,15 +130,16 @@ const formatTime = (s) => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 30% 10%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 90%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.05) 0%, transparent 40%),
-    linear-gradient(180deg, rgba(10,10,10,0.2) 0%, #0a0a0a 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%);
 }
 
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 100px 30px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1);
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
   animation: orbFloat 12s ease-in-out infinite alternate;
 }
 

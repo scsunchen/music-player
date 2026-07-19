@@ -1,7 +1,8 @@
 <template>
   <div class="immersive-album" :style="dynamicStyle" v-if="album">
-    <!-- 氛围背景（保留光球效果） -->
+    <!-- 氛围背景 -->
     <div class="atmosphere">
+      <div class="atmo-bg-img" :style="{ backgroundImage: `url(${album.cover})` }"></div>
       <div class="atmo-gradient"></div>
       <div class="atmo-orb atmo-orb-1"></div>
       <div class="atmo-orb atmo-orb-2"></div>
@@ -199,19 +200,32 @@ const formatTime = (s) => {
   pointer-events: none;
 }
 
+.atmo-bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) brightness(0.4) saturate(1.5);
+  transform: scale(1.4);
+  opacity: 0.6;
+  backface-visibility: hidden;
+}
+
 .atmo-gradient {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 8%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 85%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.04) 0%, transparent 45%),
-    linear-gradient(180deg, rgba(10,10,10,0.15) 0%, #0a0a0a 45%);
+    radial-gradient(ellipse at 20% 20%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%);
 }
 
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  animation: orbFloat 18s ease-in-out infinite;
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
+  animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
 .atmo-orb-1 {

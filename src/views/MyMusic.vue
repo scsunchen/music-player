@@ -85,7 +85,7 @@
               <span class="card-name">{{ playlist.name }}</span>
               <span class="card-count">{{ playlist.songs.length }} 首</span>
             </div>
-            <button class="card-delete" @click.stop="deletePlaylist(playlist.id)">
+            <button class="card-delete" v-if="playlist.id !== 1" @click.stop="deletePlaylist(playlist.id)" title="删除歌单">
               <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
             </button>
           </div>
@@ -332,14 +332,16 @@ const handleImport = (e) => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 40% 10%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(10,10,10,0.2) 0%, #0a0a0a 40%);
+    radial-gradient(ellipse at 20% 20%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%);
 }
 
 .atmo-orb {
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 100px 30px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.08);
+  box-shadow: 0 0 120px 40px rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
+  opacity: 1;
   animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
