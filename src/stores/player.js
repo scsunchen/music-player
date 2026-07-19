@@ -668,7 +668,9 @@ export const usePlayerStore = defineStore('player', () => {
     }
   }
   
+  const DEFAULT_PLAYLIST_ID = 1
   const deletePlaylist = (playlistId) => {
+    if (playlistId === DEFAULT_PLAYLIST_ID) return
     customPlaylists.value = customPlaylists.value.filter(p => p.id !== playlistId)
     saveCustomPlaylists()
   }

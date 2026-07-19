@@ -19,6 +19,11 @@
       "id": "pop",
       "name": "流行热歌",
       "count": 13
+    },
+    {
+      "id": "8090",
+      "name": "彩铃黄金年代",
+      "count": 48
     }
   ],
   "albums": [
@@ -175,7 +180,14 @@
       "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
       "cover": "/music-player/images/covers/guofeng.jpg",
       "songCount": 71
+    },
+    {
+      "id": 6,
+      "name": "彩铃黄金年代",
+      "description": "彩铃黄金年代 60 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
+      "cover": "/music-player/images/covers/default_cover.jpg",
+      "songCount": 48
     }
   ],
-  "totalSongs": 99
+  "totalSongs": 147
 }

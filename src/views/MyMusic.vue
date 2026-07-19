@@ -85,7 +85,7 @@
               <span class="card-name">{{ playlist.name }}</span>
               <span class="card-count">{{ playlist.songs.length }} 首</span>
             </div>
-            <button class="card-delete" @click.stop="deletePlaylist(playlist.id)">
+            <button class="card-delete" v-if="playlist.id !== 1" @click.stop="deletePlaylist(playlist.id)" title="删除歌单">
               <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
             </button>
           </div>

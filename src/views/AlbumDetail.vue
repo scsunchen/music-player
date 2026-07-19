@@ -1,7 +1,8 @@
 <template>
   <div class="immersive-album" :style="dynamicStyle" v-if="album">
-    <!-- 氛围背景（保留光球效果） -->
+    <!-- 氛围背景 -->
     <div class="atmosphere">
+      <div class="atmo-bg-img" :style="{ backgroundImage: `url(${album.cover})` }"></div>
       <div class="atmo-gradient"></div>
       <div class="atmo-orb atmo-orb-1"></div>
       <div class="atmo-orb atmo-orb-2"></div>
@@ -197,6 +198,17 @@ const formatTime = (s) => {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+}
+
+.atmo-bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) brightness(0.4) saturate(1.5);
+  transform: scale(1.4);
+  opacity: 0.6;
+  backface-visibility: hidden;
 }
 
 .atmo-gradient {
