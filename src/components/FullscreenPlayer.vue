@@ -783,7 +783,6 @@ const seek = (e) => {
   flex-direction: column;
   flex: 1;
   min-width: 0;
-  width: 0; /* flex 子元素宽度由 flex 分配，不受内容影响 */
   overflow: hidden;
   margin-top: 16px;
 }
@@ -847,9 +846,8 @@ const seek = (e) => {
   opacity: 0;
 }
 
-/* ===== 移动端隐藏歌词 ===== */
+/* ===== 移动端优化 ===== */
 @media (max-width: 767px) {
-  .fs-right { display: none; }
   .fs-vinyl-wrap { width: 240px; height: 240px; }
   .fs-cover-img { width: 145px; height: 145px; }
   .fs-title { font-size: 22px; }
@@ -862,7 +860,8 @@ const seek = (e) => {
     flex-direction: row;
     padding: 0 40px 40px;
     gap: 48px;
-    max-width: 1000px;
+    width: 1000px;
+    max-width: calc(100vw - 80px);
     margin: 0 auto;
     overflow-y: hidden;
   }
@@ -870,6 +869,7 @@ const seek = (e) => {
   .fs-left {
     width: 400px;
     min-width: 400px;
+    max-width: 400px;
     flex-shrink: 0;
     justify-content: center;
     padding: 0;
@@ -888,10 +888,9 @@ const seek = (e) => {
 
   .fs-right {
     display: flex;
-    flex: 1;
-    max-width: 420px;
-    min-width: 0;
-    width: 0;
+    width: 452px;
+    min-width: 452px;
+    max-width: 452px;
     overflow: hidden;
     margin-top: 0;
   }
@@ -907,10 +906,10 @@ const seek = (e) => {
 }
 
 @media (min-width: 1024px) {
-  .fs-body { max-width: 1100px; gap: 64px; }
-  .fs-left { width: 440px; }
+  .fs-body { width: 1100px; max-width: calc(100vw - 80px); gap: 64px; }
+  .fs-left { width: 440px; min-width: 440px; max-width: 440px; }
   .fs-vinyl-wrap { width: 340px; height: 340px; }
   .fs-cover-img { width: 210px; height: 210px; }
-  .fs-right { max-width: 460px; }
+  .fs-right { width: 492px; min-width: 492px; max-width: 492px; }
 }
 </style>

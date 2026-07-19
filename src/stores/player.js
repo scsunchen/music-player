@@ -682,6 +682,17 @@ export const usePlayerStore = defineStore('player', () => {
     if (saved) {
       customPlaylists.value = JSON.parse(saved)
     }
+    // 如果没有歌单，创建默认歌单
+    if (customPlaylists.value.length === 0) {
+      customPlaylists.value.push({
+        id: 1,
+        name: '我的收藏夹',
+        description: '随时添加喜欢的歌曲',
+        cover: resolveUrl('images/covers/default_playlist.jpg'),
+        songs: []
+      })
+      saveCustomPlaylists()
+    }
   }
 
   // 我喜欢功能
