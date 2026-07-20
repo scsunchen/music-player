@@ -289,7 +289,10 @@ const formatTime = (s) => {
   return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
-onMounted(() => loadSong())
+onMounted(() => {
+  loadSong()
+  window.scrollTo(0, 0)
+})
 
 watch(() => route?.params?.id, () => {
   loadSong()
