@@ -62,6 +62,9 @@
     
     <!-- 播放队列面板 -->
     <PlayQueue />
+
+    <!-- 桌面歌词 -->
+    <DesktopLyrics />
   </div>
 </template>
 
@@ -72,6 +75,7 @@ import { usePlayerStore } from './stores/player'
 import MusicPlayer from './components/MusicPlayer.vue'
 import FullscreenPlayer from './components/FullscreenPlayer.vue'
 import PlayQueue from './components/PlayQueue.vue'
+import DesktopLyrics from './components/DesktopLyrics.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
