@@ -48,7 +48,21 @@
       "name": "周杰伦精选",
       "description": "周杰伦经典歌曲合集",
       "cover": "/music-player/images/covers/playlist4.jpg",
-      "songs": [],
+      "songs": [
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275
+      ],
       "playCount": 256890
     },
     {

@@ -1442,6 +1442,123 @@
       "cover": "/music-player/images/covers/default_cover.jpg",
       "audioUrl": "/music-player/audio/b003c697e406.mp3",
       "genre": "pop"
+    },
+    {
+      "id": 263,
+      "title": "七里香",
+      "artist": "周杰伦",
+      "duration": 299,
+      "cover": "/music-player/images/covers/b153f6edceed_cover.jpg",
+      "audioUrl": "/music-player/audio/359a5c7311df.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 264,
+      "title": "兰亭序",
+      "artist": "周杰伦",
+      "duration": 254,
+      "cover": "/music-player/images/covers/fed41499bb74_cover.jpg",
+      "audioUrl": "/music-player/audio/47c21c2d6807.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 265,
+      "title": "发如雪",
+      "artist": "周杰伦",
+      "duration": 299,
+      "cover": "/music-player/images/covers/829ed67c36db_cover.jpg",
+      "audioUrl": "/music-player/audio/54fdf3c0e279.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 266,
+      "title": "告白气球",
+      "artist": "周杰伦",
+      "duration": 216,
+      "cover": "/music-player/images/covers/2ff5d16c8494_cover.jpg",
+      "audioUrl": "/music-player/audio/90bbb51bcc9a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 267,
+      "title": "夜曲",
+      "artist": "周杰伦",
+      "duration": 227,
+      "cover": "/music-player/images/covers/431ff53a9ae9_cover.jpg",
+      "audioUrl": "/music-player/audio/aca5ecfe2999.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 268,
+      "title": "搁浅",
+      "artist": "周杰伦",
+      "duration": 240,
+      "cover": "/music-player/images/covers/7d3c3415bc6e_cover.jpg",
+      "audioUrl": "/music-player/audio/4ef599e1f20a.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 269,
+      "title": "晴天",
+      "artist": "周杰伦",
+      "duration": 270,
+      "cover": "/music-player/images/covers/b6c704b6a1f7_cover.jpg",
+      "audioUrl": "/music-player/audio/5259cfd33121.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 270,
+      "title": "枫",
+      "artist": "周杰伦",
+      "duration": 276,
+      "cover": "/music-player/images/covers/0db4db6b8a2f_cover.jpg",
+      "audioUrl": "/music-player/audio/9183709b219c.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 271,
+      "title": "红尘客栈",
+      "artist": "周杰伦",
+      "duration": 274,
+      "cover": "/music-player/images/covers/01723341864d_cover.jpg",
+      "audioUrl": "/music-player/audio/0925fbb3caed.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 272,
+      "title": "花海",
+      "artist": "周杰伦",
+      "duration": 265,
+      "cover": "/music-player/images/covers/cd3a7ca744ad_cover.jpg",
+      "audioUrl": "/music-player/audio/6158a9565e08.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 273,
+      "title": "蒲公英的约定",
+      "artist": "周杰伦",
+      "duration": 247,
+      "cover": "/music-player/images/covers/bfbfadc127b5_cover.jpg",
+      "audioUrl": "/music-player/audio/9dc84e75b8c2.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 274,
+      "title": "说好的幸福呢",
+      "artist": "周杰伦",
+      "duration": 257,
+      "cover": "/music-player/images/covers/d33924e636a8_cover.jpg",
+      "audioUrl": "/music-player/audio/6d0e1a220f8e.mp3",
+      "genre": "pop"
+    },
+    {
+      "id": 275,
+      "title": "青花瓷",
+      "artist": "周杰伦",
+      "duration": 239,
+      "cover": "/music-player/images/covers/8705677ac67c_cover.jpg",
+      "audioUrl": "/music-player/audio/eeb642a83185.mp3",
+      "genre": "pop"
     }
   ]
 }
