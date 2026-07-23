@@ -130,7 +130,7 @@
             </div>
             <div class="song-action">
               <button
-                class="like-btn"
+                class="like-btn" v-like-burst
                 :class="{ liked: playerStore.likedSongs.includes(song.id) }"
                 @click.stop="toggleLike(song.id)"
               >

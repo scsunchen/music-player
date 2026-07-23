@@ -416,8 +416,15 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const playPlaylist = (playlist, startIndex = 0) => {
-    currentPlaylist.value = playlist.songs.map(id => 
-      songs.value.find(s => s.id === id)
+    // 构建查找表：优先使用导入歌单自带的歌曲数据
+    const importedMap = {}
+    if (playlist.importedSongs) {
+      for (const s of playlist.importedSongs) {
+        importedMap[s.id] = s
+      }
+    }
+    currentPlaylist.value = playlist.songs.map(id =>
+      importedMap[id] || songs.value.find(s => s.id === id)
     ).filter(Boolean)
     currentIndex.value = startIndex
     if (currentPlaylist.value.length > 0) {

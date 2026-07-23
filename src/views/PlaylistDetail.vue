@@ -55,8 +55,12 @@
             v-for="(song, i) in songs"
             :key="song.id"
             class="song-item"
+            :class="{ active: playerStore.currentSong?.id === song.id }"
           >
-            <span class="song-index">{{ i + 1 }}</span>
+            <span class="song-index" :class="{ playing: playerStore.currentSong?.id === song.id && playerStore.isPlaying }">
+              <span v-if="playerStore.currentSong?.id !== song.id">{{ i + 1 }}</span>
+              <span class="song-bars" v-else><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+            </span>
             <div class="song-cover" @click="playSongAt(i)">
               <img :src="song.cover" :alt="song.title" loading="lazy" />
               <div class="song-cover-play" @click.stop="playSongAt(i)">
@@ -71,7 +75,7 @@
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
               <button
-                class="like-btn"
+                class="like-btn" v-like-burst
                 :class="{ liked: playerStore.isLiked(song.id) }"
                 @click.stop="playerStore.toggleLikeSong(song.id)"
               >
@@ -444,6 +448,14 @@ const openShare = () => {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.song-item.active .song-title {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.95);
+}
+
+.song-item.active .song-artist {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.5);
+}
+
 .song-item:hover .song-cover-play {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
@@ -461,6 +473,33 @@ const openShare = () => {
   text-align: center;
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
+}
+
+.song-index.playing {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.85);
+}
+
+.song-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.song-bars .bar {
+  width: 3px;
+  border-radius: 1px;
+  background: currentColor;
+  animation: songBar 0.8s ease-in-out infinite alternate;
+}
+
+.song-bars .bar:nth-child(1) { height: 6px; animation-delay: 0s; }
+.song-bars .bar:nth-child(2) { height: 10px; animation-delay: 0.2s; }
+.song-bars .bar:nth-child(3) { height: 4px; animation-delay: 0.4s; }
+
+@keyframes songBar {
+  0% { height: 4px; }
+  100% { height: 14px; }
 }
 
 .song-cover {

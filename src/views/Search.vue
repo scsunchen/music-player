@@ -81,7 +81,7 @@
                 <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
                 <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
                 <button
-                  class="like-btn"
+                  class="like-btn" v-like-burst
                   :class="{ liked: playerStore.isLiked(song.id) }"
                   @click.stop="playerStore.toggleLikeSong(song.id)"
                 >
@@ -158,7 +158,7 @@
                 <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
                 <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
                 <button
-                  class="like-btn"
+                  class="like-btn" v-like-burst
                   :class="{ liked: playerStore.isLiked(song.id) }"
                   @click.stop="playerStore.toggleLikeSong(song.id)"
                 >
