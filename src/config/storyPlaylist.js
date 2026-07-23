@@ -27,6 +27,7 @@ export const storyData = {
       year: '2002',
       songTitle: '龙拳',
       artist: '周杰伦',
+      songId: null,
       cover: '',
       narration:
         '周杰伦用一股前所未有的力量打破了华语乐坛的格局。中国风的编曲、叛逆的唱腔、天马行空的歌词——一个属于年轻人的音乐时代，就此拉开序幕。'
@@ -43,7 +44,8 @@ export const storyData = {
       year: '2004',
       songTitle: '七里香',
       artist: '周杰伦',
-      cover: '',
+      songId: 263,
+      cover: 'https://didimusic.github.io/didimusic1.github.io/images/covers/b153f6edceed_cover.jpg',
       narration:
         '"雨下整夜，我的爱溢出就像雨水。"方文山的词配上周杰伦的旋律，让整个夏天都弥漫着稻香和初恋的气息。这首歌几乎是那个年代所有人心中的"夏日之歌"。'
     },
@@ -59,6 +61,7 @@ export const storyData = {
       year: '2006',
       songTitle: '千里之外',
       artist: '周杰伦 / 费玉清',
+      songId: null,
       cover: '',
       narration:
         '当周董遇上费玉清，两代人的声音跨越了时空的距离。这首歌不仅是一首中国风的巅峰之作，更是华语音乐传承与创新的完美注脚。'
@@ -67,7 +70,8 @@ export const storyData = {
       year: '2007',
       songTitle: '青花瓷',
       artist: '周杰伦',
-      cover: '',
+      songId: 275,
+      cover: 'https://didimusic.github.io/didimusic1.github.io/images/covers/8705677ac67c_cover.jpg',
       narration:
         '"天青色等烟雨，而我在等你。"方文山用景德镇瓷器的烧制过程比喻爱情，将中国古典美学推到了流行音乐的巅峰。这首歌至今仍是中文歌词的典范之作。'
     },
@@ -83,7 +87,8 @@ export const storyData = {
       year: '2009',
       songTitle: '说好的幸福呢',
       artist: '周杰伦',
-      cover: '',
+      songId: 274,
+      cover: 'https://didimusic.github.io/didimusic1.github.io/images/covers/d33924e636a8_cover.jpg',
       narration:
         '十年尾声的周杰伦，用这首略带忧伤的情歌为这个黄金时代画上了一个温柔的句号。当我们回望这十年，会发现每一首歌都像一帧胶片，记录着我们共同走过的青春。'
     }

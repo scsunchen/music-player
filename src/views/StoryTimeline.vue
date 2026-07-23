@@ -127,8 +127,13 @@ onBeforeUnmount(() => {
 
 const playEntry = (index) => {
   currentPlayingIndex.value = index
-  // These songs are not in the store, so we play the cover image as a placeholder
-  // In the future, real audio files can be added
+  const entry = data.entries[index]
+  if (entry.songId) {
+    const song = playerStore.songs.find(s => s.id === entry.songId)
+    if (song) {
+      playerStore.playSong(song)
+    }
+  }
 }
 </script>
 
