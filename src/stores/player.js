@@ -44,7 +44,8 @@ export const usePlayerStore = defineStore('player', () => {
   // 运行时加载歌曲和歌词数据（从 public/data/ 目录）
   const loadSongData = async () => {
     try {
-      const baseUrl = import.meta.env.BASE_URL || '/'
+      // 需要适配 base URL 的字段
+      const URL_KEYS = new Set(['cover', 'audioUrl', 'mvUrl', 'avatar', 'thumbnail'])
       const resolvePaths = (data) => {
         if (Array.isArray(data)) {
           return data.map(item => resolvePaths(item))
@@ -52,8 +53,25 @@ export const usePlayerStore = defineStore('player', () => {
         if (data && typeof data === 'object') {
           const result = {}
           for (const [key, value] of Object.entries(data)) {
-            if (typeof value === 'string' && value.startsWith('/music-player/')) {
-              result[key] = resolveUrl(value.replace('/music-player/', ''))
+            if (typeof value === 'string' && value.length > 0) {
+              // 完整 URL（http/https/data/blob）直接保留
+              if (/^(https?:|data:|blob:|\/\/)/.test(value)) {
+                result[key] = value
+              }
+              // 已知 URL 字段：适配相对路径
+              else if (URL_KEYS.has(key)) {
+                // 统一去掉 /music-player/ 前缀（旧格式兼容），再去掉前导 /
+                let clean = value
+                if (clean.startsWith('/music-player/')) {
+                  clean = clean.replace('/music-player/', '')
+                } else if (clean.startsWith('/')) {
+                  clean = clean.slice(1)
+                }
+                result[key] = resolveUrl(clean)
+              }
+              else {
+                result[key] = value
+              }
             } else {
               result[key] = resolvePaths(value)
             }
