@@ -1,5 +1,5 @@
 {
-  "totalSongs": 175,
+  "totalSongs": 460,
   "totalLyrics": 87,
   "albums": [
     {
@@ -171,6 +171,13 @@
       "description": "怀旧经典 · 彩铃黄金年代 48 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
       "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "songCount": 51
+    },
+    {
+      "id": 7,
+      "name": "少年歌行",
+      "description": "少年歌行，青春无畏。汇聚热血、励志、感动，献给每一个追梦的少年。",
+      "cover": "/music-player/images/covers/5f76c368e036_cover.jpg",
+      "songCount": 285
     }
   ],
   "categories": [
@@ -203,6 +210,11 @@
       "id": "zhoujielun",
       "name": "周杰伦精选",
       "count": 13
+    },
+    {
+      "id": "shaoniangexing",
+      "name": "少年歌行",
+      "count": 285
     }
   ]
 }
