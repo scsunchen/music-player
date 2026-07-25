@@ -4,7 +4,7 @@ import { resolveUrl } from '../utils/baseUrl'
 import {
   loadAllSongs,
   loadAlbums,
-  loadRecommendPlaylists,
+  loadPlaylists as loadRecommendPlaylists,
   loadLyricsIndex,
   loadLyrics as loadLyricsFromFile
 } from '../utils/songLoader'
@@ -104,7 +104,8 @@ export const usePlayerStore = defineStore('player', () => {
       }
 
       if (playlistsData) {
-        recommendPlaylists.value = resolvePaths(playlistsData.recommendPlaylists || [])
+        // 兼容 playlists.json ({ playlists: [...] }) 和 recommendPlaylists.json ({ recommendPlaylists: [...] })
+        recommendPlaylists.value = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
       }
 
       // 加载歌词索引（轻量级，仅存储有歌词的歌曲ID）
