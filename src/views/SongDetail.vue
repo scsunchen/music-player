@@ -194,18 +194,8 @@ const dynamicStyle = computed(() => {
   }
 })
 
-const lyricsMap = computed(() => {
-  const map = {}
-  if (playerStore.lyricsData) {
-    for (const id in playerStore.lyricsData) {
-      const d = playerStore.lyricsData[id]
-      map[id] = d && d.lyrics && d.lyrics.trim().length > 0
-    }
-  }
-  return map
-})
-const hasLyrics = computed(() => song.value ? lyricsMap.value[song.value.id] || false : false)
-const hasLyricsFor = (id) => lyricsMap.value[id] || false
+const hasLyrics = computed(() => song.value ? playerStore.hasLyrics(song.value.id) : false)
+const hasLyricsFor = (id) => playerStore.hasLyrics(id)
 
 const lyricsLines = computed(() => {
   if (!song.value) return []
@@ -261,6 +251,10 @@ const loadSong = () => {
   const id = parseInt(route?.params?.id)
   if (!id || isNaN(id)) { song.value = null; return }
   song.value = playerStore.songs.find(s => s.id === id) || null
+  // 按需加载歌词（查看歌曲详情时预加载）
+  if (song.value) {
+    playerStore.loadLyricsForSong(song.value.id)
+  }
 }
 
 const handlePlay = () => {

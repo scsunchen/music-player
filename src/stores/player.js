@@ -1,6 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { resolveUrl } from '../utils/baseUrl'
+import {
+  loadAllSongs,
+  loadAlbums,
+  loadPlaylists as loadRecommendPlaylists,
+  loadLyricsIndex,
+  loadLyrics as loadLyricsFromFile
+} from '../utils/songLoader'
 
 // 异步保存工具函数（不阻塞主线程）
 const pendingSaves = new Map()
@@ -34,51 +41,76 @@ export const usePlayerStore = defineStore('player', () => {
   const albums = ref([])
   const recommendPlaylists = ref([])
 
-  // 歌词数据
+  // 歌词数据（按需加载，key 为 songId）
   const lyricsData = ref({})
+  // 歌词索引（轻量级，仅存储有歌词的歌曲ID集合）
+  const lyricsIndexSet = ref(new Set())
 
   // 数据加载状态
   const dataLoaded = ref(false)
   const dataLoadError = ref(null)
 
-  // 运行时加载歌曲和歌词数据（从 public/data/ 目录）
+  // 需要适配 base URL 的字段
+  const URL_KEYS = new Set(['cover', 'audioUrl', 'mvUrl', 'avatar', 'thumbnail'])
+
+  // 递归规范化路径：完整 URL 保留，相对路径拼接 baseUrl
+  const resolvePaths = (data) => {
+    if (Array.isArray(data)) {
+      return data.map(item => resolvePaths(item))
+    }
+    if (data && typeof data === 'object') {
+      const result = {}
+      for (const [key, value] of Object.entries(data)) {
+        if (typeof value === 'string' && value.length > 0) {
+          if (/^(https?:|data:|blob:|\/\/)/.test(value)) {
+            result[key] = value
+          } else if (URL_KEYS.has(key)) {
+            // 兼容旧格式：去掉 /music-player/ 前缀和前导 /
+            let clean = value
+            if (clean.startsWith('/music-player/')) {
+              clean = clean.replace('/music-player/', '')
+            } else if (clean.startsWith('/')) {
+              clean = clean.slice(1)
+            }
+            result[key] = resolveUrl(clean)
+          } else {
+            result[key] = value
+          }
+        } else {
+          result[key] = resolvePaths(value)
+        }
+      }
+      return result
+    }
+    return data
+  }
+
+  // 运行时加载歌曲数据（从拆分后的独立 JSON 文件并行加载）
   const loadSongData = async () => {
     try {
-      const baseUrl = import.meta.env.BASE_URL || '/'
-      const resolvePaths = (data) => {
-        if (Array.isArray(data)) {
-          return data.map(item => resolvePaths(item))
-        }
-        if (data && typeof data === 'object') {
-          const result = {}
-          for (const [key, value] of Object.entries(data)) {
-            if (typeof value === 'string' && value.startsWith('/music-player/')) {
-              result[key] = resolveUrl(value.replace('/music-player/', ''))
-            } else {
-              result[key] = resolvePaths(value)
-            }
-          }
-          return result
-        }
-        return data
-      }
-
-      // 并行加载歌曲数据和歌词数据
-      const [songsRes, lyricsRes] = await Promise.all([
-        fetch(resolveUrl('data/songs.json')),
-        fetch(resolveUrl('data/lyrics.json')).catch(() => null)
+      // 并行加载：歌曲、专辑、推荐歌单、歌词索引
+      const [songsData, albumsData, playlistsData, lyricsIdx] = await Promise.all([
+        loadAllSongs(),
+        loadAlbums(),
+        loadRecommendPlaylists(),
+        loadLyricsIndex().catch(() => null)
       ])
 
-      if (!songsRes.ok) throw new Error(`加载歌曲数据失败: ${songsRes.status}`)
-      const songData = await songsRes.json()
+      if (!songsData) throw new Error('加载歌曲数据失败')
+      songs.value = resolvePaths(songsData.songs || [])
 
-      songs.value = resolvePaths(songData.songs)
-      albums.value = resolvePaths(songData.albums)
-      recommendPlaylists.value = resolvePaths(songData.recommendPlaylists)
+      if (albumsData) {
+        albums.value = resolvePaths(albumsData.albums || [])
+      }
 
-      // 加载歌词（允许失败）
-      if (lyricsRes && lyricsRes.ok) {
-        lyricsData.value = await lyricsRes.json()
+      if (playlistsData) {
+        // 兼容 playlists.json ({ playlists: [...] }) 和 recommendPlaylists.json ({ recommendPlaylists: [...] })
+        recommendPlaylists.value = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
+      }
+
+      // 加载歌词索引（轻量级，仅存储有歌词的歌曲ID）
+      if (lyricsIdx && Array.isArray(lyricsIdx.songIds)) {
+        lyricsIndexSet.value = new Set(lyricsIdx.songIds)
       }
 
       dataLoaded.value = true
@@ -86,6 +118,29 @@ export const usePlayerStore = defineStore('player', () => {
       console.error('加载歌曲数据失败:', e)
       dataLoadError.value = e.message
     }
+  }
+
+  // 按需加载单首歌曲的歌词
+  const loadLyricsForSong = async (songId) => {
+    if (!songId) return null
+    // 已缓存则直接返回
+    if (lyricsData.value[songId]) {
+      return lyricsData.value[songId]
+    }
+    // 歌词索引中不存在则跳过
+    if (lyricsIndexSet.value.size > 0 && !lyricsIndexSet.value.has(songId)) {
+      return null
+    }
+    const data = await loadLyricsFromFile(songId)
+    if (data && data.lyrics) {
+      lyricsData.value = { ...lyricsData.value, [songId]: data }
+    }
+    return data
+  }
+
+  // 判断歌曲是否有歌词（基于索引，无需加载歌词文件）
+  const hasLyrics = (songId) => {
+    return lyricsIndexSet.value.has(songId)
   }
   
   // 自定义播放列表
@@ -253,6 +308,9 @@ export const usePlayerStore = defineStore('player', () => {
     }
     
     currentSong.value = song
+    
+    // 按需加载歌词（不阻塞播放）
+    loadLyricsForSong(song.id)
     
     // 更新当前播放索引
     const idx = currentPlaylist.value.findIndex(s => s.id === song.id)
@@ -1155,6 +1213,8 @@ export const usePlayerStore = defineStore('player', () => {
     loadSongData,
     dataLoaded,
     dataLoadError,
-    lyricsData
+    lyricsData,
+    loadLyricsForSong,
+    hasLyrics
   }
 })

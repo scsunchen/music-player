@@ -8,8 +8,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 426,
-      "cover": "/music-player/images/covers/7b4d38bb9cf9_cover.jpg",
-      "audioUrl": "/music-player/audio/7b4d38bb9cf9.mp3"
+      "cover": "images/covers/7b4d38bb9cf9_cover.jpg",
+      "audioUrl": "audio/7b4d38bb9cf9.mp3"
     },
     {
       "id": 16,
@@ -18,8 +18,8 @@
       "album": "魔道祖师·同人",
       "albumId": 14,
       "duration": 286,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/9f54a3a8f073.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/9f54a3a8f073.mp3"
     },
     {
       "id": 17,
@@ -28,8 +28,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 298,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "audioUrl": "/music-player/audio/1685cff3aa4f.mp3"
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "audioUrl": "audio/1685cff3aa4f.mp3"
     },
     {
       "id": 18,
@@ -38,8 +38,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 459,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/ad5bb864f8c5.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/ad5bb864f8c5.mp3"
     },
     {
       "id": 19,
@@ -48,8 +48,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/86d94aa4ad8e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/86d94aa4ad8e.mp3"
     },
     {
       "id": 86,
@@ -58,8 +58,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 275,
-      "cover": "/music-player/images/covers/c6a7b2c28dde_cover.jpg",
-      "audioUrl": "/music-player/audio/c6a7b2c28dde.mp3"
+      "cover": "images/covers/c6a7b2c28dde_cover.jpg",
+      "audioUrl": "audio/c6a7b2c28dde.mp3"
     },
     {
       "id": 87,
@@ -68,8 +68,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 343,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3e40255f3bf6.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3e40255f3bf6.mp3"
     },
     {
       "id": 88,
@@ -78,8 +78,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 515,
-      "cover": "/music-player/images/covers/8cf9db35a270_cover.jpg",
-      "audioUrl": "/music-player/audio/8cf9db35a270.mp3"
+      "cover": "images/covers/8cf9db35a270_cover.jpg",
+      "audioUrl": "audio/8cf9db35a270.mp3"
     },
     {
       "id": 89,
@@ -88,8 +88,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 351,
-      "cover": "/music-player/images/covers/318d048a5c01_cover.jpg",
-      "audioUrl": "/music-player/audio/318d048a5c01.mp3"
+      "cover": "images/covers/318d048a5c01_cover.jpg",
+      "audioUrl": "audio/318d048a5c01.mp3"
     },
     {
       "id": 90,
@@ -98,8 +98,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 498,
-      "cover": "/music-player/images/covers/9da448573d47_cover.jpg",
-      "audioUrl": "/music-player/audio/9da448573d47.mp3"
+      "cover": "images/covers/9da448573d47_cover.jpg",
+      "audioUrl": "audio/9da448573d47.mp3"
     },
     {
       "id": 91,
@@ -108,8 +108,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/32bccc1057e7_cover.jpg",
-      "audioUrl": "/music-player/audio/32bccc1057e7.mp3"
+      "cover": "images/covers/32bccc1057e7_cover.jpg",
+      "audioUrl": "audio/32bccc1057e7.mp3"
     },
     {
       "id": 92,
@@ -118,8 +118,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 290,
-      "cover": "/music-player/images/covers/5b868e161787_cover.jpg",
-      "audioUrl": "/music-player/audio/5b868e161787.mp3"
+      "cover": "images/covers/5b868e161787_cover.jpg",
+      "audioUrl": "audio/5b868e161787.mp3"
     },
     {
       "id": 93,
@@ -128,8 +128,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 302,
-      "cover": "/music-player/images/covers/f448bb15f956_cover.jpg",
-      "audioUrl": "/music-player/audio/f448bb15f956.mp3"
+      "cover": "images/covers/f448bb15f956_cover.jpg",
+      "audioUrl": "audio/f448bb15f956.mp3"
     },
     {
       "id": 94,
@@ -138,8 +138,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 300,
-      "cover": "/music-player/images/covers/20092137d798_cover.jpg",
-      "audioUrl": "/music-player/audio/20092137d798.mp3"
+      "cover": "images/covers/20092137d798_cover.jpg",
+      "audioUrl": "audio/20092137d798.mp3"
     },
     {
       "id": 95,
@@ -148,8 +148,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 400,
-      "cover": "/music-player/images/covers/c3798e89c035_cover.jpg",
-      "audioUrl": "/music-player/audio/c3798e89c035.mp3"
+      "cover": "images/covers/c3798e89c035_cover.jpg",
+      "audioUrl": "audio/c3798e89c035.mp3"
     },
     {
       "id": 96,
@@ -158,8 +158,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 282,
-      "cover": "/music-player/images/covers/e13abfa87d10_cover.jpg",
-      "audioUrl": "/music-player/audio/e13abfa87d10.mp3"
+      "cover": "images/covers/e13abfa87d10_cover.jpg",
+      "audioUrl": "audio/e13abfa87d10.mp3"
     },
     {
       "id": 97,
@@ -168,8 +168,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 361,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/b6187e1d0d11.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/b6187e1d0d11.mp3"
     },
     {
       "id": 98,
@@ -178,8 +178,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 360,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/365fdb1ef4d2.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/365fdb1ef4d2.mp3"
     },
     {
       "id": 99,
@@ -188,8 +188,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 253,
-      "cover": "/music-player/images/covers/5b601a952dfd_cover.jpg",
-      "audioUrl": "/music-player/audio/5b601a952dfd.mp3"
+      "cover": "images/covers/5b601a952dfd_cover.jpg",
+      "audioUrl": "audio/5b601a952dfd.mp3"
     },
     {
       "id": 100,
@@ -198,8 +198,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 445,
-      "cover": "/music-player/images/covers/945040a103a3_cover.jpg",
-      "audioUrl": "/music-player/audio/945040a103a3.mp3"
+      "cover": "images/covers/945040a103a3_cover.jpg",
+      "audioUrl": "audio/945040a103a3.mp3"
     },
     {
       "id": 101,
@@ -208,8 +208,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 380,
-      "cover": "/music-player/images/covers/8f94fc50694b_cover.jpg",
-      "audioUrl": "/music-player/audio/8f94fc50694b.mp3"
+      "cover": "images/covers/8f94fc50694b_cover.jpg",
+      "audioUrl": "audio/8f94fc50694b.mp3"
     },
     {
       "id": 102,
@@ -218,8 +218,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 525,
-      "cover": "/music-player/images/covers/39636a93d09f_cover.jpg",
-      "audioUrl": "/music-player/audio/39636a93d09f.mp3"
+      "cover": "images/covers/39636a93d09f_cover.jpg",
+      "audioUrl": "audio/39636a93d09f.mp3"
     },
     {
       "id": 103,
@@ -228,8 +228,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 376,
-      "cover": "/music-player/images/covers/aa1762513a33_cover.jpg",
-      "audioUrl": "/music-player/audio/aa1762513a33.mp3"
+      "cover": "images/covers/aa1762513a33_cover.jpg",
+      "audioUrl": "audio/aa1762513a33.mp3"
     },
     {
       "id": 104,
@@ -238,8 +238,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 218,
-      "cover": "/music-player/images/covers/f53ee9717fe6_cover.jpg",
-      "audioUrl": "/music-player/audio/f53ee9717fe6.mp3"
+      "cover": "images/covers/f53ee9717fe6_cover.jpg",
+      "audioUrl": "audio/f53ee9717fe6.mp3"
     },
     {
       "id": 105,
@@ -248,8 +248,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 273,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/593a93992047.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/593a93992047.mp3"
     },
     {
       "id": 106,
@@ -258,8 +258,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 580,
-      "cover": "/music-player/images/covers/29c28f2557bf_cover.jpg",
-      "audioUrl": "/music-player/audio/29c28f2557bf.mp3"
+      "cover": "images/covers/29c28f2557bf_cover.jpg",
+      "audioUrl": "audio/29c28f2557bf.mp3"
     },
     {
       "id": 107,
@@ -268,8 +268,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 333,
-      "cover": "/music-player/images/covers/034efe2fe8b1_cover.jpg",
-      "audioUrl": "/music-player/audio/034efe2fe8b1.mp3"
+      "cover": "images/covers/034efe2fe8b1_cover.jpg",
+      "audioUrl": "audio/034efe2fe8b1.mp3"
     },
     {
       "id": 108,
@@ -278,8 +278,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/45cdb6fa05d2_cover.jpg",
-      "audioUrl": "/music-player/audio/45cdb6fa05d2.mp3"
+      "cover": "images/covers/45cdb6fa05d2_cover.jpg",
+      "audioUrl": "audio/45cdb6fa05d2.mp3"
     },
     {
       "id": 109,
@@ -288,8 +288,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 250,
-      "cover": "/music-player/images/covers/2d08f69865c0_cover.jpg",
-      "audioUrl": "/music-player/audio/2d08f69865c0.mp3"
+      "cover": "images/covers/2d08f69865c0_cover.jpg",
+      "audioUrl": "audio/2d08f69865c0.mp3"
     },
     {
       "id": 110,
@@ -298,8 +298,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 317,
-      "cover": "/music-player/images/covers/0dbc877330c7_cover.jpg",
-      "audioUrl": "/music-player/audio/0dbc877330c7.mp3"
+      "cover": "images/covers/0dbc877330c7_cover.jpg",
+      "audioUrl": "audio/0dbc877330c7.mp3"
     },
     {
       "id": 111,
@@ -308,8 +308,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 386,
-      "cover": "/music-player/images/covers/3ac2cb4af029_cover.jpg",
-      "audioUrl": "/music-player/audio/3ac2cb4af029.mp3"
+      "cover": "images/covers/3ac2cb4af029_cover.jpg",
+      "audioUrl": "audio/3ac2cb4af029.mp3"
     },
     {
       "id": 112,
@@ -318,8 +318,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 240,
-      "cover": "/music-player/images/covers/30a4cc3e280c_cover.jpg",
-      "audioUrl": "/music-player/audio/30a4cc3e280c.mp3"
+      "cover": "images/covers/30a4cc3e280c_cover.jpg",
+      "audioUrl": "audio/30a4cc3e280c.mp3"
     },
     {
       "id": 113,
@@ -328,8 +328,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 491,
-      "cover": "/music-player/images/covers/7e5580b246db_cover.jpg",
-      "audioUrl": "/music-player/audio/7e5580b246db.mp3"
+      "cover": "images/covers/7e5580b246db_cover.jpg",
+      "audioUrl": "audio/7e5580b246db.mp3"
     },
     {
       "id": 114,
@@ -338,8 +338,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 484,
-      "cover": "/music-player/images/covers/7be6fcc0704b_cover.jpg",
-      "audioUrl": "/music-player/audio/7be6fcc0704b.mp3"
+      "cover": "images/covers/7be6fcc0704b_cover.jpg",
+      "audioUrl": "audio/7be6fcc0704b.mp3"
     },
     {
       "id": 115,
@@ -348,8 +348,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 204,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/fcc6b4f4c094.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/fcc6b4f4c094.mp3"
     },
     {
       "id": 116,
@@ -358,8 +358,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 394,
-      "cover": "/music-player/images/covers/575c39ca06ba_cover.jpg",
-      "audioUrl": "/music-player/audio/575c39ca06ba.mp3"
+      "cover": "images/covers/575c39ca06ba_cover.jpg",
+      "audioUrl": "audio/575c39ca06ba.mp3"
     },
     {
       "id": 117,
@@ -368,8 +368,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 524,
-      "cover": "/music-player/images/covers/e3e10fa7c198_cover.jpg",
-      "audioUrl": "/music-player/audio/e3e10fa7c198.mp3"
+      "cover": "images/covers/e3e10fa7c198_cover.jpg",
+      "audioUrl": "audio/e3e10fa7c198.mp3"
     },
     {
       "id": 118,
@@ -378,8 +378,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/e25d0e259734.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/e25d0e259734.mp3"
     },
     {
       "id": 119,
@@ -388,8 +388,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 204,
-      "cover": "/music-player/images/covers/8c755b77d068_cover.jpg",
-      "audioUrl": "/music-player/audio/8c755b77d068.mp3"
+      "cover": "images/covers/8c755b77d068_cover.jpg",
+      "audioUrl": "audio/8c755b77d068.mp3"
     },
     {
       "id": 120,
@@ -398,8 +398,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 249,
-      "cover": "/music-player/images/covers/8cb0bcbbbe86_cover.jpg",
-      "audioUrl": "/music-player/audio/8cb0bcbbbe86.mp3"
+      "cover": "images/covers/8cb0bcbbbe86_cover.jpg",
+      "audioUrl": "audio/8cb0bcbbbe86.mp3"
     },
     {
       "id": 121,
@@ -408,8 +408,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 240,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/736a7040e35b.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/736a7040e35b.mp3"
     },
     {
       "id": 122,
@@ -418,8 +418,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 241,
-      "cover": "/music-player/images/covers/bd851074cac3_cover.jpg",
-      "audioUrl": "/music-player/audio/bd851074cac3.mp3"
+      "cover": "images/covers/bd851074cac3_cover.jpg",
+      "audioUrl": "audio/bd851074cac3.mp3"
     },
     {
       "id": 123,
@@ -428,8 +428,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 407,
-      "cover": "/music-player/images/covers/6a3c9e960ff6_cover.jpg",
-      "audioUrl": "/music-player/audio/6a3c9e960ff6.mp3"
+      "cover": "images/covers/6a3c9e960ff6_cover.jpg",
+      "audioUrl": "audio/6a3c9e960ff6.mp3"
     },
     {
       "id": 124,
@@ -438,8 +438,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 712,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/5b261e450252.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/5b261e450252.mp3"
     },
     {
       "id": 125,
@@ -448,8 +448,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 375,
-      "cover": "/music-player/images/covers/4335ce0f34f7_cover.jpg",
-      "audioUrl": "/music-player/audio/4335ce0f34f7.mp3"
+      "cover": "images/covers/4335ce0f34f7_cover.jpg",
+      "audioUrl": "audio/4335ce0f34f7.mp3"
     },
     {
       "id": 126,
@@ -458,8 +458,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 475,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/e2d54a96973d.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/e2d54a96973d.mp3"
     },
     {
       "id": 127,
@@ -468,8 +468,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 781,
-      "cover": "/music-player/images/covers/d8be016fa1c5_cover.jpg",
-      "audioUrl": "/music-player/audio/d8be016fa1c5.mp3"
+      "cover": "images/covers/d8be016fa1c5_cover.jpg",
+      "audioUrl": "audio/d8be016fa1c5.mp3"
     },
     {
       "id": 128,
@@ -478,8 +478,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/837cf029c314.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/837cf029c314.mp3"
     },
     {
       "id": 129,
@@ -488,8 +488,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 288,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/c477c1127012.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/c477c1127012.mp3"
     },
     {
       "id": 130,
@@ -498,8 +498,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 267,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3e07832a92c8.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3e07832a92c8.mp3"
     },
     {
       "id": 131,
@@ -508,8 +508,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 230,
-      "cover": "/music-player/images/covers/7a36407c88f2_cover.jpg",
-      "audioUrl": "/music-player/audio/7a36407c88f2.mp3"
+      "cover": "images/covers/7a36407c88f2_cover.jpg",
+      "audioUrl": "audio/7a36407c88f2.mp3"
     },
     {
       "id": 132,
@@ -518,8 +518,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 800,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3f85953eb3f6.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3f85953eb3f6.mp3"
     },
     {
       "id": 133,
@@ -528,8 +528,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 258,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/1df60c78fa3e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/1df60c78fa3e.mp3"
     },
     {
       "id": 134,
@@ -538,8 +538,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 97,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/8edb0d84807e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/8edb0d84807e.mp3"
     },
     {
       "id": 135,
@@ -548,8 +548,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 964,
-      "cover": "/music-player/images/covers/68687c9d92c3_cover.jpg",
-      "audioUrl": "/music-player/audio/68687c9d92c3.mp3"
+      "cover": "images/covers/68687c9d92c3_cover.jpg",
+      "audioUrl": "audio/68687c9d92c3.mp3"
     },
     {
       "id": 136,
@@ -558,8 +558,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 386,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/a2a29175d5bd.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/a2a29175d5bd.mp3"
     },
     {
       "id": 137,
@@ -568,8 +568,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 330,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/8316f0c2dd58.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/8316f0c2dd58.mp3"
     },
     {
       "id": 138,
@@ -578,8 +578,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 334,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/4fc4dd360715.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/4fc4dd360715.mp3"
     },
     {
       "id": 139,
@@ -588,8 +588,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 209,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/d8e7892ecb6c.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/d8e7892ecb6c.mp3"
     },
     {
       "id": 140,
@@ -598,8 +598,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/2f2e32feb3a2.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/2f2e32feb3a2.mp3"
     },
     {
       "id": 141,
@@ -608,8 +608,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 413,
-      "cover": "/music-player/images/covers/a1174b583250_cover.jpg",
-      "audioUrl": "/music-player/audio/a1174b583250.mp3"
+      "cover": "images/covers/a1174b583250_cover.jpg",
+      "audioUrl": "audio/a1174b583250.mp3"
     },
     {
       "id": 142,
@@ -618,8 +618,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/9133b87f182d_cover.jpg",
-      "audioUrl": "/music-player/audio/9133b87f182d.mp3"
+      "cover": "images/covers/9133b87f182d_cover.jpg",
+      "audioUrl": "audio/9133b87f182d.mp3"
     },
     {
       "id": 143,
@@ -628,8 +628,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 216,
-      "cover": "/music-player/images/covers/35e67671e1cd_cover.jpg",
-      "audioUrl": "/music-player/audio/35e67671e1cd.mp3"
+      "cover": "images/covers/35e67671e1cd_cover.jpg",
+      "audioUrl": "audio/35e67671e1cd.mp3"
     },
     {
       "id": 144,
@@ -638,8 +638,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 255,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/c4cae995ee19.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/c4cae995ee19.mp3"
     },
     {
       "id": 145,
@@ -648,8 +648,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 354,
-      "cover": "/music-player/images/covers/75db003efb33_cover.jpg",
-      "audioUrl": "/music-player/audio/75db003efb33.mp3"
+      "cover": "images/covers/75db003efb33_cover.jpg",
+      "audioUrl": "audio/75db003efb33.mp3"
     },
     {
       "id": 146,
@@ -658,8 +658,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 272,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/ec1d8c514cce.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/ec1d8c514cce.mp3"
     },
     {
       "id": 147,
@@ -668,8 +668,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 600,
-      "cover": "/music-player/images/covers/6e0e7697afa3_cover.jpg",
-      "audioUrl": "/music-player/audio/6e0e7697afa3.mp3"
+      "cover": "images/covers/6e0e7697afa3_cover.jpg",
+      "audioUrl": "audio/6e0e7697afa3.mp3"
     },
     {
       "id": 148,
@@ -678,8 +678,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 253,
-      "cover": "/music-player/images/covers/f412a938ec24_cover.jpg",
-      "audioUrl": "/music-player/audio/f412a938ec24.mp3"
+      "cover": "images/covers/f412a938ec24_cover.jpg",
+      "audioUrl": "audio/f412a938ec24.mp3"
     },
     {
       "id": 149,
@@ -688,8 +688,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 299,
-      "cover": "/music-player/images/covers/0e78d1b3dc3b_cover.jpg",
-      "audioUrl": "/music-player/audio/0e78d1b3dc3b.mp3"
+      "cover": "images/covers/0e78d1b3dc3b_cover.jpg",
+      "audioUrl": "audio/0e78d1b3dc3b.mp3"
     },
     {
       "id": 150,
@@ -698,8 +698,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 252,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/b43bc6d5bd61.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/b43bc6d5bd61.mp3"
     },
     {
       "id": 151,
@@ -708,8 +708,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 393,
-      "cover": "/music-player/images/covers/3be21c750cab_cover.jpg",
-      "audioUrl": "/music-player/audio/3be21c750cab.mp3"
+      "cover": "images/covers/3be21c750cab_cover.jpg",
+      "audioUrl": "audio/3be21c750cab.mp3"
     }
   ]
 }

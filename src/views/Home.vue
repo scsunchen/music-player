@@ -208,6 +208,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import { resolveUrl } from '../utils/baseUrl'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
@@ -228,7 +229,7 @@ const greeting = computed(() => {
 // 动态背景封面
 const bgCover = computed(() => {
   if (playerStore.currentSong?.cover) return playerStore.currentSong.cover
-  return '/music-player/images/covers/fenghuang_chuanqi_hero.jpg'
+  return resolveUrl('images/covers/fenghuang_chuanqi_hero.jpg')
 })
 
 // 动态主题色
@@ -255,19 +256,7 @@ const latestAlbums = computed(() => {
   return [...playerStore.albums].sort((a, b) => b.id - a.id).slice(0, 6)
 })
 
-// 歌词可用性缓存（避免模板中重复计算）
-const lyricsMap = computed(() => {
-  const map = {}
-  if (playerStore.lyricsData) {
-    for (const songId in playerStore.lyricsData) {
-      const data = playerStore.lyricsData[songId]
-      map[songId] = data && data.lyrics && data.lyrics.trim().length > 0
-    }
-  }
-  return map
-})
-
-const hasLyrics = (songId) => lyricsMap.value[songId] || false
+const hasLyrics = (songId) => playerStore.hasLyrics(songId)
 
 // 操作
 const openFullscreen = () => {

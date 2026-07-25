@@ -78,6 +78,7 @@
 import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import { resolveUrl } from '../utils/baseUrl'
 import ringtonesData from '../config/ringtonesPlaylist'
 
 const router = useRouter()
@@ -93,7 +94,7 @@ const entriesWithSongs = computed(() => {
     const song = playerStore.songs.find(s => s.id === entry.songId)
     return {
       ...entry,
-      cover: song ? song.cover : '/music-player/images/covers/1685cff3aa4f_cover.jpg',
+      cover: song ? song.cover : resolveUrl('images/covers/1685cff3aa4f_cover.jpg'),
       audioUrl: song ? song.audioUrl : ''
     }
   })

@@ -8,8 +8,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 260,
-      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
-      "audioUrl": "/music-player/audio/32d37eb29697.mp3",
+      "cover": "images/covers/32d37eb29697_cover.jpg",
+      "audioUrl": "audio/32d37eb29697.mp3",
       "genre": "pop"
     },
     {
@@ -19,8 +19,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 220,
-      "cover": "/music-player/images/covers/bed156103642_cover.png",
-      "audioUrl": "/music-player/audio/bed156103642.mp3",
+      "cover": "images/covers/bed156103642_cover.png",
+      "audioUrl": "audio/bed156103642.mp3",
       "genre": "pop"
     },
     {
@@ -30,8 +30,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 223,
-      "cover": "/music-player/images/covers/ca6ab3a2b20a_cover.jpg",
-      "audioUrl": "/music-player/audio/ca6ab3a2b20a.mp3",
+      "cover": "images/covers/ca6ab3a2b20a_cover.jpg",
+      "audioUrl": "audio/ca6ab3a2b20a.mp3",
       "genre": "pop"
     },
     {
@@ -41,8 +41,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 284,
-      "cover": "/music-player/images/covers/559f5dbc8cae_cover.jpg",
-      "audioUrl": "/music-player/audio/559f5dbc8cae.mp3",
+      "cover": "images/covers/559f5dbc8cae_cover.jpg",
+      "audioUrl": "audio/559f5dbc8cae.mp3",
       "genre": "pop"
     },
     {
@@ -52,8 +52,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 288,
-      "cover": "/music-player/images/covers/e588a1745e61_cover.png",
-      "audioUrl": "/music-player/audio/e588a1745e61.mp3",
+      "cover": "images/covers/e588a1745e61_cover.png",
+      "audioUrl": "audio/e588a1745e61.mp3",
       "genre": "pop"
     },
     {
@@ -63,8 +63,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 221,
-      "cover": "/music-player/images/covers/2bdd58f70288_cover.jpg",
-      "audioUrl": "/music-player/audio/2bdd58f70288.mp3",
+      "cover": "images/covers/2bdd58f70288_cover.jpg",
+      "audioUrl": "audio/2bdd58f70288.mp3",
       "genre": "pop"
     }
   ]

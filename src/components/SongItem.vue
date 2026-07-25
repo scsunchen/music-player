@@ -102,8 +102,7 @@ const isLiked = computed(() => {
 })
 
 const hasLyrics = computed(() => {
-  const data = playerStore.lyricsData[props.song.id]
-  return data && data.lyrics && data.lyrics.trim().length > 0
+  return playerStore.hasLyrics(props.song.id)
 })
 
 const toggleLike = () => {
