@@ -254,17 +254,7 @@ const dynamicStyle = computed(() => {
   }
 })
 
-const lyricsMap = computed(() => {
-  const map = {}
-  if (playerStore.lyricsData) {
-    for (const id in playerStore.lyricsData) {
-      const d = playerStore.lyricsData[id]
-      map[id] = d && d.lyrics && d.lyrics.trim().length > 0
-    }
-  }
-  return map
-})
-const hasLyrics = (id) => lyricsMap.value[id] || false
+const hasLyrics = (id) => playerStore.hasLyrics(id)
 
 // 加载搜索历史
 const loadSearchHistory = () => {

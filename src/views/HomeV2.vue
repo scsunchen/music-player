@@ -115,6 +115,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import { resolveUrl } from '../utils/baseUrl'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
@@ -131,7 +132,7 @@ const greeting = computed(() => {
   return '晚安'
 })
 
-const featuredCover = '/music-player/images/covers/summer_orange_cover.jpg'
+const featuredCover = resolveUrl('images/covers/summer_orange_cover.jpg')
 const featuredTitle = '橘子味的夏天'
 const featuredArtist = '清甜 · 日落氛围感'
 

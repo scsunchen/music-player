@@ -118,6 +118,7 @@
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import { resolveUrl } from '../utils/baseUrl'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
@@ -138,7 +139,7 @@ const greeting = computed(() => {
 // 动态背景封面
 const bgCover = computed(() => {
   if (playerStore.currentSong?.cover) return playerStore.currentSong.cover
-  return '/music-player/images/covers/fenghuang_chuanqi_hero.jpg'
+  return resolveUrl('images/covers/fenghuang_chuanqi_hero.jpg')
 })
 
 // 动态主题色

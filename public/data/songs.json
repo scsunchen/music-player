@@ -7,7 +7,7 @@
       "album": "你像风来了又走",
       "albumId": 12,
       "duration": 179,
-      "cover": "/music-player/images/covers/song13.jpg",
+      "cover": "images/covers/song13.jpg",
       "audioUrl": "https://scsunchen.github.io/music-player/audio/%E4%BD%A0%E5%83%8F%E9%A3%8E%E6%9D%A5%E4%BA%86%E5%8F%88%E8%B5%B0.mp3"
     },
     {
@@ -17,9 +17,9 @@
       "album": "梦底",
       "albumId": 13,
       "duration": 194,
-      "cover": "/music-player/images/梦底.jpg",
-      "audioUrl": "/music-player/audio/梦底.mp3",
-      "mvUrl": "/music-player/video/mengdi_mv.mp4"
+      "cover": "images/梦底.jpg",
+      "audioUrl": "audio/梦底.mp3",
+      "mvUrl": "video/mengdi_mv.mp4"
     },
     {
       "id": 15,
@@ -28,8 +28,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 426,
-      "cover": "/music-player/images/covers/7b4d38bb9cf9_cover.jpg",
-      "audioUrl": "/music-player/audio/7b4d38bb9cf9.mp3"
+      "cover": "images/covers/7b4d38bb9cf9_cover.jpg",
+      "audioUrl": "audio/7b4d38bb9cf9.mp3"
     },
     {
       "id": 16,
@@ -38,8 +38,8 @@
       "album": "魔道祖师·同人",
       "albumId": 14,
       "duration": 286,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/9f54a3a8f073.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/9f54a3a8f073.mp3"
     },
     {
       "id": 17,
@@ -48,8 +48,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 298,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "audioUrl": "/music-player/audio/1685cff3aa4f.mp3"
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "audioUrl": "audio/1685cff3aa4f.mp3"
     },
     {
       "id": 18,
@@ -58,8 +58,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 459,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/ad5bb864f8c5.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/ad5bb864f8c5.mp3"
     },
     {
       "id": 19,
@@ -68,8 +68,8 @@
       "album": "剑网三·同人",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/86d94aa4ad8e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/86d94aa4ad8e.mp3"
     },
     {
       "id": 86,
@@ -78,8 +78,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 275,
-      "cover": "/music-player/images/covers/c6a7b2c28dde_cover.jpg",
-      "audioUrl": "/music-player/audio/c6a7b2c28dde.mp3"
+      "cover": "images/covers/c6a7b2c28dde_cover.jpg",
+      "audioUrl": "audio/c6a7b2c28dde.mp3"
     },
     {
       "id": 87,
@@ -88,8 +88,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 343,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3e40255f3bf6.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3e40255f3bf6.mp3"
     },
     {
       "id": 88,
@@ -98,8 +98,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 515,
-      "cover": "/music-player/images/covers/8cf9db35a270_cover.jpg",
-      "audioUrl": "/music-player/audio/8cf9db35a270.mp3"
+      "cover": "images/covers/8cf9db35a270_cover.jpg",
+      "audioUrl": "audio/8cf9db35a270.mp3"
     },
     {
       "id": 89,
@@ -108,8 +108,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 351,
-      "cover": "/music-player/images/covers/318d048a5c01_cover.jpg",
-      "audioUrl": "/music-player/audio/318d048a5c01.mp3"
+      "cover": "images/covers/318d048a5c01_cover.jpg",
+      "audioUrl": "audio/318d048a5c01.mp3"
     },
     {
       "id": 90,
@@ -118,8 +118,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 498,
-      "cover": "/music-player/images/covers/9da448573d47_cover.jpg",
-      "audioUrl": "/music-player/audio/9da448573d47.mp3"
+      "cover": "images/covers/9da448573d47_cover.jpg",
+      "audioUrl": "audio/9da448573d47.mp3"
     },
     {
       "id": 91,
@@ -128,8 +128,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/32bccc1057e7_cover.jpg",
-      "audioUrl": "/music-player/audio/32bccc1057e7.mp3"
+      "cover": "images/covers/32bccc1057e7_cover.jpg",
+      "audioUrl": "audio/32bccc1057e7.mp3"
     },
     {
       "id": 92,
@@ -138,8 +138,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 290,
-      "cover": "/music-player/images/covers/5b868e161787_cover.jpg",
-      "audioUrl": "/music-player/audio/5b868e161787.mp3"
+      "cover": "images/covers/5b868e161787_cover.jpg",
+      "audioUrl": "audio/5b868e161787.mp3"
     },
     {
       "id": 93,
@@ -148,8 +148,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 302,
-      "cover": "/music-player/images/covers/f448bb15f956_cover.jpg",
-      "audioUrl": "/music-player/audio/f448bb15f956.mp3"
+      "cover": "images/covers/f448bb15f956_cover.jpg",
+      "audioUrl": "audio/f448bb15f956.mp3"
     },
     {
       "id": 94,
@@ -158,8 +158,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 300,
-      "cover": "/music-player/images/covers/20092137d798_cover.jpg",
-      "audioUrl": "/music-player/audio/20092137d798.mp3"
+      "cover": "images/covers/20092137d798_cover.jpg",
+      "audioUrl": "audio/20092137d798.mp3"
     },
     {
       "id": 95,
@@ -168,8 +168,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 400,
-      "cover": "/music-player/images/covers/c3798e89c035_cover.jpg",
-      "audioUrl": "/music-player/audio/c3798e89c035.mp3"
+      "cover": "images/covers/c3798e89c035_cover.jpg",
+      "audioUrl": "audio/c3798e89c035.mp3"
     },
     {
       "id": 96,
@@ -178,8 +178,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 282,
-      "cover": "/music-player/images/covers/e13abfa87d10_cover.jpg",
-      "audioUrl": "/music-player/audio/e13abfa87d10.mp3"
+      "cover": "images/covers/e13abfa87d10_cover.jpg",
+      "audioUrl": "audio/e13abfa87d10.mp3"
     },
     {
       "id": 97,
@@ -188,8 +188,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 361,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/b6187e1d0d11.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/b6187e1d0d11.mp3"
     },
     {
       "id": 98,
@@ -198,8 +198,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 360,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/365fdb1ef4d2.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/365fdb1ef4d2.mp3"
     },
     {
       "id": 99,
@@ -208,8 +208,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 253,
-      "cover": "/music-player/images/covers/5b601a952dfd_cover.jpg",
-      "audioUrl": "/music-player/audio/5b601a952dfd.mp3"
+      "cover": "images/covers/5b601a952dfd_cover.jpg",
+      "audioUrl": "audio/5b601a952dfd.mp3"
     },
     {
       "id": 100,
@@ -218,8 +218,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 445,
-      "cover": "/music-player/images/covers/945040a103a3_cover.jpg",
-      "audioUrl": "/music-player/audio/945040a103a3.mp3"
+      "cover": "images/covers/945040a103a3_cover.jpg",
+      "audioUrl": "audio/945040a103a3.mp3"
     },
     {
       "id": 101,
@@ -228,8 +228,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 380,
-      "cover": "/music-player/images/covers/8f94fc50694b_cover.jpg",
-      "audioUrl": "/music-player/audio/8f94fc50694b.mp3"
+      "cover": "images/covers/8f94fc50694b_cover.jpg",
+      "audioUrl": "audio/8f94fc50694b.mp3"
     },
     {
       "id": 102,
@@ -238,8 +238,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 525,
-      "cover": "/music-player/images/covers/39636a93d09f_cover.jpg",
-      "audioUrl": "/music-player/audio/39636a93d09f.mp3"
+      "cover": "images/covers/39636a93d09f_cover.jpg",
+      "audioUrl": "audio/39636a93d09f.mp3"
     },
     {
       "id": 103,
@@ -248,8 +248,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 376,
-      "cover": "/music-player/images/covers/aa1762513a33_cover.jpg",
-      "audioUrl": "/music-player/audio/aa1762513a33.mp3"
+      "cover": "images/covers/aa1762513a33_cover.jpg",
+      "audioUrl": "audio/aa1762513a33.mp3"
     },
     {
       "id": 104,
@@ -258,8 +258,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 218,
-      "cover": "/music-player/images/covers/f53ee9717fe6_cover.jpg",
-      "audioUrl": "/music-player/audio/f53ee9717fe6.mp3"
+      "cover": "images/covers/f53ee9717fe6_cover.jpg",
+      "audioUrl": "audio/f53ee9717fe6.mp3"
     },
     {
       "id": 105,
@@ -268,8 +268,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 273,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/593a93992047.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/593a93992047.mp3"
     },
     {
       "id": 106,
@@ -278,8 +278,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 580,
-      "cover": "/music-player/images/covers/29c28f2557bf_cover.jpg",
-      "audioUrl": "/music-player/audio/29c28f2557bf.mp3"
+      "cover": "images/covers/29c28f2557bf_cover.jpg",
+      "audioUrl": "audio/29c28f2557bf.mp3"
     },
     {
       "id": 107,
@@ -288,8 +288,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 333,
-      "cover": "/music-player/images/covers/034efe2fe8b1_cover.jpg",
-      "audioUrl": "/music-player/audio/034efe2fe8b1.mp3"
+      "cover": "images/covers/034efe2fe8b1_cover.jpg",
+      "audioUrl": "audio/034efe2fe8b1.mp3"
     },
     {
       "id": 108,
@@ -298,8 +298,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/45cdb6fa05d2_cover.jpg",
-      "audioUrl": "/music-player/audio/45cdb6fa05d2.mp3"
+      "cover": "images/covers/45cdb6fa05d2_cover.jpg",
+      "audioUrl": "audio/45cdb6fa05d2.mp3"
     },
     {
       "id": 109,
@@ -308,8 +308,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 250,
-      "cover": "/music-player/images/covers/2d08f69865c0_cover.jpg",
-      "audioUrl": "/music-player/audio/2d08f69865c0.mp3"
+      "cover": "images/covers/2d08f69865c0_cover.jpg",
+      "audioUrl": "audio/2d08f69865c0.mp3"
     },
     {
       "id": 110,
@@ -318,8 +318,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 317,
-      "cover": "/music-player/images/covers/0dbc877330c7_cover.jpg",
-      "audioUrl": "/music-player/audio/0dbc877330c7.mp3"
+      "cover": "images/covers/0dbc877330c7_cover.jpg",
+      "audioUrl": "audio/0dbc877330c7.mp3"
     },
     {
       "id": 111,
@@ -328,8 +328,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 386,
-      "cover": "/music-player/images/covers/3ac2cb4af029_cover.jpg",
-      "audioUrl": "/music-player/audio/3ac2cb4af029.mp3"
+      "cover": "images/covers/3ac2cb4af029_cover.jpg",
+      "audioUrl": "audio/3ac2cb4af029.mp3"
     },
     {
       "id": 112,
@@ -338,8 +338,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 240,
-      "cover": "/music-player/images/covers/30a4cc3e280c_cover.jpg",
-      "audioUrl": "/music-player/audio/30a4cc3e280c.mp3"
+      "cover": "images/covers/30a4cc3e280c_cover.jpg",
+      "audioUrl": "audio/30a4cc3e280c.mp3"
     },
     {
       "id": 113,
@@ -348,8 +348,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 491,
-      "cover": "/music-player/images/covers/7e5580b246db_cover.jpg",
-      "audioUrl": "/music-player/audio/7e5580b246db.mp3"
+      "cover": "images/covers/7e5580b246db_cover.jpg",
+      "audioUrl": "audio/7e5580b246db.mp3"
     },
     {
       "id": 114,
@@ -358,8 +358,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 484,
-      "cover": "/music-player/images/covers/7be6fcc0704b_cover.jpg",
-      "audioUrl": "/music-player/audio/7be6fcc0704b.mp3"
+      "cover": "images/covers/7be6fcc0704b_cover.jpg",
+      "audioUrl": "audio/7be6fcc0704b.mp3"
     },
     {
       "id": 115,
@@ -368,8 +368,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 204,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "audioUrl": "/music-player/audio/fcc6b4f4c094.mp3"
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "audioUrl": "audio/fcc6b4f4c094.mp3"
     },
     {
       "id": 116,
@@ -378,8 +378,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 394,
-      "cover": "/music-player/images/covers/575c39ca06ba_cover.jpg",
-      "audioUrl": "/music-player/audio/575c39ca06ba.mp3"
+      "cover": "images/covers/575c39ca06ba_cover.jpg",
+      "audioUrl": "audio/575c39ca06ba.mp3"
     },
     {
       "id": 117,
@@ -388,8 +388,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 524,
-      "cover": "/music-player/images/covers/e3e10fa7c198_cover.jpg",
-      "audioUrl": "/music-player/audio/e3e10fa7c198.mp3"
+      "cover": "images/covers/e3e10fa7c198_cover.jpg",
+      "audioUrl": "audio/e3e10fa7c198.mp3"
     },
     {
       "id": 118,
@@ -398,8 +398,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/e25d0e259734.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/e25d0e259734.mp3"
     },
     {
       "id": 119,
@@ -408,8 +408,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 204,
-      "cover": "/music-player/images/covers/8c755b77d068_cover.jpg",
-      "audioUrl": "/music-player/audio/8c755b77d068.mp3"
+      "cover": "images/covers/8c755b77d068_cover.jpg",
+      "audioUrl": "audio/8c755b77d068.mp3"
     },
     {
       "id": 120,
@@ -418,8 +418,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 249,
-      "cover": "/music-player/images/covers/8cb0bcbbbe86_cover.jpg",
-      "audioUrl": "/music-player/audio/8cb0bcbbbe86.mp3"
+      "cover": "images/covers/8cb0bcbbbe86_cover.jpg",
+      "audioUrl": "audio/8cb0bcbbbe86.mp3"
     },
     {
       "id": 121,
@@ -428,8 +428,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 240,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/736a7040e35b.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/736a7040e35b.mp3"
     },
     {
       "id": 122,
@@ -438,8 +438,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 241,
-      "cover": "/music-player/images/covers/bd851074cac3_cover.jpg",
-      "audioUrl": "/music-player/audio/bd851074cac3.mp3"
+      "cover": "images/covers/bd851074cac3_cover.jpg",
+      "audioUrl": "audio/bd851074cac3.mp3"
     },
     {
       "id": 123,
@@ -448,8 +448,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 407,
-      "cover": "/music-player/images/covers/6a3c9e960ff6_cover.jpg",
-      "audioUrl": "/music-player/audio/6a3c9e960ff6.mp3"
+      "cover": "images/covers/6a3c9e960ff6_cover.jpg",
+      "audioUrl": "audio/6a3c9e960ff6.mp3"
     },
     {
       "id": 124,
@@ -458,8 +458,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 712,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/5b261e450252.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/5b261e450252.mp3"
     },
     {
       "id": 125,
@@ -468,8 +468,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 375,
-      "cover": "/music-player/images/covers/4335ce0f34f7_cover.jpg",
-      "audioUrl": "/music-player/audio/4335ce0f34f7.mp3"
+      "cover": "images/covers/4335ce0f34f7_cover.jpg",
+      "audioUrl": "audio/4335ce0f34f7.mp3"
     },
     {
       "id": 126,
@@ -478,8 +478,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 475,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/e2d54a96973d.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/e2d54a96973d.mp3"
     },
     {
       "id": 127,
@@ -488,8 +488,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 781,
-      "cover": "/music-player/images/covers/d8be016fa1c5_cover.jpg",
-      "audioUrl": "/music-player/audio/d8be016fa1c5.mp3"
+      "cover": "images/covers/d8be016fa1c5_cover.jpg",
+      "audioUrl": "audio/d8be016fa1c5.mp3"
     },
     {
       "id": 128,
@@ -498,8 +498,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/837cf029c314.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/837cf029c314.mp3"
     },
     {
       "id": 129,
@@ -508,8 +508,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 288,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/c477c1127012.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/c477c1127012.mp3"
     },
     {
       "id": 130,
@@ -518,8 +518,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 267,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3e07832a92c8.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3e07832a92c8.mp3"
     },
     {
       "id": 131,
@@ -528,8 +528,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 230,
-      "cover": "/music-player/images/covers/7a36407c88f2_cover.jpg",
-      "audioUrl": "/music-player/audio/7a36407c88f2.mp3"
+      "cover": "images/covers/7a36407c88f2_cover.jpg",
+      "audioUrl": "audio/7a36407c88f2.mp3"
     },
     {
       "id": 132,
@@ -538,8 +538,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 800,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/3f85953eb3f6.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/3f85953eb3f6.mp3"
     },
     {
       "id": 133,
@@ -548,8 +548,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 258,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/1df60c78fa3e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/1df60c78fa3e.mp3"
     },
     {
       "id": 134,
@@ -558,8 +558,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 97,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/8edb0d84807e.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/8edb0d84807e.mp3"
     },
     {
       "id": 135,
@@ -568,8 +568,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 964,
-      "cover": "/music-player/images/covers/68687c9d92c3_cover.jpg",
-      "audioUrl": "/music-player/audio/68687c9d92c3.mp3"
+      "cover": "images/covers/68687c9d92c3_cover.jpg",
+      "audioUrl": "audio/68687c9d92c3.mp3"
     },
     {
       "id": 136,
@@ -578,8 +578,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 386,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/a2a29175d5bd.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/a2a29175d5bd.mp3"
     },
     {
       "id": 137,
@@ -588,8 +588,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 330,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/8316f0c2dd58.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/8316f0c2dd58.mp3"
     },
     {
       "id": 138,
@@ -598,8 +598,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 334,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/4fc4dd360715.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/4fc4dd360715.mp3"
     },
     {
       "id": 139,
@@ -608,8 +608,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 209,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/d8e7892ecb6c.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/d8e7892ecb6c.mp3"
     },
     {
       "id": 140,
@@ -618,8 +618,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 308,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/2f2e32feb3a2.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/2f2e32feb3a2.mp3"
     },
     {
       "id": 141,
@@ -628,8 +628,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 413,
-      "cover": "/music-player/images/covers/a1174b583250_cover.jpg",
-      "audioUrl": "/music-player/audio/a1174b583250.mp3"
+      "cover": "images/covers/a1174b583250_cover.jpg",
+      "audioUrl": "audio/a1174b583250.mp3"
     },
     {
       "id": 142,
@@ -638,8 +638,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 420,
-      "cover": "/music-player/images/covers/9133b87f182d_cover.jpg",
-      "audioUrl": "/music-player/audio/9133b87f182d.mp3"
+      "cover": "images/covers/9133b87f182d_cover.jpg",
+      "audioUrl": "audio/9133b87f182d.mp3"
     },
     {
       "id": 143,
@@ -648,8 +648,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 216,
-      "cover": "/music-player/images/covers/35e67671e1cd_cover.jpg",
-      "audioUrl": "/music-player/audio/35e67671e1cd.mp3"
+      "cover": "images/covers/35e67671e1cd_cover.jpg",
+      "audioUrl": "audio/35e67671e1cd.mp3"
     },
     {
       "id": 144,
@@ -658,8 +658,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 255,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/c4cae995ee19.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/c4cae995ee19.mp3"
     },
     {
       "id": 145,
@@ -668,8 +668,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 354,
-      "cover": "/music-player/images/covers/75db003efb33_cover.jpg",
-      "audioUrl": "/music-player/audio/75db003efb33.mp3"
+      "cover": "images/covers/75db003efb33_cover.jpg",
+      "audioUrl": "audio/75db003efb33.mp3"
     },
     {
       "id": 146,
@@ -678,8 +678,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 272,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/ec1d8c514cce.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/ec1d8c514cce.mp3"
     },
     {
       "id": 147,
@@ -688,8 +688,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 600,
-      "cover": "/music-player/images/covers/6e0e7697afa3_cover.jpg",
-      "audioUrl": "/music-player/audio/6e0e7697afa3.mp3"
+      "cover": "images/covers/6e0e7697afa3_cover.jpg",
+      "audioUrl": "audio/6e0e7697afa3.mp3"
     },
     {
       "id": 148,
@@ -698,8 +698,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 253,
-      "cover": "/music-player/images/covers/f412a938ec24_cover.jpg",
-      "audioUrl": "/music-player/audio/f412a938ec24.mp3"
+      "cover": "images/covers/f412a938ec24_cover.jpg",
+      "audioUrl": "audio/f412a938ec24.mp3"
     },
     {
       "id": 149,
@@ -708,8 +708,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 299,
-      "cover": "/music-player/images/covers/0e78d1b3dc3b_cover.jpg",
-      "audioUrl": "/music-player/audio/0e78d1b3dc3b.mp3"
+      "cover": "images/covers/0e78d1b3dc3b_cover.jpg",
+      "audioUrl": "audio/0e78d1b3dc3b.mp3"
     },
     {
       "id": 150,
@@ -718,8 +718,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 252,
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "audioUrl": "/music-player/audio/b43bc6d5bd61.mp3"
+      "cover": "images/covers/guofeng.jpg",
+      "audioUrl": "audio/b43bc6d5bd61.mp3"
     },
     {
       "id": 151,
@@ -728,8 +728,8 @@
       "album": "国风精选",
       "albumId": 14,
       "duration": 393,
-      "cover": "/music-player/images/covers/3be21c750cab_cover.jpg",
-      "audioUrl": "/music-player/audio/3be21c750cab.mp3"
+      "cover": "images/covers/3be21c750cab_cover.jpg",
+      "audioUrl": "audio/3be21c750cab.mp3"
     },
     {
       "id": 152,
@@ -738,8 +738,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 271,
-      "cover": "/music-player/images/covers/22b8989e42a5_cover.jpg",
-      "audioUrl": "/music-player/audio/22b8989e42a5.mp3",
+      "cover": "images/covers/22b8989e42a5_cover.jpg",
+      "audioUrl": "audio/22b8989e42a5.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Gx411J7Gx&autoplay=0"
     },
     {
@@ -749,8 +749,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 314,
-      "cover": "/music-player/images/covers/fbc8a4cb3c22_cover.jpg",
-      "audioUrl": "/music-player/audio/fbc8a4cb3c22.mp3"
+      "cover": "images/covers/fbc8a4cb3c22_cover.jpg",
+      "audioUrl": "audio/fbc8a4cb3c22.mp3"
     },
     {
       "id": 154,
@@ -759,8 +759,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 262,
-      "cover": "/music-player/images/covers/deed6d493a39_cover.jpg",
-      "audioUrl": "/music-player/audio/deed6d493a39.mp3",
+      "cover": "images/covers/deed6d493a39_cover.jpg",
+      "audioUrl": "audio/deed6d493a39.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1ms411Q7vR&autoplay=0"
     },
     {
@@ -770,8 +770,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 222,
-      "cover": "/music-player/images/covers/552fe25faac9_cover.png",
-      "audioUrl": "/music-player/audio/552fe25faac9.mp3",
+      "cover": "images/covers/552fe25faac9_cover.png",
+      "audioUrl": "audio/552fe25faac9.mp3",
       "mvUrl": "https://player.bilibili.com/player.html?bvid=BV1Nx411n7eJ&autoplay=0"
     },
     {
@@ -781,8 +781,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 279,
-      "cover": "/music-player/images/covers/ec181f738cd5_cover.png",
-      "audioUrl": "/music-player/audio/ec181f738cd5.mp3"
+      "cover": "images/covers/ec181f738cd5_cover.png",
+      "audioUrl": "audio/ec181f738cd5.mp3"
     },
     {
       "id": 157,
@@ -791,8 +791,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 305,
-      "cover": "/music-player/images/covers/52a1ef28d729_cover.jpg",
-      "audioUrl": "/music-player/audio/52a1ef28d729.mp3"
+      "cover": "images/covers/52a1ef28d729_cover.jpg",
+      "audioUrl": "audio/52a1ef28d729.mp3"
     },
     {
       "id": 158,
@@ -801,8 +801,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 268,
-      "cover": "/music-player/images/covers/5cc55d824dcb_cover.png",
-      "audioUrl": "/music-player/audio/5cc55d824dcb.mp3"
+      "cover": "images/covers/5cc55d824dcb_cover.png",
+      "audioUrl": "audio/5cc55d824dcb.mp3"
     },
     {
       "id": 159,
@@ -811,8 +811,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 332,
-      "cover": "/music-player/images/covers/bf8a3923db1c_cover.jpg",
-      "audioUrl": "/music-player/audio/bf8a3923db1c.mp3"
+      "cover": "images/covers/bf8a3923db1c_cover.jpg",
+      "audioUrl": "audio/bf8a3923db1c.mp3"
     },
     {
       "id": 160,
@@ -821,8 +821,8 @@
       "album": "许巍",
       "albumId": 16,
       "duration": 309,
-      "cover": "/music-player/images/covers/53cc8297d764_cover.jpg",
-      "audioUrl": "/music-player/audio/53cc8297d764.mp3"
+      "cover": "images/covers/53cc8297d764_cover.jpg",
+      "audioUrl": "audio/53cc8297d764.mp3"
     },
     {
       "id": 161,
@@ -831,8 +831,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 259,
-      "cover": "/music-player/images/covers/2a389c61057a_cover.png",
-      "audioUrl": "/music-player/audio/2a389c61057a.mp3",
+      "cover": "images/covers/2a389c61057a_cover.png",
+      "audioUrl": "audio/2a389c61057a.mp3",
       "genre": "pop"
     },
     {
@@ -842,8 +842,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 218,
-      "cover": "/music-player/images/covers/d556e7694d1d_cover.png",
-      "audioUrl": "/music-player/audio/d556e7694d1d.mp3",
+      "cover": "images/covers/d556e7694d1d_cover.png",
+      "audioUrl": "audio/d556e7694d1d.mp3",
       "genre": "pop"
     },
     {
@@ -853,8 +853,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 251,
-      "cover": "/music-player/images/covers/12f86bf94a40_cover.png",
-      "audioUrl": "/music-player/audio/12f86bf94a40.mp3",
+      "cover": "images/covers/12f86bf94a40_cover.png",
+      "audioUrl": "audio/12f86bf94a40.mp3",
       "genre": "pop"
     },
     {
@@ -864,8 +864,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 284,
-      "cover": "/music-player/images/covers/22a64a173800_cover.png",
-      "audioUrl": "/music-player/audio/22a64a173800.mp3",
+      "cover": "images/covers/22a64a173800_cover.png",
+      "audioUrl": "audio/22a64a173800.mp3",
       "genre": "pop"
     },
     {
@@ -875,8 +875,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 277,
-      "cover": "/music-player/images/covers/f3f0bb8b22a7_cover.png",
-      "audioUrl": "/music-player/audio/f3f0bb8b22a7.mp3",
+      "cover": "images/covers/f3f0bb8b22a7_cover.png",
+      "audioUrl": "audio/f3f0bb8b22a7.mp3",
       "genre": "pop"
     },
     {
@@ -886,8 +886,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 261,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "audioUrl": "/music-player/audio/adbb36ef488f.mp3",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "audioUrl": "audio/adbb36ef488f.mp3",
       "genre": "pop"
     },
     {
@@ -897,8 +897,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 217,
-      "cover": "/music-player/images/covers/d3e0b64e0c6a_cover.png",
-      "audioUrl": "/music-player/audio/d3e0b64e0c6a.mp3",
+      "cover": "images/covers/d3e0b64e0c6a_cover.png",
+      "audioUrl": "audio/d3e0b64e0c6a.mp3",
       "genre": "pop"
     },
     {
@@ -908,8 +908,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 272,
-      "cover": "/music-player/images/covers/ff74bedf17f4_cover.png",
-      "audioUrl": "/music-player/audio/ff74bedf17f4.mp3",
+      "cover": "images/covers/ff74bedf17f4_cover.png",
+      "audioUrl": "audio/ff74bedf17f4.mp3",
       "genre": "pop"
     },
     {
@@ -919,8 +919,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 255,
-      "cover": "/music-player/images/covers/071a72aa75ce_cover.png",
-      "audioUrl": "/music-player/audio/071a72aa75ce.mp3",
+      "cover": "images/covers/071a72aa75ce_cover.png",
+      "audioUrl": "audio/071a72aa75ce.mp3",
       "genre": "pop"
     },
     {
@@ -930,8 +930,8 @@
       "album": "欢子",
       "albumId": 17,
       "duration": 266,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "audioUrl": "/music-player/audio/a1b2c3d4e5f6.mp3",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "audioUrl": "audio/a1b2c3d4e5f6.mp3",
       "genre": "pop"
     },
     {
@@ -940,8 +940,8 @@
       "artist": "大哥不洗头",
       "album": "写不完的温柔",
       "duration": 174,
-      "cover": "/music-player/images/covers/default_cover.jpg",
-      "audioUrl": "/music-player/audio/8216a1f3e8f9.mp3",
+      "cover": "images/covers/default_cover.jpg",
+      "audioUrl": "audio/8216a1f3e8f9.mp3",
       "genre": "pop"
     },
     {
@@ -951,8 +951,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 260,
-      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
-      "audioUrl": "/music-player/audio/32d37eb29697.mp3",
+      "cover": "images/covers/32d37eb29697_cover.jpg",
+      "audioUrl": "audio/32d37eb29697.mp3",
       "genre": "pop"
     },
     {
@@ -962,8 +962,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 220,
-      "cover": "/music-player/images/covers/bed156103642_cover.png",
-      "audioUrl": "/music-player/audio/bed156103642.mp3",
+      "cover": "images/covers/bed156103642_cover.png",
+      "audioUrl": "audio/bed156103642.mp3",
       "genre": "pop"
     },
     {
@@ -973,8 +973,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 223,
-      "cover": "/music-player/images/covers/ca6ab3a2b20a_cover.jpg",
-      "audioUrl": "/music-player/audio/ca6ab3a2b20a.mp3",
+      "cover": "images/covers/ca6ab3a2b20a_cover.jpg",
+      "audioUrl": "audio/ca6ab3a2b20a.mp3",
       "genre": "pop"
     },
     {
@@ -984,8 +984,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 284,
-      "cover": "/music-player/images/covers/559f5dbc8cae_cover.jpg",
-      "audioUrl": "/music-player/audio/559f5dbc8cae.mp3",
+      "cover": "images/covers/559f5dbc8cae_cover.jpg",
+      "audioUrl": "audio/559f5dbc8cae.mp3",
       "genre": "pop"
     },
     {
@@ -995,8 +995,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 288,
-      "cover": "/music-player/images/covers/e588a1745e61_cover.png",
-      "audioUrl": "/music-player/audio/e588a1745e61.mp3",
+      "cover": "images/covers/e588a1745e61_cover.png",
+      "audioUrl": "audio/e588a1745e61.mp3",
       "genre": "pop"
     },
     {
@@ -1006,8 +1006,8 @@
       "album": "凤凰传奇",
       "albumId": 18,
       "duration": 221,
-      "cover": "/music-player/images/covers/2bdd58f70288_cover.jpg",
-      "audioUrl": "/music-player/audio/2bdd58f70288.mp3",
+      "cover": "images/covers/2bdd58f70288_cover.jpg",
+      "audioUrl": "audio/2bdd58f70288.mp3",
       "genre": "pop"
     },
     {
@@ -1017,7 +1017,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1028,7 +1028,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1039,7 +1039,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1050,7 +1050,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1061,7 +1061,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1072,7 +1072,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1083,7 +1083,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1094,7 +1094,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1105,7 +1105,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1116,7 +1116,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1127,7 +1127,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1138,7 +1138,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1149,7 +1149,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1160,7 +1160,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1171,7 +1171,7 @@
       "album": "橘子味的夏天",
       "albumId": 19,
       "duration": 0,
-      "cover": "/music-player/images/covers/default_cover.jpg",
+      "cover": "images/covers/default_cover.jpg",
       "audioUrl": "",
       "genre": "pop"
     },
@@ -1180,7 +1180,7 @@
       "title": "i miss you",
       "artist": "青春美少女,罗百吉",
       "duration": 245,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/08e11d6551aa.mp3",
       "genre": "pop"
     },
@@ -1189,7 +1189,7 @@
       "title": "一万个理由",
       "artist": "郑源",
       "duration": 266,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/8ade6766e73a.mp3",
       "genre": "pop"
     },
@@ -1198,7 +1198,7 @@
       "title": "一个人的寂寞两个人的错",
       "artist": "贺一帆",
       "duration": 337,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1a65fd8ba33c.mp3",
       "genre": "pop"
     },
@@ -1207,7 +1207,7 @@
       "title": "一定要爱你",
       "artist": "田一龙",
       "duration": 258,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/f13180620a80.mp3",
       "genre": "pop"
     },
@@ -1216,7 +1216,7 @@
       "title": "下辈子如果我还记得你",
       "artist": "马郁",
       "duration": 229,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/77c2bbfe5de3.mp3",
       "genre": "pop"
     },
@@ -1225,7 +1225,7 @@
       "title": "不怕不怕",
       "artist": "美美jocie",
       "duration": 215,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/963902241878.mp3",
       "genre": "pop"
     },
@@ -1234,7 +1234,7 @@
       "title": "不要再来伤害我",
       "artist": "张振宇",
       "duration": 322,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2a713d8d77b2.mp3",
       "genre": "pop"
     },
@@ -1243,7 +1243,7 @@
       "title": "不要在我寂寞的时候说爱我",
       "artist": "郑源",
       "duration": 245,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1e467b0265cf.mp3",
       "genre": "pop"
     },
@@ -1252,7 +1252,7 @@
       "title": "不要用我的爱来伤害我",
       "artist": "韩晶",
       "duration": 233,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b000c9ff4450.mp3",
       "genre": "pop"
     },
@@ -1261,7 +1261,7 @@
       "title": "丢了幸福的猪",
       "artist": "姜玉阳",
       "duration": 272,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/13d19c407c40.mp3",
       "genre": "pop"
     },
@@ -1270,7 +1270,7 @@
       "title": "两只蝴蝶",
       "artist": "庞龙",
       "duration": 272,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/30893be04958.mp3",
       "genre": "pop"
     },
@@ -1279,7 +1279,7 @@
       "title": "你到底爱谁",
       "artist": "亮亮",
       "duration": 258,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/e6ceb7545595.mp3",
       "genre": "pop"
     },
@@ -1288,7 +1288,7 @@
       "title": "你的选择",
       "artist": "易欣",
       "duration": 254,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/3c02c734dc5a.mp3",
       "genre": "pop"
     },
@@ -1297,7 +1297,7 @@
       "title": "做你的爱人",
       "artist": "谢军",
       "duration": 286,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/020633d1dbd1.mp3",
       "genre": "pop"
     },
@@ -1306,7 +1306,7 @@
       "title": "冰吻",
       "artist": "王键",
       "duration": 240,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/5fa91e40674a.mp3",
       "genre": "pop"
     },
@@ -1315,7 +1315,7 @@
       "title": "分手在那个秋天",
       "artist": "浩瀚",
       "duration": 233,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/8c9712d6191c.mp3",
       "genre": "pop"
     },
@@ -1324,7 +1324,7 @@
       "title": "别说我的眼泪你无所谓",
       "artist": "东来东往",
       "duration": 295,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/003739cfa4eb.mp3",
       "genre": "pop"
     },
@@ -1333,7 +1333,7 @@
       "title": "单车恋人",
       "artist": "后弦",
       "duration": 249,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/29a351cf7260.mp3",
       "genre": "pop"
     },
@@ -1342,7 +1342,7 @@
       "title": "哥 只是个传说",
       "artist": "陈旭",
       "duration": 248,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/627bb000ad30.mp3",
       "genre": "pop"
     },
@@ -1351,7 +1351,7 @@
       "title": "回心转意",
       "artist": "黑龙",
       "duration": 297,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/66fafd2c3a3d.mp3",
       "genre": "pop"
     },
@@ -1360,7 +1360,7 @@
       "title": "坏女孩",
       "artist": "徐良,小凌",
       "duration": 242,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/16d2ae7657f8.mp3",
       "genre": "pop"
     },
@@ -1369,7 +1369,7 @@
       "title": "天使的翅膀",
       "artist": "安琥",
       "duration": 220,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/f945ec88bbf6.mp3",
       "genre": "pop"
     },
@@ -1378,7 +1378,7 @@
       "title": "天涯",
       "artist": "爱乐团",
       "duration": 258,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/fc891bf58765.mp3",
       "genre": "pop"
     },
@@ -1387,7 +1387,7 @@
       "title": "孤单北半球",
       "artist": "欧得洋",
       "duration": 248,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/66a52eeececa.mp3",
       "genre": "pop"
     },
@@ -1396,7 +1396,7 @@
       "title": "寂寞才说爱",
       "artist": "刘可",
       "duration": 233,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/012014397912.mp3",
       "genre": "pop"
     },
@@ -1405,7 +1405,7 @@
       "title": "当你孤单你会想起谁",
       "artist": "张栋梁",
       "duration": 255,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2ea51481d4e9.mp3",
       "genre": "pop"
     },
@@ -1414,7 +1414,7 @@
       "title": "感动天感动地",
       "artist": "宇桐非",
       "duration": 252,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/ba3fb145aee8.mp3",
       "genre": "pop"
     },
@@ -1423,7 +1423,7 @@
       "title": "放生",
       "artist": "范逸臣",
       "duration": 272,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/547797cc628e.mp3",
       "genre": "pop"
     },
@@ -1432,7 +1432,7 @@
       "title": "最初一次的温柔",
       "artist": "兰雨",
       "duration": 214,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/a112ea09dc1c.mp3",
       "genre": "pop"
     },
@@ -1441,7 +1441,7 @@
       "title": "最幸福的人",
       "artist": "曾春年",
       "duration": 276,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/d268cec7365c.mp3",
       "genre": "pop"
     },
@@ -1450,7 +1450,7 @@
       "title": "有一种爱叫做放手",
       "artist": "阿木",
       "duration": 266,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/c61c01fd533e.mp3",
       "genre": "pop"
     },
@@ -1459,7 +1459,7 @@
       "title": "有没有人告诉你",
       "artist": "陈楚生",
       "duration": 261,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/637160c3501b.mp3",
       "genre": "pop"
     },
@@ -1468,7 +1468,7 @@
       "title": "死心塌地",
       "artist": "夹子道",
       "duration": 255,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/df08024c1c8b.mp3",
       "genre": "pop"
     },
@@ -1477,7 +1477,7 @@
       "title": "求佛",
       "artist": "誓言",
       "duration": 284,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/5d1b9298a947.mp3",
       "genre": "pop"
     },
@@ -1486,7 +1486,7 @@
       "title": "爱情买卖",
       "artist": "慕容晓晓",
       "duration": 213,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2e7914891d6f.mp3",
       "genre": "pop"
     },
@@ -1495,7 +1495,7 @@
       "title": "爱死了昨天(DJ版)",
       "artist": "DJ尚哥,李慧珍",
       "duration": 253,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1bea50f0d046.mp3",
       "genre": "pop"
     },
@@ -1504,7 +1504,7 @@
       "title": "犯错",
       "artist": "顾峰,斯琴高丽",
       "duration": 196,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/e72be4e8cf36.mp3",
       "genre": "pop"
     },
@@ -1513,7 +1513,7 @@
       "title": "猪之歌",
       "artist": "香香",
       "duration": 202,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/495327433547.mp3",
       "genre": "pop"
     },
@@ -1522,7 +1522,7 @@
       "title": "今生最爱",
       "artist": "王程明",
       "duration": 298,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b8b4230c3a2a.mp3",
       "genre": "pop"
     },
@@ -1531,7 +1531,7 @@
       "title": "生日礼物",
       "artist": "江涛",
       "duration": 268,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/bc17d9300381.mp3",
       "genre": "pop"
     },
@@ -1540,7 +1540,7 @@
       "title": "秋天不回来",
       "artist": "王强",
       "duration": 254,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/96fe6bbd4ffa.mp3",
       "genre": "pop"
     },
@@ -1549,7 +1549,7 @@
       "title": "素颜",
       "artist": "许嵩,何曼婷",
       "duration": 239,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6f596a2aa14b.mp3",
       "genre": "pop"
     },
@@ -1558,7 +1558,7 @@
       "title": "老人与海 (Remix)",
       "artist": "海鸣威",
       "duration": 260,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/e444c72c2d13.mp3",
       "genre": "pop"
     },
@@ -1567,7 +1567,7 @@
       "title": "让泪化作相思雨",
       "artist": "南合文斗",
       "duration": 289,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/bf7d8567777e.mp3",
       "genre": "pop"
     },
@@ -1576,7 +1576,7 @@
       "title": "该死的温柔",
       "artist": "马天宇",
       "duration": 225,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/7814960f4939.mp3",
       "genre": "pop"
     },
@@ -1585,7 +1585,7 @@
       "title": "那一夜",
       "artist": "谢军",
       "duration": 345,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b098cd280851.mp3",
       "genre": "pop"
     },
@@ -1594,7 +1594,7 @@
       "title": "错错错",
       "artist": "六哲,陈娟儿",
       "duration": 289,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/f60e19570d65.mp3",
       "genre": "pop"
     },
@@ -1603,7 +1603,7 @@
       "title": "飞舞",
       "artist": "王冰洋",
       "duration": 266,
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b003c697e406.mp3",
       "genre": "pop"
     },
@@ -1723,491 +1723,6 @@
       "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/8705677ac67c_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/eeb642a83185.mp3",
       "genre": "pop"
-    }
-  ],
-  "albums": [
-    {
-      "id": 1,
-      "name": "十一月的萧邦",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album1.jpg",
-      "songs": [],
-      "releaseDate": "2005-11-01",
-      "description": "周杰伦2005年发行的音乐专辑，融合古典与流行，收录《夜曲》《发如雪》等经典曲目，是华语乐坛里程碑式的作品。"
-    },
-    {
-      "id": 2,
-      "name": "叶惠美",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album2.jpg",
-      "songs": [],
-      "releaseDate": "2003-07-31",
-      "description": "周杰伦2003年发行的音乐专辑，以母亲的名字命名。收录《以父之名》《晴天》《东风破》等传世经典，被公认为周杰伦最具艺术性的专辑。"
-    },
-    {
-      "id": 3,
-      "name": "七里香",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album3.jpg",
-      "songs": [],
-      "releaseDate": "2004-08-03",
-      "description": "周杰伦2004年发行的音乐专辑，收录《七里香》《借口》《园游会》等歌曲，充满夏日浪漫气息，是周杰伦最具代表性的专辑之一。"
-    },
-    {
-      "id": 4,
-      "name": "魔杰座",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album4.jpg",
-      "songs": [],
-      "releaseDate": "2008-10-09",
-      "description": "周杰伦2008年发行的音乐专辑，收录《稻香》《说好的幸福呢》《给我一首歌的时间》等，风格多元，展现音乐才华。"
-    },
-    {
-      "id": 5,
-      "name": "周杰伦的床边故事",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album5.jpg",
-      "songs": [],
-      "releaseDate": "2016-06-24",
-      "description": "周杰伦2016年发行的音乐专辑，以童话故事为概念，收录《告白气球》《前世情人》《不该》等，充满温暖与想象力。"
-    },
-    {
-      "id": 6,
-      "name": "光年之外",
-      "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album6.jpg",
-      "songs": [],
-      "releaseDate": "2016-12-05",
-      "description": "邓紫棋为电影《太空旅客》演唱的主题曲，以太空为意象诉说跨越时空的爱情，MV在YouTube突破2亿播放量。"
-    },
-    {
-      "id": 7,
-      "name": "Xposed",
-      "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album7.jpg",
-      "songs": [],
-      "releaseDate": "2012-07-05",
-      "description": "邓紫棋2012年发行的音乐专辑，展现其强大的创作和演唱实力，收录《泡沫》《潜意识的残酷》等经典作品。"
-    },
-    {
-      "id": 8,
-      "name": "绅士",
-      "artist": "薛之谦",
-      "cover": "/music-player/images/covers/album8.jpg",
-      "songs": [],
-      "releaseDate": "2015-06-05",
-      "description": "薛之谦2015年发行的音乐专辑，收录《绅士》《演员》《一半》等歌曲，以细腻的情感表达和独特的嗓音打动了无数听众。"
-    },
-    {
-      "id": 9,
-      "name": "起风了",
-      "artist": "买辣椒也用券",
-      "cover": "/music-player/images/covers/album9.jpg",
-      "songs": [],
-      "releaseDate": "2019-01-15",
-      "description": "买辣椒也用券2019年发行的翻唱单曲，改编自高桥优《ヤキモチ》，以温柔嗓音诠释青春与遗憾，成为年度现象级歌曲。"
-    },
-    {
-      "id": 10,
-      "name": "猎户星座",
-      "artist": "朴树",
-      "cover": "/music-player/images/covers/album10.jpg",
-      "songs": [],
-      "releaseDate": "2017-04-30",
-      "description": "朴树2017年发行的音乐专辑，距上一张专辑14年之久。收录《平凡之路》《清白之年》《达尼亚》等，充满对人生的思考与感悟。"
-    },
-    {
-      "id": 11,
-      "name": "那些年",
-      "artist": "胡夏",
-      "cover": "/music-player/images/covers/album11.jpg",
-      "songs": [],
-      "releaseDate": "2011-08-08",
-      "description": "胡夏为电影《那些年，我们一起追的女孩》演唱的主题曲，以纯净嗓音唱出青春的悸动与遗憾，成为华语乐坛经典情歌。"
-    },
-    {
-      "id": 12,
-      "name": "风来的方向",
-      "artist": "晨晨",
-      "cover": "/music-player/images/covers/album12.jpg",
-      "songs": [
-        13
-      ],
-      "releaseDate": "2026-05-16",
-      "description": "晨晨2026年发行的原创音乐专辑，以清新温暖的曲风，描绘生活中的美好瞬间。"
-    },
-    {
-      "id": 13,
-      "name": "梦底",
-      "artist": "海来阿木",
-      "cover": "/music-player/images/梦底.jpg",
-      "songs": [
-        14
-      ],
-      "description": "2026年央视春晚原创歌曲，海来阿木作词作曲。原名《来不及》，历经25版打磨，以极简歌词和沧桑烟嗓，唱尽成年人最深的思念与遗憾，从私人执念升华为全民共情的情感之作。",
-      "releaseDate": "2026-02-17"
-    },
-    {
-      "id": 14,
-      "name": "国风精选",
-      "artist": "群星",
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "songs": [
-        15,
-        16,
-        17,
-        18,
-        19,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99,
-        100,
-        101,
-        102,
-        103,
-        104,
-        105,
-        106,
-        107,
-        108,
-        109,
-        110,
-        111,
-        112,
-        113,
-        114,
-        115,
-        116,
-        117,
-        118,
-        119,
-        120,
-        121,
-        122,
-        123,
-        124,
-        125,
-        126,
-        127,
-        128,
-        129,
-        130,
-        131,
-        132,
-        133,
-        134,
-        135,
-        136,
-        137,
-        138,
-        139,
-        140,
-        141,
-        142,
-        143,
-        144,
-        145,
-        146,
-        147,
-        148,
-        149,
-        150,
-        151
-      ],
-      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美",
-      "releaseDate": "2026-05-19"
-    },
-    {
-      "id": 16,
-      "name": "许巍",
-      "artist": "许巍",
-      "cover": "/music-player/images/covers/xuwei.jpg",
-      "songs": [
-        152,
-        153,
-        154,
-        155,
-        156,
-        157,
-        158,
-        159,
-        160
-      ],
-      "description": "许巍经典歌曲合集。每个人的心里，都有一首许巍的歌，唱着自由、远方和曾经的梦想。",
-      "releaseDate": "2026-05-19"
-    },
-    {
-      "id": 17,
-      "name": "欢子",
-      "cover": "/music-player/images/covers/huanzi.jpg",
-      "songs": [
-        161,
-        162,
-        163,
-        164,
-        165,
-        166,
-        167,
-        168,
-        169,
-        170
-      ],
-      "description": "欢子经典情歌合集。以独特的嗓音和深情的演绎，唱出爱情中的甜蜜与心酸。《得到你的人却得不到你的心》《原谅我一次》等经典曲目，承载了一代人的情感记忆。"
-    },
-    {
-      "id": 18,
-      "name": "凤凰传奇",
-      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
-      "description": "凤凰传奇经典歌曲合集。玲花高亢嘹亮的嗓音与曾毅独特的说唱风格完美融合，开创了民族流行音乐的新纪元。从《奢香夫人》到《最炫民族风》，每一首都是传唱不衰的经典。",
-      "songs": [
-        172,
-        173,
-        174,
-        175,
-        176,
-        177
-      ]
-    },
-    {
-      "id": 19,
-      "name": "橘子味的夏天",
-      "cover": "/music-player/images/covers/summer_orange_cover.jpg",
-      "description": "夏天是橘子汽水冒起的气泡，是黄昏染遍天空的橘粉，是晚风里轻轻晃动的旋律。这张歌单装满了暖橙色调的温柔与甜，适合傍晚散步、窗边发呆、和喜欢的人共享耳机。",
-      "songs": [
-        200,
-        201,
-        202,
-        203,
-        204,
-        205,
-        206,
-        207,
-        208,
-        209,
-        210,
-        211,
-        212,
-        213,
-        214
-      ]
-    }
-  ],
-  "recommendPlaylists": [
-    {
-      "id": 1,
-      "name": "华语经典",
-      "description": "精选华语经典歌曲，带你重温那些年的感动",
-      "cover": "/music-player/images/covers/playlist1.jpg",
-      "songs": [
-        171
-      ],
-      "playCount": 125680
-    },
-    {
-      "id": 2,
-      "name": "流行热歌",
-      "description": "当下最火的流行歌曲，紧跟音乐潮流",
-      "cover": "/music-player/images/covers/playlist2.jpg",
-      "songs": [
-        161,
-        162,
-        163,
-        164,
-        165,
-        166,
-        167,
-        168,
-        169,
-        170,
-        172,
-        173,
-        174,
-        175,
-        176,
-        177
-      ],
-      "playCount": 98750
-    },
-    {
-      "id": 3,
-      "name": "治愈系",
-      "description": "温暖治愈的音乐，抚慰疲惫的心灵",
-      "cover": "/music-player/images/covers/playlist3.jpg",
-      "songs": [],
-      "playCount": 76320
-    },
-    {
-      "id": 4,
-      "name": "周杰伦精选",
-      "description": "周杰伦经典歌曲合集",
-      "cover": "/music-player/images/covers/playlist4.jpg",
-      "songs": [
-        263,
-        264,
-        265,
-        266,
-        267,
-        268,
-        269,
-        270,
-        271,
-        272,
-        273,
-        274,
-        275
-      ],
-      "playCount": 256890
-    },
-    {
-      "id": 5,
-      "name": "国风歌曲",
-      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "songs": [
-        15,
-        16,
-        17,
-        18,
-        19,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99,
-        100,
-        101,
-        102,
-        103,
-        104,
-        105,
-        106,
-        107,
-        108,
-        109,
-        110,
-        111,
-        112,
-        113,
-        114,
-        115,
-        116,
-        117,
-        118,
-        119,
-        120,
-        121,
-        122,
-        123,
-        124,
-        125,
-        126,
-        127,
-        128,
-        129,
-        130,
-        131,
-        132,
-        133,
-        134,
-        135,
-        136,
-        137,
-        138,
-        139,
-        140,
-        141,
-        142,
-        143,
-        144,
-        145,
-        146,
-        147,
-        148,
-        149,
-        150,
-        151
-      ],
-      "playCount": 88888
-    },
-    {
-      "id": 6,
-      "name": "怀旧经典",
-      "description": "怀旧经典 · 彩铃黄金年代 48 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
-      "cover": "/music-player/images/covers/1685cff3aa4f_cover.jpg",
-      "songs": [
-        170,
-        242,
-        216,
-        241,
-        115,
-        240,
-        238,
-        255,
-        248,
-        259,
-        261,
-        226,
-        250,
-        254,
-        232,
-        257,
-        251,
-        231,
-        233,
-        245,
-        222,
-        230,
-        224,
-        243,
-        247,
-        239,
-        219,
-        220,
-        228,
-        236,
-        249,
-        218,
-        262,
-        260,
-        229,
-        227,
-        252,
-        221,
-        253,
-        215,
-        217,
-        246,
-        237,
-        223,
-        244,
-        256,
-        225,
-        258,
-        235,
-        166,
-        234
-      ],
-      "playCount": 0
     }
   ]
 }

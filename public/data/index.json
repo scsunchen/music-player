@@ -1,4 +1,178 @@
 {
+  "totalSongs": 175,
+  "totalLyrics": 87,
+  "albums": [
+    {
+      "id": 1,
+      "name": "十一月的萧邦",
+      "artist": "周杰伦",
+      "cover": "images/covers/album1.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 2,
+      "name": "叶惠美",
+      "artist": "周杰伦",
+      "cover": "images/covers/album2.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 3,
+      "name": "七里香",
+      "artist": "周杰伦",
+      "cover": "images/covers/album3.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 4,
+      "name": "魔杰座",
+      "artist": "周杰伦",
+      "cover": "images/covers/album4.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 5,
+      "name": "周杰伦的床边故事",
+      "artist": "周杰伦",
+      "cover": "images/covers/album5.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 6,
+      "name": "光年之外",
+      "artist": "邓紫棋",
+      "cover": "images/covers/album6.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 7,
+      "name": "Xposed",
+      "artist": "邓紫棋",
+      "cover": "images/covers/album7.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 8,
+      "name": "绅士",
+      "artist": "薛之谦",
+      "cover": "images/covers/album8.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 9,
+      "name": "起风了",
+      "artist": "买辣椒也用券",
+      "cover": "images/covers/album9.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 10,
+      "name": "猎户星座",
+      "artist": "朴树",
+      "cover": "images/covers/album10.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 11,
+      "name": "那些年",
+      "artist": "胡夏",
+      "cover": "images/covers/album11.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 12,
+      "name": "风来的方向",
+      "artist": "晨晨",
+      "cover": "images/covers/album12.jpg",
+      "songCount": 1
+    },
+    {
+      "id": 13,
+      "name": "梦底",
+      "artist": "海来阿木",
+      "cover": "images/梦底.jpg",
+      "songCount": 1
+    },
+    {
+      "id": 14,
+      "name": "国风精选",
+      "artist": "群星",
+      "cover": "images/covers/guofeng.jpg",
+      "songCount": 71
+    },
+    {
+      "id": 16,
+      "name": "许巍",
+      "artist": "许巍",
+      "cover": "images/covers/xuwei.jpg",
+      "songCount": 9
+    },
+    {
+      "id": 17,
+      "name": "欢子",
+      "artist": "",
+      "cover": "images/covers/huanzi.jpg",
+      "songCount": 10
+    },
+    {
+      "id": 18,
+      "name": "凤凰传奇",
+      "artist": "",
+      "cover": "images/covers/32d37eb29697_cover.jpg",
+      "songCount": 6
+    },
+    {
+      "id": 19,
+      "name": "橘子味的夏天",
+      "artist": "",
+      "cover": "images/covers/summer_orange_cover.jpg",
+      "songCount": 15
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1,
+      "name": "华语经典",
+      "description": "精选华语经典歌曲，带你重温那些年的感动",
+      "cover": "images/covers/playlist1.jpg",
+      "songCount": 1
+    },
+    {
+      "id": 2,
+      "name": "流行热歌",
+      "description": "当下最火的流行歌曲，紧跟音乐潮流",
+      "cover": "images/covers/playlist2.jpg",
+      "songCount": 16
+    },
+    {
+      "id": 3,
+      "name": "治愈系",
+      "description": "温暖治愈的音乐，抚慰疲惫的心灵",
+      "cover": "images/covers/playlist3.jpg",
+      "songCount": 0
+    },
+    {
+      "id": 4,
+      "name": "周杰伦精选",
+      "description": "周杰伦经典歌曲合集",
+      "cover": "images/covers/playlist4.jpg",
+      "songCount": 13
+    },
+    {
+      "id": 5,
+      "name": "国风歌曲",
+      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
+      "cover": "images/covers/guofeng.jpg",
+      "songCount": 71
+    },
+    {
+      "id": 6,
+      "name": "怀旧经典",
+      "description": "怀旧经典 · 彩铃黄金年代 48 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
+      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "songCount": 51
+    }
+  ],
   "categories": [
     {
       "id": "guofeng",
@@ -30,169 +204,5 @@
       "name": "周杰伦精选",
       "count": 13
     }
-  ],
-  "albums": [
-    {
-      "id": 1,
-      "name": "十一月的萧邦",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album1.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 2,
-      "name": "叶惠美",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album2.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 3,
-      "name": "七里香",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album3.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 4,
-      "name": "魔杰座",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album4.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 5,
-      "name": "周杰伦的床边故事",
-      "artist": "周杰伦",
-      "cover": "/music-player/images/covers/album5.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 6,
-      "name": "光年之外",
-      "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album6.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 7,
-      "name": "Xposed",
-      "artist": "邓紫棋",
-      "cover": "/music-player/images/covers/album7.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 8,
-      "name": "绅士",
-      "artist": "薛之谦",
-      "cover": "/music-player/images/covers/album8.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 9,
-      "name": "起风了",
-      "artist": "买辣椒也用券",
-      "cover": "/music-player/images/covers/album9.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 10,
-      "name": "猎户星座",
-      "artist": "朴树",
-      "cover": "/music-player/images/covers/album10.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 11,
-      "name": "那些年",
-      "artist": "胡夏",
-      "cover": "/music-player/images/covers/album11.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 12,
-      "name": "风来的方向",
-      "artist": "晨晨",
-      "cover": "/music-player/images/covers/album12.jpg",
-      "songCount": 1
-    },
-    {
-      "id": 13,
-      "name": "梦底",
-      "artist": "海来阿木",
-      "cover": "/music-player/images/梦底.jpg",
-      "songCount": 1
-    },
-    {
-      "id": 14,
-      "name": "国风精选",
-      "artist": "群星",
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "songCount": 71
-    },
-    {
-      "id": 16,
-      "name": "许巍",
-      "artist": "许巍",
-      "cover": "/music-player/images/covers/xuwei.jpg",
-      "songCount": 9
-    },
-    {
-      "id": 17,
-      "name": "欢子",
-      "cover": "/music-player/images/covers/huanzi.jpg",
-      "songCount": 10
-    },
-    {
-      "id": 18,
-      "name": "凤凰传奇",
-      "cover": "/music-player/images/covers/32d37eb29697_cover.jpg",
-      "songCount": 6
-    }
-  ],
-  "playlists": [
-    {
-      "id": 1,
-      "name": "华语经典",
-      "description": "精选华语经典歌曲，带你重温那些年的感动",
-      "cover": "/music-player/images/covers/playlist1.jpg",
-      "songCount": 1
-    },
-    {
-      "id": 2,
-      "name": "流行热歌",
-      "description": "当下最火的流行歌曲，紧跟音乐潮流",
-      "cover": "/music-player/images/covers/playlist2.jpg",
-      "songCount": 16
-    },
-    {
-      "id": 3,
-      "name": "治愈系",
-      "description": "温暖治愈的音乐，抚慰疲惫的心灵",
-      "cover": "/music-player/images/covers/playlist3.jpg",
-      "songCount": 0
-    },
-    {
-      "id": 4,
-      "name": "周杰伦精选",
-      "description": "周杰伦经典歌曲合集",
-      "cover": "/music-player/images/covers/playlist4.jpg",
-      "songCount": 13
-    },
-    {
-      "id": 5,
-      "name": "国风歌曲",
-      "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
-      "cover": "/music-player/images/covers/guofeng.jpg",
-      "songCount": 71
-    },
-    {
-      "id": 6,
-      "name": "怀旧经典",
-      "description": "怀旧经典 · 彩铃黄金年代 48 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
-      "cover": "/music-player/images/covers/default_cover.jpg",
-      "songCount": 48
-    }
-  ],
-  "totalSongs": 160
+  ]
 }
