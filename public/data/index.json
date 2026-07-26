@@ -1,6 +1,6 @@
 {
-  "totalSongs": 460,
-  "totalLyrics": 87,
+  "totalSongs": 527,
+  "totalLyrics": 439,
   "albums": [
     {
       "id": 1,
@@ -135,7 +135,7 @@
       "name": "华语经典",
       "description": "精选华语经典歌曲，带你重温那些年的感动",
       "cover": "images/covers/playlist1.jpg",
-      "songCount": 1
+      "songCount": 4
     },
     {
       "id": 2,
@@ -160,10 +160,10 @@
     },
     {
       "id": 5,
-      "name": "国风歌曲",
+      "name": "一曲一悲欢",
       "description": "精选古风、仙侠、游戏同人国风歌曲，带你领略华夏音乐之美。琴瑟和鸣，剑影江湖，一曲肝肠断，天涯何处觅知音。",
       "cover": "images/covers/guofeng.jpg",
-      "songCount": 71
+      "songCount": 68
     },
     {
       "id": 6,
@@ -176,8 +176,15 @@
       "id": 7,
       "name": "少年歌行",
       "description": "少年歌行，青春无畏。汇聚热血、励志、感动，献给每一个追梦的少年。",
-      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/5f76c368e036_cover.jpg",
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/7a3c9e1f4b8d_cover.jpg",
       "songCount": 285
+    },
+    {
+      "id": 8,
+      "name": "【河图】世上尽灯火",
+      "description": "河图精选合集，世上尽灯火，一曲江湖梦。墨明棋妙核心成员，古风音乐领军人物。",
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/ae853ad9cf93_cover.jpg",
+      "songCount": 70
     }
   ],
   "categories": [
@@ -215,6 +222,11 @@
       "id": "shaoniangexing",
       "name": "少年歌行",
       "count": 285
+    },
+    {
+      "id": "hetu",
+      "name": "【河图】世上尽灯火",
+      "count": 70
     }
   ]
 }

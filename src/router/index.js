@@ -123,12 +123,29 @@ router.beforeEach((to, from, next) => {
     
     transition.finished.then(() => {
       document.documentElement.removeAttribute('data-transition')
+      // 过渡动画完成后，重置滚动位置到顶部
+      if (from.name) {
+        window.scrollTo(0, 0)
+      }
     }).catch(() => {
       document.documentElement.removeAttribute('data-transition')
     })
   } catch (e) {
     // View Transitions 失败，直接跳转
     next()
+    // 降级：直接重置滚动
+    if (from.name) {
+      window.scrollTo(0, 0)
+    }
+  }
+})
+
+// 全局滚动重置（非 View Transitions 场景的兜底）
+router.afterEach((to, from) => {
+  if (!from.name) return
+  // 不支持 View Transitions 时直接滚动（支持时由 beforeEach 内的 transition.finished 处理）
+  if (!supportsViewTransitions()) {
+    window.scrollTo(0, 0)
   }
 })
 

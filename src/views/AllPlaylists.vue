@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="card-info">
-            <span class="card-name">{{ playlist.name }}</span>
+            <span class="card-name" @click="router.push(`/playlist/${playlist.id}`)">{{ playlist.name }}</span>
             <span class="card-count">{{ (playlist.songs || []).length }} 首</span>
           </div>
         </div>
@@ -286,6 +286,12 @@ const dynamicStyle = computed(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.card-name:hover {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.95);
 }
 
 .card-count {

@@ -4288,6 +4288,609 @@
       "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/842bfca56837_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/4df9bb7469a0.mp3",
       "genre": "pop"
+    },
+    {
+      "id": 561,
+      "title": "NEW WORLD ORDER crossfade(首张中日合辑)",
+      "artist": "月蚀音乐,蛇足,ゆう十",
+      "duration": 401,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/aedb3da83453_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/ea1413913977.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 562,
+      "title": "《吻画》——剑网3万花门派同人原创主题曲",
+      "artist": "月蚀音乐,河图",
+      "duration": 271,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/06e97df0c470_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/5df7272754a2.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 563,
+      "title": "【剑网3】依山观澜(藏剑·叶英)",
+      "artist": "河图",
+      "duration": 310,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/8ae3728167b1_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1db1b591c18c.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 564,
+      "title": "一战破晓",
+      "artist": "音频怪物,河图",
+      "duration": 275,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/23d95e67aa09_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2f92f589d0b2.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 565,
+      "title": "三世演义",
+      "artist": "河图",
+      "duration": 221,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e42eedbfb156_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/48949149d5ee.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 566,
+      "title": "不染 inst.（《楚留香》手游宣传曲）",
+      "artist": "河图",
+      "duration": 237,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/07d4e1729e28_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/ea020ac5eb0d.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 567,
+      "title": "不良人",
+      "artist": "河图",
+      "duration": 284,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/15b6df7ead17_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2ec1d520638f.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 568,
+      "title": "丹心鉴",
+      "artist": "月蝕,河图",
+      "duration": 261,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/0507fcbcfe69_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/e9b673e8061b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 569,
+      "title": "伤",
+      "artist": "河图",
+      "duration": 330,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/0233f602c04b_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/fb99802371ab.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 570,
+      "title": "假如",
+      "artist": "河图",
+      "duration": 261,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/1ad3bdb94aa7_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/916ab663caed.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 571,
+      "title": "兰陵殇",
+      "artist": "河图",
+      "duration": 282,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e8eb0f741212_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2d973a5f0c0c.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 572,
+      "title": "再逢明月照九州",
+      "artist": "河图",
+      "duration": 296,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/cfc48a11495c_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2ce8e8722a14.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 573,
+      "title": "十方天华 crossfade",
+      "artist": "月蚀音乐,冥月,小爱的妈",
+      "duration": 408,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/b82f894389a5_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/267523b506e3.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 574,
+      "title": "吻画(万花)",
+      "artist": "河图",
+      "duration": 271,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/569801959c46_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6b25f80483ea.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 575,
+      "title": "因我而动（by：河图）",
+      "artist": "夏墨萧音 音乐团队,河图",
+      "duration": 179,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/9fcada4f1317_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/704eb649ed03.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 576,
+      "title": "墨-为龙",
+      "artist": "墨明棋妙,河图",
+      "duration": 242,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/1466303e6011_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/0fb1a9b7aeac.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 577,
+      "title": "墨-雨碎江南.印象",
+      "artist": "河图,墨虎蔷薇,墨明棋妙",
+      "duration": 245,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/3c1856f545c2_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b4987411eb34.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 578,
+      "title": "墨宝 古龙群侠传",
+      "artist": "河图",
+      "duration": 218,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/efd405849d52_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/8913e48c8179.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 579,
+      "title": "妙-四周年纪念歌曲—话说这两年",
+      "artist": "墨明棋妙",
+      "duration": 217,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/0c7e35148671_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/ae0cb743a5c2.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 580,
+      "title": "妙-墨明棋妙和朋友们的Free Talk",
+      "artist": "墨明棋妙",
+      "duration": 219,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/54f3aa62eab1_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/f0c07ceebd0b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 581,
+      "title": "守",
+      "artist": "河图",
+      "duration": 352,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/c94c6d29d87c_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6c7fcb2421c5.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 582,
+      "title": "宝贝，回家",
+      "artist": "音频怪物,绯村柯北,HITA",
+      "duration": 351,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/f881a21f5df4_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/fa4f1d9ae8a4.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 583,
+      "title": "寒衣调",
+      "artist": "河图",
+      "duration": 281,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/d5a4c4c49d15_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/956769fbe203.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 584,
+      "title": "寻常",
+      "artist": "河图",
+      "duration": 249,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/0c97befd4457_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/08ccc803f177.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 585,
+      "title": "尽江南",
+      "artist": "河图",
+      "duration": 289,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/4c2e0ec25b98_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/70a31d14d984.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 586,
+      "title": "巅峰·致战场",
+      "artist": "河图,大话西游手游",
+      "duration": 205,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/0f3a508e0900_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/ade77b758aa2.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 587,
+      "title": "归墟终极",
+      "artist": "河图",
+      "duration": 320,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/default_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/950e08d549cb.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 588,
+      "title": "影子",
+      "artist": "河图",
+      "duration": 211,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/default_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/2471b9bc5e7b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 589,
+      "title": "御华万里 crossfade",
+      "artist": "冥月,小爱的妈,HITA",
+      "duration": 536,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e3285487eef4_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/f59beac56e24.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 590,
+      "title": "御龙行~剧场版",
+      "artist": "今时古梦,彦Jans,司夏",
+      "duration": 701,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e8a2338f7f53_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b5861288fa61.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 591,
+      "title": "御龙行~纯歌版",
+      "artist": "今时古梦,彦Jans,司夏",
+      "duration": 369,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/06b5d54a5255_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/d09859e728e9.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 592,
+      "title": "我们的墨明棋妙",
+      "artist": "墨明棋妙",
+      "duration": 286,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/default_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/47070054c2bd.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 593,
+      "title": "斗仙",
+      "artist": "河图",
+      "duration": 236,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/4df1bd8850e6_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/9f3163c69c3e.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 594,
+      "title": "旧戏书",
+      "artist": "河图",
+      "duration": 216,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/83200a6703c2_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/a1651c2c2fca.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 595,
+      "title": "明-夜郎",
+      "artist": "墨明棋妙,河图,乍雨初晴",
+      "duration": 236,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/2e186270cf13_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b873a771ce21.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 596,
+      "title": "明-安徒生的事",
+      "artist": "墨明棋妙,河图,HITA",
+      "duration": 284,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/b2f58a47af85_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/49830bb66cb8.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 597,
+      "title": "明珠山河歌",
+      "artist": "河图",
+      "duration": 247,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/67d626460481_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1cd040ee539d.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 598,
+      "title": "朝忆梨花暮忆雪",
+      "artist": "河图",
+      "duration": 268,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/627f33ea7939_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6191145f6368.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 599,
+      "title": "棋-一千零一次月蚀",
+      "artist": "墨明棋妙,河图",
+      "duration": 312,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/cbd4fbd8c530_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/8283db156e0b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 600,
+      "title": "棋-穿越",
+      "artist": "墨明棋妙,河图,檀烧",
+      "duration": 260,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/bb7dcf9bcc9a_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/18cd280927eb.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 601,
+      "title": "殊宠",
+      "artist": "河图,寵儿",
+      "duration": 250,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/955d62d0bda1_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/baa6a15f9832.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 602,
+      "title": "江湖·闪蝶",
+      "artist": "河图",
+      "duration": 255,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e26ff3539438_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/a8382a065cf1.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 603,
+      "title": "沧海之曜",
+      "artist": "河图",
+      "duration": 222,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/123da027cfaf_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/4b26009a9b9e.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 604,
+      "title": "滚滚红尘",
+      "artist": "河图",
+      "duration": 186,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/9da97e9657fa_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/5bb14849506a.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 605,
+      "title": "热爱至上 (伴奏)",
+      "artist": "河图,音频怪物,慕寒",
+      "duration": 259,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/36f860f57bab_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/d656cae70907.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 606,
+      "title": "热爱至上",
+      "artist": "河图,音频怪物,慕寒",
+      "duration": 259,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/b4252b0414ac_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/bc12dc186a4b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 607,
+      "title": "焚于毫末",
+      "artist": "河图",
+      "duration": 344,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/a802c1bf00b6_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/1608b3c70d5d.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 608,
+      "title": "燃尽人间色",
+      "artist": "异世谣",
+      "duration": 280,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/423df3506265_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/7a34aa0fcc30.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 609,
+      "title": "燃尽人间色",
+      "artist": "慕寒,司夏,河图",
+      "duration": 280,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/4708961348b6_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/51ec4ea3fb2f.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 610,
+      "title": "狐言 (带伴唱伴奏)",
+      "artist": "河图",
+      "duration": 211,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e802ed6c8e6f_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/a6a0e4a8f0e3.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 611,
+      "title": "盈灵",
+      "artist": "河图",
+      "duration": 257,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/9e73731a99a2_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/22955424add5.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 612,
+      "title": "知与君同",
+      "artist": "河图",
+      "duration": 216,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/8984755e39e6_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/084600e2fbaa.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 613,
+      "title": "离人醉杭州",
+      "artist": "河图,曼文",
+      "duration": 246,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/10376aea5bd8_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b2522b8d1306.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 614,
+      "title": "离人醉杭州（伴奏）",
+      "artist": "河图,曼文",
+      "duration": 249,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/194ac04c2e0d_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/e0e089e13ee9.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 615,
+      "title": "窗前明月光",
+      "artist": "河图",
+      "duration": 249,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/03dcafc85add_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/795618f8bc7b.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 616,
+      "title": "紫衣重",
+      "artist": "归墟原创团队",
+      "duration": 247,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/6ef718b55f10_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/70b1487c73ba.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 617,
+      "title": "紫衣重",
+      "artist": "河图",
+      "duration": 247,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e8474c7481d8_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6f6ca04f8847.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 618,
+      "title": "藏海花·天葬·三日静寂",
+      "artist": "河图",
+      "duration": 301,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/ef5094d762c7_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/d0446c724b83.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 619,
+      "title": "藤萝月",
+      "artist": "徒有琴,商连,河图",
+      "duration": 320,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/8338c53c8779_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/81c4e3195087.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 620,
+      "title": "醉话江湖",
+      "artist": "河图,月蚀音乐",
+      "duration": 306,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/28e48e1fe7e7_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/c9b3da4148ae.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 621,
+      "title": "长生歌 crossfade",
+      "artist": "月蚀音乐,HITA,河图",
+      "duration": 402,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/bfaa2d3bba20_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/6e45043dbfd1.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 622,
+      "title": "问剑逍遥",
+      "artist": "河图",
+      "duration": 256,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/4d091e477162_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/bb8eb3f5e3e6.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 623,
+      "title": "问剑逍遥(醉逍遥)",
+      "artist": "河图",
+      "duration": 256,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/af1228b9a670_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/0826fa5cf992.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 624,
+      "title": "雨碎江南客缘",
+      "artist": "墨明棋妙",
+      "duration": 254,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/4264368a2856_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/cfd7dcd41497.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 625,
+      "title": "风起天阑",
+      "artist": "河图",
+      "duration": 328,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/c3995cf031e9_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/b13d530a0d1d.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 626,
+      "title": "龙图",
+      "artist": "河图",
+      "duration": 337,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/2668590b5bfe_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/658ea8913791.mp3",
+      "genre": "guofeng"
+    },
+    {
+      "id": 627,
+      "title": "龙图(无念白)",
+      "artist": "河图",
+      "duration": 256,
+      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/e1c4204054eb_cover.jpg",
+      "audioUrl": "https://didimusic.github.io/didimusic1.github.io/audio/421408b2d253.mp3",
+      "genre": "guofeng"
     }
   ]
 }
