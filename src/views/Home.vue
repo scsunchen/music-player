@@ -205,7 +205,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import { resolveUrl } from '../utils/baseUrl'
@@ -214,8 +214,8 @@ import SkeletonLoader from '../components/SkeletonLoader.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 
-const loading = ref(true)
-onMounted(() => { setTimeout(() => { loading.value = false }, 600) })
+// 骨架屏基于真实数据加载状态：数据就绪或加载失败时都隐藏
+const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
 
 // 问候语
 const greeting = computed(() => {

@@ -12,8 +12,9 @@ const getTransitionDirection = (to, from) => {
   const fromIndex = routes.indexOf(from.path)
   
   if (toIndex === -1 || fromIndex === -1) {
-    // 详情页使用缩放动画
-    return to.path.includes('/:') ? 'in' : 'out'
+    // 详情页（带动态参数）使用缩放动画
+    const isDetailRoute = to.matched.some(record => record.path.includes('/:'))
+    return isDetailRoute ? 'in' : 'out'
   }
   
   return toIndex > fromIndex ? 'right' : 'left'
@@ -24,26 +25,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('../views/Home.vue')
-  },
-  {
-    path: '/home-old',
-    name: 'HomeOld',
-    component: () => import('../views/HomeOld.vue')
-  },
-  {
-    path: '/home-v2',
-    name: 'HomeV2',
-    component: () => import('../views/HomeV2.vue')
-  },
-  {
-    path: '/home-immersive',
-    name: 'HomeImmersive',
-    component: () => import('../views/HomeImmersive.vue')
-  },
-  {
-    path: '/home-dashboard',
-    name: 'HomeDashboard',
-    component: () => import('../views/HomeDashboard.vue')
   },
   {
     path: '/search',

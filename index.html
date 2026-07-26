@@ -43,16 +43,26 @@
           navigator.serviceWorker.register(base + 'sw.js')
             .then((reg) => {
               console.log('Service Worker 注册成功', reg.scope)
+              // 检测到新 SW 时，通知旧 SW 立即接管（静默更新，不强制刷新）
               reg.addEventListener('updatefound', () => {
                 const newWorker = reg.installing
                 newWorker.addEventListener('statechange', () => {
-                  if (newWorker.state === 'activated') {
-                    window.location.reload()
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // 新 SW 已安装，通知其跳过等待接管
+                    newWorker.postMessage('SKIP_WAITING')
                   }
                 })
               })
             })
             .catch((err) => console.log('Service Worker 注册失败', err))
+
+          // 监听控制器变更（新 SW 接管），下次导航时自然生效
+          let refreshing = false
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (refreshing) return
+            refreshing = true
+            window.location.reload()
+          })
         })
       }
     </script>
