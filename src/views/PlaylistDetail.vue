@@ -1,5 +1,12 @@
 <template>
-  <div class="immersive-playlist" :style="dynamicStyle" v-if="playlist">
+  <!-- 专属模板分发 -->
+  <GuofengInk
+    v-if="playlist?.template === 'guofeng-ink'"
+    :playlist="playlist"
+    :songs="songs"
+  />
+  <!-- 通用模板 -->
+  <div class="immersive-playlist" :style="dynamicStyle" v-else-if="playlist">
     <!-- 轻量氛围背景 -->
     <div class="atmosphere">
       <div class="atmo-gradient"></div>
@@ -112,6 +119,7 @@ import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import ShareModal from '../components/ShareModal.vue'
+import GuofengInk from './GuofengInk.vue'
 
 const route = useRoute()
 const router = useRouter()

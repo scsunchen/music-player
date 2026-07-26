@@ -63,7 +63,7 @@
           </div>
           <div class="song-list">
             <div
-              v-for="song in filteredSongs"
+              v-for="song in displayFilteredSongs"
               :key="song.id"
               class="song-item"
             >
@@ -93,6 +93,9 @@
                 <span class="song-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
               </div>
             </div>
+          </div>
+          <div class="load-more-hint" v-if="hasMoreSearchResults">
+            滚动加载更多（{{ displayFilteredSongs.length }}/{{ filteredSongs.length }}）
           </div>
         </div>
 
@@ -140,7 +143,7 @@
           </div>
           <div class="song-list">
             <div
-              v-for="song in playerStore.songs"
+              v-for="song in displaySongs"
               :key="song.id"
               class="song-item"
             >
@@ -167,6 +170,9 @@
                 <span class="song-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
               </div>
             </div>
+          </div>
+          <div class="load-more-hint" v-if="hasMoreSongs">
+            滚动加载更多（{{ displaySongs.length }}/{{ playerStore.songs.length }}）
           </div>
         </div>
 
@@ -230,7 +236,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 
@@ -244,6 +250,11 @@ let debounceTimer = null
 // 搜索历史
 const searchHistory = ref([])
 const MAX_HISTORY = 10
+
+// 渐进加载：初始展示条数 + 每次滚动加载条数
+const PAGE_SIZE = 30
+const displayCount = ref(PAGE_SIZE)
+const searchDisplayCount = ref(PAGE_SIZE)
 
 const dynamicStyle = computed(() => {
   const color = playerStore.themeColor || '#667eea'
@@ -287,6 +298,8 @@ watch(searchQuery, (val) => {
   clearTimeout(debounceTimer)
   debounceTimer = setTimeout(() => {
     debouncedQuery.value = val
+    // 重置搜索结果分页
+    searchDisplayCount.value = PAGE_SIZE
   }, 300)
 })
 
@@ -301,6 +314,10 @@ const filteredSongs = computed(() => {
   })
 })
 
+// 搜索结果：只展示前 N 条，滚动到底部加载更多
+const displayFilteredSongs = computed(() => filteredSongs.value.slice(0, searchDisplayCount.value))
+const hasMoreSearchResults = computed(() => searchDisplayCount.value < filteredSongs.value.length)
+
 const filteredAlbums = computed(() => {
   if (!debouncedQuery.value) return []
   const query = debouncedQuery.value.toLowerCase()
@@ -309,6 +326,37 @@ const filteredAlbums = computed(() => {
     return name.includes(query)
   })
 })
+
+// 未搜索时：全部歌曲渐进加载
+const displaySongs = computed(() => playerStore.songs.slice(0, displayCount.value))
+const hasMoreSongs = computed(() => displayCount.value < playerStore.songs.length)
+
+// 加载更多
+const loadMore = () => {
+  if (debouncedQuery.value) {
+    if (hasMoreSearchResults.value) {
+      searchDisplayCount.value += PAGE_SIZE
+    }
+  } else {
+    if (hasMoreSongs.value) {
+      displayCount.value += PAGE_SIZE
+    }
+  }
+}
+
+// 滚动监听：触底加载
+const onScroll = () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const scrollHeight = document.documentElement.scrollHeight
+  const clientHeight = document.documentElement.clientHeight
+  // 距底部 200px 时触发加载
+  if (scrollTop + clientHeight >= scrollHeight - 200) {
+    loadMore()
+  }
+}
+
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 const handleSearch = () => {}
 
@@ -338,15 +386,6 @@ const addToPlaylist = (playlistId) => {
     closeModal()
   }
 }
-
-// 防抖处理搜索输入
-watch(searchQuery, (val) => {
-  clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    debouncedQuery.value = val
-  }, 300)
-})
-
 </script>
 
 <style scoped>
@@ -831,6 +870,14 @@ watch(searchQuery, (val) => {
 
 .bottom-space {
   height: 40px;
+}
+
+.load-more-hint {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ===== 添加到歌单按钮 ===== */
