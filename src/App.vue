@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from './stores/player'
 import MusicPlayer from './components/MusicPlayer.vue'
@@ -80,6 +80,11 @@ import DesktopLyrics from './components/DesktopLyrics.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 const showFullscreen = ref(false)
+
+// 全屏播放器打开时，给 body 添加标记，暂停页面层动画以减少 GPU 负载
+watch(showFullscreen, (val) => {
+  document.body.classList.toggle('fs-open', val)
+})
 
 // 导航栏动态色
 const headerStyle = computed(() => {
@@ -393,5 +398,18 @@ html[data-transition="in"] ::view-transition-new(root) {
   .fade-slide-leave-active {
     transition: all 0.3s ease;
   }
+}
+
+/* 全屏播放器打开时：暂停页面层所有动画，释放 GPU 给播放器 */
+body.fs-open .guofeng-page .atmo-orb,
+body.fs-open .guofeng-page .ink-wash,
+body.fs-open .guofeng-page .mountain-silhouette,
+body.fs-open .guofeng-page .poem-line,
+body.fs-open .guofeng-page .vinyl-disc,
+body.fs-open .guofeng-page .song-bars .bar,
+body.fs-open .immersive-playlist .atmo-orb,
+body.fs-open .immersive-all-playlists .atmo-orb,
+body.fs-open .home-page .atmo-orb {
+  animation-play-state: paused !important;
 }
 </style>
