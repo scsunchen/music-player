@@ -24,7 +24,7 @@
             
             <!-- 分享链接 -->
             <div class="share-link">
-              <input ref="linkInput" :value="shareUrl" readonly />
+              <input ref="linkInput" :value="shareText" readonly />
               <button class="btn-copy" @click="copyLink">
                 {{ copied ? '已复制' : '复制链接' }}
               </button>
@@ -38,17 +38,11 @@
                 </svg>
                 <span>系统分享</span>
               </button>
-              <button class="method-btn" @click="shareWeixin">
+              <button class="method-btn" @click="copyLink">
                 <svg viewBox="0 0 24 24" width="24" height="24">
-                  <path fill="currentColor" d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5.44 0 .87-.04 1.28-.11-..54-.85-1.06-1.22-1.63-.21.02-.43.04-.66.04-2.76 0-5-1.79-5-4s2.24-4 5-4 5 1.79 5 4c0 .34-.04.67-.13.98.74.37 1.42.82 2.02 1.34.35-.77.54-1.61.54-2.5 0-3.31-3.36-6-7.5-6zm11.5 8c-2.49 0-4.5 1.79-4.5 4s2.01 4 4.5 4c.59 0 1.16-.1 1.69-.28L21 21l-.78-2.34C21.92 17.56 23 15.89 23 14c0-2.21-2.24-4-5-4z"/>
+                  <path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                 </svg>
-                <span>微信</span>
-              </button>
-              <button class="method-btn" @click="shareQQ">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                  <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 14.5h-7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5h7c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/>
-                </svg>
-                <span>QQ</span>
+                <span>复制链接</span>
               </button>
             </div>
           </div>
@@ -101,20 +95,30 @@ const shareData = computed(() => {
   }
 })
 
-// 生成分享链接
+// 生成正确的分享链接（适配 hash 路由）
 const shareUrl = computed(() => {
   const base = window.location.origin + (import.meta.env.BASE_URL || '/')
+  const hashBase = base + '#'
   if (props.type === 'song') {
-    return `${base}?share=song&id=${props.data.id}`
+    return `${hashBase}/song/${props.data.id}`
   } else {
-    return `${base}?share=playlist&id=${props.data.id}`
+    return `${hashBase}/playlist/${props.data.id}`
   }
 })
 
-// 复制链接
+// 复制时带上的文本：歌曲名/歌单名 + 链接
+const shareText = computed(() => {
+  if (props.type === 'song') {
+    return `《${shareData.value.title}》 - ${shareData.value.subtitle}\n${shareUrl.value}`
+  } else {
+    return `${shareData.value.title}（${shareData.value.subtitle}）\n${shareUrl.value}`
+  }
+})
+
+// 复制链接（带歌曲信息）
 const copyLink = async () => {
   try {
-    await navigator.clipboard.writeText(shareUrl.value)
+    await navigator.clipboard.writeText(shareText.value)
     copied.value = true
     setTimeout(() => copied.value = false, 2000)
   } catch (err) {
@@ -132,25 +136,15 @@ const shareNative = async () => {
     try {
       await navigator.share({
         title: shareData.value.title,
-        text: `快来听 ${shareData.value.title} - ${shareData.value.subtitle}`,
+        text: props.type === 'song'
+          ? `《${shareData.value.title}》 - ${shareData.value.subtitle}`
+          : `${shareData.value.title}（${shareData.value.subtitle}）`,
         url: shareUrl.value
       })
     } catch (err) {
       console.log('分享取消')
     }
   }
-}
-
-// 微信分享（提示复制链接）
-const shareWeixin = () => {
-  copyLink()
-  alert('链接已复制，请打开微信粘贴分享给好友')
-}
-
-// QQ分享
-const shareQQ = () => {
-  const url = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(shareUrl.value)}&title=${encodeURIComponent(shareData.value.title)}&desc=${encodeURIComponent(shareData.value.subtitle)}`
-  window.open(url, '_blank')
 }
 
 const close = () => {
