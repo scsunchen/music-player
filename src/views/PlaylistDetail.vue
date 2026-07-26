@@ -1,7 +1,44 @@
 <template>
+  <!-- 数据未就绪：骨架屏 -->
+  <div class="playlist-skeleton" v-if="!playlist && loading">
+    <div class="sk-atmosphere"></div>
+    <div class="sk-content">
+      <header class="sk-header">
+        <div class="sk-back"></div>
+        <div class="sk-header-info">
+          <div class="sk-header-label"></div>
+          <div class="sk-header-title"></div>
+        </div>
+        <div class="sk-play-all"></div>
+      </header>
+      <section class="sk-hero">
+        <div class="sk-hero-cover"></div>
+        <div class="sk-hero-info">
+          <div class="sk-hero-desc"></div>
+          <div class="sk-hero-desc short"></div>
+          <div class="sk-hero-meta">
+            <div class="sk-meta-item"></div>
+            <div class="sk-meta-item"></div>
+            <div class="sk-meta-item"></div>
+          </div>
+        </div>
+      </section>
+      <div class="sk-song-list">
+        <div class="sk-song-item" v-for="i in 8" :key="i">
+          <div class="sk-song-index"></div>
+          <div class="sk-song-cover"></div>
+          <div class="sk-song-meta">
+            <div class="sk-song-title"></div>
+            <div class="sk-song-artist"></div>
+          </div>
+          <div class="sk-song-dur"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 专属模板分发 -->
   <GuofengInk
-    v-if="playlist?.template === 'guofeng-ink'"
+    v-else-if="playlist?.template === 'guofeng-ink'"
     :playlist="playlist"
     :songs="songs"
   />
@@ -126,6 +163,9 @@ const router = useRouter()
 const playerStore = usePlayerStore()
 const showShare = ref(false)
 
+// 数据加载状态：数据未就绪且无错误时显示骨架屏
+const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
+
 const dynamicStyle = computed(() => {
   const color = playerStore.themeColor || '#667eea'
   return {
@@ -188,6 +228,105 @@ const openShare = () => {
 </script>
 
 <style scoped>
+/* ===== 骨架屏 ===== */
+.playlist-skeleton {
+  position: relative;
+  min-height: 100vh;
+  background: #0a0a0a;
+  overflow-x: hidden;
+}
+
+.sk-atmosphere {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 20%, rgba(102,126,234,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(102,126,234,0.04) 0%, transparent 50%),
+              linear-gradient(180deg, rgba(10,10,10,0.3) 0%, #0a0a0a 100%);
+  pointer-events: none;
+}
+
+.sk-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 0;
+}
+
+@media (min-width: 768px) { .sk-content { padding: 48px 48px 0; max-width: 1400px; } }
+@media (min-width: 1200px) { .sk-content { padding: 48px 64px 0; max-width: 1600px; } }
+
+.sk-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: skShimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* 所有骨架块共用 shimmer 效果 */
+.sk-back, .sk-header-label, .sk-header-title, .sk-play-all,
+.sk-hero-cover, .sk-hero-desc, .sk-meta-item,
+.sk-song-index, .sk-song-cover, .sk-song-title, .sk-song-artist, .sk-song-dur {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: skShimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+@keyframes skShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.sk-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.sk-back { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; }
+.sk-header-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.sk-header-label { width: 60px; height: 10px; }
+.sk-header-title { width: 180px; height: 24px; }
+.sk-play-all { width: 120px; height: 40px; border-radius: 100px; flex-shrink: 0; }
+
+.sk-hero {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 36px;
+  align-items: flex-end;
+}
+
+.sk-hero-cover { width: 140px; height: 140px; border-radius: 16px; flex-shrink: 0; }
+.sk-hero-info { flex: 1; padding-bottom: 4px; }
+.sk-hero-desc { width: 100%; height: 14px; margin-bottom: 8px; }
+.sk-hero-desc.short { width: 60%; }
+.sk-hero-meta { display: flex; gap: 16px; margin-top: 14px; }
+.sk-meta-item { width: 80px; height: 24px; border-radius: 100px; }
+
+.sk-song-list { display: flex; flex-direction: column; gap: 2px; }
+.sk-song-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+.sk-song-index { width: 24px; height: 14px; flex-shrink: 0; }
+.sk-song-cover { width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0; }
+.sk-song-meta { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.sk-song-title { width: 50%; height: 14px; }
+.sk-song-artist { width: 30%; height: 12px; }
+.sk-song-dur { width: 30px; height: 12px; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .sk-content { padding: 20px 20px 0; }
+  .sk-hero-cover { width: 100px; height: 100px; }
+  .sk-song-cover { width: 42px; height: 42px; }
+}
+
+/* ===== 正常内容样式 ===== */
 .immersive-playlist {
   position: relative;
   min-height: 100vh;
