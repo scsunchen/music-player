@@ -98,7 +98,7 @@
           <h3 class="section-title">新专辑</h3>
           <router-link to="/albums" class="see-all">全部</router-link>
         </div>
-        <div class="horizontal-scroll" ref="scrollRef2">
+        <div class="horizontal-scroll">
           <div
             v-for="album in latestAlbums"
             :key="album.id"
@@ -205,7 +205,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import { resolveUrl } from '../utils/baseUrl'
@@ -213,41 +213,6 @@ import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
-
-// 横向滚动容器 refs
-const scrollRef1 = ref(null)
-const scrollRef2 = ref(null)
-
-// 桌面端：将纵向滚轮事件转换为横向滚动
-const wheelHandler = (e) => {
-  // 只有在容器可以横向滚动时才拦截（内容超出视口）
-  const el = e.currentTarget
-  if (el.scrollWidth <= el.clientWidth) return
-
-  // Shift+滚轮 原生支持横向滚动，不拦截
-  if (e.shiftKey) return
-
-  // 仅在纵向滚轮时转换（deltaY !== 0）
-  if (e.deltaY !== 0) {
-    e.preventDefault()
-    el.scrollLeft += e.deltaY
-  }
-}
-
-let cleanupFns = []
-
-onMounted(() => {
-  // 为桌面端横向滚动区域绑定滚轮事件
-  const scrollEls = [scrollRef1.value, scrollRef2.value].filter(Boolean)
-  scrollEls.forEach(el => {
-    el.addEventListener('wheel', wheelHandler, { passive: false })
-    cleanupFns.push(() => el.removeEventListener('wheel', wheelHandler))
-  })
-})
-
-onUnmounted(() => {
-  cleanupFns.forEach(fn => fn())
-})
 
 // 骨架屏基于真实数据加载状态：数据就绪或加载失败时都隐藏
 const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
