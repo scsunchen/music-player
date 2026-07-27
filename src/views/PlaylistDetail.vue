@@ -180,7 +180,7 @@ const hasLyrics = (id) => playerStore.hasLyrics(id)
 const playlist = computed(() => {
   const id = parseInt(route?.params?.id)
   if (!id || isNaN(id)) return null
-  return playerStore.recommendPlaylists.find(p => p.id === id) ||
+  return playerStore.allPlaylists.find(p => p.id === id) ||
          playerStore.customPlaylists.find(p => p.id === id)
 })
 
