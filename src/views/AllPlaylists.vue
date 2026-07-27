@@ -25,14 +25,14 @@
         </div>
         <div class="info-text">
           <h2>推荐歌单</h2>
-          <p>{{ playerStore.recommendPlaylists.length }} 个歌单</p>
+          <p>{{ playerStore.allPlaylists.length }} 个歌单</p>
         </div>
       </div>
 
       <!-- 歌单网格 -->
       <div class="playlist-grid">
         <div
-          v-for="playlist in playerStore.recommendPlaylists"
+          v-for="playlist in playerStore.allPlaylists"
           :key="playlist.id"
           class="playlist-card"
         >

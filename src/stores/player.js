@@ -39,6 +39,7 @@ export const usePlayerStore = defineStore('player', () => {
   // 数据（运行时从 JSON 文件加载）
   const songs = ref([])
   const albums = ref([])
+  const allPlaylists = ref([])
   const recommendPlaylists = ref([])
 
   // 歌词数据（按需加载，key 为 songId）
@@ -105,9 +106,11 @@ export const usePlayerStore = defineStore('player', () => {
 
       if (playlistsData) {
         // 兼容 playlists.json ({ playlists: [...] }) 和 recommendPlaylists.json ({ recommendPlaylists: [...] })
-        const allPlaylists = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
-        // 仅显示 showOnHome 不为 false 的歌单（默认显示，兼容旧数据）
-        recommendPlaylists.value = allPlaylists.filter(p => p.showOnHome !== false)
+        const loadedPlaylists = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
+        // 全部歌单（供 /playlists 页面使用）
+        allPlaylists.value = loadedPlaylists
+        // 仅显示 showOnHome 不为 false 的歌单（默认显示，兼容旧数据，供首页使用）
+        recommendPlaylists.value = loadedPlaylists.filter(p => p.showOnHome !== false)
       }
 
       // 加载歌词索引（轻量级，仅存储有歌词的歌曲ID）
@@ -1157,6 +1160,7 @@ export const usePlayerStore = defineStore('player', () => {
     // 数据
     songs,
     albums,
+    allPlaylists,
     recommendPlaylists,
     customPlaylists,
     likedSongs,
