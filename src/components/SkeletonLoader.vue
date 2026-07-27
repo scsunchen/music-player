@@ -30,7 +30,7 @@
           <div class="sk-see-all"></div>
         </div>
         <div class="sk-scroll">
-          <div class="sk-scroll-card" v-for="i in 5" :key="i">
+          <div class="sk-scroll-card" v-for="i in 6" :key="i">
             <div class="sk-scroll-cover"></div>
             <div class="sk-scroll-name"></div>
             <div class="sk-scroll-count"></div>
@@ -278,8 +278,8 @@ const chipWidths = ['90px', '72px', '84px', '84px']
 /* 桌面端 */
 @media (min-width: 768px) {
   .sk-content {
-    padding: 60px 40px;
-    max-width: 960px;
+    padding: 60px 48px;
+    max-width: 1400px;
   }
 
   .sk-np-cover {
@@ -287,33 +287,32 @@ const chipWidths = ['90px', '72px', '84px', '84px']
     height: 88px;
   }
 
+  .sk-scroll {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    overflow: visible;
+  }
+
   .sk-scroll-card {
-    width: 170px;
+    width: 100%;
   }
 
   .sk-scroll-cover {
-    width: 170px;
-    height: 170px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .sk-content {
-    max-width: 1040px;
+    max-width: 1600px;
   }
 
   .sk-np-cover {
     width: 96px;
     height: 96px;
-  }
-
-  .sk-scroll-card {
-    width: 180px;
-  }
-
-  .sk-scroll-cover {
-    width: 180px;
-    height: 180px;
   }
 }
 </style>

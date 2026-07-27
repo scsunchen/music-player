@@ -74,7 +74,7 @@
           <h3 class="section-title">为你推荐</h3>
           <router-link to="/playlists" class="see-all">全部</router-link>
         </div>
-        <div class="horizontal-scroll" ref="scrollRef1">
+        <div class="horizontal-scroll">
           <div
             v-for="playlist in playerStore.recommendPlaylists"
             :key="playlist.id"
@@ -903,13 +903,22 @@ const formatTime = (seconds) => {
     font-size: 14px;
   }
 
+  .horizontal-scroll {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    scroll-snap-type: none;
+  }
+
   .glass-card {
-    width: 190px;
+    width: calc((100% - 80px) / 6);
+    min-width: 130px;
+    scroll-snap-align: none;
   }
 
   .glass-card-cover {
-    width: 190px;
-    height: 190px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
   }
 
   .section-title {
@@ -929,12 +938,8 @@ const formatTime = (seconds) => {
   }
 
   .glass-card {
-    width: 210px;
-  }
-
-  .glass-card-cover {
-    width: 210px;
-    height: 210px;
+    width: calc((100% - 80px) / 6);
+    min-width: 150px;
   }
 
   /* 宽屏双栏并排 */
