@@ -105,7 +105,9 @@ export const usePlayerStore = defineStore('player', () => {
 
       if (playlistsData) {
         // 兼容 playlists.json ({ playlists: [...] }) 和 recommendPlaylists.json ({ recommendPlaylists: [...] })
-        recommendPlaylists.value = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
+        const allPlaylists = resolvePaths(playlistsData.playlists || playlistsData.recommendPlaylists || [])
+        // 仅显示 showOnHome 不为 false 的歌单（默认显示，兼容旧数据）
+        recommendPlaylists.value = allPlaylists.filter(p => p.showOnHome !== false)
       }
 
       // 加载歌词索引（轻量级，仅存储有歌词的歌曲ID）
