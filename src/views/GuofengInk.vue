@@ -212,14 +212,21 @@ const formatTime = (s) => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;600;900&family=Ma+Shan+Zheng&display=swap');
+/* 本地子集化字体：仅包含国风页实际用到的字符（149KB） */
+@font-face {
+  font-family: 'Ma Shan Zheng';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/music-player/fonts/MaShanZheng-subset.woff2') format('woff2');
+}
 
 .guofeng-page {
   position: relative;
   min-height: calc(100vh - 130px);
   background: #0a0807;
   color: rgba(255, 255, 255, 0.85);
-  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  font-family: 'Songti SC', 'SimSun', 'STSong', serif;
   padding-bottom: 140px;
   overflow-x: hidden;
 }
@@ -353,7 +360,7 @@ const formatTime = (s) => {
 }
 
 .gf-seal {
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 15px;
   color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
   letter-spacing: 4px;
@@ -385,7 +392,7 @@ const formatTime = (s) => {
   border-radius: 100px;
   color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
   font-size: 13px;
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'Songti SC', 'SimSun', 'STSong', serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -532,7 +539,7 @@ const formatTime = (s) => {
 }
 
 .poem-line {
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.4);
   letter-spacing: 6px;
@@ -551,7 +558,7 @@ const formatTime = (s) => {
 }
 
 .gf-title {
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 56px;
   font-weight: 900;
   color: #fff;
@@ -649,7 +656,7 @@ const formatTime = (s) => {
 }
 
 .label-text {
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 22px;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 6px;
@@ -687,7 +694,7 @@ const formatTime = (s) => {
 .song-number {
   width: 32px;
   text-align: center;
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
@@ -843,7 +850,7 @@ const formatTime = (s) => {
   width: 20px;
   height: 20px;
   font-size: 11px;
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'Songti SC', 'SimSun', 'STSong', serif;
   font-weight: 600;
   border-radius: 4px;
 }
@@ -884,7 +891,7 @@ const formatTime = (s) => {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.25);
   font-variant-numeric: tabular-nums;
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'Songti SC', 'SimSun', 'STSong', serif;
   min-width: 36px;
   text-align: right;
 }
@@ -926,7 +933,7 @@ const formatTime = (s) => {
 }
 
 .footer-text {
-  font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+  font-family: 'Ma Shan Zheng', 'Songti SC', 'SimSun', 'STSong', serif;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.25);
   letter-spacing: 6px;
