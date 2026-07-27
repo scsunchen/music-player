@@ -4,7 +4,7 @@
       "id": 1,
       "name": "华语经典",
       "description": "精选华语经典歌曲，带你重温那些年的感动",
-      "cover": "images/covers/playlist1.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/playlist1.jpg",
       "songs": [
         171,
         99,
@@ -18,7 +18,7 @@
       "id": 2,
       "name": "流行热歌",
       "description": "当下最火的流行歌曲，紧跟音乐潮流",
-      "cover": "images/covers/playlist2.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/playlist2.jpg",
       "songs": [
         161,
         162,
@@ -43,7 +43,7 @@
       "id": 3,
       "name": "治愈系",
       "description": "温暖治愈的音乐，抚慰疲惫的心灵",
-      "cover": "images/covers/playlist3.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/playlist3.jpg",
       "songs": [],
       "playCount": 76320
     },
@@ -51,7 +51,7 @@
       "id": 4,
       "name": "周杰伦精选",
       "description": "周杰伦经典歌曲合集",
-      "cover": "images/covers/playlist4.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/playlist4.jpg",
       "songs": [
         263,
         264,
@@ -73,7 +73,7 @@
       "id": 5,
       "name": "一曲一悲欢",
       "description": "纯阳崖边殉情，五毒以身饲蛊，洛道孤人背棺独行。这江湖从不少轰轰烈烈的相逢，更多是咫尺错过、生死相隔。此歌单收纳所有爱恨纠葛，一曲一故事，听尽世间情缘两难。",
-      "cover": "images/covers/guofeng.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/guofeng.jpg",
       "template": "guofeng-ink",
       "songs": [
         15,
@@ -150,7 +150,7 @@
       "id": 6,
       "name": "怀旧经典",
       "description": "怀旧经典 · 彩铃黄金年代 48 首网络歌曲合集，刻在 80、90 后青春里的终极回忆杀",
-      "cover": "images/covers/1685cff3aa4f_cover.jpg",
+      "cover": "https://didimusic.github.io/music-player/images/covers/1685cff3aa4f_cover.jpg",
       "songs": [
         170,
         242,

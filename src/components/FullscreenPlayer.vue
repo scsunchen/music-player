@@ -323,6 +323,9 @@ const seek = (e) => {
   background: #07070f;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  /* 100dvh 适配移动端动态视口，避免地址栏收缩时高度跳变 */
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* ===== 动态氛围背景 ===== */
@@ -678,7 +681,7 @@ const seek = (e) => {
   height: 100%;
   background: linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.9));
   border-radius: 3px;
-  transition: width 0.1s linear;
+  will-change: width;
 }
 
 .fs-progress-glow {
@@ -690,7 +693,7 @@ const seek = (e) => {
   border-radius: 3px;
   opacity: 0.4;
   filter: blur(4px);
-  transition: width 0.1s linear;
+  will-change: width;
 }
 
 .fs-progress-thumb {
