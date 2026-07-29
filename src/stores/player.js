@@ -632,6 +632,17 @@ export const usePlayerStore = defineStore('player', () => {
     }
   }
   
+  // 下一首播放：将歌曲插入到队列最前面（当前歌曲播放完后立即播放）
+  const insertNext = (song) => {
+    // 如果已在队列中，先移除
+    const existingIdx = playQueue.value.findIndex(s => s.id === song.id)
+    if (existingIdx >= 0) {
+      playQueue.value.splice(existingIdx, 1)
+    }
+    playQueue.value.unshift(song)
+    savePlayQueue()
+  }
+  
   const removeFromQueue = (index) => {
     playQueue.value.splice(index, 1)
     savePlayQueue()
@@ -1196,6 +1207,7 @@ export const usePlayerStore = defineStore('player', () => {
     getAudioElement,
     // 播放队列
     addToQueue,
+    insertNext,
     removeFromQueue,
     clearQueue,
     playFromQueue,

@@ -15,19 +15,9 @@
         <div class="header-info">
           <span class="header-label">PLAYLISTS</span>
           <h1 class="header-title">推荐歌单</h1>
+          <p class="header-count">{{ playerStore.allPlaylists.length }} 个歌单</p>
         </div>
       </header>
-
-      <!-- 歌单信息 -->
-      <div class="info-bar">
-        <div class="info-icon">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-        </div>
-        <div class="info-text">
-          <h2>推荐歌单</h2>
-          <p>{{ playerStore.allPlaylists.length }} 个歌单</p>
-        </div>
-      </div>
 
       <!-- 歌单网格 -->
       <div class="playlist-grid">
@@ -187,36 +177,8 @@ const dynamicStyle = computed(() => {
   letter-spacing: -0.5px;
 }
 
-/* 信息栏 */
-.info-bar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
-}
-
-.info-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.12);
-  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 1);
-  flex-shrink: 0;
-}
-
-.info-text h2 {
-  margin: 0 0 4px;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.info-text p {
-  margin: 0;
+.header-count {
+  margin: 4px 0 0;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
 }

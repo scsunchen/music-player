@@ -118,6 +118,12 @@
             <div class="song-actions">
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
+              <button class="action-btn" @click.stop="playerStore.insertNext(song)" title="下一首播放">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h11v4H3v-4zm14 0h4v4h-4v-4z M5 6l7 4-7 4V6z M14 6l7 4-7 4V6z"/></svg>
+              </button>
+              <button class="action-btn" @click.stop="playerStore.addToQueue(song)" title="加入队列">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h11v4H3v-4zm14 0h2v4h-2v-4zM5 6h2v12H5V6z"/></svg>
+              </button>
               <button
                 class="like-btn" v-like-burst
                 :class="{ liked: playerStore.isLiked(song.id) }"
@@ -738,6 +744,22 @@ const openShare = () => {
   transition: all 0.2s;
   display: flex;
   align-items: center;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.action-btn:hover {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
+  transform: scale(1.15);
 }
 
 .like-btn:hover {
