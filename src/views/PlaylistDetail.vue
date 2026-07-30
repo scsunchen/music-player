@@ -119,10 +119,10 @@
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
               <button class="action-btn" @click.stop="playerStore.insertNext(song)" title="下一首播放">
-                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h11v4H3v-4zm14 0h4v4h-4v-4z M5 6l7 4-7 4V6z M14 6l7 4-7 4V6z"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6z"/></svg>
               </button>
               <button class="action-btn" @click.stop="playerStore.addToQueue(song)" title="加入队列">
-                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h11v4H3v-4zm14 0h2v4h-2v-4zM5 6h2v12H5V6z"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h10v2H3v-2zm0-4h10v2H3V6zm0 8h6v2H3v-2zm11-3v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
               </button>
               <button
                 class="like-btn" v-like-burst
@@ -760,6 +760,9 @@ const openShare = () => {
 .action-btn:hover {
   color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8);
   transform: scale(1.15);
+}
+.action-btn:active {
+  transform: scale(0.9);
 }
 
 .like-btn:hover {

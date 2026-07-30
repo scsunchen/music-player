@@ -65,6 +65,14 @@
 
     <!-- 桌面歌词 -->
     <DesktopLyrics />
+
+    <!-- 全局 Toast 提示 -->
+    <transition name="toast">
+      <div v-if="playerStore.toastMessage" class="toast" :style="toastStyle">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        <span>{{ playerStore.toastMessage }}</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -96,6 +104,19 @@ const headerStyle = computed(() => {
     '--nav-r': r,
     '--nav-g': g,
     '--nav-b': b,
+  }
+})
+
+// Toast 动态色
+const toastStyle = computed(() => {
+  const color = playerStore.themeColor || '#667eea'
+  const r = parseInt(color.slice(1, 3), 16)
+  const g = parseInt(color.slice(3, 5), 16)
+  const b = parseInt(color.slice(5, 7), 16)
+  return {
+    '--toast-r': r,
+    '--toast-g': g,
+    '--toast-b': b,
   }
 })
 
@@ -411,5 +432,49 @@ body.fs-open .immersive-playlist .atmo-orb,
 body.fs-open .immersive-all-playlists .atmo-orb,
 body.fs-open .home-page .atmo-orb {
   animation-play-state: paused !important;
+}
+
+/* ==================== Toast 提示 ==================== */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(20, 20, 28, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--toast-r), var(--toast-g), var(--toast-b), 0.25);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--toast-r), var(--toast-g), var(--toast-b), 0.1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast svg {
+  color: rgba(var(--toast-r), var(--toast-g), var(--toast-b), 0.9);
+  flex-shrink: 0;
+}
+
+.toast-enter-active {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toast-leave-active {
+  transition: all 0.25s ease;
+}
+.toast-enter-from {
+  opacity: 0;
+  transform: translateX(-50%) translateY(16px);
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
 }
 </style>

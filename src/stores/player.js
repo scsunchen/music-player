@@ -168,6 +168,15 @@ export const usePlayerStore = defineStore('player', () => {
   const playQueue = ref([])
   const showQueue = ref(false)
 
+  // Toast 提示
+  const toastMessage = ref('')
+  let toastTimer = null
+  const showToast = (msg) => {
+    toastMessage.value = msg
+    clearTimeout(toastTimer)
+    toastTimer = setTimeout(() => { toastMessage.value = '' }, 2000)
+  }
+
   // 封面颜色缓存
   const coverColorCache = new Map()
 
@@ -629,6 +638,9 @@ export const usePlayerStore = defineStore('player', () => {
     if (!playQueue.value.find(s => s.id === song.id)) {
       playQueue.value.push(song)
       savePlayQueue()
+      showToast(`「${song.title}」已加入播放队列`)
+    } else {
+      showToast(`「${song.title}」已在队列中`)
     }
   }
   
@@ -641,6 +653,7 @@ export const usePlayerStore = defineStore('player', () => {
     }
     playQueue.value.unshift(song)
     savePlayQueue()
+    showToast(`「${song.title}」将下一首播放`)
   }
   
   const removeFromQueue = (index) => {
@@ -1187,6 +1200,7 @@ export const usePlayerStore = defineStore('player', () => {
     themeColor,
     playQueue,
     showQueue,
+    toastMessage,
     bufferedProgress,
 
     // 计算属性
