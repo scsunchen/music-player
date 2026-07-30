@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from './stores/player'
 import MusicPlayer from './components/MusicPlayer.vue'
@@ -204,6 +204,24 @@ onMounted(() => {
     window.history.replaceState({}, document.title, window.location.pathname)
   }
 })
+
+// 电脑端空格键：播放/暂停（排除输入框聚焦时）
+const onKeydown = (e) => {
+  if (e.code !== 'Space') return
+  // 仅电脑端生效
+  if (window.innerWidth < 768) return
+  // 排除输入框、文本域、contenteditable
+  const tag = document.activeElement?.tagName
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return
+  if (document.activeElement?.isContentEditable) return
+  // 没有歌曲时不响应
+  if (!playerStore.currentSong) return
+  // 阻止页面滚动
+  e.preventDefault()
+  playerStore.togglePlay()
+}
+onMounted(() => document.addEventListener('keydown', onKeydown))
+onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 </script>
 
 <style>
