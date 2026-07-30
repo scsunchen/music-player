@@ -224,20 +224,13 @@ const close = () => {
   flex: 1;
   overflow-y: auto;
   padding: 20px 24px;
-  scrollbar-width: thin;
+  /* 默认完全隐藏滚动条 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .modal-body::-webkit-scrollbar {
-  width: 4px;
-}
-
-.modal-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
+  display: none;
 }
 
 /* 版本块 */
