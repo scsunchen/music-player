@@ -11,46 +11,48 @@
           <span class="brand-tagline">听见时光</span>
         </div>
       </router-link>
-      <nav class="nav">
-        <router-link to="/" class="nav-link" active-class="active">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      <div class="header-right">
+        <nav class="nav">
+          <router-link to="/" class="nav-link" active-class="active">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>首页</span>
+          </router-link>
+          <router-link to="/search" class="nav-link" active-class="active">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <span>搜索</span>
+          </router-link>
+          <router-link to="/my" class="nav-link" active-class="active">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span>我的</span>
+          </router-link>
+          <router-link to="/stats" class="nav-link" active-class="active">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+            </svg>
+            <span>统计</span>
+          </router-link>
+          <router-link to="/season" class="nav-link nav-link-season" active-class="active">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            </svg>
+            <span>季节</span>
+          </router-link>
+        </nav>
+        <!-- 版本号按钮 -->
+        <button class="version-btn" @click="showChangelog = true">
+          <svg viewBox="0 0 24 24" width="14" height="14">
+            <path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
           </svg>
-          <span>首页</span>
-        </router-link>
-        <router-link to="/search" class="nav-link" active-class="active">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-          </svg>
-          <span>搜索</span>
-        </router-link>
-        <router-link to="/my" class="nav-link" active-class="active">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-          <span>我的</span>
-        </router-link>
-        <router-link to="/stats" class="nav-link" active-class="active">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-          </svg>
-          <span>统计</span>
-        </router-link>
-        <router-link to="/season" class="nav-link nav-link-season" active-class="active">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-          </svg>
-          <span>季节</span>
-        </router-link>
-      </nav>
-      <!-- 版本号按钮 -->
-      <button class="version-btn" @click="showChangelog = true">
-        <svg viewBox="0 0 24 24" width="14" height="14">
-          <path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-        </svg>
-        <span class="version-text">v{{ currentVersion }}</span>
-        <span class="version-dot"></span>
-      </button>
+          <span class="version-text">v{{ currentVersion }}</span>
+          <span class="version-dot"></span>
+        </button>
+      </div>
     </header>
 
     <!-- 主内容区 -->
@@ -321,6 +323,13 @@ body {
 .nav {
   display: flex;
   gap: 4px;
+  flex-shrink: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex-shrink: 0;
 }
 
