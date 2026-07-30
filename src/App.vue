@@ -43,6 +43,14 @@
           <span>季节</span>
         </router-link>
       </nav>
+      <!-- 版本号按钮 -->
+      <button class="version-btn" @click="showChangelog = true">
+        <svg viewBox="0 0 24 24" width="14" height="14">
+          <path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        <span class="version-text">v{{ currentVersion }}</span>
+        <span class="version-dot"></span>
+      </button>
     </header>
 
     <!-- 主内容区 -->
@@ -84,6 +92,9 @@
         <img :src="flyCover" alt="" />
       </div>
     </Teleport>
+
+    <!-- 版本更新日志弹窗 -->
+    <ChangelogModal :visible="showChangelog" @close="showChangelog = false" />
   </div>
 </template>
 
@@ -95,10 +106,13 @@ import MusicPlayer from './components/MusicPlayer.vue'
 import FullscreenPlayer from './components/FullscreenPlayer.vue'
 import PlayQueue from './components/PlayQueue.vue'
 import DesktopLyrics from './components/DesktopLyrics.vue'
+import ChangelogModal from './components/ChangelogModal.vue'
+import { currentVersion } from './config/changelog'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
 const showFullscreen = ref(false)
+const showChangelog = ref(false)
 
 // 飞入动画状态
 const flyShow = ref(false)
@@ -343,6 +357,65 @@ body {
   border: 1px solid rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.1);
 }
 
+/* 版本号按钮 */
+.version-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.version-btn svg {
+  width: 13px;
+  height: 13px;
+  color: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.8);
+  flex-shrink: 0;
+}
+
+.version-btn .version-text {
+  display: none;
+}
+
+.version-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 1);
+  box-shadow: 0 0 8px rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.6);
+  flex-shrink: 0;
+  animation: version-pulse 2s ease-in-out infinite;
+}
+
+@keyframes version-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.version-btn:hover {
+  background: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.12);
+  border-color: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.3);
+  color: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 1);
+}
+
+.version-btn:hover .version-dot {
+  animation: none;
+  opacity: 1;
+}
+
+.version-btn:active {
+  transform: scale(0.92);
+}
+
 @media (min-width: 768px) {
   .header {
     padding: 14px 32px;
@@ -386,6 +459,21 @@ body {
   }
 
   .nav-link span {
+    display: inline;
+  }
+
+  .version-btn {
+    padding: 7px 14px;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .version-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .version-btn .version-text {
     display: inline;
   }
 }
