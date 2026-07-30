@@ -121,7 +121,7 @@
               <button class="action-btn" @click.stop="playerStore.insertNext(song)" title="下一首播放">
                 <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6z"/></svg>
               </button>
-              <button class="action-btn" @click.stop="playerStore.addToQueue(song)" title="加入队列">
+              <button class="action-btn" @click.stop="(e) => playerStore.addToQueue(song, { x: e.clientX, y: e.clientY })" title="加入队列">
                 <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 10h10v2H3v-2zm0-4h10v2H3V6zm0 8h6v2H3v-2zm11-3v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
               </button>
               <button

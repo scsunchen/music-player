@@ -73,6 +73,17 @@
         <span>{{ playerStore.toastMessage }}</span>
       </div>
     </transition>
+
+    <!-- 飞入动画：封面从点击位置飞到右下角队列按钮 -->
+    <Teleport to="body">
+      <div
+        v-if="flyShow"
+        class="fly-cover"
+        :style="flyStyle"
+      >
+        <img :src="flyCover" alt="" />
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -88,6 +99,56 @@ import DesktopLyrics from './components/DesktopLyrics.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 const showFullscreen = ref(false)
+
+// 飞入动画状态
+const flyShow = ref(false)
+const flyCover = ref('')
+const flyStyle = ref({})
+
+// 监听 store 的飞入动画触发
+watch(() => playerStore.flyAnimation, (fly) => {
+  if (!fly) return
+  const { song, fromX, fromY } = fly
+
+  // 获取右下角队列按钮位置作为目标点
+  const queueBtn = document.querySelector('.btn-queue')
+  let toX = window.innerWidth - 30
+  let toY = window.innerHeight - 80
+  if (queueBtn) {
+    const rect = queueBtn.getBoundingClientRect()
+    toX = rect.left + rect.width / 2
+    toY = rect.top + rect.height / 2
+  }
+
+  flyCover.value = song.cover
+  flyShow.value = true
+  // 起始位置
+  flyStyle.value = {
+    left: fromX + 'px',
+    top: fromY + 'px',
+    transform: 'translate(-50%, -50%) scale(1)',
+    opacity: '1',
+    transition: 'none',
+  }
+
+  // 下一帧启动飞行动画
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      flyStyle.value = {
+        left: toX + 'px',
+        top: toY + 'px',
+        transform: 'translate(-50%, -50%) scale(0.2)',
+        opacity: '0',
+        transition: 'left 0.6s cubic-bezier(0.4, 0, 0.6, 1), top 0.6s cubic-bezier(0.4, 0, 0.6, 1), transform 0.6s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.5s ease 0.1s',
+      }
+    })
+  })
+
+  // 动画结束后隐藏
+  setTimeout(() => {
+    flyShow.value = false
+  }, 700)
+})
 
 // 全屏播放器打开时，给 body 添加标记，暂停页面层动画以减少 GPU 负载
 watch(showFullscreen, (val) => {
@@ -476,5 +537,23 @@ body.fs-open .home-page .atmo-orb {
 .toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(8px);
+}
+
+/* ==================== 飞入动画 ==================== */
+.fly-cover {
+  position: fixed;
+  z-index: 3000;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.fly-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

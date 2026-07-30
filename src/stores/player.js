@@ -177,6 +177,15 @@ export const usePlayerStore = defineStore('player', () => {
     toastTimer = setTimeout(() => { toastMessage.value = '' }, 2000)
   }
 
+  // 飞入动画：封面从点击位置飞到右下角队列按钮
+  const flyAnimation = ref(null) // { song, fromX, fromY, id }
+  let flyIdCounter = 0
+  const triggerFlyAnimation = (song, fromX, fromY) => {
+    flyAnimation.value = { song, fromX, fromY, id: ++flyIdCounter }
+    // 动画结束后清除
+    setTimeout(() => { flyAnimation.value = null }, 800)
+  }
+
   // 封面颜色缓存
   const coverColorCache = new Map()
 
@@ -634,11 +643,16 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   // 播放队列管理
-  const addToQueue = (song) => {
+  // coords: 可选，{ x, y } 点击位置坐标，用于触发飞入动画
+  const addToQueue = (song, coords) => {
     if (!playQueue.value.find(s => s.id === song.id)) {
       playQueue.value.push(song)
       savePlayQueue()
       showToast(`「${song.title}」已加入播放队列`)
+      // 电脑端飞入动画
+      if (coords && window.innerWidth >= 768) {
+        triggerFlyAnimation(song, coords.x, coords.y)
+      }
     } else {
       showToast(`「${song.title}」已在队列中`)
     }
@@ -1201,6 +1215,7 @@ export const usePlayerStore = defineStore('player', () => {
     playQueue,
     showQueue,
     toastMessage,
+    flyAnimation,
     bufferedProgress,
 
     // 计算属性

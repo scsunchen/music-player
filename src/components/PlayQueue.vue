@@ -14,6 +14,51 @@
           </div>
 
           <div class="queue-content">
+            <!-- 手动添加的插队队列（置顶显示） -->
+            <div v-if="playerStore.playQueue.length > 0" class="queue-section queue-section-priority">
+              <div class="section-label section-label-priority">
+                <span>
+                  <svg viewBox="0 0 24 24" width="14" height="14" class="priority-icon"><path fill="currentColor" d="M3 10h10v2H3v-2zm0-4h10v2H3V6zm0 8h6v2H3v-2zm11-3v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+                  待播放（插队）
+                </span>
+                <button class="btn-clear-small" @click="playerStore.clearQueue()">清空</button>
+              </div>
+              <TransitionGroup name="list" tag="div" class="queue-list">
+                <div
+                  v-for="(song, index) in playerStore.playQueue"
+                  :key="'q-' + song.id"
+                  class="queue-item queue-item-drag queue-item-priority"
+                  draggable="true"
+                  @dragstart="onDragStart(index, $event)"
+                  @dragover.prevent="onDragOver(index, $event)"
+                  @drop="onDrop(index, $event)"
+                  @dragend="onDragEnd"
+                >
+                  <div class="drag-handle">
+                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  </div>
+                  <div class="queue-cover" @click="playerStore.playFromQueue(index)">
+                    <img :src="song.cover" :alt="song.title" loading="lazy" />
+                    <div class="queue-cover-play">
+                      <svg viewBox="0 0 24 24" width="12" height="12"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+                    </div>
+                  </div>
+                  <div class="queue-info" @click="playerStore.playFromQueue(index)">
+                    <h4>{{ song.title }}</h4>
+                    <p>{{ song.artist }}</p>
+                  </div>
+                  <button class="btn-remove" @click="playerStore.removeFromQueue(index)">
+                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                  </button>
+                </div>
+              </TransitionGroup>
+            </div>
+
+            <!-- 分隔线 -->
+            <div v-if="playerStore.currentPlaylist.length > 0 && playerStore.playQueue.length > 0" class="queue-divider">
+              <span>播放列表</span>
+            </div>
+
             <!-- 当前播放列表 -->
             <div v-if="playerStore.currentPlaylist.length > 0" class="queue-section">
               <div class="section-label">
@@ -48,48 +93,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- 分隔线 -->
-            <div v-if="playerStore.currentPlaylist.length > 0 && playerStore.playQueue.length > 0" class="queue-divider">
-              <span>插队队列 ({{ playerStore.playQueue.length }})</span>
-            </div>
-
-            <!-- 手动添加的队列 -->
-            <div v-if="playerStore.playQueue.length > 0" class="queue-section">
-              <div class="section-label">
-                <span>待播放</span>
-                <button class="btn-clear-small" @click="playerStore.clearQueue()">清空</button>
-              </div>
-              <TransitionGroup name="list" tag="div" class="queue-list">
-                <div
-                  v-for="(song, index) in playerStore.playQueue"
-                  :key="'q-' + song.id"
-                  class="queue-item queue-item-drag"
-                  draggable="true"
-                  @dragstart="onDragStart(index, $event)"
-                  @dragover.prevent="onDragOver(index, $event)"
-                  @drop="onDrop(index, $event)"
-                  @dragend="onDragEnd"
-                >
-                  <div class="drag-handle">
-                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                  </div>
-                  <div class="queue-cover" @click="playerStore.playFromQueue(index)">
-                    <img :src="song.cover" :alt="song.title" loading="lazy" />
-                    <div class="queue-cover-play">
-                      <svg viewBox="0 0 24 24" width="12" height="12"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
-                    </div>
-                  </div>
-                  <div class="queue-info" @click="playerStore.playFromQueue(index)">
-                    <h4>{{ song.title }}</h4>
-                    <p>{{ song.artist }}</p>
-                  </div>
-                  <button class="btn-remove" @click="playerStore.removeFromQueue(index)">
-                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                  </button>
-                </div>
-              </TransitionGroup>
             </div>
 
             <!-- 完全空 -->
@@ -267,6 +270,46 @@ const onDragEnd = () => {
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.05);
+}
+
+/* 插队队列高亮样式 */
+.queue-section-priority {
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.03);
+  border-radius: 12px;
+  padding: 2px 0;
+  margin-bottom: 4px;
+}
+
+.section-label-priority {
+  padding-top: 12px;
+}
+
+.section-label-priority span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.7);
+  font-weight: 600;
+}
+
+.priority-icon {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.6);
+}
+
+.queue-item-priority {
+  position: relative;
+}
+
+.queue-item-priority::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  border-radius: 0 3px 3px 0;
+  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.5);
 }
 
 .queue-list {
