@@ -118,7 +118,7 @@
             <div class="song-actions">
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
-              <button class="action-btn" @click.stop="playerStore.insertNext(song)" title="下一首播放">
+              <button class="action-btn" @click.stop="(e) => playerStore.insertNext(song, { x: e.clientX, y: e.clientY })" title="下一首播放">
                 <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6z"/></svg>
               </button>
               <button class="action-btn" @click.stop="(e) => playerStore.addToQueue(song, { x: e.clientX, y: e.clientY })" title="加入队列">

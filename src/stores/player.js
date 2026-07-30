@@ -659,7 +659,8 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   // 下一首播放：将歌曲插入到队列最前面（当前歌曲播放完后立即播放）
-  const insertNext = (song) => {
+  // coords: 可选，{ x, y } 点击位置坐标，用于触发飞入动画
+  const insertNext = (song, coords) => {
     // 如果已在队列中，先移除
     const existingIdx = playQueue.value.findIndex(s => s.id === song.id)
     if (existingIdx >= 0) {
@@ -668,6 +669,10 @@ export const usePlayerStore = defineStore('player', () => {
     playQueue.value.unshift(song)
     savePlayQueue()
     showToast(`「${song.title}」将下一首播放`)
+    // 电脑端飞入动画
+    if (coords && window.innerWidth >= 768) {
+      triggerFlyAnimation(song, coords.x, coords.y)
+    }
   }
   
   const removeFromQueue = (index) => {
