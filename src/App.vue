@@ -216,8 +216,12 @@ const onKeydown = (e) => {
   if (document.activeElement?.isContentEditable) return
   // 没有歌曲时不响应
   if (!playerStore.currentSong) return
-  // 阻止页面滚动
+  // 阻止默认行为（页面滚动 + 按钮原生click），统一由togglePlay处理
   e.preventDefault()
+  // 如果焦点在按钮上，先移除焦点避免视觉残留
+  if (tag === 'BUTTON') {
+    document.activeElement.blur()
+  }
   playerStore.togglePlay()
 }
 onMounted(() => document.addEventListener('keydown', onKeydown))
