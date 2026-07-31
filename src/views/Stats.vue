@@ -164,7 +164,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
@@ -172,7 +172,13 @@ import SkeletonLoader from '../components/SkeletonLoader.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 
-const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
+// 页面本地 loading：挂载后立即显示骨架屏，下一帧渲染真实内容
+const loading = ref(true)
+onMounted(() => {
+  requestAnimationFrame(() => {
+    loading.value = false
+  })
+})
 
 const dynamicStyle = computed(() => {
   const color = playerStore.themeColor || '#667eea'
