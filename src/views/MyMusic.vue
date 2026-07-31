@@ -1,5 +1,6 @@
 <template>
-  <div class="immersive-my" :style="dynamicStyle">
+  <SkeletonLoader type="my" v-if="loading" />
+  <div class="immersive-my" :style="dynamicStyle" v-else>
     <!-- 轻量氛围背景 -->
     <div class="atmosphere">
       <div class="atmo-gradient"></div>
@@ -207,9 +208,12 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
+
+const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
 
 const newPlaylistName = ref('')
 const showModal = ref(false)

@@ -1,5 +1,6 @@
 <template>
-  <div class="immersive-stats" :style="dynamicStyle">
+  <SkeletonLoader type="stats" v-if="loading" />
+  <div class="immersive-stats" :style="dynamicStyle" v-else>
     <!-- 轻量氛围背景 -->
     <div class="atmosphere">
       <div class="atmo-gradient"></div>
@@ -166,9 +167,12 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
+
+const loading = computed(() => !playerStore.dataLoaded && !playerStore.dataLoadError)
 
 const dynamicStyle = computed(() => {
   const color = playerStore.themeColor || '#667eea'
