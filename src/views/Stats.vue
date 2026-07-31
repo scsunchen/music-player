@@ -172,12 +172,12 @@ import SkeletonLoader from '../components/SkeletonLoader.vue'
 const router = useRouter()
 const playerStore = usePlayerStore()
 
-// 页面本地 loading：挂载后立即显示骨架屏，下一帧渲染真实内容
+// 页面本地 loading：挂载后显示骨架屏，短暂延时后渲染真实内容
 const loading = ref(true)
 onMounted(() => {
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     loading.value = false
-  })
+  }, 600)
 })
 
 const dynamicStyle = computed(() => {

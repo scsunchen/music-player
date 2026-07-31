@@ -1,5 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+// 核心页面同步导入，确保导航立即响应
+import Home from '../views/Home.vue'
+import Search from '../views/Search.vue'
+import MyMusic from '../views/MyMusic.vue'
+import Stats from '../views/Stats.vue'
+
 // View Transitions API 支持检测
 const supportsViewTransitions = () => {
   return 'startViewTransition' in document
@@ -24,12 +30,12 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue')
+    component: Home
   },
   {
     path: '/search',
     name: 'Search',
-    component: () => import('../views/Search.vue')
+    component: Search
   },
   {
     path: '/playlist/:id',
@@ -49,7 +55,7 @@ const routes = [
   {
     path: '/my',
     name: 'MyMusic',
-    component: () => import('../views/MyMusic.vue')
+    component: MyMusic
   },
   {
     path: '/liked',
@@ -84,7 +90,7 @@ const routes = [
   {
     path: '/stats',
     name: 'Stats',
-    component: () => import('../views/Stats.vue')
+    component: Stats
   },
   {
     path: '/story',
