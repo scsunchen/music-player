@@ -229,8 +229,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
 .sk-atmosphere {
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at 30% 20%, rgba(102, 126, 234, 0.06) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 70%, rgba(102, 126, 234, 0.04) 0%, transparent 50%),
+  background: radial-gradient(ellipse at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 70%, rgba(102, 126, 234, 0.07) 0%, transparent 50%),
               linear-gradient(180deg, rgba(10,10,10,0.5) 0%, #0a0a0a 100%);
   pointer-events: none;
 }
@@ -248,7 +248,7 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
   padding: 32px 32px 0;
 }
 
-/* 闪光动画 */
+/* 闪光动画 — 提升对比度，确保骨架屏清晰可见 */
 .sk-np-label, .sk-np-cover, .sk-np-title, .sk-np-artist, .sk-np-btn,
 .sk-chip, .sk-section-title, .sk-see-all,
 .sk-scroll-cover, .sk-scroll-name, .sk-scroll-count,
@@ -262,9 +262,9 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
 .sk-bar, .sk-bar-label,
 .sk-week-label, .sk-week-value,
 .sk-artist-rank, .sk-artist-name, .sk-artist-bar, .sk-artist-count {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background: linear-gradient(90deg, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.08) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 1.2s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -328,8 +328,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
   align-items: center;
   gap: 20px;
   padding: 16px 20px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 20px;
 }
 .sk-np-cover { width: 72px; height: 72px; border-radius: 14px; flex-shrink: 0; }
@@ -369,8 +369,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
   gap: 14px;
   padding: 18px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .sk-qk-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; }
@@ -431,8 +431,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
 }
 
 .sk-stat-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 20px 16px;
   text-align: center;
@@ -453,8 +453,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
 .sk-col-grow { flex: 1.6; }
 
 .sk-chart-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 24px 20px 16px;
 }
@@ -497,8 +497,8 @@ const artistWidths = ['100%', '75%', '55%', '40%', '25%']
 }
 
 .sk-week-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px;
   padding: 18px 16px;
   text-align: center;
