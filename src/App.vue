@@ -489,7 +489,7 @@ body {
 
 .main {
   flex: 1;
-  padding-bottom: 80px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
 /* 滚动条样式 */

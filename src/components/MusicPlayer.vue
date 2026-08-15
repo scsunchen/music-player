@@ -247,6 +247,7 @@ const onTouchEnd = () => {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 1000;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -733,5 +734,120 @@ const onTouchEnd = () => {
 .text-slide-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+/* ==================== 移动端适配 ==================== */
+@media (max-width: 768px) {
+  .music-player {
+    padding: 0 12px;
+    height: 70px;
+  }
+
+  /* 歌曲信息区缩小 */
+  .song-info {
+    min-width: auto;
+    flex: 0 1 35%;
+    gap: 8px;
+  }
+
+  .cover-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cover {
+    width: 28px;
+    height: 28px;
+  }
+
+  .vinyl-center {
+    width: 8px;
+    height: 8px;
+  }
+
+  .title {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .artist {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* 控制区紧凑 */
+  .controls {
+    flex: 1;
+    max-width: none;
+    gap: 4px;
+  }
+
+  .control-buttons {
+    gap: 4px;
+  }
+
+  .control-buttons button {
+    padding: 6px;
+  }
+
+  .btn-play {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-mode svg,
+  .btn-like svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-prev svg,
+  .btn-next svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-like {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* 进度条紧凑 */
+  .progress-container {
+    gap: 8px;
+  }
+
+  .time {
+    font-size: 10px;
+    min-width: 32px;
+  }
+
+  /* 音量控制隐藏，移动端用系统音量 */
+  .volume {
+    display: none;
+  }
+
+  /* 队列按钮缩小 */
+  .btn-queue {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .btn-queue svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 均衡器在移动端隐藏 */
+  .control-buttons > .music-visualizer {
+    display: none;
+  }
 }
 </style>

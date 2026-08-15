@@ -161,6 +161,7 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
+import { resolveUrl } from '../utils/baseUrl'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
@@ -177,6 +178,7 @@ const dynamicStyle = computed(() => {
     '--dynamic-r': parseInt(color.slice(1, 3), 16),
     '--dynamic-g': parseInt(color.slice(3, 5), 16),
     '--dynamic-b': parseInt(color.slice(5, 7), 16),
+    '--font-mashanzheng': `url('${resolveUrl('fonts/MaShanZheng-subset.woff2')}') format('woff2')`,
   }
 })
 
@@ -224,7 +226,7 @@ const formatTime = (s) => {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/music-player/fonts/MaShanZheng-subset.woff2') format('woff2');
+  src: var(--font-mashanzheng, url('/music-player/fonts/MaShanZheng-subset.woff2') format('woff2'));
 }
 
 .guofeng-page {

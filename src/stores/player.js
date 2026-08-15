@@ -793,9 +793,14 @@ export const usePlayerStore = defineStore('player', () => {
   }
   
   const loadCustomPlaylists = () => {
-    const saved = localStorage.getItem('customPlaylists')
-    if (saved) {
-      customPlaylists.value = JSON.parse(saved)
+    try {
+      const saved = localStorage.getItem('customPlaylists')
+      if (saved) {
+        customPlaylists.value = JSON.parse(saved)
+      }
+    } catch (e) {
+      console.error('加载自定义歌单失败，重置为空:', e)
+      customPlaylists.value = []
     }
     // 如果没有歌单，创建默认歌单
     if (customPlaylists.value.length === 0) {
@@ -814,9 +819,14 @@ export const usePlayerStore = defineStore('player', () => {
   const likedSongs = ref([])
 
   const loadLikedSongs = () => {
-    const saved = localStorage.getItem('likedSongs')
-    if (saved) {
-      likedSongs.value = JSON.parse(saved)
+    try {
+      const saved = localStorage.getItem('likedSongs')
+      if (saved) {
+        likedSongs.value = JSON.parse(saved)
+      }
+    } catch (e) {
+      console.error('加载喜欢的歌曲失败，重置为空:', e)
+      likedSongs.value = []
     }
   }
 
@@ -846,9 +856,14 @@ export const usePlayerStore = defineStore('player', () => {
   const recentSongs = ref([])
 
   const loadRecentSongs = () => {
-    const saved = localStorage.getItem('recentSongs')
-    if (saved) {
-      recentSongs.value = JSON.parse(saved)
+    try {
+      const saved = localStorage.getItem('recentSongs')
+      if (saved) {
+        recentSongs.value = JSON.parse(saved)
+      }
+    } catch (e) {
+      console.error('加载最近播放失败，重置为空:', e)
+      recentSongs.value = []
     }
   }
 
