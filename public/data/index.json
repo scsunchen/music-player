@@ -1,6 +1,6 @@
 {
-  "totalSongs": 527,
-  "totalLyrics": 439,
+  "totalSongs": 861,
+  "totalLyrics": 773,
   "albums": [
     {
       "id": 1,
@@ -176,15 +176,36 @@
       "id": 7,
       "name": "少年歌行",
       "description": "少年歌行，青春无畏。汇聚热血、励志、感动，献给每一个追梦的少年。",
-      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/7a3c9e1f4b8d_cover.jpg",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/7a3c9e1f4b8d_cover.jpg",
       "songCount": 285
     },
     {
       "id": 8,
       "name": "【河图】世上尽灯火",
       "description": "河图精选合集，世上尽灯火，一曲江湖梦。墨明棋妙核心成员，古风音乐领军人物。",
-      "cover": "https://didimusic.github.io/didimusic1.github.io/images/covers/ae853ad9cf93_cover.jpg",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/ae853ad9cf93_cover.jpg",
       "songCount": 70
+    },
+    {
+      "id": 9,
+      "name": "华语伤感女声 | 往事有伤 回忆无声",
+      "description": "细心聆听那些触动你内心的华语伤感女声",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/04d91381ae11_cover.jpg",
+      "songCount": 97
+    },
+    {
+      "id": 10,
+      "name": "听邓紫棋热门精选",
+      "description": "为你精选邓紫棋的必听好歌",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/f5423f32c7bb_cover.jpg",
+      "songCount": 27
+    },
+    {
+      "id": 11,
+      "name": "减压轻音乐， 舒缓放松大脑，治愈心情",
+      "description": "减压轻音乐， 舒缓放松大脑，治愈心情",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/93056fbbe201_cover.jpg",
+      "songCount": 210
     }
   ],
   "categories": [
@@ -206,7 +227,7 @@
     {
       "id": "pop",
       "name": "流行热歌",
-      "count": 13
+      "count": 347
     },
     {
       "id": "8090",
