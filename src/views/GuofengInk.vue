@@ -236,7 +236,7 @@ const formatTime = (s) => {
   color: rgba(255, 255, 255, 0.85);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   padding-bottom: 140px;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ===== 沉浸式氛围背景 ===== */

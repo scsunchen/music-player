@@ -252,7 +252,7 @@ const playSongAt = (index) => { playerStore.playSong(songs.value[index]) }
 .seasonal-page {
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ===== Background Layer ===== */

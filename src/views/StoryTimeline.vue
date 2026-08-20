@@ -152,7 +152,7 @@ const playEntry = (index) => {
 .story-page {
   min-height: 100vh;
   background: var(--story-dark);
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   color: var(--story-text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',

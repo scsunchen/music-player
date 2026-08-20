@@ -240,7 +240,7 @@ const toggleLike = (id) => {
 .summer-page {
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: #1a1a2e;
 }
 

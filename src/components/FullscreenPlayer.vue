@@ -467,7 +467,7 @@ const seek = (e) => {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .fs-body::-webkit-scrollbar { display: none; }

@@ -286,7 +286,7 @@ const formatTime = (seconds) => {
   background: #0a0a0a;
   color: rgba(255, 255, 255, 0.85);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   padding-bottom: 100px;
 }
 
