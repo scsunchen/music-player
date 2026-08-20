@@ -507,7 +507,7 @@ body {
 /* 滚动条样式 — 随歌曲主题色动态变化 */
 html {
   scrollbar-width: thin;
-  scrollbar-color: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5) transparent;
+  scrollbar-color: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5) rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.08);
 }
 
 ::-webkit-scrollbar {
@@ -516,7 +516,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.08);
 }
 
 ::-webkit-scrollbar-thumb {
