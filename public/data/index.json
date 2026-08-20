@@ -1,6 +1,6 @@
 {
-  "totalSongs": 861,
-  "totalLyrics": 773,
+  "totalSongs": 1132,
+  "totalLyrics": 1007,
   "albums": [
     {
       "id": 1,
@@ -206,6 +206,34 @@
       "description": "减压轻音乐， 舒缓放松大脑，治愈心情",
       "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/93056fbbe201_cover.jpg",
       "songCount": 210
+    },
+    {
+      "id": 12,
+      "name": "华语经典 | 那些属于我们青春的一首歌曲",
+      "description": "90后经典怀旧歌曲 时光会流逝，旋律会长存。 你是否还记得当年哼在嘴边的那句副歌？ 如今...",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/95e66d779c7f_cover.jpg",
+      "songCount": 215
+    },
+    {
+      "id": 13,
+      "name": "听许巍热门精选",
+      "description": "听许巍热门精选",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/0b961fc918bf_cover.jpg",
+      "songCount": 24
+    },
+    {
+      "id": 14,
+      "name": "听IVE热门精选 | 可盐可甜 风格无限的K泡芙",
+      "description": "IVE是韩国STARSHIP娱乐旗下女子偶像团体，由安宥真、秋天、张员瑛、LIZ、Rei、Leeseo...",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/77be67edf016_cover.jpg",
+      "songCount": 30
+    },
+    {
+      "id": 15,
+      "name": "《牛来》片尾曲《雨后轻风有香》",
+      "description": "全网公认《牛来》全片最高光之作。词曲、演唱全部由导演母亲独立完成，五年追梦路上最温暖的注脚。全篇不写情爱，以草原四季、草木枯荣寄寓人生。那些迷茫、遗憾、漫长的等待，都融进舒缓悠扬的曲调。什么时候，雨微风柔，什么时候，萌芽破土，歌声像长辈轻声宽慰，告诉每一个正在坚持的人：熬过荒芜，终会遇见属于自己的春风。",
+      "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/47446bc784c0_cover.jpg",
+      "songCount": 2
     }
   ],
   "categories": [
@@ -227,7 +255,7 @@
     {
       "id": "pop",
       "name": "流行热歌",
-      "count": 347
+      "count": 618
     },
     {
       "id": "8090",
