@@ -504,28 +504,14 @@ body {
   padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
-/* 滚动条样式 — 随歌曲主题色动态变化 */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5) rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.08);
+/* 主页面滚动条隐藏，内部容器各自控制 */
+html, body {
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.08);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.8);
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .fade-slide-enter-active,
