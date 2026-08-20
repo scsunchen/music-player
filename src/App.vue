@@ -171,6 +171,18 @@ watch(showFullscreen, (val) => {
   document.body.classList.toggle('fs-open', val)
 })
 
+// 滚动条动态主题色：随当前歌曲封面主色变化
+watch(() => playerStore.themeColor, (color) => {
+  const c = color || '#667eea'
+  const r = parseInt(c.slice(1, 3), 16)
+  const g = parseInt(c.slice(3, 5), 16)
+  const b = parseInt(c.slice(5, 7), 16)
+  const root = document.documentElement
+  root.style.setProperty('--scroll-r', r)
+  root.style.setProperty('--scroll-g', g)
+  root.style.setProperty('--scroll-b', b)
+}, { immediate: true })
+
 // 导航栏动态色
 const headerStyle = computed(() => {
   const color = playerStore.themeColor || '#667eea'
@@ -492,10 +504,10 @@ body {
   padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
-/* 滚动条样式 */
+/* 滚动条样式 — 随歌曲主题色动态变化 */
 html {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -508,12 +520,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(var(--scroll-r, 102), var(--scroll-g, 126), var(--scroll-b, 234), 0.8);
 }
 
 .fade-slide-enter-active,
