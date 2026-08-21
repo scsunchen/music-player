@@ -105,7 +105,20 @@
         <!-- 右侧：歌词 -->
         <div class="fs-right">
           <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
-            <p v-for="(line, index) in lyricsLines" :key="index" class="fs-lyric-line" :class="{ active: index === activeLineIndex }" @click="seekToLyric(line)">{{ line.text }}</p>
+            <p
+              v-for="(line, index) in lyricsLines"
+              :key="index"
+              class="fs-lyric-line"
+              :class="{ active: index === activeLineIndex }"
+              @click="seekToLyric(line)"
+            >
+              <span v-if="index === activeLineIndex" class="star-particle s1"></span>
+              <span v-if="index === activeLineIndex" class="star-particle s2"></span>
+              <span v-if="index === activeLineIndex" class="star-particle s3"></span>
+              <span v-if="index === activeLineIndex" class="star-particle s4"></span>
+              <span v-if="index === activeLineIndex" class="star-particle s5"></span>
+              <span class="lyric-text">{{ line.text }}</span>
+            </p>
           </div>
           <div class="fs-no-lyrics" v-else>
             <p>暂无歌词</p>
@@ -802,6 +815,7 @@ const seek = (e) => {
 .fs-lyrics::-webkit-scrollbar { display: none; }
 
 .fs-lyric-line {
+  position: relative;
   margin: 0;
   padding: 10px 0;
   font-size: 16px;
@@ -822,6 +836,61 @@ const seek = (e) => {
   transform: scale(1.12);
   font-weight: 600;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+/* 动感歌词：星星粒子跳跃特效 */
+.lyric-text {
+  position: relative;
+  z-index: 1;
+}
+
+.star-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(120, 180, 255, 0.9);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 0 4px rgba(120, 180, 255, 0.6));
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+}
+
+.fs-lyric-line.active .star-particle {
+  animation: starJump 1.6s ease-in-out infinite;
+}
+
+/* 5 颗星星：不同起始位置、延迟、方向 */
+.s1 { left: 5%;  animation-delay: 0s;   --tx: -8px; }
+.s2 { left: 25%; animation-delay: 0.3s; --tx: 10px; }
+.s3 { left: 50%; animation-delay: 0.6s; --tx: -6px; }
+.s4 { left: 75%; animation-delay: 0.9s; --tx: 8px;  }
+.s5 { left: 95%; animation-delay: 1.2s; --tx: -10px; }
+
+@keyframes starJump {
+  0% {
+    top: 50%;
+    opacity: 0;
+    transform: translateX(0) scale(0.3) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(var(--tx, 0)) scale(1) rotate(72deg);
+  }
+  50% {
+    top: -20%;
+    opacity: 0.8;
+    transform: translateX(calc(var(--tx, 0) * 1.5)) scale(1.2) rotate(180deg);
+  }
+  85% {
+    opacity: 0.4;
+    transform: translateX(var(--tx, 0)) scale(0.8) rotate(288deg);
+  }
+  100% {
+    top: 50%;
+    opacity: 0;
+    transform: translateX(0) scale(0.3) rotate(360deg);
+  }
 }
 
 .fs-no-lyrics {
