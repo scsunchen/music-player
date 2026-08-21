@@ -118,6 +118,7 @@
             <div class="song-actions">
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
+              <span class="tag-badge ai" v-if="song.isAI">AI</span>
               <button class="action-btn" @click.stop="(e) => playerStore.insertNext(song, { x: e.clientX, y: e.clientY })" title="下一首播放">
                 <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6z"/></svg>
               </button>
@@ -744,6 +745,12 @@ const openShare = () => {
   color: rgba(255, 138, 101, 0.8);
   background: rgba(255, 138, 101, 0.1);
   border: 1px solid rgba(255, 138, 101, 0.15);
+}
+
+.tag-badge.ai {
+  color: rgba(168, 85, 247, 0.8);
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.15);
 }
 
 .like-btn {

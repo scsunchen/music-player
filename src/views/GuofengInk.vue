@@ -126,6 +126,7 @@
           <div class="song-actions" @click.stop>
             <span class="tag-lyrics" v-if="hasLyrics(song.id)">詞</span>
             <span class="tag-mv" v-if="song.mvUrl">影</span>
+            <span class="tag-ai" v-if="song.isAI">AI</span>
             <button
               class="song-like"
               :class="{ liked: playerStore.isLiked(song.id) }"
@@ -840,7 +841,7 @@ const formatTime = (s) => {
   flex-shrink: 0;
 }
 
-.tag-lyrics, .tag-mv {
+.tag-lyrics, .tag-mv, .tag-ai {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -862,6 +863,12 @@ const formatTime = (s) => {
   color: #e8a838;
   background: rgba(232, 168, 56, 0.1);
   border: 1px solid rgba(232, 168, 56, 0.2);
+}
+
+.tag-ai {
+  color: rgba(168, 85, 247, 0.8);
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .song-like {

@@ -10321,8 +10321,8 @@
     },
     {
       "id": 1231,
-      "title": "孙丽芳",
-      "artist": "雨后轻风有香",
+      "title": "雨后轻风有香",
+      "artist": "孙丽芳",
       "duration": 241,
       "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/47446bc784c0_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic2.github.io/audio/47446bc784c0.mp3",
@@ -10335,7 +10335,9 @@
       "duration": 220,
       "cover": "https://didimusic.github.io/didimusic2.github.io/images/covers/f83d88cd21ae_cover.jpg",
       "audioUrl": "https://didimusic.github.io/didimusic2.github.io/audio/f83d88cd21ae.mp3",
-      "genre": "pop"
+      "genre": "pop",
+      "isAI": true,
+      "mvUrl": "https://didimusic.github.io/didimusic2.github.io/video/yuhouqingfengyouxiang-duguxiete.mp4"
     }
   ]
 }

@@ -129,6 +129,7 @@
             <div class="song-actions">
               <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
               <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
+              <span class="tag-badge ai" v-if="song.isAI">AI</span>
               <button
                 class="like-btn" v-like-burst
                 :class="{ liked: playerStore.isLiked(song.id) }"
@@ -701,6 +702,7 @@ const handleImport = (e) => {
 .tag-badge { display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; height: 16px; font-size: 10px; font-weight: 600; line-height: 1; border-radius: 3px; flex-shrink: 0; }
 .tag-badge.lyrics { color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.8); background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.1); border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15); }
 .tag-badge.mv { color: rgba(255, 138, 101, 0.8); background: rgba(255, 138, 101, 0.1); border: 1px solid rgba(255, 138, 101, 0.15); }
+.tag-badge.ai { background: rgba(168, 85, 247, 0.15); color: rgba(168, 85, 247, 0.9); }
 
 .like-btn { background: none; border: none; padding: 4px; cursor: pointer; color: rgba(255, 255, 255, 0.2); transition: all 0.2s; display: flex; align-items: center; }
 .like-btn:hover { color: rgba(245, 87, 108, 0.7); transform: scale(1.15); }

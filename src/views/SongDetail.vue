@@ -33,6 +33,7 @@
             <span class="hero-tag" v-if="song.duration">{{ formatTime(song.duration) }}</span>
             <span class="hero-tag lyrics" v-if="hasLyrics">词</span>
             <span class="hero-tag mv" v-if="song.mvUrl">MV</span>
+            <span class="hero-tag ai" v-if="song.isAI">AI</span>
             <button
               class="hero-like-btn"
               :class="{ liked: playerStore.isLiked(song.id) }"
@@ -115,6 +116,7 @@
             <div class="song-actions">
               <span class="tag-badge lyrics" v-if="hasLyricsFor(s.id)">词</span>
               <span class="tag-badge mv" v-if="s.mvUrl">MV</span>
+              <span class="tag-badge ai" v-if="s.isAI">AI</span>
               <span class="song-duration" v-if="s.duration">{{ formatTime(s.duration) }}</span>
             </div>
           </div>
@@ -520,6 +522,11 @@ watch(() => route?.params?.id, () => {
   border-color: rgba(255, 138, 101, 0.15);
 }
 
+.hero-tag.ai {
+  background: rgba(168, 85, 247, 0.15);
+  color: rgba(168, 85, 247, 0.9);
+}
+
 .hero-like-btn {
   width: 32px;
   height: 32px;
@@ -789,6 +796,11 @@ watch(() => route?.params?.id, () => {
   color: rgba(255, 138, 101, 0.8);
   background: rgba(255, 138, 101, 0.1);
   border: 1px solid rgba(255, 138, 101, 0.15);
+}
+
+.tag-badge.ai {
+  background: rgba(168, 85, 247, 0.15);
+  color: rgba(168, 85, 247, 0.9);
 }
 
 .song-duration {

@@ -57,6 +57,7 @@
           <div class="song-actions">
             <span class="tag-badge lyrics" v-if="hasLyrics(song.id)">词</span>
             <span class="tag-badge mv" v-if="song.mvUrl">MV</span>
+            <span class="tag-badge ai" v-if="song.isAI">AI</span>
             <button
               class="like-btn liked"
               @click.stop="playerStore.toggleLikeSong(song.id)"
@@ -469,6 +470,11 @@ const formatTime = (s) => {
   color: rgba(255, 138, 101, 0.8);
   background: rgba(255, 138, 101, 0.1);
   border: 1px solid rgba(255, 138, 101, 0.15);
+}
+
+.tag-badge.ai {
+  background: rgba(168, 85, 247, 0.15);
+  color: rgba(168, 85, 247, 0.9);
 }
 
 .like-btn {
