@@ -110,6 +110,7 @@ import PlayQueue from './components/PlayQueue.vue'
 import DesktopLyrics from './components/DesktopLyrics.vue'
 import ChangelogModal from './components/ChangelogModal.vue'
 import { currentVersion } from './config/changelog'
+import { resolveUrl } from './utils/baseUrl'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
@@ -254,6 +255,27 @@ const onKeydown = (e) => {
 }
 onMounted(() => document.addEventListener('keydown', onKeydown))
 onUnmounted(() => document.removeEventListener('keydown', onKeydown))
+
+// 动态注入本地字体 @font-face，确保路径与部署基准一致
+// 放在全局注入而不是组件 scoped style 中，避免 CSS var() 在 @font-face src 中的兼容性问题
+onMounted(() => {
+  const fontPath = resolveUrl('fonts/MaShanZheng-subset.woff2')
+  const styleId = 'font-mashanzheng-inject'
+  if (document.getElementById(styleId)) return
+
+  const style = document.createElement('style')
+  style.id = styleId
+  style.textContent = `
+    @font-face {
+      font-family: 'Ma Shan Zheng';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('${fontPath}') format('woff2');
+    }
+  `
+  document.head.appendChild(style)
+})
 </script>
 
 <style>
