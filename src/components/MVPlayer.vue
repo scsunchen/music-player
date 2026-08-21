@@ -83,10 +83,13 @@ const emit = defineEmits(['close'])
 const playerStore = usePlayerStore()
 const videoRef = ref(null)
 
-// 判断是否为本地视频
+// 判断是否为可直接播放的视频文件（非 iframe 嵌入）
 const isLocalVideo = computed(() => {
   if (!props.song?.mvUrl) return false
-  return props.song.mvUrl.startsWith('/') || props.song.mvUrl.startsWith('blob:')
+  const url = props.song.mvUrl
+  // 相对路径、blob、或直接的视频文件 URL（.mp4/.webm/.ogg 等）
+  if (url.startsWith('/') || url.startsWith('blob:')) return true
+  return /\.(mp4|webm|ogg|mov|m4v)(\?|$)/i.test(url)
 })
 
 const isLiked = computed(() => {

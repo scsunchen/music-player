@@ -11,8 +11,8 @@
     </div>
 
     <!-- 歌曲信息 -->
-    <div class="song-info" @click="openFullscreen">
-      <div class="cover-wrapper" :class="{ playing: playerStore.isPlaying }">
+    <div class="song-info">
+      <div class="cover-wrapper" :class="{ playing: playerStore.isPlaying }" @click="openFullscreen">
         <!-- 黑胶唱片外圈 -->
         <div class="vinyl-disc">
           <!-- 唱片纹路 -->
@@ -32,7 +32,7 @@
           <div class="vinyl-center"></div>
         </div>
       </div>
-      <div class="info">
+      <div class="info" @click="goToSongDetail">
         <Transition name="text-slide" mode="out-in">
           <h4 :key="playerStore.currentSong.id" class="title">{{ playerStore.currentSong.title }}</h4>
         </Transition>
@@ -166,6 +166,13 @@ watch(() => playerStore.isPlaying, tryConnectVisualizer)
 // 打开全屏播放页
 const openFullscreen = () => {
   emit('open-fullscreen')
+}
+
+// 跳转歌曲详情页
+const goToSongDetail = () => {
+  if (playerStore.currentSong) {
+    router.push(`/song/${playerStore.currentSong.id}`)
+  }
 }
 
 // 当前歌曲是否已喜欢
