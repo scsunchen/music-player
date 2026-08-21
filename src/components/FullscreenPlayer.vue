@@ -104,6 +104,10 @@
 
         <!-- 右侧：歌词 -->
         <div class="fs-right">
+          <!-- 淡彩流动背景 -->
+          <div class="fs-lyric-bg" :style="{ '--accent': accentColor }"></div>
+          <!-- 歌词粒子画布 -->
+          <canvas ref="lyricParticleCanvas" class="fs-lyric-particles"></canvas>
           <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
             <p
               v-for="(line, index) in lyricsLines"
@@ -112,10 +116,15 @@
               :class="{ active: index === activeLineIndex }"
               @click="seekToLyric(line)"
             >
-              <span v-if="index === activeLineIndex" class="star-particle s1"></span>
-              <span v-if="index === activeLineIndex" class="star-particle s2"></span>
-              <span v-if="index === activeLineIndex" class="star-particle s3"></span>
-              <span class="lyric-text">{{ line.text }}</span>
+              <template v-if="index === activeLineIndex && line.text">
+                <span
+                  v-for="(char, ci) in lineChars(line.text)"
+                  :key="ci"
+                  class="lyric-char"
+                  :data-ci="ci"
+                >{{ char === ' ' ? '\u00A0' : char }}</span>
+              </template>
+              <span v-else class="lyric-text">{{ line.text }}</span>
             </p>
           </div>
           <div class="fs-no-lyrics" v-else>
@@ -139,6 +148,10 @@ const playerStore = usePlayerStore()
 const lyricsRef = ref(null)
 const visualizerRef = ref(null)
 const particleCanvas = ref(null)
+const lyricParticleCanvas = ref(null)
+
+// 将歌词文本拆成字符数组（支持中英文）
+const lineChars = (text) => Array.from(text)
 
 // 直接同步 store 的 themeColor，避免两套颜色提取逻辑导致闪烁
 const accentColor = computed(() => playerStore.themeColor || '#667eea')
@@ -226,8 +239,10 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (particleAnimId) cancelAnimationFrame(particleAnimId)
+  if (effectRafId) cancelAnimationFrame(effectRafId)
   if (scrollRafId) cancelAnimationFrame(scrollRafId)
   window.removeEventListener('resize', resizeParticles)
+  window.removeEventListener('resize', resizeLyricCanvas)
 })
 
 // 触摸手势
@@ -320,6 +335,170 @@ const seek = (e) => {
   const percent = (e.clientX - rect.left) / rect.width
   playerStore.seekTo(percent * playerStore.duration)
 }
+
+// ===== 歌词动感特效系统 =====
+let lyricParticleCtx = null
+let lyricParticles = []
+let effectRafId = null
+let lastEmitChar = -1
+
+const initLyricEffect = () => {
+  const canvas = lyricParticleCanvas.value
+  if (!canvas) return
+  lyricParticleCtx = canvas.getContext('2d')
+  resizeLyricCanvas()
+  effectRafId = requestAnimationFrame(updateLyricEffect)
+}
+
+const resizeLyricCanvas = () => {
+  const canvas = lyricParticleCanvas.value
+  if (!canvas) return
+  const parent = canvas.parentElement
+  if (!parent) return
+  canvas.width = parent.clientWidth
+  canvas.height = parent.clientHeight
+}
+
+const emitLyricParticles = (x, y, bass) => {
+  const count = Math.floor(1 + bass * 4)
+  for (let i = 0; i < count; i++) {
+    lyricParticles.push({
+      x: x + (Math.random() - 0.5) * 16,
+      y: y + (Math.random() - 0.5) * 8,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: -Math.random() * 1.2 - 0.3,
+      size: Math.random() * 2 + 0.5,
+      life: 1,
+      decay: 0.012 + Math.random() * 0.02,
+      hue: 190 + Math.random() * 70
+    })
+  }
+}
+
+const drawLyricParticles = () => {
+  if (!lyricParticleCtx || !lyricParticleCanvas.value) return
+  const canvas = lyricParticleCanvas.value
+  const ctx = lyricParticleCtx
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  lyricParticles = lyricParticles.filter(p => p.life > 0)
+
+  for (const p of lyricParticles) {
+    p.x += p.vx
+    p.y += p.vy
+    p.vy -= 0.008
+    p.life -= p.decay
+
+    const r = Math.max(0.1, p.size * p.life)
+    ctx.beginPath()
+    ctx.arc(p.x, p.y, r, 0, Math.PI * 2)
+    ctx.fillStyle = `hsla(${p.hue}, 80%, 70%, ${p.life * 0.55})`
+    ctx.fill()
+  }
+
+  if (lyricParticles.length > 300) {
+    lyricParticles = lyricParticles.slice(-300)
+  }
+}
+
+const updateLyricEffect = () => {
+  effectRafId = requestAnimationFrame(updateLyricEffect)
+
+  drawLyricParticles()
+
+  // 获取低频能量
+  let bass = 0
+  if (visualizerRef.value?.getFrequencyData) {
+    const data = visualizerRef.value.getFrequencyData()
+    if (data) {
+      let sum = 0
+      for (let i = 0; i < 4; i++) sum += data[i]
+      bass = sum / (4 * 255)
+    }
+  }
+
+  const idx = activeLineIndex.value
+  if (idx < 0) { lastEmitChar = -1; return }
+
+  const lines = lyricsLines.value
+  const line = lines[idx]
+  if (!line || !line.text) { lastEmitChar = -1; return }
+
+  const nextLine = lines[idx + 1]
+  const lineEnd = nextLine ? nextLine.time : line.time + 5
+  const lineDuration = Math.max(0.1, lineEnd - line.time)
+  const elapsed = playerStore.currentTime - line.time
+  const progress = Math.min(1, Math.max(0, elapsed / lineDuration))
+  const revealIdx = progress * line.text.length
+
+  // 直接操作 DOM 更新字符样式（绕过 Vue 响应式，保证性能）
+  const activeEl = lyricsRef.value?.querySelector('.fs-lyric-line.active')
+  if (!activeEl) return
+  const chars = activeEl.querySelectorAll('.lyric-char')
+
+  const currentCharIdx = Math.floor(revealIdx)
+
+  chars.forEach((el, i) => {
+    if (i < revealIdx) {
+      // 已唱字符：白光 + 柔和霓虹辉光
+      el.style.opacity = '1'
+      el.style.color = '#fff'
+      const glow = 6 + bass * 22
+      el.style.textShadow = `0 0 ${glow}px rgba(120, 180, 255, ${0.25 + bass * 0.35}), 0 0 ${glow * 2}px rgba(120, 180, 255, ${0.12 + bass * 0.2})`
+      el.style.transform = 'scale(1)'
+    } else if (i === currentCharIdx) {
+      // 正在显现的字符：最亮 + 大辉光
+      el.style.opacity = '1'
+      el.style.color = '#fff'
+      const glow = 12 + bass * 30
+      el.style.textShadow = `0 0 ${glow}px rgba(255, 255, 255, ${0.45 + bass * 0.3}), 0 0 ${glow * 2}px rgba(120, 180, 255, ${0.25 + bass * 0.25}), 0 0 ${glow * 3}px rgba(168, 85, 247, ${0.15 + bass * 0.15})`
+      el.style.transform = 'scale(1.12)'
+
+      // 从当前字符位置发射粒子
+      if (lyricParticleCanvas.value && i !== lastEmitChar) {
+        const rect = el.getBoundingClientRect()
+        const canvasRect = lyricParticleCanvas.value.getBoundingClientRect()
+        const x = rect.left + rect.width / 2 - canvasRect.left
+        const y = rect.top + rect.height / 2 - canvasRect.top
+        emitLyricParticles(x, y, bass)
+        lastEmitChar = i
+      } else if (Math.random() < 0.15 + bass * 0.3) {
+        // 持续发射少量粒子
+        const rect = el.getBoundingClientRect()
+        const canvasRect = lyricParticleCanvas.value.getBoundingClientRect()
+        const x = rect.left + rect.width / 2 - canvasRect.left
+        const y = rect.top + rect.height / 2 - canvasRect.top
+        emitLyricParticles(x, y, bass)
+      }
+    } else {
+      // 未唱字符：暗淡
+      el.style.opacity = '0.28'
+      el.style.color = 'rgba(255, 255, 255, 0.4)'
+      el.style.textShadow = 'none'
+      el.style.transform = 'scale(1)'
+    }
+  })
+}
+
+// 当可见性变化时启动/停止特效
+watch(() => props.visible, (val) => {
+  if (val) {
+    nextTick(() => {
+      initLyricEffect()
+      window.addEventListener('resize', resizeLyricCanvas)
+    })
+  } else {
+    if (effectRafId) { cancelAnimationFrame(effectRafId); effectRafId = null }
+    window.removeEventListener('resize', resizeLyricCanvas)
+    lyricParticles = []
+  }
+})
+
+// 切歌时重置
+watch(() => playerStore.currentSong?.id, () => {
+  lastEmitChar = -1
+  lyricParticles = []
+})
 </script>
 
 <style scoped>
@@ -799,12 +978,14 @@ const seek = (e) => {
   min-width: 0;
   overflow: hidden;
   margin-top: 16px;
+  position: relative;
 }
 
 .fs-lyrics {
   flex: 1;
   overflow-y: auto;
   position: relative;
+  z-index: 1;
   padding: 8px 32px 32px;
   mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
@@ -831,83 +1012,54 @@ const seek = (e) => {
 
 .fs-lyric-line.active {
   color: #fff;
-  transform: scale(1.12);
   font-weight: 600;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
 
-/* 动感歌词：星星从左到右弹跳特效 */
+/* 动感歌词：逐字显现 + 霓虹辉光 + 粒子消散 */
+
+/* 淡彩流动背景 */
+.fs-lyric-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    -45deg,
+    rgba(102, 126, 234, 0.06),
+    rgba(118, 75, 162, 0.08),
+    rgba(240, 147, 251, 0.04),
+    rgba(168, 85, 247, 0.06),
+    rgba(102, 126, 234, 0.06)
+  );
+  background-size: 400% 400%;
+  animation: lyricBgFlow 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes lyricBgFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 粒子画布 */
+.fs-lyric-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
 .lyric-text {
   position: relative;
   z-index: 1;
 }
 
-.star-particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  top: 50%;
-  left: 0;
-  background: rgba(120, 180, 255, 0.95);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.7));
-  pointer-events: none;
-  opacity: 0;
-  z-index: 0;
-}
-
-.fs-lyric-line.active .star-particle {
-  animation: starRun 2s ease-in-out infinite;
-}
-
-.s1 { animation-delay: 0s; }
-.s2 { animation-delay: 0.6s; }
-.s3 { animation-delay: 1.2s; }
-
-@keyframes starRun {
-  0% {
-    left: 0%;
-    top: 50%;
-    opacity: 0;
-    transform: translateY(0) scale(0.5) rotate(0deg);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1) rotate(36deg);
-  }
-  25% {
-    left: 25%;
-    top: 20%;
-    transform: translateY(-6px) scale(1.1) rotate(90deg);
-  }
-  40% {
-    top: 50%;
-    transform: translateY(0) scale(1) rotate(144deg);
-  }
-  50% {
-    left: 50%;
-    top: 20%;
-    transform: translateY(-6px) scale(1.1) rotate(180deg);
-  }
-  65% {
-    top: 50%;
-    transform: translateY(0) scale(1) rotate(216deg);
-  }
-  75% {
-    left: 75%;
-    top: 20%;
-    transform: translateY(-6px) scale(1.1) rotate(270deg);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(-4px) scale(0.8) rotate(324deg);
-  }
-  100% {
-    left: 100%;
-    top: 50%;
-    opacity: 0;
-    transform: translateY(0) scale(0.5) rotate(360deg);
-  }
+/* 逐字符样式 */
+.lyric-char {
+  display: inline-block;
+  opacity: 0.28;
+  color: rgba(255, 255, 255, 0.4);
+  transition: opacity 0.15s ease, text-shadow 0.12s ease, transform 0.12s ease, color 0.15s ease;
+  will-change: opacity, text-shadow, transform;
 }
 
 .fs-no-lyrics {

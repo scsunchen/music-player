@@ -152,7 +152,13 @@ const connectAudio = (audioElement) => {
   }
 }
 
-defineExpose({ connectAudio })
+const getFrequencyData = () => {
+  if (!analyser || !dataArray) return null
+  analyser.getByteFrequencyData(dataArray)
+  return dataArray
+}
+
+defineExpose({ connectAudio, getFrequencyData })
 </script>
 
 <style scoped>
