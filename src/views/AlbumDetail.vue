@@ -262,16 +262,16 @@ const formatTime = (s) => {
 .content-layer {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 32px 32px 0;
 }
 
 @media (min-width: 768px) {
-  .content-layer { padding: 48px 48px 0; }
+  .content-layer { padding: 48px 48px 0; max-width: 1400px; }
 }
 @media (min-width: 1200px) {
-  .content-layer { padding: 48px 64px 0; max-width: 1000px; }
+  .content-layer { padding: 48px 64px 0; max-width: 1600px; }
 }
 
 /* 页头 */

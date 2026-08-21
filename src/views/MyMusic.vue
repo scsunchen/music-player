@@ -112,7 +112,7 @@
         </div>
         <div class="song-list">
           <div
-            v-for="song in playerStore.songs"
+            v-for="song in displaySongs"
             :key="song.id"
             class="song-item"
           >
@@ -148,6 +148,9 @@
               </button>
               <span class="song-duration" v-if="song.duration">{{ formatTime(song.duration) }}</span>
             </div>
+          </div>
+          <div class="load-more-hint" v-if="hasMoreSongs">
+            滚动加载更多（{{ displaySongs.length }}/{{ playerStore.songs.length }}）
           </div>
         </div>
       </section>
@@ -206,7 +209,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
@@ -220,6 +223,10 @@ onMounted(() => {
   setTimeout(() => {
     loading.value = false
   }, 600)
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
 })
 
 const newPlaylistName = ref('')
@@ -238,6 +245,27 @@ const dynamicStyle = computed(() => {
 })
 
 const hasLyrics = (id) => playerStore.hasLyrics(id)
+
+// 所有歌曲滚动加载
+const PAGE_SIZE = 30
+const displayCount = ref(PAGE_SIZE)
+const displaySongs = computed(() => playerStore.songs.slice(0, displayCount.value))
+const hasMoreSongs = computed(() => displayCount.value < playerStore.songs.length)
+
+const loadMore = () => {
+  if (hasMoreSongs.value) {
+    displayCount.value += PAGE_SIZE
+  }
+}
+
+const onScroll = () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const scrollHeight = document.documentElement.scrollHeight
+  const clientHeight = document.documentElement.clientHeight
+  if (scrollTop + clientHeight >= scrollHeight - 200) {
+    loadMore()
+  }
+}
 
 const likedSongs = computed(() => playerStore.getLikedSongsList())
 const recentSongs = computed(() => playerStore.getRecentSongsList())
@@ -728,6 +756,14 @@ const handleImport = (e) => {
 .add-btn:active { transform: scale(0.9); }
 
 .song-duration { font-size: 12px; font-weight: 300; color: rgba(255, 255, 255, 0.25); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+
+.load-more-hint {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  font-variant-numeric: tabular-nums;
+}
 
 .bottom-space { height: 40px; }
 

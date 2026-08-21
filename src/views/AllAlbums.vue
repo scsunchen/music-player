@@ -16,18 +16,8 @@
           <span class="header-label">ALBUMS</span>
           <h1 class="header-title">全部专辑</h1>
         </div>
+        <span class="header-count">{{ playerStore.albums.length }} 张专辑</span>
       </header>
-
-      <!-- 专辑信息 -->
-      <div class="info-bar">
-        <div class="info-icon">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/></svg>
-        </div>
-        <div class="info-text">
-          <h2>全部专辑</h2>
-          <p>{{ playerStore.albums.length }} 张专辑</p>
-        </div>
-      </div>
 
       <!-- 专辑网格 -->
       <div class="album-grid">
@@ -43,7 +33,7 @@
             </div>
           </div>
           <div class="card-info">
-            <span class="card-name">{{ album.name }}</span>
+            <span class="card-name" @click="router.push(`/album/${album.id}`)">{{ album.name }}</span>
             <span class="card-artist">{{ album.artist || '' }}</span>
           </div>
         </div>
@@ -187,38 +177,10 @@ const dynamicStyle = computed(() => {
   letter-spacing: -0.5px;
 }
 
-/* 信息栏 */
-.info-bar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
-}
-
-.info-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.12);
-  border: 1px solid rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 1);
-  flex-shrink: 0;
-}
-
-.info-text h2 {
-  margin: 0 0 4px;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.info-text p {
-  margin: 0;
+.header-count {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
 }
 
 /* 专辑网格 */
@@ -286,6 +248,12 @@ const dynamicStyle = computed(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.card-name:hover {
+  color: rgba(var(--dynamic-r), var(--dynamic-g), var(--dynamic-b), 0.9);
 }
 
 .card-artist {
