@@ -40,7 +40,6 @@ jobs:
           name: 一起听-windows-installer
           path: |
             src-tauri/target/release/bundle/nsis/*.exe
-            src-tauri/target/release/bundle/msi/*.msi
           if-no-files-found: warn
 
       - name: Create GitHub release
@@ -49,7 +48,6 @@ jobs:
         with:
           files: |
             src-tauri/target/release/bundle/nsis/*.exe
-            src-tauri/target/release/bundle/msi/*.msi
           draft: false
           prerelease: false
           generate_release_notes: true
