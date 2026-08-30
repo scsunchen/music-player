@@ -5,7 +5,8 @@ import path from 'path'
 
 // 部署基础路径，修改此处即可切换部署目录
 // 例如：'/' 根目录部署，'/music-player/' 子目录部署，'/app/player/' 任意路径
-const BASE_URL = process.env.BASE_URL || '/music-player/'
+// Tauri 桌面端使用相对路径
+const BASE_URL = process.env.TAURI_ENV_PLATFORM ? './' : (process.env.BASE_URL || '/music-player/')
 
 /**
  * JSON 压缩插件
