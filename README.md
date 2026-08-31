@@ -1,9 +1,11 @@
 # 🎵 一起听 · 听见时光
 
-一个基于 Vue 3 + Vite 的现代化音乐播放器，采用纯静态部署，无需后端服务器。全站沉浸氛围风设计，动态色系随播放封面实时变化。
+一个基于 Vue 3 + Vite 的现代化音乐播放器，纯静态部署，无需后端服务器。全站沉浸氛围风设计，动态色系随播放封面实时变化。支持 Web 端与桌面端（Windows / macOS）。
 
 ![Vue 3](https://img.shields.io/badge/Vue-3.x-4FC08D?logo=vue.js)
 ![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite)
+![Tauri](https://img.shields.io/badge/Tauri-2.x-FFC131?logo=tauri)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## ✨ 功能特性
@@ -11,10 +13,11 @@
 ### 🎵 核心播放功能
 - **歌曲播放** — 播放、暂停、上一首、下一首
 - **播放模式** — 列表循环、单曲循环（仅自动播放时循环）、随机播放
-- **进度控制** — 可拖拽进度条，显示当前时间/总时长
+- **进度控制** — 可拖拽进度条，显示当前时间/总时长、缓冲进度
 - **音量调节** — 滑块调节音量（默认 50%，范围 0-1）
 - **锁屏控制** — Media Session API 支持锁屏显示歌曲信息和控制按钮
-- **播放队列** — 当前播放列表和手动添加的插队队列
+- **播放队列** — 当前播放列表和手动添加的插队队列，支持"加入队列"和"下一首播放"
+- **键盘快捷键** — 空格键播放/暂停（电脑端）
 
 ### 📚 音乐管理
 - **歌曲库** — 90+ 首精选歌曲（国风、许巍、凤凰传奇等）
@@ -27,9 +30,9 @@
 - **我喜欢** — 收藏喜欢的歌曲，数据保存在本地
 - **最近播放** — 自动记录播放历史（最近 50 首）
 - **自定义歌单** — 创建、删除、导入个人歌单
-- **快速收藏** — 底部播放器和全屏播放器一键喜欢
+- **快速收藏** — 底部播放器和全屏播放器一键喜欢，爱心爆裂动画效果
 
-### 🎨 沉浸氛围风（方案 D）
+### 🎨 沉浸氛围风
 - **动态色系** — 从封面提取主色调，全站颜色实时同步变化（导航栏、按钮、背景光球）
 - **毛玻璃效果** — 核心卡片采用 `backdrop-filter: blur(24px)` 毛玻璃设计
 - **氛围光球** — `box-shadow` 实现的轻量浮动光球，GPU 友好
@@ -40,13 +43,18 @@
 - **歌词显示** — 当前行高亮，RAF 缓动滚动（无卡顿）
 - **手势支持** — 下滑关闭全屏
 - **左右布局** — 电脑端封面与歌词并排显示，固定宽度防偏移
-- **性能优化** — `box-shadow` 替代 `filter:blur`、`transform:scale` 替代 `font-size` 变化、`computed` 预计算 active 行
+- **桌面歌词** — 基于 Document Picture-in-Picture API，悬浮显示在桌面最前
 
 ### 🎭 季节/节日动态主题
 - **6 个主题** — 夏(橘子日落)、秋(枫叶信笺)、冬(雪落星光)、春(樱花物语)、情人节(玫瑰红)、中秋节(金秋明月)
 - **自动切换** — `getActiveTheme()` 根据当前日期自动匹配，节日优先、季节兜底
 - **配置驱动** — 新增主题只需添加配置对象，无需新建页面
 - **粒子效果** — 6 种动画类型：浮动、闪烁、爱心、飘雪、樱花、灯笼
+
+### 📜 时间轴专题页
+- **华语金曲十年** — `/story` 按年份展示经典歌曲与时代叙事，滚动动画渐入
+- **怀旧彩铃时间轴** — `/ringtones` 重温 2003–2010 彩铃黄金年代，经典老歌一键播放
+- **国风沉浸歌单** — 水墨背景 + 卷轴 + 诗词，国风歌曲沉浸式体验
 
 ### 🏠 多首页方案
 - **方案 D**（默认 `/`）— 沉浸氛围风，Hero 大图 + 快捷入口 + 推荐歌单 + 新专辑 + 热门歌曲
@@ -59,6 +67,11 @@
 - **离线缓存** — Service Worker 缓存静态资源
 - **响应式设计** — 完美适配手机端和电脑端
 
+### 🖥️ 桌面端应用（Tauri）
+- **跨平台** — 支持 Windows（NSIS 安装包）和 macOS（Intel + Apple Silicon）
+- **轻量高性能** — Rust 内核 + WebView 渲染，包体小、启动快
+- **CI/CD 自动构建** — GitHub Actions 自动打包并发布到 Release
+
 ## 🛠️ 技术栈
 
 | 技术 | 说明 |
@@ -67,10 +80,12 @@
 | Vite 5 | 下一代前端构建工具 |
 | Pinia | Vue 状态管理 |
 | Vue Router | 路由管理（Hash 模式，支持 View Transitions） |
+| Tauri 2 | 桌面应用框架（Rust + WebView） |
 | CSS3 | 动画、渐变、毛玻璃、CSS 变量动态色系 |
 | Service Worker | PWA 离线缓存 |
 | Media Session API | 锁屏播放控制 |
 | Web Audio API | 音频分析和频谱可视化 |
+| Document Picture-in-Picture | 桌面歌词悬浮窗 |
 | Canvas | 粒子动画、频谱渲染 |
 
 ## ⚡ 性能优化
@@ -85,6 +100,7 @@
 - **computed 预计算** — active 行判定从每行调用 `isCurrentLine()` 改为单次 `computed`
 - **粒子数量优化** — 桌面端从 60 降至 35，移动端从 30 降至 20
 - **运行时数据加载** — 歌曲和歌词数据运行时 fetch 加载，不打包进 JS
+- **按需加载器** — `songLoader.js` 统一管理歌曲、专辑、歌单、歌词数据的加载与缓存
 
 ## 📁 项目结构
 
@@ -104,20 +120,33 @@ music-player/
 ├── scripts/
 │   ├── batch_import.py     # Excel 批量导入歌曲脚本
 │   └── templates/          # 导入模板（music_data_template.xlsx / demo_playlist.json）
+├── src-tauri/               # Tauri 桌面端
+│   ├── src/                 # Rust 源码
+│   ├── icons/               # 应用图标（含 .ico / .icns）
+│   ├── capabilities/        # Tauri 权限配置
+│   ├── tauri.conf.json      # Tauri 配置
+│   └── Cargo.toml           # Rust 依赖
 ├── src/
 │   ├── config/
-│   │   └── seasonalThemes.js   # 季节/节日主题配置引擎
+│   │   ├── seasonalThemes.js   # 季节/节日主题配置引擎
+│   │   ├── changelog.js        # 版本更新日志
+│   │   ├── storyPlaylist.js    # 华语金曲十年时间轴配置
+│   │   └── ringtonesPlaylist.js # 怀旧彩铃时间轴配置
 │   ├── components/
 │   │   ├── MusicPlayer.vue       # 底部播放器
 │   │   ├── FullscreenPlayer.vue  # 全屏播放页（沉浸氛围风）
 │   │   ├── MusicVisualizer.vue   # 真实音频频谱
+│   │   ├── DesktopLyrics.vue     # 桌面歌词（PiP）
 │   │   ├── FloatingNotes.vue     # 浮动音符
 │   │   ├── PlayQueue.vue         # 播放队列面板
 │   │   ├── SongItem.vue          # 歌曲列表项（旧版，功能页保留使用）
 │   │   ├── PlaylistCard.vue      # 歌单/专辑卡片（旧版，功能页保留使用）
 │   │   ├── ShareModal.vue        # 分享弹窗
 │   │   ├── MVPlayer.vue          # MV 播放器
+│   │   ├── ChangelogModal.vue    # 版本更新日志弹窗
 │   │   └── SkeletonLoader.vue    # 骨架屏
+│   ├── directives/
+│   │   └── likeBurst.js          # 收藏爱心爆裂动画指令 v-like-burst
 │   ├── views/
 │   │   ├── Home.vue              # 首页（方案 D 沉浸氛围风）
 │   │   ├── HomeV2.vue            # 首页方案 A（杂志编辑风）
@@ -135,16 +164,23 @@ music-player/
 │   │   ├── MyMusic.vue           # 我的音乐（含歌单导入）
 │   │   ├── Stats.vue             # 播放统计
 │   │   ├── SeasonalPage.vue      # 季节/节日动态主题页
+│   │   ├── StoryTimeline.vue     # 华语金曲十年时间轴
+│   │   ├── RingtonesTimeline.vue # 怀旧彩铃时间轴
+│   │   ├── GuofengInk.vue        # 国风沉浸歌单页
 │   │   ├── SummerOrange.vue      # （已下线，保留备用）
 │   │   └── Love520.vue           # （已下线，保留备用）
 │   ├── stores/
 │   │   └── player.js             # 播放器状态管理（含运行时数据加载、导入歌单）
 │   ├── utils/
-│   │   └── baseUrl.js             # 全局路径工具（支持自定义部署路径）
+│   │   ├── baseUrl.js            # 全局路径工具（支持自定义部署路径）
+│   │   └── songLoader.js         # 歌曲数据按需加载器
 │   ├── router/
 │   │   └── index.js              # 路由配置（含 View Transitions 动画）
 │   ├── App.vue                   # 根组件（沉浸氛围风导航栏）
 │   └── main.js                   # 入口文件
+├── .github/workflows/
+│   ├── deploy.yml                # GitHub Pages 部署
+│   └── tauri-build.yml           # 桌面端自动构建与发布
 ├── deploy-dist.sh                # Bash 部署脚本
 ├── deploy-dist.ps1               # PowerShell 部署脚本
 ├── index.html
@@ -159,7 +195,7 @@ music-player/
 npm install
 ```
 
-### 开发模式
+### Web 开发模式
 ```bash
 npm run dev
 ```
@@ -183,11 +219,24 @@ npm run build
 npm run preview
 ```
 
+### 桌面端开发（Tauri）
+```bash
+# 需要先安装 Rust 工具链
+npm run tauri:dev
+```
+
+### 构建桌面端安装包
+```bash
+npm run tauri:build
+```
+
 ## 📦 部署
+
+### Web 端部署
 
 项目采用纯静态部署，可部署到 GitHub Pages、Vercel、Netlify 或任何静态服务器。
 
-### 自定义部署路径
+#### 自定义部署路径
 
 修改 `vite.config.js` 中的 `BASE_URL`：
 
@@ -201,7 +250,7 @@ npm run build                      # 子目录部署
 BASE_URL=/app/player/ npm run build  # 任意路径
 ```
 
-### 构建并推送
+#### 构建并推送
 
 ```bash
 # Bash
@@ -212,6 +261,24 @@ BASE_URL=/app/player/ npm run build  # 任意路径
 .\deploy-dist.ps1 [分支名] [BASE_URL]
 ```
 
+### 桌面端自动构建与发布
+
+通过 GitHub Actions 自动构建 Windows 和 macOS 安装包：
+
+1. **推送标签触发**（自动创建 Release）：
+   ```bash
+   git tag v1.1.0
+   git push origin v1.1.0
+   ```
+
+2. **手动触发**（仅构建，不创建 Release）：
+   在 GitHub Actions 页面选择 "Build Desktop Apps" → Run workflow
+
+构建产物：
+- **Windows**: NSIS 安装包 (`.exe`)
+- **macOS Intel**: DMG 镜像 (`.dmg`)
+- **macOS Apple Silicon**: DMG 镜像 (`.dmg`)
+
 ## 🗺️ 路由说明
 
 | 路由 | 页面 | 说明 |
@@ -221,6 +288,8 @@ BASE_URL=/app/player/ npm run build  # 任意路径
 | `/my` | MyMusic.vue | 我的音乐（歌单管理 + 导入） |
 | `/stats` | Stats.vue | 播放统计 |
 | `/season` | SeasonalPage.vue | 季节/节日动态主题（自动匹配） |
+| `/story` | StoryTimeline.vue | 华语金曲十年时间轴 |
+| `/ringtones` | RingtonesTimeline.vue | 怀旧彩铃时间轴 |
 | `/song/:id` | SongDetail.vue | 歌曲详情 |
 | `/album/:id` | AlbumDetail.vue | 专辑详情 |
 | `/playlist/:id` | PlaylistDetail.vue | 歌单详情 |
@@ -245,7 +314,7 @@ BASE_URL=/app/player/ npm run build  # 任意路径
 ### 歌曲列表交互规则
 - **封面点击** → 播放歌曲
 - **标题/歌手点击** → 跳转 `/song/:id` 详情页
-- **收藏按钮** → 切换喜欢状态
+- **收藏按钮** → 切换喜欢状态（爱心爆裂动画）
 - 列表项不设置整体 `@click`，避免事件冒泡冲突
 
 ### 性能约束
@@ -298,21 +367,41 @@ BASE_URL=/app/player/ npm run build  # 任意路径
 }
 ```
 
-## 🎯 未来计划
+## 🎯 版本日志
 
-- [x] 播放队列管理
-- [x] 真实音频频谱
-- [x] 缓冲进度显示
-- [x] 运行时数据加载
-- [x] 沉浸氛围风全站适配
-- [x] 动态色系全站同步
-- [x] 全屏播放器性能优化
-- [x] 季节/节日动态主题引擎
-- [x] 本地歌单导入
-- [ ] 键盘快捷键支持
-- [ ] 定时关闭功能
-- [ ] 歌手页面
-- [ ] 黑暗/明亮主题切换
+### v1.1.0 (2026-07-30)
+
+**新增**
+- "加入队列"和"下一首播放"功能
+- 电脑端空格键播放/暂停快捷键
+- 版本更新日志功能
+- 桌面歌词（Document Picture-in-Picture）
+- 华语金曲十年时间轴页面
+- 怀旧彩铃时间轴页面
+- 国风沉浸歌单页面
+- 收藏爱心爆裂动画效果
+- Tauri 桌面端支持（Windows / macOS）
+
+**优化**
+- 队列管理界面，插队队列置顶显示
+- 添加歌曲加入队列飞入动画效果
+- 分享链接支持携带歌曲信息
+
+**修复**
+- 歌单列表页只显示6个歌单的问题
+- 歌单7和8点进去空白页面的问题
+- 首页推荐歌单"全部"跳转重复导航栏
+- 全屏播放器移动端进度条闪烁问题
+- 歌曲分享链接无法打开具体页面的问题
+
+### v1.0.0 (2026-07-20)
+- 初始版本发布
+- 基本播放功能与全屏播放器
+- 歌单管理与搜索功能
+- 播放队列与播放模式切换
+- 桌面歌词与音乐可视化
+- 国风沉浸式歌单页面
+- 季节主题页面
 
 ## 📄 开源协议
 
