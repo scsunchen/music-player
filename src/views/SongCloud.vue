@@ -114,6 +114,18 @@ let targetPositions = []
 let originalPositions = []
 let isTransitioning = false
 let transitionProgress = 0
+let cameraAnimating = false
+let cameraStartPos = new THREE.Vector3()
+let cameraTargetPos = new THREE.Vector3()
+let cameraAnimProgress = 0
+
+// 各布局对应的相机视角
+const layoutCameraViews = {
+  sphere:    { dist: 65,  polar: 90,  azimuth: 0,   name: '星云球' },
+  galaxy:    { dist: 80,  polar: 65,  azimuth: 0,   name: '银河旋臂' },
+  helix:     { dist: 75,  polar: 85,  azimuth: 75,  name: '双螺旋' },
+  fireworks: { dist: 70,  polar: 75,  azimuth: 30,  name: '烟花绽放' },
+}
 
 const layoutModes = [
   { id: 'sphere', name: '星云球', icon: '🌐' },
@@ -182,13 +194,13 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'galaxy': {
-      // 银河旋臂（4 条旋臂）
+      // 银河旋臂（4 条旋臂，扁平盘状）
       const arms = 4
       const armIndex = index % arms
-      const r = 5 + t * 40
-      const twist = t * 5
-      const angle = twist + (armIndex * Math.PI * 2 / arms) + (seed - 0.5) * 0.8
-      const yOffset = (seed - 0.5) * 6 * (1 - t * 0.3)
+      const r = 3 + t * 45
+      const twist = t * 6.5
+      const angle = twist + (armIndex * Math.PI * 2 / arms) + (seed - 0.5) * 1.2
+      const yOffset = (seed - 0.5) * 2.5 * (1 - t * 0.5)
       return new THREE.Vector3(
         Math.cos(angle) * r,
         yOffset,
@@ -196,11 +208,11 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'helix': {
-      // 双螺旋
+      // 双螺旋（纵向拉长）
       const helixIndex = index % 2
-      const r = 18 + seed * 4
-      const angle = t * Math.PI * 8 + helixIndex * Math.PI
-      const y = (t - 0.5) * 60
+      const r = 16 + seed * 5
+      const angle = t * Math.PI * 10 + helixIndex * Math.PI
+      const y = (t - 0.5) * 75
       return new THREE.Vector3(
         Math.cos(angle) * r,
         y,
@@ -208,10 +220,10 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'fireworks': {
-      // 烟花绽放
+      // 烟花绽放（放射状，外层更稀疏）
       const phi = Math.acos(2 * seed - 1)
       const theta = 2 * Math.PI * ((index * 0.618033988749895) % 1)
-      const r = 10 + t * 35
+      const r = 8 + Math.pow(t, 0.7) * 42
       return new THREE.Vector3(
         r * Math.sin(phi) * Math.cos(theta),
         r * Math.sin(phi) * Math.sin(theta),
@@ -462,6 +474,22 @@ function switchLayout(mode) {
   isTransitioning = true
   currentMode.value = mode
   transitionProgress = 0
+  cameraAnimating = true
+  cameraAnimProgress = 0
+  controls.autoRotate = false
+
+  // 保存当前相机位置
+  cameraStartPos.copy(camera.position)
+
+  // 计算目标相机位置
+  const view = layoutCameraViews[mode]
+  const polarRad = view.polar * Math.PI / 180
+  const azRad = view.azimuth * Math.PI / 180
+  cameraTargetPos.set(
+    view.dist * Math.sin(polarRad) * Math.sin(azRad),
+    view.dist * Math.cos(polarRad),
+    view.dist * Math.sin(polarRad) * Math.cos(azRad)
+  )
 
   // 计算新目标位置
   const count = songsData.length
@@ -496,9 +524,12 @@ function animate() {
     if (transitionProgress >= 1) {
       transitionProgress = 1
       isTransitioning = false
+      cameraAnimating = false
+      controls.autoRotate = true
     }
     const t = easeInOutCubic(transitionProgress)
 
+    // 粒子位置过渡
     const posArr = songPoints.geometry.attributes.position.array
     for (let i = 0; i < songsData.length; i++) {
       const start = originalPositions[i]
@@ -508,6 +539,11 @@ function animate() {
       posArr[i * 3 + 2] = start.z + (end.z - start.z) * t
     }
     songPoints.geometry.attributes.position.needsUpdate = true
+
+    // 相机视角平滑过渡
+    if (cameraAnimating) {
+      camera.position.lerpVectors(cameraStartPos, cameraTargetPos, t)
+    }
   } else {
     // 轻微浮动
     const posArr = songPoints.geometry.attributes.position.array
