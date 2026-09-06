@@ -28,10 +28,10 @@
       </div>
     </div>
 
-    <!-- 悬浮信息卡片 -->
+    <!-- 桌面端：悬浮信息卡片 -->
     <transition name="fade">
       <div
-        v-if="hoveredSong"
+        v-if="hoveredSong && !isMobile"
         class="song-tooltip"
         :style="{ left: tooltipPos.x + 'px', top: tooltipPos.y + 'px', '--accent': hoveredSongColor }"
       >
@@ -50,8 +50,24 @@
       </div>
     </transition>
 
+    <!-- 移动端：底部歌曲信息条 -->
+    <transition name="slide-up">
+      <div v-if="selectedSong && isMobile" class="mobile-song-bar" :style="{ '--accent': selectedSongColor }">
+        <div class="msb-cover">
+          <img :src="selectedSong.cover" :alt="selectedSong.title" @error="handleImgError" />
+        </div>
+        <div class="msb-info">
+          <div class="msb-title">{{ selectedSong.title }}</div>
+          <div class="msb-artist">{{ selectedSong.artist }}</div>
+        </div>
+        <button class="msb-play-btn" @click="playSelectedSong">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </transition>
+
     <!-- 底部布局切换 -->
-    <div class="layout-controls">
+    <div class="layout-controls" :class="{ mobile: isMobile }">
       <button
         v-for="mode in layoutModes"
         :key="mode.id"
@@ -60,12 +76,12 @@
         @click="switchLayout(mode.id)"
       >
         <span class="btn-icon">{{ mode.icon }}</span>
-        <span class="btn-text">{{ mode.name }}</span>
+        <span class="btn-text" v-if="!isMobile">{{ mode.name }}</span>
       </button>
     </div>
 
     <!-- 操作提示 -->
-    <div class="tips-bar">
+    <div class="tips-bar" v-if="!isMobile">
       <span>🖱️ 拖拽旋转</span>
       <span>🔍 滚轮缩放</span>
       <span>👆 点击播放</span>
@@ -96,6 +112,9 @@ const hoveredSongColor = ref('#667eea')
 const tooltipPos = ref({ x: 0, y: 0 })
 const currentMode = ref('sphere')
 const totalSongs = ref(0)
+const selectedSong = ref(null)
+const selectedSongColor = ref('#667eea')
+const isMobile = ref(false)
 
 let scene, camera, renderer, controls
 let songPoints = null
@@ -264,10 +283,10 @@ function initThree() {
   camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 500)
   camera.position.set(0, 0, 65)
 
-  // 渲染器
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+  // 渲染器 - 移动端降低像素比
+  renderer = new THREE.WebGLRenderer({ antialias: !isMobile.value, alpha: true })
   renderer.setSize(width, height)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setPixelRatio(isMobile.value ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2))
   container.appendChild(renderer.domElement)
 
   // 控制器
@@ -280,6 +299,11 @@ function initThree() {
   controls.autoRotate = true
   controls.autoRotateSpeed = 0.2
   controls.enablePan = false
+  // 移动端触摸设置
+  controls.touches = {
+    ONE: THREE.TOUCH.ROTATE,
+    TWO: THREE.TOUCH.DOLLY_PAN
+  }
 
   // Raycaster
   raycaster = new THREE.Raycaster()
@@ -301,7 +325,7 @@ function initThree() {
 
 // ========== 背景星云 ==========
 function createNebula() {
-  const count = 4000
+  const count = isMobile.value ? 1500 : 4000
   const geometry = new THREE.BufferGeometry()
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
@@ -350,7 +374,7 @@ function createNebula() {
 
 // ========== 内层光晕 ==========
 function createInnerGlow() {
-  const count = 1200
+  const count = isMobile.value ? 400 : 1200
   const geometry = new THREE.BufferGeometry()
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
@@ -634,6 +658,49 @@ function onClick() {
   }
 }
 
+// 移动端触摸：轻触选中歌曲，显示底部信息条
+let touchStartTime = 0
+let touchStartPos = { x: 0, y: 0 }
+
+function onTouchStart(e) {
+  if (e.touches.length !== 1) return
+  touchStartTime = Date.now()
+  touchStartPos = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+}
+
+function onTouchEnd(e) {
+  // 只处理单指轻触（短时间 + 小位移 = tap）
+  if (Date.now() - touchStartTime > 300) return
+  const dx = e.changedTouches[0].clientX - touchStartPos.x
+  const dy = e.changedTouches[0].clientY - touchStartPos.y
+  if (Math.sqrt(dx * dx + dy * dy) > 20) return // 移动超过 20px 不算 tap
+
+  const rect = canvasRef.value.getBoundingClientRect()
+  const touch = e.changedTouches[0]
+  mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1
+  mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1
+
+  // 检测点击的粒子
+  raycaster.setFromCamera(mouse, camera)
+  const intersects = raycaster.intersectObject(songPoints)
+  if (intersects.length > 0) {
+    const idx = intersects[0].index
+    const song = songsData[idx]
+    selectedSong.value = song
+    const rgb = colorsArray[idx]
+    selectedSongColor.value = `rgb(${Math.round(rgb[0]*255)}, ${Math.round(rgb[1]*255)}, ${Math.round(rgb[2]*255)})`
+    createBurstEffect(song)
+  } else {
+    selectedSong.value = null
+  }
+}
+
+function playSelectedSong() {
+  if (selectedSong.value) {
+    playerStore.playSong(selectedSong.value)
+  }
+}
+
 function onResize() {
   if (!renderer || !camera) return
   const width = canvasRef.value.clientWidth
@@ -757,6 +824,10 @@ async function loadSongs() {
 
 // ========== 生命周期 ==========
 onMounted(async () => {
+  // 检测移动端
+  isMobile.value = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    || window.innerWidth < 768
+
   await loadSongs()
   await nextTick()
   initThree()
@@ -765,6 +836,9 @@ onMounted(async () => {
   window.addEventListener('resize', onResize)
   canvasRef.value.addEventListener('mousemove', onMouseMove)
   canvasRef.value.addEventListener('click', onClick)
+  // 触摸事件
+  canvasRef.value.addEventListener('touchstart', onTouchStart, { passive: true })
+  canvasRef.value.addEventListener('touchend', onTouchEnd, { passive: true })
 })
 
 onUnmounted(() => {
@@ -1019,5 +1093,121 @@ onUnmounted(() => {
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-6px);
+}
+
+/* 上滑过渡 */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* ========== 移动端适配 ========== */
+@media (max-width: 768px) {
+  .cloud-header {
+    padding: 12px 16px;
+  }
+  .header-text h1 {
+    font-size: 17px;
+  }
+  .header-text p {
+    font-size: 11px;
+  }
+  .header-right {
+    gap: 14px;
+  }
+  .stat-value {
+    font-size: 15px;
+  }
+  .stat-label {
+    font-size: 10px;
+  }
+  .back-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* 移动端布局控制（仅图标） */
+.layout-controls.mobile {
+  bottom: 24px;
+  padding: 5px;
+  gap: 2px;
+}
+.layout-controls.mobile .layout-btn {
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+/* 移动端底部歌曲条 */
+.mobile-song-bar {
+  position: fixed;
+  bottom: 80px;
+  left: 12px;
+  right: 12px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(15, 15, 35, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.3), 0 0 30px var(--accent, #667eea33);
+}
+.msb-cover {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+}
+.msb-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.msb-info {
+  flex: 1;
+  min-width: 0;
+}
+.msb-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.msb-artist {
+  color: rgba(255,255,255,0.5);
+  font-size: 12px;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.msb-play-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent, #667eea);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px var(--accent, #667eea66);
+}
+.msb-play-btn:active {
+  transform: scale(0.95);
 }
 </style>
