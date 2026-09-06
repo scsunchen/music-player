@@ -546,8 +546,10 @@ function easeInOutCubic(t) {
 // ========== 动画循环 ==========
 function animate() {
   animationId = requestAnimationFrame(animate)
-  const elapsed = clock.getElapsedTime()
+  // 先取 delta（更新内部时间戳），再读 elapsedTime
+  // 不能先调 getElapsedTime() 再调 getDelta()，否则 delta≈0
   const delta = clock.getDelta()
+  const elapsed = clock.elapsedTime
 
   // 布局过渡动画
   if (isTransitioning) {
