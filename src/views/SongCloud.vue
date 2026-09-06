@@ -547,12 +547,16 @@ function animate() {
 
   // 布局过渡动画
   if (isTransitioning) {
-    transitionProgress += delta * 0.8
+    // 安全限制：delta 异常时用固定值
+    const dt = Math.min(delta, 0.05)
+    transitionProgress += dt * 0.8
     if (transitionProgress >= 1) {
       transitionProgress = 1
       isTransitioning = false
       cameraAnimating = false
       controls.autoRotate = true
+      // 同步 OrbitControls 内部状态到新相机位置
+      controls.update()
     }
     const t = easeInOutCubic(transitionProgress)
 
@@ -570,6 +574,7 @@ function animate() {
     // 相机视角平滑过渡
     if (cameraAnimating) {
       camera.position.lerpVectors(cameraStartPos, cameraTargetPos, t)
+      camera.lookAt(0, 0, 0)
     }
   } else {
     // 轻微浮动
@@ -640,7 +645,10 @@ function animate() {
     }
   }
 
-  controls.update()
+  // 过渡期间跳过 controls.update()，避免覆盖手动相机动画
+  if (!isTransitioning) {
+    controls.update()
+  }
   renderer.render(scene, camera)
 }
 
