@@ -28,6 +28,36 @@
       </div>
     </div>
 
+    <!-- 搜索框 -->
+    <div class="cloud-search" :class="{ mobile: isMobile }">
+      <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input
+        ref="searchInputRef"
+        v-model="searchQuery"
+        type="text"
+        placeholder="搜索歌曲/歌手..."
+        @input="onSearchInput"
+        @keydown.enter="selectFirstResult"
+      />
+      <button v-if="searchQuery" class="search-clear" @click="clearSearch">✕</button>
+      <!-- 搜索结果下拉 -->
+      <div v-if="searchResults.length > 0 && searchQuery" class="search-results">
+        <div
+          v-for="(song, i) in searchResults.slice(0, 8)"
+          :key="song.id"
+          class="search-result-item"
+          @click="flyToSong(song)"
+        >
+          <img :src="song.cover" class="sr-cover" @error="handleImgError" />
+          <div class="sr-info">
+            <div class="sr-title">{{ song.title }}</div>
+            <div class="sr-artist">{{ song.artist }}</div>
+          </div>
+          <span class="sr-index">{{ i + 1 }}</span>
+        </div>
+      </div>
+    </div>
+
     <!-- 桌面端：悬浮信息卡片 -->
     <transition name="fade">
       <div
@@ -89,6 +119,7 @@
       <span>🖱️ 拖拽旋转</span>
       <span>🔍 滚轮缩放</span>
       <span>👆 点击播放</span>
+      <span>🎵 切歌自动聚焦</span>
     </div>
 
     <!-- 加载中 -->
@@ -110,6 +141,7 @@ const router = useRouter()
 const playerStore = usePlayerStore()
 
 const canvasRef = ref(null)
+const searchInputRef = ref(null)
 const loading = ref(true)
 const hoveredSong = ref(null)
 const hoveredSongColor = ref('#667eea')
@@ -119,6 +151,10 @@ const totalSongs = ref(0)
 const selectedSong = ref(null)
 const selectedSongColor = ref('#667eea')
 const isMobile = ref(false)
+
+// 搜索相关
+const searchQuery = ref('')
+const searchResults = ref([])
 
 let scene, camera, renderer, controls
 let songPoints = null
@@ -142,12 +178,32 @@ let cameraStartPos = new THREE.Vector3()
 let cameraTargetPos = new THREE.Vector3()
 let cameraAnimProgress = 0
 
+// 功能1: 当前播放歌曲高亮
+let highlightRing = null
+let highlightPulse = 0
+let currentPlayingIndex = -1
+
+// 功能3: 音频频谱可视化
+let audioAnalyser = null
+let audioSource = null
+let freqData = null
+let audioContext = null
+let beatPulse = 0
+
+// 功能5: 切歌自动聚焦
+let focusAnimating = false
+let focusStartPos = new THREE.Vector3()
+let focusTargetPos = new THREE.Vector3()
+let focusProgress = 0
+let focusSongIndex = -1
+
 // 各布局对应的相机视角
 const layoutCameraViews = {
   sphere:    { dist: 65,  polar: 90,  azimuth: 0,   name: '星云球' },
   galaxy:    { dist: 80,  polar: 65,  azimuth: 0,   name: '银河旋臂' },
   helix:     { dist: 75,  polar: 85,  azimuth: 75,  name: '双螺旋' },
   fireworks: { dist: 70,  polar: 75,  azimuth: 30,  name: '烟花绽放' },
+  artist:    { dist: 90,  polar: 80,  azimuth: 20,  name: '歌手聚类' },
 }
 
 const layoutModes = [
@@ -155,6 +211,7 @@ const layoutModes = [
   { id: 'galaxy', name: '银河旋臂', icon: '🌌' },
   { id: 'helix', name: '双螺旋', icon: '🌀' },
   { id: 'fireworks', name: '烟花绽放', icon: '🎆' },
+  { id: 'artist', name: '歌手聚类', icon: '🎤' },
 ]
 
 const artistCount = computed(() => {
@@ -164,7 +221,6 @@ const artistCount = computed(() => {
 
 // ========== 颜色生成 ==========
 function getSongColor(song, index) {
-  // 根据歌曲信息生成伪随机但稳定的颜色
   const hash = (song.title + song.artist + song.id).split('').reduce((acc, char) => {
     return char.charCodeAt(0) + ((acc << 5) - acc)
   }, 0)
@@ -206,7 +262,6 @@ function getLayoutPosition(mode, index, total, song) {
 
   switch (mode) {
     case 'sphere': {
-      // 斐波那契球面分布
       const phi = Math.acos(1 - 2 * t)
       const theta = Math.PI * (1 + Math.sqrt(5)) * index
       const r = 30 + seed * 8
@@ -217,7 +272,6 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'galaxy': {
-      // 银河旋臂（4 条旋臂，扁平盘状）
       const arms = 4
       const armIndex = index % arms
       const r = 3 + t * 45
@@ -231,7 +285,6 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'helix': {
-      // 双螺旋（纵向拉长）
       const helixIndex = index % 2
       const r = 16 + seed * 5
       const angle = t * Math.PI * 10 + helixIndex * Math.PI
@@ -243,7 +296,6 @@ function getLayoutPosition(mode, index, total, song) {
       )
     }
     case 'fireworks': {
-      // 烟花绽放（放射状，外层更稀疏）
       const phi = Math.acos(2 * seed - 1)
       const theta = 2 * Math.PI * ((index * 0.618033988749895) % 1)
       const r = 8 + Math.pow(t, 0.7) * 42
@@ -253,9 +305,58 @@ function getLayoutPosition(mode, index, total, song) {
         r * Math.cos(phi)
       )
     }
+    case 'artist': {
+      // 功能4: 按歌手聚类 — 同歌手聚成球状星团
+      if (!artistClusterData) buildArtistClusters()
+      const cluster = artistClusterData.get(song.artist)
+      if (!cluster) return new THREE.Vector3(0, 0, 0)
+      const localIdx = cluster.songIndices.indexOf(index)
+      const cT = localIdx / cluster.count
+      const cPhi = Math.acos(1 - 2 * (cT + 0.001))
+      const cTheta = Math.PI * (1 + Math.sqrt(5)) * localIdx
+      const cR = 4 + seed * 3
+      return new THREE.Vector3(
+        cluster.center.x + cR * Math.cos(cTheta) * Math.sin(cPhi),
+        cluster.center.y + cR * Math.cos(cPhi),
+        cluster.center.z + cR * Math.sin(cTheta) * Math.sin(cPhi)
+      )
+    }
     default:
       return new THREE.Vector3(0, 0, 0)
   }
+}
+
+// ========== 歌手聚类数据 ==========
+let artistClusterData = null
+
+function buildArtistClusters() {
+  artistClusterData = new Map()
+  const artistMap = new Map()
+  songsData.forEach((song, i) => {
+    if (!artistMap.has(song.artist)) {
+      artistMap.set(song.artist, [])
+    }
+    artistMap.get(song.artist).push(i)
+  })
+
+  const artists = Array.from(artistMap.keys())
+  const numArtists = artists.length
+  artists.forEach((artist, ai) => {
+    const indices = artistMap.get(artist)
+    // 将歌手星团分布在球面上
+    const phi = Math.acos(1 - 2 * (ai + 0.5) / numArtists)
+    const theta = Math.PI * (1 + Math.sqrt(5)) * ai
+    const r = 28 + (indices.length / songsData.length) * 15
+    artistClusterData.set(artist, {
+      center: new THREE.Vector3(
+        r * Math.cos(theta) * Math.sin(phi),
+        r * Math.cos(phi),
+        r * Math.sin(theta) * Math.sin(phi)
+      ),
+      songIndices: indices,
+      count: indices.length
+    })
+  })
 }
 
 // ========== 创建粒子纹理 ==========
@@ -279,21 +380,17 @@ function initThree() {
   const width = container.clientWidth
   const height = container.clientHeight
 
-  // 场景
   scene = new THREE.Scene()
   scene.fog = new THREE.FogExp2(0x05051a, 0.012)
 
-  // 相机
   camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 500)
   camera.position.set(0, 0, 65)
 
-  // 渲染器 - 移动端降低像素比
   renderer = new THREE.WebGLRenderer({ antialias: !isMobile.value, alpha: true })
   renderer.setSize(width, height)
   renderer.setPixelRatio(isMobile.value ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2))
   container.appendChild(renderer.domElement)
 
-  // 控制器
   controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
   controls.dampingFactor = 0.05
@@ -303,28 +400,121 @@ function initThree() {
   controls.autoRotate = true
   controls.autoRotateSpeed = 0.2
   controls.enablePan = false
-  // 移动端触摸设置
   controls.touches = {
     ONE: THREE.TOUCH.ROTATE,
     TWO: THREE.TOUCH.DOLLY_PAN
   }
 
-  // Raycaster
   raycaster = new THREE.Raycaster()
 
-  // 创建背景星云
   createNebula()
-
-  // 创建内层光晕
   createInnerGlow()
-
-  // 创建中心核心
   createCore()
-
-  // 创建歌曲粒子
   createSongPoints()
+  createHighlightRing()
+  initAudioAnalyser()
 
   loading.value = false
+}
+
+// ========== 功能1: 当前播放歌曲高亮光环 ==========
+function createHighlightRing() {
+  const geometry = new THREE.RingGeometry(3, 5, 64)
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  })
+  highlightRing = new THREE.Mesh(geometry, material)
+  highlightRing.visible = false
+  scene.add(highlightRing)
+}
+
+function updateHighlightRing(elapsed) {
+  if (!highlightRing) return
+
+  const song = playerStore.currentSong
+  if (!song) {
+    highlightRing.visible = false
+    currentPlayingIndex = -1
+    return
+  }
+
+  const newIdx = songsData.findIndex(s => s.id === song.id)
+  if (newIdx !== currentPlayingIndex) {
+    currentPlayingIndex = newIdx
+    if (newIdx >= 0) {
+      highlightRing.visible = true
+      const rgb = colorsArray[newIdx]
+      highlightRing.material.color.setRGB(rgb[0], rgb[1], rgb[2])
+    } else {
+      highlightRing.visible = false
+    }
+  }
+
+  if (highlightRing.visible && currentPlayingIndex >= 0) {
+    const posArr = songPoints.geometry.attributes.position.array
+    const x = posArr[currentPlayingIndex * 3]
+    const y = posArr[currentPlayingIndex * 3 + 1]
+    const z = posArr[currentPlayingIndex * 3 + 2]
+    highlightRing.position.set(x, y, z)
+
+    // 脉冲动画
+    highlightPulse += 0.05
+    const pulse = 1 + Math.sin(highlightPulse) * 0.3
+    highlightRing.scale.setScalar(pulse)
+    highlightRing.material.opacity = 0.4 + Math.sin(highlightPulse) * 0.2
+    // 让光环始终面向相机
+    highlightRing.lookAt(camera.position)
+  }
+}
+
+// ========== 功能3: 音频频谱可视化 ==========
+function initAudioAnalyser() {
+  try {
+    const audioEl = document.querySelector('audio')
+    if (!audioEl) return
+    audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    audioSource = audioContext.createMediaElementSource(audioEl)
+    audioAnalyser = audioContext.createAnalyser()
+    audioAnalyser.fftSize = 64
+    audioAnalyser.smoothingTimeConstant = 0.8
+    audioSource.connect(audioAnalyser)
+    audioAnalyser.connect(audioContext.destination)
+    freqData = new Uint8Array(audioAnalyser.frequencyBinCount)
+  } catch (e) {
+    // 音频上下文可能因跨域限制失败，静默降级
+  }
+}
+
+function updateAudioVisualization(elapsed) {
+  if (!audioAnalyser || !freqData || !songPoints) return
+  audioAnalyser.getByteFrequencyData(freqData)
+
+  const sizes = songPoints.geometry.attributes.size.array
+  const avgFreq = freqData.reduce((a, b) => a + b, 0) / freqData.length
+  beatPulse = avgFreq / 255
+
+  // 根据频段让粒子脉动
+  for (let i = 0; i < songsData.length; i++) {
+    const freqIdx = i % freqData.length
+    const freqVal = freqData[freqIdx] / 255
+    const boost = 1 + freqVal * 0.8 + beatPulse * 0.3
+    // 不影响悬浮放大逻辑，只做额外叠加
+    if (i !== currentPlayingIndex) {
+      sizes[i] = baseSizes[i] * boost
+    }
+  }
+  songPoints.geometry.attributes.size.needsUpdate = true
+
+  // 核心随节拍跳动
+  if (coreMesh) {
+    const breath = 1 + Math.sin(elapsed * 0.8) * 0.15 + beatPulse * 0.4
+    coreMesh.scale.setScalar(breath)
+  }
 }
 
 // ========== 背景星云 ==========
@@ -417,7 +607,6 @@ function createInnerGlow() {
 
 // ========== 中心核心 ==========
 function createCore() {
-  // 核心球
   const geometry = new THREE.SphereGeometry(2.5, 48, 48)
   const material = new THREE.MeshBasicMaterial({
     color: 0x667eea,
@@ -427,7 +616,6 @@ function createCore() {
   coreMesh = new THREE.Mesh(geometry, material)
   scene.add(coreMesh)
 
-  // 光晕层
   const haloGeo = new THREE.SphereGeometry(5, 32, 32)
   const haloMat = new THREE.MeshBasicMaterial({
     color: 0x667eea,
@@ -468,7 +656,6 @@ function createSongPoints() {
     colors[i * 3 + 2] = rgb[2]
     colorsArray.push(rgb)
 
-    // 大小基于时长或随机，营造层次感
     const sizeBase = 0.8 + (song.duration / 300) * 1.2
     const size = Math.min(sizeBase, 2.5)
     sizes[i] = size
@@ -499,21 +686,21 @@ function createSongPoints() {
 // ========== 布局切换 ==========
 function switchLayout(mode) {
   if (isTransitioning || mode === currentMode.value) return
+  // 如果切换到 artist 模式，先构建聚类
+  if (mode === 'artist') buildArtistClusters()
+
   isTransitioning = true
   currentMode.value = mode
   transitionProgress = 0
   cameraAnimating = true
   cameraAnimProgress = 0
 
-  // 完全禁用 OrbitControls，防止内部阻尼状态覆盖手动相机动画
   controls.enabled = false
   controls.autoRotate = false
   controls.enableDamping = false
 
-  // 保存当前相机位置
   cameraStartPos.copy(camera.position)
 
-  // 计算目标相机位置
   const view = layoutCameraViews[mode]
   const polarRad = view.polar * Math.PI / 180
   const azRad = view.azimuth * Math.PI / 180
@@ -523,10 +710,8 @@ function switchLayout(mode) {
     view.dist * Math.sin(polarRad) * Math.cos(azRad)
   )
 
-  // 计算新目标位置
   const count = songsData.length
   songsData.forEach((song, i) => {
-    const newPos = getLayoutPosition(mode, i, count, song)
     originalPositions[i].copy(
       new THREE.Vector3(
         songPoints.geometry.attributes.position.array[i * 3],
@@ -534,7 +719,7 @@ function switchLayout(mode) {
         songPoints.geometry.attributes.position.array[i * 3 + 2]
       )
     )
-    targetPositions[i] = newPos
+    targetPositions[i] = getLayoutPosition(mode, i, count, song)
   })
 }
 
@@ -543,33 +728,134 @@ function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 }
 
+// ========== 功能2: 搜索定位 ==========
+function onSearchInput() {
+  if (!searchQuery.value.trim()) {
+    searchResults.value = []
+    return
+  }
+  const q = searchQuery.value.toLowerCase()
+  searchResults.value = songsData.filter(s =>
+    s.title.toLowerCase().includes(q) ||
+    s.artist.toLowerCase().includes(q)
+  )
+}
+
+function selectFirstResult() {
+  if (searchResults.value.length > 0) {
+    flyToSong(searchResults.value[0])
+  }
+}
+
+function flyToSong(song) {
+  const idx = songsData.findIndex(s => s.id === song.id)
+  if (idx < 0) return
+
+  searchQuery.value = ''
+  searchResults.value = []
+
+  // 获取粒子当前位置
+  const posArr = songPoints.geometry.attributes.position.array
+  const targetX = posArr[idx * 3]
+  const targetY = posArr[idx * 3 + 1]
+  const targetZ = posArr[idx * 3 + 2]
+
+  // 启动聚焦动画
+  focusAnimating = true
+  focusProgress = 0
+  focusSongIndex = idx
+  focusStartPos.copy(camera.position)
+
+  // 相机目标位置：粒子前方一定距离
+  const dir = new THREE.Vector3(targetX, targetY, targetZ).normalize()
+  const dist = 20
+  focusTargetPos.set(
+    targetX + dir.x * dist,
+    targetY + dir.y * dist,
+    targetZ + dir.z * dist
+  )
+
+  // 暂停自动旋转
+  controls.autoRotate = false
+  controls.enabled = false
+
+  // 高亮该粒子
+  const rgb = colorsArray[idx]
+  selectedSong.value = song
+  selectedSongColor.value = `rgb(${Math.round(rgb[0]*255)}, ${Math.round(rgb[1]*255)}, ${Math.round(rgb[2]*255)})`
+  createBurstEffect(song)
+}
+
+function clearSearch() {
+  searchQuery.value = ''
+  searchResults.value = []
+}
+
+// ========== 功能5: 切歌自动聚焦 ==========
+function onPlayerSongChange(newSong) {
+  if (!newSong || !songPoints) return
+  const idx = songsData.findIndex(s => s.id === newSong.id)
+  if (idx < 0) return
+
+  // 如果当前正在过渡或聚焦动画中，不中断
+  if (isTransitioning) return
+
+  // 获取粒子位置
+  const posArr = songPoints.geometry.attributes.position.array
+  const targetX = posArr[idx * 3]
+  const targetY = posArr[idx * 3 + 1]
+  const targetZ = posArr[idx * 3 + 2]
+
+  focusAnimating = true
+  focusProgress = 0
+  focusSongIndex = idx
+  focusStartPos.copy(camera.position)
+
+  const dir = new THREE.Vector3(targetX, targetY, targetZ).normalize()
+  const dist = 25
+  focusTargetPos.set(
+    targetX + dir.x * dist,
+    targetY + dir.y * dist,
+    targetZ + dir.z * dist
+  )
+
+  controls.autoRotate = false
+  controls.enabled = false
+}
+
+// 监听播放器切歌
+watch(() => playerStore.currentSong?.id, (newId, oldId) => {
+  if (newId && newId !== oldId) {
+    // 延迟一点确保粒子位置已更新
+    setTimeout(() => {
+      if (playerStore.currentSong) {
+        onPlayerSongChange(playerStore.currentSong)
+      }
+    }, 100)
+  }
+})
+
 // ========== 动画循环 ==========
 function animate() {
   animationId = requestAnimationFrame(animate)
-  // 先取 delta（更新内部时间戳），再读 elapsedTime
-  // 不能先调 getElapsedTime() 再调 getDelta()，否则 delta≈0
   const delta = clock.getDelta()
   const elapsed = clock.elapsedTime
 
   // 布局过渡动画
   if (isTransitioning) {
-    // 安全限制：delta 异常时用固定值
     const dt = Math.min(delta, 0.05)
     transitionProgress += dt * 0.8
     if (transitionProgress >= 1) {
       transitionProgress = 1
       isTransitioning = false
       cameraAnimating = false
-      // 恢复 OrbitControls，从新相机位置重新开始
       controls.autoRotate = true
       controls.enableDamping = true
       controls.enabled = true
-      // update() 会读取当前相机位置，重新推导内部球面坐标
       controls.update()
     }
     const t = easeInOutCubic(transitionProgress)
 
-    // 粒子位置过渡
     const posArr = songPoints.geometry.attributes.position.array
     for (let i = 0; i < songsData.length; i++) {
       const start = originalPositions[i]
@@ -580,9 +866,33 @@ function animate() {
     }
     songPoints.geometry.attributes.position.needsUpdate = true
 
-    // 相机视角平滑过渡
     if (cameraAnimating) {
       camera.position.lerpVectors(cameraStartPos, cameraTargetPos, t)
+      camera.lookAt(0, 0, 0)
+    }
+  } else if (focusAnimating) {
+    // 功能5: 相机聚焦动画
+    const dt = Math.min(delta, 0.05)
+    focusProgress += dt * 1.2
+    if (focusProgress >= 1) {
+      focusProgress = 1
+      focusAnimating = false
+      controls.autoRotate = true
+      controls.enableDamping = true
+      controls.enabled = true
+      controls.update()
+    }
+    const t = easeInOutCubic(focusProgress)
+    camera.position.lerpVectors(focusStartPos, focusTargetPos, t)
+
+    // 聚焦目标粒子位置
+    if (focusSongIndex >= 0) {
+      const posArr = songPoints.geometry.attributes.position.array
+      const tx = posArr[focusSongIndex * 3]
+      const ty = posArr[focusSongIndex * 3 + 1]
+      const tz = posArr[focusSongIndex * 3 + 2]
+      camera.lookAt(tx, ty, tz)
+    } else {
       camera.lookAt(0, 0, 0)
     }
   } else {
@@ -604,8 +914,8 @@ function animate() {
     innerGlow.rotation.y = -elapsed * 0.025
   }
 
-  // 核心呼吸
-  if (coreMesh) {
+  // 核心呼吸（如果没有音频分析则用默认动画）
+  if (coreMesh && !audioAnalyser) {
     const breath = 1 + Math.sin(elapsed * 0.8) * 0.15
     coreMesh.scale.setScalar(breath)
   }
@@ -616,8 +926,16 @@ function animate() {
     coreMesh.material.color.lerp(color, 0.02)
   }
 
-  // Raycaster 检测悬浮（过渡期间跳过，避免干扰相机动画）
-  if (songPoints && mouse.x > -9 && !isTransitioning && controls.enabled) {
+  // 功能1: 更新当前播放高亮光环
+  updateHighlightRing(elapsed)
+
+  // 功能3: 更新音频频谱可视化
+  if (!isTransitioning && !focusAnimating) {
+    updateAudioVisualization(elapsed)
+  }
+
+  // Raycaster 检测悬浮（过渡/聚焦期间跳过）
+  if (songPoints && mouse.x > -9 && !isTransitioning && !focusAnimating && controls.enabled) {
     raycaster.setFromCamera(mouse, camera)
     const intersects = raycaster.intersectObject(songPoints)
 
@@ -629,12 +947,11 @@ function animate() {
         const rgb = colorsArray[idx]
         hoveredSongColor.value = `rgb(${Math.round(rgb[0]*255)}, ${Math.round(rgb[1]*255)}, ${Math.round(rgb[2]*255)})`
       }
-      // 悬浮放大
       const sizes = songPoints.geometry.attributes.size.array
       for (let i = 0; i < sizes.length; i++) {
         if (i === idx) {
           sizes[i] += (baseSizes[i] * 2.5 - sizes[i]) * 0.15
-        } else {
+        } else if (i !== currentPlayingIndex) {
           sizes[i] += (baseSizes[i] - sizes[i]) * 0.05
         }
       }
@@ -643,10 +960,11 @@ function animate() {
     } else {
       if (hoveredSong.value) {
         hoveredSong.value = null
-        // 恢复大小
         const sizes = songPoints.geometry.attributes.size.array
         for (let i = 0; i < sizes.length; i++) {
-          sizes[i] = baseSizes[i]
+          if (i !== currentPlayingIndex) {
+            sizes[i] = baseSizes[i]
+          }
         }
         songPoints.geometry.attributes.size.needsUpdate = true
         controls.autoRotate = true
@@ -654,8 +972,7 @@ function animate() {
     }
   }
 
-  // 正常帧调用 controls.update()，过渡期间完全跳过
-  if (!isTransitioning && controls.enabled) {
+  if (!isTransitioning && !focusAnimating && controls.enabled) {
     controls.update()
   }
   renderer.render(scene, camera)
@@ -671,9 +988,7 @@ function onMouseMove(e) {
 
 function onClick() {
   if (hoveredSong.value) {
-    // 播放歌曲
     playerStore.playSong(hoveredSong.value)
-    // 粒子爆裂效果
     createBurstEffect(hoveredSong.value)
   }
 }
@@ -686,7 +1001,7 @@ function playHoveredSong() {
   }
 }
 
-// 移动端触摸：轻触选中歌曲，显示底部信息条
+// 移动端触摸
 let touchStartTime = 0
 let touchStartPos = { x: 0, y: 0 }
 
@@ -697,18 +1012,16 @@ function onTouchStart(e) {
 }
 
 function onTouchEnd(e) {
-  // 只处理单指轻触（短时间 + 小位移 = tap）
   if (Date.now() - touchStartTime > 300) return
   const dx = e.changedTouches[0].clientX - touchStartPos.x
   const dy = e.changedTouches[0].clientY - touchStartPos.y
-  if (Math.sqrt(dx * dx + dy * dy) > 20) return // 移动超过 20px 不算 tap
+  if (Math.sqrt(dx * dx + dy * dy) > 20) return
 
   const rect = canvasRef.value.getBoundingClientRect()
   const touch = e.changedTouches[0]
   mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1
   mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1
 
-  // 检测点击的粒子
   raycaster.setFromCamera(mouse, camera)
   const intersects = raycaster.intersectObject(songPoints)
   if (intersects.length > 0) {
@@ -740,7 +1053,6 @@ function onResize() {
 
 // ========== 爆裂效果 ==========
 function createBurstEffect(song) {
-  // 找到歌曲粒子位置
   const idx = songsData.findIndex(s => s.id === song.id)
   if (idx < 0) return
 
@@ -841,7 +1153,6 @@ async function loadSongs() {
     songsData = data.songs || data
     totalSongs.value = songsData.length
   } catch (e) {
-    // fallback
     const { resolveUrl } = (await import('../utils/baseUrl'))
     const res = await fetch(resolveUrl('data/songs.json'))
     const data = await res.json()
@@ -852,7 +1163,6 @@ async function loadSongs() {
 
 // ========== 生命周期 ==========
 onMounted(async () => {
-  // 检测移动端
   isMobile.value = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     || window.innerWidth < 768
 
@@ -864,7 +1174,6 @@ onMounted(async () => {
   window.addEventListener('resize', onResize)
   canvasRef.value.addEventListener('mousemove', onMouseMove)
   canvasRef.value.addEventListener('click', onClick)
-  // 触摸事件
   canvasRef.value.addEventListener('touchstart', onTouchStart, { passive: true })
   canvasRef.value.addEventListener('touchend', onTouchEnd, { passive: true })
 })
@@ -877,6 +1186,9 @@ onUnmounted(() => {
     canvasRef.value?.removeChild(renderer.domElement)
   }
   if (controls) controls.dispose()
+  if (audioContext) {
+    audioContext.close()
+  }
 })
 </script>
 
@@ -969,6 +1281,127 @@ onUnmounted(() => {
   font-size: 18px;
   font-weight: 600;
   margin-top: 2px;
+}
+
+/* 搜索框 */
+.cloud-search {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 15, 35, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 8px 16px;
+  transition: border-color 0.25s;
+}
+.cloud-search:focus-within {
+  border-color: rgba(102, 126, 234, 0.5);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.15);
+}
+.cloud-search.mobile {
+  width: calc(100% - 32px);
+  top: 64px;
+}
+.search-icon {
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+.cloud-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+}
+.cloud-search input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+.search-clear {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.search-clear:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+/* 搜索结果下拉 */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.search-results::-webkit-scrollbar {
+  display: none;
+}
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.search-result-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+.sr-cover {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.sr-info {
+  flex: 1;
+  min-width: 0;
+}
+.sr-title {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sr-artist {
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sr-index {
+  color: rgba(255,255,255,0.2);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 /* 悬浮卡片 */
