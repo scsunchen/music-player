@@ -1052,7 +1052,7 @@ onUnmounted(() => {
 .layout-controls {
   position: fixed;
   right: 16px;
-  top: calc(50% - 50px);
+  top: calc(50% - 140px);
   transform: translateY(-50%);
   z-index: 10;
   display: flex;
