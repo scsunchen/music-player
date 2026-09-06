@@ -1052,8 +1052,7 @@ onUnmounted(() => {
 .layout-controls {
   position: fixed;
   right: 16px;
-  top: calc(50% - 140px);
-  transform: translateY(-50%);
+  bottom: calc(50% + 40px);
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -1184,9 +1183,7 @@ onUnmounted(() => {
 /* 移动端布局控制（右侧竖排，仅图标） */
 .layout-controls.mobile {
   right: 8px;
-  top: calc(50% - 140px);
-  bottom: auto;
-  transform: translateY(-50%);
+  bottom: calc(50% + 40px);
   padding: 4px;
   gap: 2px;
 }
