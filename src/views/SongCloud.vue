@@ -69,7 +69,7 @@
       </div>
     </transition>
 
-    <!-- 底部布局切换 -->
+    <!-- 右侧布局切换（竖向排列） -->
     <div class="layout-controls" :class="{ mobile: isMobile }">
       <button
         v-for="mode in layoutModes"
@@ -77,9 +77,10 @@
         class="layout-btn"
         :class="{ active: currentMode === mode.id }"
         @click="switchLayout(mode.id)"
+        :title="mode.name"
       >
         <span class="btn-icon">{{ mode.icon }}</span>
-        <span class="btn-text" v-if="!isMobile">{{ mode.name }}</span>
+        <span class="btn-text">{{ mode.name }}</span>
       </button>
     </div>
 
@@ -503,7 +504,11 @@ function switchLayout(mode) {
   transitionProgress = 0
   cameraAnimating = true
   cameraAnimProgress = 0
+
+  // 完全禁用 OrbitControls，防止内部阻尼状态覆盖手动相机动画
+  controls.enabled = false
   controls.autoRotate = false
+  controls.enableDamping = false
 
   // 保存当前相机位置
   cameraStartPos.copy(camera.position)
@@ -522,7 +527,6 @@ function switchLayout(mode) {
   const count = songsData.length
   songsData.forEach((song, i) => {
     const newPos = getLayoutPosition(mode, i, count, song)
-    // 保存当前位置作为起点
     originalPositions[i].copy(
       new THREE.Vector3(
         songPoints.geometry.attributes.position.array[i * 3],
@@ -554,8 +558,11 @@ function animate() {
       transitionProgress = 1
       isTransitioning = false
       cameraAnimating = false
+      // 恢复 OrbitControls，从新相机位置重新开始
       controls.autoRotate = true
-      // 同步 OrbitControls 内部状态到新相机位置
+      controls.enableDamping = true
+      controls.enabled = true
+      // update() 会读取当前相机位置，重新推导内部球面坐标
       controls.update()
     }
     const t = easeInOutCubic(transitionProgress)
@@ -607,8 +614,8 @@ function animate() {
     coreMesh.material.color.lerp(color, 0.02)
   }
 
-  // Raycaster 检测悬浮
-  if (songPoints && mouse.x > -9) {
+  // Raycaster 检测悬浮（过渡期间跳过，避免干扰相机动画）
+  if (songPoints && mouse.x > -9 && !isTransitioning && controls.enabled) {
     raycaster.setFromCamera(mouse, camera)
     const intersects = raycaster.intersectObject(songPoints)
 
@@ -645,8 +652,8 @@ function animate() {
     }
   }
 
-  // 过渡期间跳过 controls.update()，避免覆盖手动相机动画
-  if (!isTransitioning) {
+  // 正常帧调用 controls.update()，过渡期间完全跳过
+  if (!isTransitioning && controls.enabled) {
     controls.update()
   }
   renderer.render(scene, camera)
@@ -1039,39 +1046,40 @@ onUnmounted(() => {
   border-radius: 0 0 14px 14px;
 }
 
-/* 底部控制 */
+/* 右侧竖排布局控制 */
 .layout-controls {
   position: fixed;
-  bottom: 96px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 10;
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+  gap: 4px;
   background: rgba(15, 15, 35, 0.65);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 100px;
+  border-radius: 14px;
   padding: 6px;
 }
-
 .layout-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 18px;
+  padding: 10px 12px;
   border: none;
   background: transparent;
   color: rgba(255,255,255,0.5);
-  border-radius: 100px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 13px;
   font-family: inherit;
   transition: all 0.25s;
+  white-space: nowrap;
 }
 .layout-btn:hover {
-  color: rgba(255,255,255,0.85);
-  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.08);
 }
 .layout-btn.active {
   background: rgba(255,255,255,0.15);
@@ -1083,11 +1091,11 @@ onUnmounted(() => {
 .tips-bar {
   position: fixed;
   bottom: 96px;
-  right: 20px;
+  left: 20px;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 6px;
   color: rgba(255,255,255,0.3);
   font-size: 12px;
@@ -1171,15 +1179,23 @@ onUnmounted(() => {
   }
 }
 
-/* 移动端布局控制（仅图标） */
+/* 移动端布局控制（右侧竖排，仅图标） */
 .layout-controls.mobile {
-  bottom: 96px;
-  padding: 5px;
+  right: 8px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  padding: 4px;
   gap: 2px;
 }
 .layout-controls.mobile .layout-btn {
-  padding: 10px 12px;
+  padding: 8px 10px;
   font-size: 16px;
+  flex-direction: column;
+  gap: 2px;
+}
+.layout-controls.mobile .btn-text {
+  font-size: 9px;
 }
 
 /* 移动端底部歌曲条 */
