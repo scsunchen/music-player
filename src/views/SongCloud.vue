@@ -1184,7 +1184,7 @@ onUnmounted(() => {
 /* 移动端布局控制（右侧竖排，仅图标） */
 .layout-controls.mobile {
   right: 8px;
-  top: calc(50% - 50px);
+  top: calc(50% - 120px);
   bottom: auto;
   transform: translateY(-50%);
   padding: 4px;
