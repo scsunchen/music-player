@@ -46,7 +46,10 @@
             <span>⏱️ {{ formatDuration(hoveredSong.duration) }}</span>
           </div>
         </div>
-        <div class="tooltip-hint">点击播放</div>
+        <button class="tooltip-play-btn" @click.stop="playHoveredSong">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          <span>播放</span>
+        </button>
       </div>
     </transition>
 
@@ -658,6 +661,14 @@ function onClick() {
   }
 }
 
+function playHoveredSong() {
+  if (hoveredSong.value) {
+    playerStore.playSong(hoveredSong.value)
+    createBurstEffect(hoveredSong.value)
+    hoveredSong.value = null
+  }
+}
+
 // 移动端触摸：轻触选中歌曲，显示底部信息条
 let touchStartTime = 0
 let touchStartPos = { x: 0, y: 0 }
@@ -947,7 +958,7 @@ onUnmounted(() => {
 .song-tooltip {
   position: fixed;
   z-index: 100;
-  pointer-events: none;
+  pointer-events: auto;
   width: 260px;
   background: rgba(15, 15, 35, 0.9);
   backdrop-filter: blur(20px);
@@ -992,20 +1003,38 @@ onUnmounted(() => {
   color: rgba(255,255,255,0.4);
   font-size: 11px;
 }
-.tooltip-hint {
+.tooltip-play-btn {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid rgba(255,255,255,0.08);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
   color: var(--accent, #667eea);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.tooltip-play-btn:hover {
+  color: #fff;
+  background: var(--accent, #667eea);
+  margin: 10px -14px -14px -14px;
+  padding: 12px 14px;
+  border-radius: 0 0 14px 14px;
 }
 
 /* 底部控制 */
 .layout-controls {
   position: fixed;
-  bottom: 50px;
+  bottom: 96px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -1045,11 +1074,13 @@ onUnmounted(() => {
 /* 操作提示 */
 .tips-bar {
   position: fixed;
-  bottom: 16px;
+  bottom: 96px;
   right: 20px;
   z-index: 10;
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
   color: rgba(255,255,255,0.3);
   font-size: 12px;
 }
@@ -1134,7 +1165,7 @@ onUnmounted(() => {
 
 /* 移动端布局控制（仅图标） */
 .layout-controls.mobile {
-  bottom: 24px;
+  bottom: 96px;
   padding: 5px;
   gap: 2px;
 }
@@ -1146,7 +1177,7 @@ onUnmounted(() => {
 /* 移动端底部歌曲条 */
 .mobile-song-bar {
   position: fixed;
-  bottom: 80px;
+  bottom: 96px;
   left: 12px;
   right: 12px;
   z-index: 15;
