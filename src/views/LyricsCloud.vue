@@ -99,7 +99,21 @@ let smoothTimeRaf = null
 let lastFrameTime = 0
 
 const currentSong = computed(() => playerStore.currentSong)
-const lyricsLines = computed(() => playerStore.currentSongLyrics || [])
+
+// 解析 LRC 歌词
+const lyricsLines = computed(() => {
+  if (!currentSong.value) return []
+  const raw = playerStore.lyricsData?.[currentSong.value.id]?.lyrics || ''
+  if (!raw) return []
+  return raw.split('\n').filter(l => l.trim()).map(line => {
+    const match = line.match(/\[(\d{2}):(\d{2})\.(\d{2,3})\]\s*(.*)/)
+    if (match) {
+      const time = parseInt(match[1]) * 60 + parseInt(match[2]) + parseInt(match[3]) / (match[3].length === 3 ? 1000 : 100)
+      return { time, text: match[4] }
+    }
+    return null
+  }).filter(Boolean)
+})
 
 // 主题色板
 const colorPalette = [
@@ -437,14 +451,20 @@ function onResize() {
 }
 
 // ========== 监听歌曲/歌词变化 ==========
-watch(() => playerStore.currentSong?.id, async () => {
+watch(() => playerStore.currentSong?.id, async (newId) => {
   loading.value = true
-  // 等歌词加载
-  await new Promise(resolve => setTimeout(resolve, 500))
-  await nextTick()
-  buildLyricsCloud()
   currentLineIndex = -1
   prevLineIndex = -1
+  // 主动加载新歌曲的歌词
+  if (newId) {
+    try {
+      await playerStore.loadLyricsForSong?.(newId)
+    } catch (e) { /* ignore */ }
+  }
+  await nextTick()
+  if (lyricsLines.value.length > 0) {
+    buildLyricsCloud()
+  }
   loading.value = false
 })
 
@@ -462,18 +482,25 @@ onMounted(async () => {
   isMobile.value = window.innerWidth < 768
   initThree()
 
+  // 主动加载歌词
+  if (currentSong.value?.id && lyricsLines.value.length === 0) {
+    try {
+      await playerStore.loadLyricsForSong?.(currentSong.value.id)
+    } catch (e) { /* ignore */ }
+  }
+
   // 等待歌词加载
   if (lyricsLines.value.length > 0) {
     buildLyricsCloud()
     loading.value = false
   } else {
-    // 等一下歌词
+    // 再等一下歌词加载
     setTimeout(() => {
       if (lyricsLines.value.length > 0) {
         buildLyricsCloud()
       }
       loading.value = false
-    }, 1000)
+    }, 1500)
   }
 
   lastFrameTime = performance.now()
