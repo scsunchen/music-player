@@ -106,6 +106,11 @@ const routes = [
     path: '/cloud',
     name: 'SongCloud',
     component: () => import('../views/SongCloud.vue')
+  },
+  {
+    path: '/lyrics-cloud',
+    name: 'LyricsCloud',
+    component: () => import('../views/LyricsCloud.vue')
   }
 ]
 

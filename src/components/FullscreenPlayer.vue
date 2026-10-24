@@ -104,6 +104,15 @@
 
         <!-- 右侧：歌词 -->
         <div class="fs-right">
+          <div class="lyrics-header" v-if="lyricsLines.length > 0">
+            <span class="lyrics-title">歌词</span>
+            <button class="lyrics-cloud-btn" @click="openLyricsCloud" title="歌词云">
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+              </svg>
+              <span>歌词云</span>
+            </button>
+          </div>
           <div class="fs-lyrics" ref="lyricsRef" v-if="lyricsLines.length > 0">
             <p v-for="(line, index) in lyricsLines" :key="index" class="fs-lyric-line" :class="{ active: index === activeLineIndex }" @click="seekToLyric(line)">{{ line.text }}</p>
           </div>
@@ -118,12 +127,14 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import MusicVisualizer from './MusicVisualizer.vue'
 
 const props = defineProps({ visible: Boolean })
 const emit = defineEmits(['close'])
 
+const router = useRouter()
 const playerStore = usePlayerStore()
 const lyricsRef = ref(null)
 const visualizerRef = ref(null)
@@ -257,6 +268,11 @@ const activeLineIndex = computed(() => {
 })
 
 const seekToLyric = (line) => { if (line?.time !== undefined) playerStore.seekTo(line.time) }
+
+const openLyricsCloud = () => {
+  emit('close')
+  router.push('/lyrics-cloud?from=fullscreen')
+}
 
 // 用 RAF 手动插值滚动，比 scrollTo smooth 更丝滑
 let lastScrolledIndex = -1
@@ -788,6 +804,37 @@ const seek = (e) => {
   min-width: 0;
   overflow: hidden;
   margin-top: 16px;
+}
+
+.lyrics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px 8px;
+}
+.lyrics-title {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+.lyrics-cloud-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.lyrics-cloud-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .fs-lyrics {
