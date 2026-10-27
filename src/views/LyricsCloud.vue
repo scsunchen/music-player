@@ -164,7 +164,7 @@ function initThree() {
   const h = canvas.clientHeight
 
   scene = new THREE.Scene()
-  scene.fog = new THREE.FogExp2(0x05051a, 0.008)
+  scene.fog = new THREE.FogExp2(0x05051a, 0.0035)
 
   camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000)
   camera.position.set(0, 0, 120)
@@ -214,14 +214,24 @@ function createTextTexture(text, color, fontSize = 48, highlighted = false) {
   const colorHex = '#' + color.toString(16).padStart(6, '0')
 
   if (highlighted) {
-    // 高亮版本：多层强发光
-    ctx.shadowColor = colorHex
-    ctx.shadowBlur = 40
-    ctx.globalAlpha = 0.8
-    ctx.fillStyle = colorHex
+    // 高亮版本：金色强光晕 + 纯白文字
+    const glowColor = '#ffd700'
+
+    // 外层大光晕
+    ctx.shadowColor = glowColor
+    ctx.shadowBlur = 50
+    ctx.globalAlpha = 0.6
+    ctx.fillStyle = glowColor
     ctx.fillText(text, x, y)
 
-    ctx.shadowBlur = 20
+    // 中层光晕
+    ctx.shadowBlur = 25
+    ctx.globalAlpha = 0.9
+    ctx.fillText(text, x, y)
+
+    // 主体纯白文字
+    ctx.shadowBlur = 8
+    ctx.shadowColor = '#ffffff'
     ctx.globalAlpha = 1
     ctx.fillStyle = '#ffffff'
     ctx.fillText(text, x, y)
@@ -323,7 +333,7 @@ function buildLyricsCloud() {
     const material = new THREE.MeshBasicMaterial({
       map: texture,
       transparent: true,
-      opacity: 0.45 + Math.random() * 0.3,
+      opacity: 0.3 + Math.random() * 0.25,
       side: THREE.DoubleSide,
       depthWrite: false,
     })
@@ -338,10 +348,10 @@ function buildLyricsCloud() {
     scene.add(mesh)
     lyricMeshes.push(mesh)
 
-    // 光晕层（默认隐藏，激活时显示）
-    const glowSize = Math.max(width, height) * scaleFactor * 2.5
+    // 光晕层（默认隐藏，激活时显示）— 金色
+    const glowSize = Math.max(width, height) * scaleFactor * 3.5
     const glowGeometry = new THREE.PlaneGeometry(glowSize, glowSize)
-    const glowTexture = createGlowTexture(color)
+    const glowTexture = createGlowTexture(0xffd700)
     const glowMaterial = new THREE.MeshBasicMaterial({
       map: glowTexture,
       transparent: true,
@@ -434,12 +444,12 @@ function animate() {
 
     if (data.isActive) {
       // 当前行：飞到正前方 + 高亮 + 光晕
-      const targetZ = 40
+      const targetZ = 55
       mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * t
       mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * t
       mesh.position.z = data.originalPos.z + (targetZ - data.originalPos.z) * t
 
-      const scaleMultiplier = 2.8
+      const scaleMultiplier = 3.2
       mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * t
       mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * t
 
@@ -452,20 +462,20 @@ function animate() {
         mesh.material.needsUpdate = true
       }
 
-      // 强脉冲发光
-      const pulse = 0.7 + 0.3 * Math.sin(elapsed * 4)
-      mesh.material.opacity = 0.9 + 0.1 * pulse
+      // 全亮 + 轻微脉冲
+      const pulse = 0.85 + 0.15 * Math.sin(elapsed * 3)
+      mesh.material.opacity = pulse
 
       // 光晕层跟随 + 脉冲
       if (glowMesh) {
         glowMesh.position.x = mesh.position.x
         glowMesh.position.y = mesh.position.y
-        glowMesh.position.z = mesh.position.z - 2
+        glowMesh.position.z = mesh.position.z - 3
         glowMesh.rotation.y = mesh.rotation.y
         glowMesh.rotation.x = mesh.rotation.x
-        const glowScale = 1 + 0.3 * Math.sin(elapsed * 2.5)
+        const glowScale = 1 + 0.25 * Math.sin(elapsed * 2)
         glowMesh.scale.setScalar(scaleMultiplier * glowScale)
-        glowMesh.material.opacity = 0.5 * t * (0.7 + 0.3 * pulse)
+        glowMesh.material.opacity = 0.7 * t * (0.7 + 0.3 * pulse)
       }
 
     } else if (i === prevLineIndex && transitionProgress < 1) {
@@ -473,9 +483,9 @@ function animate() {
       const reverseT = 1 - t
       mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * reverseT
       mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * reverseT
-      mesh.position.z = data.originalPos.z + (40 - data.originalPos.z) * reverseT
+      mesh.position.z = data.originalPos.z + (55 - data.originalPos.z) * reverseT
 
-      const scaleMultiplier = 2.8
+      const scaleMultiplier = 3.2
       mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * reverseT
       mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * reverseT
 
@@ -488,7 +498,7 @@ function animate() {
       if (glowMesh) {
         glowMesh.position.x = mesh.position.x
         glowMesh.position.y = mesh.position.y
-        glowMesh.position.z = mesh.position.z - 2
+        glowMesh.position.z = mesh.position.z - 3
         glowMesh.rotation.y = mesh.rotation.y
         glowMesh.rotation.x = mesh.rotation.x
         glowMesh.scale.setScalar(scaleMultiplier)
