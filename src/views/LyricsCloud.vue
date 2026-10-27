@@ -89,6 +89,7 @@ const smoothCurrentTime = ref(0)
 
 let scene, camera, renderer, controls
 let lyricMeshes = []
+let lyricGlowMeshes = []
 let lyricData = []
 let animationId = null
 let clock = new THREE.Clock()
@@ -189,7 +190,7 @@ function initThree() {
 }
 
 // ========== 创建文字纹理 ==========
-function createTextTexture(text, color, fontSize = 48) {
+function createTextTexture(text, color, fontSize = 48, highlighted = false) {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const dpr = 2
@@ -197,7 +198,7 @@ function createTextTexture(text, color, fontSize = 48) {
   ctx.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif`
   const metrics = ctx.measureText(text)
   const textWidth = Math.max(metrics.width, 10)
-  const padding = fontSize * 0.6
+  const padding = fontSize * (highlighted ? 1.2 : 0.6)
 
   canvas.width = (textWidth + padding * 2) * dpr
   canvas.height = fontSize * 2.2 * dpr
@@ -210,18 +211,34 @@ function createTextTexture(text, color, fontSize = 48) {
   const x = (textWidth + padding * 2) / 2
   const y = fontSize * 1.1
 
-  // 发光层
-  ctx.shadowColor = '#' + color.toString(16).padStart(6, '0')
-  ctx.shadowBlur = 20
-  ctx.fillStyle = '#' + color.toString(16).padStart(6, '0')
-  ctx.globalAlpha = 0.3
-  ctx.fillText(text, x, y)
+  const colorHex = '#' + color.toString(16).padStart(6, '0')
 
-  // 主体文字
-  ctx.shadowBlur = 0
-  ctx.globalAlpha = 1
-  ctx.fillStyle = '#ffffff'
-  ctx.fillText(text, x, y)
+  if (highlighted) {
+    // 高亮版本：多层强发光
+    ctx.shadowColor = colorHex
+    ctx.shadowBlur = 40
+    ctx.globalAlpha = 0.8
+    ctx.fillStyle = colorHex
+    ctx.fillText(text, x, y)
+
+    ctx.shadowBlur = 20
+    ctx.globalAlpha = 1
+    ctx.fillStyle = '#ffffff'
+    ctx.fillText(text, x, y)
+  } else {
+    // 普通版本：淡发光
+    ctx.shadowColor = colorHex
+    ctx.shadowBlur = 15
+    ctx.fillStyle = colorHex
+    ctx.globalAlpha = 0.25
+    ctx.fillText(text, x, y)
+
+    // 主体文字
+    ctx.shadowBlur = 0
+    ctx.globalAlpha = 1
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'
+    ctx.fillText(text, x, y)
+  }
 
   const texture = new THREE.CanvasTexture(canvas)
   texture.minFilter = THREE.LinearFilter
@@ -231,6 +248,30 @@ function createTextTexture(text, color, fontSize = 48) {
     width: textWidth + padding * 2,
     height: fontSize * 2.2,
   }
+}
+
+// ========== 创建光晕纹理 ==========
+function createGlowTexture(color) {
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+  const size = 256
+  canvas.width = size
+  canvas.height = size
+
+  const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
+  const colorHex = '#' + color.toString(16).padStart(6, '0')
+  gradient.addColorStop(0, colorHex + 'aa')
+  gradient.addColorStop(0.3, colorHex + '44')
+  gradient.addColorStop(0.6, colorHex + '11')
+  gradient.addColorStop(1, colorHex + '00')
+
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.minFilter = THREE.LinearFilter
+  texture.magFilter = THREE.LinearFilter
+  return texture
 }
 
 // ========== 球面上随机分布 ==========
@@ -255,7 +296,14 @@ function buildLyricsCloud() {
     m.material.map?.dispose()
     m.material.dispose()
   })
+  lyricGlowMeshes.forEach(m => {
+    scene.remove(m)
+    m.geometry.dispose()
+    m.material.map?.dispose()
+    m.material.dispose()
+  })
   lyricMeshes = []
+  lyricGlowMeshes = []
   lyricData = []
 
   const lines = lyricsLines.value
@@ -267,7 +315,8 @@ function buildLyricsCloud() {
     const color = colorPalette[Math.floor(Math.random() * colorPalette.length)]
     const baseSize = isMobile.value ? 22 : 32
     const fontSize = baseSize + Math.random() * (baseSize * 0.8)
-    const { texture, width, height } = createTextTexture(line.text || '', color, fontSize)
+    const { texture, width, height } = createTextTexture(line.text || '', color, fontSize, false)
+    const { texture: highlightTexture, width: hlWidth, height: hlHeight } = createTextTexture(line.text || '', color, fontSize, true)
 
     const scaleFactor = isMobile.value ? 0.12 : 0.15
     const geometry = new THREE.PlaneGeometry(width * scaleFactor, height * scaleFactor)
@@ -288,6 +337,26 @@ function buildLyricsCloud() {
 
     scene.add(mesh)
     lyricMeshes.push(mesh)
+
+    // 光晕层（默认隐藏，激活时显示）
+    const glowSize = Math.max(width, height) * scaleFactor * 2.5
+    const glowGeometry = new THREE.PlaneGeometry(glowSize, glowSize)
+    const glowTexture = createGlowTexture(color)
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      map: glowTexture,
+      transparent: true,
+      opacity: 0,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    })
+    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial)
+    glowMesh.position.copy(mesh.position)
+    glowMesh.position.z -= 1
+    glowMesh.rotation.copy(mesh.rotation)
+    scene.add(glowMesh)
+    lyricGlowMeshes.push(glowMesh)
+
     lyricData.push({
       index: i,
       text: line.text,
@@ -296,6 +365,10 @@ function buildLyricsCloud() {
       originalScale: mesh.scale.clone(),
       originalOpacity: material.opacity,
       originalRotation: mesh.rotation.clone(),
+      normalTexture: texture,
+      highlightTexture: highlightTexture,
+      hlWidth: hlWidth * scaleFactor,
+      hlHeight: hlHeight * scaleFactor,
       isActive: false,
       floatOffset: Math.random() * Math.PI * 2,
       floatSpeed: 0.5 + Math.random() * 0.5,
@@ -356,34 +429,53 @@ function animate() {
   // 更新每个歌词粒子
   lyricData.forEach((data, i) => {
     const mesh = lyricMeshes[i]
+    const glowMesh = lyricGlowMeshes[i]
     if (!mesh) return
 
     if (data.isActive) {
-      // 当前行：飞到正前方
+      // 当前行：飞到正前方 + 高亮 + 光晕
       const targetZ = 40
       mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * t
       mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * t
       mesh.position.z = data.originalPos.z + (targetZ - data.originalPos.z) * t
 
-      const scaleMultiplier = 2.5
+      const scaleMultiplier = 2.8
       mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * t
       mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * t
 
       mesh.rotation.y = data.originalRotation.y + (0 - data.originalRotation.y) * t
       mesh.rotation.x = data.originalRotation.x + (0 - data.originalRotation.x) * t
 
-      // 发光脉冲
-      const pulse = 0.7 + 0.3 * Math.sin(elapsed * 3)
-      mesh.material.opacity = data.originalOpacity + (1 - data.originalOpacity) * t * pulse
+      // 切换到高亮纹理
+      if (mesh.material.map !== data.highlightTexture) {
+        mesh.material.map = data.highlightTexture
+        mesh.material.needsUpdate = true
+      }
+
+      // 强脉冲发光
+      const pulse = 0.7 + 0.3 * Math.sin(elapsed * 4)
+      mesh.material.opacity = 0.9 + 0.1 * pulse
+
+      // 光晕层跟随 + 脉冲
+      if (glowMesh) {
+        glowMesh.position.x = mesh.position.x
+        glowMesh.position.y = mesh.position.y
+        glowMesh.position.z = mesh.position.z - 2
+        glowMesh.rotation.y = mesh.rotation.y
+        glowMesh.rotation.x = mesh.rotation.x
+        const glowScale = 1 + 0.3 * Math.sin(elapsed * 2.5)
+        glowMesh.scale.setScalar(scaleMultiplier * glowScale)
+        glowMesh.material.opacity = 0.5 * t * (0.7 + 0.3 * pulse)
+      }
 
     } else if (i === prevLineIndex && transitionProgress < 1) {
-      // 上一行：飞回原位
+      // 上一行：飞回原位 + 恢复普通状态
       const reverseT = 1 - t
       mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * reverseT
       mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * reverseT
       mesh.position.z = data.originalPos.z + (40 - data.originalPos.z) * reverseT
 
-      const scaleMultiplier = 2.5
+      const scaleMultiplier = 2.8
       mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * reverseT
       mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * reverseT
 
@@ -392,12 +484,34 @@ function animate() {
 
       mesh.material.opacity = data.originalOpacity + (1 - data.originalOpacity) * reverseT
 
+      // 光晕淡出
+      if (glowMesh) {
+        glowMesh.position.x = mesh.position.x
+        glowMesh.position.y = mesh.position.y
+        glowMesh.position.z = mesh.position.z - 2
+        glowMesh.rotation.y = mesh.rotation.y
+        glowMesh.rotation.x = mesh.rotation.x
+        glowMesh.scale.setScalar(scaleMultiplier)
+        glowMesh.material.opacity = 0.5 * reverseT
+      }
+
+      // 切换回普通纹理（过渡接近完成时）
+      if (transitionProgress > 0.8 && mesh.material.map !== data.normalTexture) {
+        mesh.material.map = data.normalTexture
+        mesh.material.needsUpdate = true
+      }
+
     } else {
       // 普通行：轻微漂浮
       const floatY = Math.sin(elapsed * data.floatSpeed + data.floatOffset) * data.floatAmplitude
       const floatX = Math.cos(elapsed * data.floatSpeed * 0.7 + data.floatOffset) * data.floatAmplitude * 0.5
       mesh.position.y = data.originalPos.y + floatY
       mesh.position.x = data.originalPos.x + floatX
+
+      // 确保光晕隐藏
+      if (glowMesh && glowMesh.material.opacity > 0) {
+        glowMesh.material.opacity = Math.max(0, glowMesh.material.opacity - 0.05)
+      }
     }
   })
 
