@@ -42,6 +42,7 @@
                   <div class="fs-vinyl-center"></div>
                 </div>
               </div>
+              <div class="fs-tonearm" :class="{ engaged: playerStore.isPlaying }"></div>
             </div>
           </div>
 
@@ -546,15 +547,52 @@ const seek = (e) => {
   height: 100%;
 }
 
-.fs-vinyl.spinning .fs-vinyl-disc {
-  animation: discSpin 12s linear infinite;
+/* 唱臂：暂停时抬在外圈，播放时落针内移 */
+.fs-tonearm {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 39%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(270deg, rgba(216, 216, 228, 0.9), rgba(140, 140, 152, 0.6));
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.8);
+  transform-origin: 100% 50%;
+  transform: rotate(-74deg);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+  pointer-events: none;
 }
 
-@keyframes discSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.fs-tonearm.engaged {
+  transform: rotate(-66deg);
 }
 
+.fs-tonearm::before {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ececf4, #6e6e7a 58%, #26262e);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
+}
+
+.fs-tonearm::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: -4px;
+  width: 13px;
+  height: 10px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #c8c8d2, #4e4e58);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* 始终挂载动画，用 play-state 控制启停，暂停/恢复不会跳回原点 */
 .fs-vinyl-disc {
   width: 100%;
   height: 100%;
@@ -565,6 +603,17 @@ const seek = (e) => {
   align-items: center;
   justify-content: center;
   position: relative;
+  animation: discSpin 34s linear infinite;
+  animation-play-state: paused;
+}
+
+.fs-vinyl.spinning .fs-vinyl-disc {
+  animation-play-state: running;
+}
+
+@keyframes discSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .fs-vinyl-grooves {
