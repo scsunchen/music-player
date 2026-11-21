@@ -142,7 +142,7 @@ const visualizerRef = ref(null)
 const particleCanvas = ref(null)
 
 // 直接同步 store 的 themeColor，避免两套颜色提取逻辑导致闪烁
-const accentColor = computed(() => playerStore.themeColor || '#667eea')
+const accentColor = computed(() => playerStore.themeColor || '#c99a5b')
 
 // 切歌时重置歌词滚动位置
 watch(() => playerStore.currentSong?.id, () => {

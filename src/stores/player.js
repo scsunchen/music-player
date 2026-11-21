@@ -162,7 +162,7 @@ export const usePlayerStore = defineStore('player', () => {
   const playMode = ref('list') // list, shuffle, repeat
   
   // 主题色
-  const themeColor = ref('#667eea')
+  const themeColor = ref('#c99a5b')
   
   // 播放队列（独立的待播放列表）
   const playQueue = ref([])
@@ -189,6 +189,35 @@ export const usePlayerStore = defineStore('player', () => {
   // 封面颜色缓存
   const coverColorCache = new Map()
 
+  // 无歌曲 / 灰色封面时的兜底主色（黄铜）
+  const DEFAULT_THEME_COLOR = '#c99a5b'
+
+  const rgbToHsl = (r, g, b) => {
+    r /= 255; g /= 255; b /= 255
+    const max = Math.max(r, g, b)
+    const min = Math.min(r, g, b)
+    const l = (max + min) / 2
+    const d = max - min
+    let h = 0
+    let s = 0
+    if (d > 0) {
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0)
+      else if (max === g) h = (b - r) / d + 2
+      else h = (r - g) / d + 4
+      h *= 60
+    }
+    return { h, s, l }
+  }
+
+  const hslToHex = (h, s, l) => {
+    const k = (n) => (n + h / 30) % 12
+    const a = s * Math.min(l, 1 - l)
+    const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+    const toHex = (v) => Math.round(v * 255).toString(16).padStart(2, '0')
+    return '#' + toHex(f(0)) + toHex(f(8)) + toHex(f(4))
+  }
+
   const extractColorFromCover = (coverUrl) => {
     // 检查缓存
     if (coverColorCache.has(coverUrl)) {
@@ -205,31 +234,32 @@ export const usePlayerStore = defineStore('player', () => {
       canvas.height = 50
       ctx.drawImage(img, 0, 0, 50, 50)
       const data = ctx.getImageData(0, 0, 50, 50).data
+
       let r = 0, g = 0, b = 0, count = 0
       for (let i = 0; i < data.length; i += 16) { // sample every 4th pixel
+        if (data[i + 3] < 128) continue // 跳过透明像素
         r += data[i]
         g += data[i + 1]
         b += data[i + 2]
         count++
       }
-      r = Math.round(r / count)
-      g = Math.round(g / count)
-      b = Math.round(b / count)
-      // Make color more saturated and darker for background
-      const max = Math.max(r, g, b)
-      const boost = 1.3
-      if (max > 0) {
-        r = Math.min(255, Math.round((r / max) * 180 * boost))
-        g = Math.min(255, Math.round((g / max) * 140 * boost))
-        b = Math.min(255, Math.round((b / max) * 200 * boost))
+
+      let color = DEFAULT_THEME_COLOR
+      if (count > 0) {
+        // 只保留色相，把饱和度和亮度钳制在固定区间：
+        // 保证每首歌颜色不同，但明暗强度恒定，不会刺眼也不会发灰
+        const hsl = rgbToHsl(r / count, g / count, b / count)
+        color = hsl.s < 0.12
+          ? DEFAULT_THEME_COLOR
+          : hslToHex(hsl.h, Math.min(0.66, Math.max(0.5, hsl.s)), 0.6)
       }
-      const color = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')
+
       themeColor.value = color
       // 缓存结果
       coverColorCache.set(coverUrl, color)
     }
     img.onerror = () => {
-      themeColor.value = '#667eea'
+      themeColor.value = DEFAULT_THEME_COLOR
     }
     img.src = coverUrl
   }

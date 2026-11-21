@@ -329,7 +329,7 @@ const trackNo = computed(() => {
 
 // 动态主题色
 const dynamicStyle = computed(() => {
-  const color = playerStore.themeColor || '#667eea'
+  const color = playerStore.themeColor || '#c99a5b'
   return {
     '--dynamic-color': color,
     '--dynamic-r': parseInt(color.slice(1, 3), 16),

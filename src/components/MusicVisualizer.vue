@@ -29,6 +29,24 @@ let animationId = null
 let sourceNode = null
 let audioSourceConnected = false
 let smoothedData = null
+// 主题色缓存（切歌时失效重新读取）
+let themeRgb = null
+
+const readThemeRgb = () => {
+  if (themeRgb) return themeRgb
+  let hex = '#c99a5b'
+  const el = canvasRef.value
+  if (el) {
+    const v = getComputedStyle(el).getPropertyValue('--theme-color').trim()
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) hex = v
+  }
+  themeRgb = {
+    r: parseInt(hex.slice(1, 3), 16),
+    g: parseInt(hex.slice(3, 5), 16),
+    b: parseInt(hex.slice(5, 7), 16),
+  }
+  return themeRgb
+}
 
 watch(() => playerStore.isPlaying, (val) => {
   isPlaying.value = val
@@ -44,10 +62,11 @@ watch(() => playerStore.isPlaying, (val) => {
 })
 
 watch(() => playerStore.currentSong, () => {
-  // 切歌时重置平滑数据
+  // 切歌时重置平滑数据与主题色缓存
   if (smoothedData) {
     smoothedData.fill(0)
   }
+  themeRgb = null
 })
 
 onMounted(() => {
@@ -126,12 +145,13 @@ const draw = () => {
     const x = startX + i * (barWidth + barGap)
     const y = canvasHeight - barHeight
     
-    // 渐变色
+    // 渐变色：跟随当前歌曲主题色
+    const { r, g, b } = readThemeRgb()
     const gradient = ctx.createLinearGradient(x, canvasHeight, x, y)
-    gradient.addColorStop(0, '#667eea')
-    gradient.addColorStop(0.5, '#764ba2')
-    gradient.addColorStop(1, '#f093fb')
-    
+    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.35)`)
+    gradient.addColorStop(0.55, `rgb(${r}, ${g}, ${b})`)
+    gradient.addColorStop(1, `rgb(${Math.min(255, r + 70)}, ${Math.min(255, g + 70)}, ${Math.min(255, b + 70)})`)
+
     ctx.fillStyle = gradient
     ctx.beginPath()
     ctx.roundRect(x, y, barWidth, barHeight, 1.5)

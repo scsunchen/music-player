@@ -71,18 +71,18 @@ onMounted(() => {
 }
 
 .note.note {
-  color: rgba(102, 126, 234, 0.7);
-  text-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+  color: color-mix(in srgb, var(--theme-color, #c99a5b) 70%, transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--theme-color, #c99a5b) 45%, transparent);
 }
 
 .note.lightning {
-  color: rgba(240, 147, 251, 0.8);
-  text-shadow: 0 0 12px rgba(240, 147, 251, 0.6), 0 0 24px rgba(240, 147, 251, 0.3);
+  color: color-mix(in srgb, var(--theme-color, #c99a5b) 92%, transparent);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--theme-color, #c99a5b) 55%, transparent), 0 0 24px color-mix(in srgb, var(--theme-color, #c99a5b) 25%, transparent);
 }
 
 .note.sparkle {
-  color: rgba(255, 215, 0, 0.7);
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  color: color-mix(in srgb, var(--theme-color, #c99a5b) 55%, transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--theme-color, #c99a5b) 40%, transparent);
 }
 
 @keyframes floatUp {

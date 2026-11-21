@@ -174,7 +174,7 @@ watch(showFullscreen, (val) => {
 
 // 滚动条动态主题色：随当前歌曲封面主色变化
 watch(() => playerStore.themeColor, (color) => {
-  const c = color || '#667eea'
+  const c = color || '#c99a5b'
   const r = parseInt(c.slice(1, 3), 16)
   const g = parseInt(c.slice(3, 5), 16)
   const b = parseInt(c.slice(5, 7), 16)
@@ -186,7 +186,7 @@ watch(() => playerStore.themeColor, (color) => {
 
 // 导航栏动态色
 const headerStyle = computed(() => {
-  const color = playerStore.themeColor || '#667eea'
+  const color = playerStore.themeColor || '#c99a5b'
   const r = parseInt(color.slice(1, 3), 16)
   const g = parseInt(color.slice(3, 5), 16)
   const b = parseInt(color.slice(5, 7), 16)
@@ -199,7 +199,7 @@ const headerStyle = computed(() => {
 
 // Toast 动态色
 const toastStyle = computed(() => {
-  const color = playerStore.themeColor || '#667eea'
+  const color = playerStore.themeColor || '#c99a5b'
   const r = parseInt(color.slice(1, 3), 16)
   const g = parseInt(color.slice(3, 5), 16)
   const b = parseInt(color.slice(5, 7), 16)
@@ -284,6 +284,14 @@ onMounted(() => {
 </script>
 
 <style>
+/* 注册为可插值的数值属性，切歌时主色能平滑过渡而不是硬跳 */
+@property --nav-r { syntax: '<number>'; inherits: true; initial-value: 201; }
+@property --nav-g { syntax: '<number>'; inherits: true; initial-value: 154; }
+@property --nav-b { syntax: '<number>'; inherits: true; initial-value: 91; }
+@property --toast-r { syntax: '<number>'; inherits: true; initial-value: 201; }
+@property --toast-g { syntax: '<number>'; inherits: true; initial-value: 154; }
+@property --toast-b { syntax: '<number>'; inherits: true; initial-value: 91; }
+
 * {
   margin: 0;
   padding: 0;
@@ -311,15 +319,16 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 10, 10, 0.75);
+  background: rgba(12, 11, 14, 0.78);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(240, 231, 216, 0.07);
   padding: 12px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  transition: --nav-r 0.6s ease, --nav-g 0.6s ease, --nav-b 0.6s ease;
 }
 
 .logo {
@@ -401,8 +410,19 @@ body {
 
 .nav-link.active {
   color: #fff;
-  background: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.15);
-  border: 1px solid rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.1);
+  background: transparent;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 1px;
+  height: 1px;
+  background: rgba(var(--nav-r), var(--nav-g), var(--nav-b), 0.85);
 }
 
 /* 版本号按钮 */
@@ -666,6 +686,7 @@ body.fs-open .home-page .atmo-orb {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--toast-r), var(--toast-g), var(--toast-b), 0.1);
   pointer-events: none;
   white-space: nowrap;
+  transition: --toast-r 0.6s ease, --toast-g 0.6s ease, --toast-b 0.6s ease;
 }
 
 .toast svg {

@@ -248,8 +248,8 @@ const onTouchEnd = () => {
   left: 0;
   right: 0;
   height: 80px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, #100e12 0%, #07070a 100%);
+  border-top: 1px solid rgba(240, 231, 216, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -299,7 +299,7 @@ const onTouchEnd = () => {
 .glow-2 {
   width: 150px;
   height: 150px;
-  background: rgba(118, 75, 162, 0.12);
+  background: color-mix(in srgb, var(--theme-color) 12%, transparent);
   top: -80px;
   left: 50%;
   animation: glowDrift2 5s ease-in-out infinite;
@@ -308,7 +308,7 @@ const onTouchEnd = () => {
 .glow-3 {
   width: 180px;
   height: 180px;
-  background: rgba(240, 147, 251, 0.1);
+  background: color-mix(in srgb, var(--theme-color) 9%, transparent);
   top: -90px;
   right: 15%;
   animation: glowDrift3 3.5s ease-in-out infinite;
@@ -488,7 +488,7 @@ const onTouchEnd = () => {
   width: 48px;
   height: 48px;
   background: var(--theme-color) !important;
-  color: #fff !important;
+  color: #121014 !important;
   position: relative;
 }
 
@@ -656,16 +656,16 @@ const onTouchEnd = () => {
 }
 
 .btn-like:hover {
-  color: #f5576c;
-  background: rgba(245, 87, 108, 0.15);
+  color: var(--theme-color);
+  background: color-mix(in srgb, var(--theme-color) 15%, transparent);
 }
 
 .btn-like.liked {
-  color: #f5576c;
+  color: var(--theme-color);
 }
 
 .btn-like.liked:hover {
-  color: rgba(245, 87, 108, 0.7);
+  color: color-mix(in srgb, var(--theme-color) 70%, transparent);
 }
 
 /* 队列按钮 */
@@ -701,8 +701,8 @@ const onTouchEnd = () => {
   min-width: 16px;
   height: 16px;
   padding: 0 4px;
-  background: #f5576c;
-  color: #fff;
+  background: var(--theme-color);
+  color: #121014;
   font-size: 10px;
   font-weight: 600;
   border-radius: 8px;
