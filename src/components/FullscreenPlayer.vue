@@ -42,7 +42,7 @@
                   <div class="fs-vinyl-center"></div>
                 </div>
               </div>
-              <div class="fs-tonearm" :class="{ engaged: playerStore.isPlaying }"></div>
+              <div class="fs-tonearm" :class="{ engaged: playerStore.isPlaying && playerStore.currentSong }" :style="{ '--arm': armAngle }"></div>
             </div>
           </div>
 
@@ -143,6 +143,13 @@ const particleCanvas = ref(null)
 
 // 直接同步 store 的 themeColor，避免两套颜色提取逻辑导致闪烁
 const accentColor = computed(() => playerStore.themeColor || '#c99a5b')
+
+// 唱臂角度：停止/暂停时停在唱片外，播放时落在最外圈并随进度向内（模拟真实拾音）
+const armAngle = computed(() => {
+  if (!playerStore.currentSong || !playerStore.isPlaying) return '-110deg'
+  const p = Math.min(1, Math.max(0, (playerStore.progress || 0) / 100))
+  return `${(-83 + p * 28).toFixed(2)}deg`
+})
 
 // 切歌时重置歌词滚动位置
 watch(() => playerStore.currentSong?.id, () => {
@@ -558,14 +565,15 @@ const seek = (e) => {
   background: linear-gradient(270deg, rgba(216, 216, 228, 0.9), rgba(140, 140, 152, 0.6));
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.8);
   transform-origin: 100% 50%;
-  transform: rotate(-74deg);
+  transform: rotate(var(--arm, -110deg));
   transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 5;
   pointer-events: none;
 }
 
+/* 播放中：唱臂缓慢向盘心内移，用线性过渡避免每秒重设时回弹 */
 .fs-tonearm.engaged {
-  transform: rotate(-66deg);
+  transition: transform 0.9s linear;
 }
 
 .fs-tonearm::before {

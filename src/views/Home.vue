@@ -27,7 +27,7 @@
             </div>
             <div class="vinyl-spindle"></div>
           </div>
-          <div class="tonearm" :class="{ engaged: playerStore.isPlaying && playerStore.currentSong }"></div>
+          <div ref="tonearmRef" class="tonearm" :class="{ engaged: playerStore.isPlaying && playerStore.currentSong }"></div>
         </div>
 
         <div class="deck-info">
@@ -285,7 +285,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
 import { resolveUrl } from '../utils/baseUrl'
@@ -336,6 +336,20 @@ const dynamicStyle = computed(() => {
     '--dynamic-g': parseInt(color.slice(3, 5), 16),
     '--dynamic-b': parseInt(color.slice(5, 7), 16),
   }
+})
+
+// 唱臂角度：停止/暂停时停在唱片外，播放时落在最外圈并随进度向内（模拟真实拾音）
+// 用 watchEffect 直接写 CSS 变量，避免每秒多次触发整页重渲染
+const tonearmRef = ref(null)
+watchEffect(() => {
+  const el = tonearmRef.value
+  if (!el) return
+  if (!playerStore.currentSong || !playerStore.isPlaying) {
+    el.style.setProperty('--arm', '-92deg')
+    return
+  }
+  const p = Math.min(1, Math.max(0, (playerStore.progress || 0) / 100))
+  el.style.setProperty('--arm', `${(-64 + p * 18).toFixed(2)}deg`)
 })
 
 // 波形条：随机高度与节奏，一次性生成避免重复渲染抖动
@@ -591,14 +605,15 @@ const formatTime = (seconds) => {
   background: linear-gradient(270deg, rgba(216, 216, 228, 0.9), rgba(140, 140, 152, 0.6));
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.8);
   transform-origin: 100% 50%;
-  transform: rotate(-44deg);
+  transform: rotate(var(--arm, -92deg));
   transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 5;
   pointer-events: none;
 }
 
+/* 播放中：唱臂缓慢向盘心内移，用线性过渡避免每秒重设时回弹 */
 .tonearm.engaged {
-  transform: rotate(-37deg);
+  transition: transform 0.9s linear;
 }
 
 .tonearm::before {
