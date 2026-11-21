@@ -256,6 +256,11 @@ const onKeydown = (e) => {
 onMounted(() => document.addEventListener('keydown', onKeydown))
 onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
+// 页面内任意位置请求打开全屏播放器（如首页唱片台）
+const onOpenFullscreen = () => { showFullscreen.value = true }
+onMounted(() => window.addEventListener('open-fullscreen', onOpenFullscreen))
+onUnmounted(() => window.removeEventListener('open-fullscreen', onOpenFullscreen))
+
 // 动态注入本地字体 @font-face，确保路径与部署基准一致
 // 放在全局注入而不是组件 scoped style 中，避免 CSS var() 在 @font-face src 中的兼容性问题
 onMounted(() => {
