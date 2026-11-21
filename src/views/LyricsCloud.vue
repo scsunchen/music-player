@@ -1,103 +1,109 @@
 <template>
-  <div class="lyrics-cloud-page">
-    <div ref="canvasRef" class="lc-canvas"></div>
-
-    <!-- 背景渐变 -->
-    <div class="bg-gradient" :style="bgStyle"></div>
-
-    <!-- 顶部信息栏 -->
-    <div class="top-bar">
-      <div class="left">
-        <button class="back-btn" @click="goBack">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-          </svg>
-        </button>
-        <div class="song-info" v-if="currentSong">
-          <div class="cover">
-            <img :src="currentSong.cover" :alt="currentSong.title" @error="handleImgError" />
-          </div>
-          <div class="text">
-            <h1>{{ currentSong.title }}</h1>
-            <p>{{ currentSong.artist }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="right">
-        <span class="mode-tag">🎵 歌词云</span>
-      </div>
+  <div class="lyrics-stage" :style="stageStyle">
+    <!-- 背景氛围：封面模糊 + 主题色 + 颗粒 -->
+    <div class="bg">
+      <div class="bg-cover" :style="{ backgroundImage: `url(${bgCover})` }"></div>
+      <div class="bg-tint"></div>
+      <div class="bg-grain"></div>
+      <div class="bg-scan"></div>
     </div>
 
-    <!-- 底部控制栏 -->
-    <div class="bottom-controls" @mouseenter="showControls = true" @mouseleave="showControls = false">
+    <!-- 顶栏 -->
+    <header class="top-bar">
+      <button class="back-btn" @click="goBack" aria-label="返回">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+
+      <div class="song-info" v-if="currentSong">
+        <div class="cover">
+          <img :src="currentSong.cover" :alt="currentSong.title" @error="handleImgError" />
+        </div>
+        <div class="text">
+          <h1>{{ currentSong.title }}</h1>
+          <p>{{ currentSong.artist }}</p>
+        </div>
+      </div>
+
+      <div class="mode-tag">
+        <span class="dot"></span>
+        <span>SING ALONG</span>
+      </div>
+    </header>
+
+    <!-- 歌词聚焦轨道 -->
+    <main class="rail-wrap" ref="wrapRef">
+      <div class="rail" ref="trackRef" :style="{ transform: `translateY(${trackOffset}px)` }">
+        <p
+          v-for="(line, i) in lyricsLines"
+          :key="i"
+          class="line"
+          :class="{
+            active: i === activeIndex,
+            near: Math.abs(i - activeIndex) === 1,
+          }"
+          @click="seekToLine(i)"
+        >
+          <span class="fill">{{ line.text || '♪' }}</span>
+        </p>
+      </div>
+    </main>
+
+    <!-- 底部控制 -->
+    <footer class="controls">
       <div class="progress-row">
-        <span class="time">{{ formatTime(smoothCurrentTime) }}</span>
+        <span class="time">{{ formatTime(displayTime) }}</span>
         <div class="progress-bar" @click="seekProgress">
           <div class="progress-fill" :style="{ width: playerStore.progress + '%' }"></div>
         </div>
         <span class="time">{{ formatTime(playerStore.duration) }}</span>
       </div>
-      <div class="control-btns">
-        <button class="ctrl-btn" @click="playerStore.prevSong">
-          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      <div class="btns">
+        <button class="ctrl" @click="playerStore.prevSong" aria-label="上一首">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
         </button>
-        <button class="ctrl-btn play-btn" @click="playerStore.togglePlay">
-          <svg v-if="!playerStore.isPlaying" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-          <svg v-else viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        <button class="ctrl play-btn" @click="playerStore.togglePlay" aria-label="播放/暂停">
+          <svg v-if="!playerStore.isPlaying" viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          <svg v-else viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         </button>
-        <button class="ctrl-btn" @click="playerStore.nextSong">
-          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        <button class="ctrl" @click="playerStore.nextSong" aria-label="下一首">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
         </button>
       </div>
-    </div>
+    </footer>
 
-    <!-- 提示 -->
-    <div class="tips" v-if="!isMobile">
-      <span>🖱️ 拖拽旋转</span>
-      <span>🔍 滚轮缩放</span>
-    </div>
-
-    <!-- 暂无歌词 -->
-    <div v-if="lyricsLines.length === 0 && !loading" class="no-lyrics">
+    <!-- 无歌词 -->
+    <div v-if="!loading && lyricsLines.length === 0" class="empty">
       <p>暂无歌词</p>
+      <span>这首歌还没有歌词文件</span>
     </div>
 
-    <!-- 加载中 -->
-    <div v-if="loading" class="loading-overlay">
-      <div class="loading-spinner"></div>
-      <p>正在生成歌词云...</p>
+    <!-- 载入中 -->
+    <div v-if="loading" class="loading">
+      <span class="spinner"></span>
+      <p>正在载入歌词…</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { usePlayerStore } from '../stores/player'
-import * as THREE from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { resolveUrl } from '../utils/baseUrl'
 
 const router = useRouter()
 const route = useRoute()
 const playerStore = usePlayerStore()
 
-const canvasRef = ref(null)
 const loading = ref(true)
-const showControls = ref(false)
-const isMobile = ref(false)
-const smoothCurrentTime = ref(0)
+const wrapRef = ref(null)
+const trackRef = ref(null)
 
-let scene, camera, renderer, controls
-let lyricMeshes = []
-let lyricGlowMeshes = []
-let lyricData = []
-let animationId = null
-let clock = new THREE.Clock()
-let currentLineIndex = -1
-let transitionProgress = 1
-let prevLineIndex = -1
-let smoothTimeRaf = null
-let lastFrameTime = 0
+const activeIndex = ref(-1)
+const trackOffset = ref(0)
+const displayTime = ref(0)
 
 const currentSong = computed(() => playerStore.currentSong)
 
@@ -106,29 +112,67 @@ const lyricsLines = computed(() => {
   if (!currentSong.value) return []
   const raw = playerStore.lyricsData?.[currentSong.value.id]?.lyrics || ''
   if (!raw) return []
-  return raw.split('\n').filter(l => l.trim()).map(line => {
-    const match = line.match(/\[(\d{2}):(\d{2})\.(\d{2,3})\]\s*(.*)/)
-    if (match) {
-      const time = parseInt(match[1]) * 60 + parseInt(match[2]) + parseInt(match[3]) / (match[3].length === 3 ? 1000 : 100)
-      return { time, text: match[4] }
-    }
-    return null
-  }).filter(Boolean)
+  return raw
+    .split('\n')
+    .filter((l) => l.trim())
+    .map((line) => {
+      const match = line.match(/\[(\d{2}):(\d{2})\.(\d{2,3})\]\s*(.*)/)
+      if (!match) return null
+      const ms = match[3].length === 3 ? parseInt(match[3]) : parseInt(match[3]) * 10
+      const time = parseInt(match[1]) * 60 + parseInt(match[2]) + ms / 1000
+      return { time, text: match[4].trim() }
+    })
+    .filter(Boolean)
 })
 
-// 主题色板
-const colorPalette = [
-  0x667eea, 0x764ba2, 0xbc4eff, 0x4facfe,
-  0x00f2fe, 0x43e97b, 0xfa709a, 0xfeca57,
-  0xff6b6b, 0xa29bfe, 0xfd79a8, 0x74b9ff,
-]
+// 背景封面
+const bgCover = computed(() => {
+  if (currentSong.value?.cover) return currentSong.value.cover
+  return resolveUrl('images/covers/fenghuang_chuanqi_hero.jpg')
+})
 
-const bgStyle = computed(() => {
-  const accent = currentSong.value?.accent || '#667eea'
+// 主题色变量
+const stageStyle = computed(() => {
+  const color = playerStore.themeColor || '#c99a5b'
   return {
-    '--accent': accent,
+    '--accent': color,
+    '--accent-r': parseInt(color.slice(1, 3), 16),
+    '--accent-g': parseInt(color.slice(3, 5), 16),
+    '--accent-b': parseInt(color.slice(5, 7), 16),
   }
 })
+
+// ========== 轨道居中 ==========
+let activeEl = null
+
+function centerActive() {
+  const wrap = wrapRef.value
+  const track = trackRef.value
+  if (!wrap || !track) return
+
+  const lines = track.querySelectorAll('.line')
+  if (!lines.length) {
+    trackOffset.value = 0
+    return
+  }
+
+  const idx = activeIndex.value >= 0 ? activeIndex.value : 0
+  const el = lines[idx]
+  if (!el) return
+
+  activeEl = el
+  const offset = el.offsetTop + el.offsetHeight / 2 - wrap.clientHeight / 2
+  trackOffset.value = -offset
+}
+
+function seekToLine(index) {
+  const line = lyricsLines.value[index]
+  if (!line) return
+  smoothTime = line.time
+  activeIndex.value = index
+  nextTick(centerActive)
+  playerStore.seekTo(line.time)
+}
 
 function goBack() {
   if (route.query.from === 'fullscreen') {
@@ -155,765 +199,545 @@ function seekProgress(e) {
   playerStore.seekTo(ratio * playerStore.duration)
 }
 
-// ========== Three.js 初始化 ==========
-function initThree() {
-  const canvas = canvasRef.value
-  if (!canvas) return
+// ========== 播放时钟 + 逐字进度 ==========
+let smoothTime = 0
+let lastTs = 0
+let rafId = null
 
-  const w = canvas.clientWidth
-  const h = canvas.clientHeight
-
-  scene = new THREE.Scene()
-  scene.fog = new THREE.FogExp2(0x05051a, 0.0035)
-
-  camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000)
-  camera.position.set(0, 0, 120)
-
-  renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true,
-    powerPreference: 'high-performance',
-  })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-  renderer.setSize(w, h)
-  renderer.setClearColor(0x000000, 0)
-  canvas.appendChild(renderer.domElement)
-
-  controls = new OrbitControls(camera, renderer.domElement)
-  controls.enableDamping = true
-  controls.dampingFactor = 0.05
-  controls.autoRotate = true
-  controls.autoRotateSpeed = 0.3
-  controls.enablePan = false
-  controls.minDistance = 40
-  controls.maxDistance = 250
+function setFill(percent) {
+  if (activeEl) activeEl.style.setProperty('--p', percent.toFixed(1))
 }
 
-// ========== 创建文字纹理 ==========
-function createTextTexture(text, color, fontSize = 48, highlighted = false) {
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
-  const dpr = 2
+function tick(ts) {
+  rafId = requestAnimationFrame(tick)
 
-  ctx.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif`
-  const metrics = ctx.measureText(text)
-  const textWidth = Math.max(metrics.width, 10)
-  const padding = fontSize * (highlighted ? 1.2 : 0.6)
+  const dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.12) : 0.016
+  lastTs = ts
 
-  canvas.width = (textWidth + padding * 2) * dpr
-  canvas.height = fontSize * 2.2 * dpr
+  const storeTime = playerStore.currentTime || 0
+  const duration = playerStore.duration || 0
 
-  ctx.scale(dpr, dpr)
-  ctx.font = `600 ${fontSize}px -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif`
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
+  if (playerStore.isPlaying) smoothTime += dt
+  // 与播放器时间校准（seek / 切歌时）
+  if (Math.abs(storeTime - smoothTime) > 0.3) smoothTime = storeTime
+  if (duration && smoothTime > duration) smoothTime = duration
 
-  const x = (textWidth + padding * 2) / 2
-  const y = fontSize * 1.1
-
-  const colorHex = '#' + color.toString(16).padStart(6, '0')
-
-  if (highlighted) {
-    // 高亮版本：金色强光晕 + 纯白文字
-    const glowColor = '#ffd700'
-
-    // 外层大光晕
-    ctx.shadowColor = glowColor
-    ctx.shadowBlur = 50
-    ctx.globalAlpha = 0.6
-    ctx.fillStyle = glowColor
-    ctx.fillText(text, x, y)
-
-    // 中层光晕
-    ctx.shadowBlur = 25
-    ctx.globalAlpha = 0.9
-    ctx.fillText(text, x, y)
-
-    // 主体纯白文字
-    ctx.shadowBlur = 8
-    ctx.shadowColor = '#ffffff'
-    ctx.globalAlpha = 1
-    ctx.fillStyle = '#ffffff'
-    ctx.fillText(text, x, y)
-  } else {
-    // 普通版本：淡发光
-    ctx.shadowColor = colorHex
-    ctx.shadowBlur = 15
-    ctx.fillStyle = colorHex
-    ctx.globalAlpha = 0.25
-    ctx.fillText(text, x, y)
-
-    // 主体文字
-    ctx.shadowBlur = 0
-    ctx.globalAlpha = 1
-    ctx.fillStyle = 'rgba(255,255,255,0.9)'
-    ctx.fillText(text, x, y)
-  }
-
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.minFilter = THREE.LinearFilter
-  texture.magFilter = THREE.LinearFilter
-  return {
-    texture,
-    width: textWidth + padding * 2,
-    height: fontSize * 2.2,
-  }
-}
-
-// ========== 创建光晕纹理 ==========
-function createGlowTexture(color) {
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
-  const size = 256
-  canvas.width = size
-  canvas.height = size
-
-  const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2)
-  const colorHex = '#' + color.toString(16).padStart(6, '0')
-  gradient.addColorStop(0, colorHex + 'aa')
-  gradient.addColorStop(0.3, colorHex + '44')
-  gradient.addColorStop(0.6, colorHex + '11')
-  gradient.addColorStop(1, colorHex + '00')
-
-  ctx.fillStyle = gradient
-  ctx.fillRect(0, 0, size, size)
-
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.minFilter = THREE.LinearFilter
-  texture.magFilter = THREE.LinearFilter
-  return texture
-}
-
-// ========== 球面上随机分布 ==========
-function getRandomSpherePosition(radius) {
-  const u = Math.random()
-  const v = Math.random()
-  const theta = 2 * Math.PI * u
-  const phi = Math.acos(2 * v - 1)
-  return {
-    x: radius * Math.sin(phi) * Math.cos(theta),
-    y: radius * Math.sin(phi) * Math.sin(theta) * 0.5,
-    z: radius * Math.cos(phi),
-  }
-}
-
-// ========== 构建歌词云 ==========
-function buildLyricsCloud() {
-  // 清理旧的
-  lyricMeshes.forEach(m => {
-    scene.remove(m)
-    m.geometry.dispose()
-    m.material.map?.dispose()
-    m.material.dispose()
-  })
-  lyricGlowMeshes.forEach(m => {
-    scene.remove(m)
-    m.geometry.dispose()
-    m.material.map?.dispose()
-    m.material.dispose()
-  })
-  lyricMeshes = []
-  lyricGlowMeshes = []
-  lyricData = []
+  const whole = Math.floor(smoothTime)
+  if (whole !== displayTime.value) displayTime.value = whole
 
   const lines = lyricsLines.value
-  if (lines.length === 0) return
+  if (!lines.length) return
 
-  const baseRadius = isMobile.value ? 45 : 60
-
-  lines.forEach((line, i) => {
-    const color = colorPalette[Math.floor(Math.random() * colorPalette.length)]
-    const baseSize = isMobile.value ? 22 : 32
-    const fontSize = baseSize + Math.random() * (baseSize * 0.8)
-    const { texture, width, height } = createTextTexture(line.text || '', color, fontSize, false)
-    const { texture: highlightTexture, width: hlWidth, height: hlHeight } = createTextTexture(line.text || '', color, fontSize, true)
-
-    const scaleFactor = isMobile.value ? 0.12 : 0.15
-    const geometry = new THREE.PlaneGeometry(width * scaleFactor, height * scaleFactor)
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      opacity: 0.3 + Math.random() * 0.25,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    })
-
-    const mesh = new THREE.Mesh(geometry, material)
-    const pos = getRandomSpherePosition(baseRadius + Math.random() * 25)
-    mesh.position.set(pos.x, pos.y, pos.z)
-
-    mesh.rotation.y = Math.random() * Math.PI * 2
-    mesh.rotation.x = (Math.random() - 0.5) * 0.5
-
-    scene.add(mesh)
-    lyricMeshes.push(mesh)
-
-    // 光晕层（默认隐藏，激活时显示）— 金色
-    const glowSize = Math.max(width, height) * scaleFactor * 3.5
-    const glowGeometry = new THREE.PlaneGeometry(glowSize, glowSize)
-    const glowTexture = createGlowTexture(0xffd700)
-    const glowMaterial = new THREE.MeshBasicMaterial({
-      map: glowTexture,
-      transparent: true,
-      opacity: 0,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
-    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial)
-    glowMesh.position.copy(mesh.position)
-    glowMesh.position.z -= 1
-    glowMesh.rotation.copy(mesh.rotation)
-    scene.add(glowMesh)
-    lyricGlowMeshes.push(glowMesh)
-
-    lyricData.push({
-      index: i,
-      text: line.text,
-      color,
-      originalPos: mesh.position.clone(),
-      originalScale: mesh.scale.clone(),
-      originalOpacity: material.opacity,
-      originalRotation: mesh.rotation.clone(),
-      normalTexture: texture,
-      highlightTexture: highlightTexture,
-      hlWidth: hlWidth * scaleFactor,
-      hlHeight: hlHeight * scaleFactor,
-      isActive: false,
-      floatOffset: Math.random() * Math.PI * 2,
-      floatSpeed: 0.5 + Math.random() * 0.5,
-      floatAmplitude: 1 + Math.random() * 2,
-    })
-  })
-}
-
-// ========== 当前行切换 ==========
-function updateCurrentLine() {
-  const t = playerStore.currentTime
-  const lines = lyricsLines.value
-  if (lines.length === 0) return
-
-  let newIdx = -1
+  // 定位当前行
+  let idx = -1
   for (let i = lines.length - 1; i >= 0; i--) {
-    if (t >= lines[i].time) {
-      newIdx = i
+    if (smoothTime >= lines[i].time) {
+      idx = i
       break
     }
   }
 
-  if (newIdx !== currentLineIndex && newIdx >= 0) {
-    prevLineIndex = currentLineIndex
-    currentLineIndex = newIdx
-    transitionProgress = 0
-
-    if (prevLineIndex >= 0 && lyricData[prevLineIndex]) {
-      lyricData[prevLineIndex].isActive = false
-    }
-    if (lyricData[currentLineIndex]) {
-      lyricData[currentLineIndex].isActive = true
-    }
-
-    // 相机轻微推近
-    if (controls) {
-      // 不打断用户操作，只是轻微调整 autoRotate
-    }
-  }
-}
-
-// ========== 动画循环 ==========
-function animate() {
-  animationId = requestAnimationFrame(animate)
-  const dt = Math.min(clock.getDelta(), 0.05)
-  const elapsed = clock.elapsedTime
-
-  updateCurrentLine()
-
-  // 过渡进度
-  if (transitionProgress < 1) {
-    transitionProgress += dt * 2
-    if (transitionProgress > 1) transitionProgress = 1
+  if (idx !== activeIndex.value) {
+    activeIndex.value = idx
+    nextTick(centerActive)
   }
 
-  const t = easeOutCubic(transitionProgress)
-
-  // 更新每个歌词粒子
-  lyricData.forEach((data, i) => {
-    const mesh = lyricMeshes[i]
-    const glowMesh = lyricGlowMeshes[i]
-    if (!mesh) return
-
-    if (data.isActive) {
-      // 当前行：飞到正前方 + 高亮 + 光晕
-      const targetZ = 55
-      mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * t
-      mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * t
-      mesh.position.z = data.originalPos.z + (targetZ - data.originalPos.z) * t
-
-      const scaleMultiplier = 3.2
-      mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * t
-      mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * t
-
-      mesh.rotation.y = data.originalRotation.y + (0 - data.originalRotation.y) * t
-      mesh.rotation.x = data.originalRotation.x + (0 - data.originalRotation.x) * t
-
-      // 切换到高亮纹理
-      if (mesh.material.map !== data.highlightTexture) {
-        mesh.material.map = data.highlightTexture
-        mesh.material.needsUpdate = true
-      }
-
-      // 全亮 + 轻微脉冲
-      const pulse = 0.85 + 0.15 * Math.sin(elapsed * 3)
-      mesh.material.opacity = pulse
-
-      // 光晕层跟随 + 脉冲
-      if (glowMesh) {
-        glowMesh.position.x = mesh.position.x
-        glowMesh.position.y = mesh.position.y
-        glowMesh.position.z = mesh.position.z - 3
-        glowMesh.rotation.y = mesh.rotation.y
-        glowMesh.rotation.x = mesh.rotation.x
-        const glowScale = 1 + 0.25 * Math.sin(elapsed * 2)
-        glowMesh.scale.setScalar(scaleMultiplier * glowScale)
-        glowMesh.material.opacity = 0.7 * t * (0.7 + 0.3 * pulse)
-      }
-
-    } else if (i === prevLineIndex && transitionProgress < 1) {
-      // 上一行：飞回原位 + 恢复普通状态
-      const reverseT = 1 - t
-      mesh.position.x = data.originalPos.x + (0 - data.originalPos.x) * reverseT
-      mesh.position.y = data.originalPos.y + (0 - data.originalPos.y) * reverseT
-      mesh.position.z = data.originalPos.z + (55 - data.originalPos.z) * reverseT
-
-      const scaleMultiplier = 3.2
-      mesh.scale.x = data.originalScale.x + (data.originalScale.x * scaleMultiplier - data.originalScale.x) * reverseT
-      mesh.scale.y = data.originalScale.y + (data.originalScale.y * scaleMultiplier - data.originalScale.y) * reverseT
-
-      mesh.rotation.y = data.originalRotation.y + (0 - data.originalRotation.y) * reverseT
-      mesh.rotation.x = data.originalRotation.x + (0 - data.originalRotation.x) * reverseT
-
-      mesh.material.opacity = data.originalOpacity + (1 - data.originalOpacity) * reverseT
-
-      // 光晕淡出
-      if (glowMesh) {
-        glowMesh.position.x = mesh.position.x
-        glowMesh.position.y = mesh.position.y
-        glowMesh.position.z = mesh.position.z - 3
-        glowMesh.rotation.y = mesh.rotation.y
-        glowMesh.rotation.x = mesh.rotation.x
-        glowMesh.scale.setScalar(scaleMultiplier)
-        glowMesh.material.opacity = 0.5 * reverseT
-      }
-
-      // 切换回普通纹理（过渡接近完成时）
-      if (transitionProgress > 0.8 && mesh.material.map !== data.normalTexture) {
-        mesh.material.map = data.normalTexture
-        mesh.material.needsUpdate = true
-      }
-
-    } else {
-      // 普通行：轻微漂浮
-      const floatY = Math.sin(elapsed * data.floatSpeed + data.floatOffset) * data.floatAmplitude
-      const floatX = Math.cos(elapsed * data.floatSpeed * 0.7 + data.floatOffset) * data.floatAmplitude * 0.5
-      mesh.position.y = data.originalPos.y + floatY
-      mesh.position.x = data.originalPos.x + floatX
-
-      // 确保光晕隐藏
-      if (glowMesh && glowMesh.material.opacity > 0) {
-        glowMesh.material.opacity = Math.max(0, glowMesh.material.opacity - 0.05)
-      }
-    }
-  })
-
-  if (controls) controls.update()
-  if (renderer && scene && camera) renderer.render(scene, camera)
-}
-
-function easeOutCubic(x) {
-  return 1 - Math.pow(1 - x, 3)
-}
-
-// ========== 平滑时间 ==========
-function updateSmoothTime() {
-  smoothTimeRaf = requestAnimationFrame(updateSmoothTime)
-  const now = performance.now()
-  const dt = lastFrameTime ? (now - lastFrameTime) / 1000 : 0.016
-  lastFrameTime = now
-
-  if (playerStore.isPlaying) {
-    smoothCurrentTime.value += dt
-    if (smoothCurrentTime.value > playerStore.duration) {
-      smoothCurrentTime.value = playerStore.duration
-    }
+  // 当前行逐字填充进度
+  if (idx >= 0) {
+    const start = lines[idx].time
+    const end = idx + 1 < lines.length ? lines[idx + 1].time : (duration || start + 4)
+    const span = Math.max(end - start, 1.2)
+    const p = Math.min(100, Math.max(0, ((smoothTime - start) / span) * 100))
+    setFill(p)
   }
 }
-
-// 监听播放器时间校准
-watch(() => playerStore.currentTime, (val) => {
-  if (Math.abs(val - smoothCurrentTime.value) > 0.5) {
-    smoothCurrentTime.value = val
-  }
-})
 
 // ========== 响应式 ==========
 function onResize() {
-  if (!renderer || !camera) return
-  const canvas = canvasRef.value
-  if (!canvas) return
-
-  const w = canvas.clientWidth
-  const h = canvas.clientHeight
-  camera.aspect = w / h
-  camera.updateProjectionMatrix()
-  renderer.setSize(w, h)
-
-  const wasMobile = isMobile.value
-  isMobile.value = w < 768
-  if (wasMobile !== isMobile.value && lyricsLines.value.length > 0) {
-    buildLyricsCloud()
-  }
+  centerActive()
 }
 
-// ========== 监听歌曲/歌词变化 ==========
+// ========== 数据加载 ==========
+async function ensureLyrics(songId) {
+  if (!songId) return
+  if (lyricsLines.value.length > 0) return
+  try {
+    await playerStore.loadLyricsForSong?.(songId)
+  } catch (e) { /* ignore */ }
+}
+
 watch(() => playerStore.currentSong?.id, async (newId) => {
   loading.value = true
-  currentLineIndex = -1
-  prevLineIndex = -1
-  // 主动加载新歌曲的歌词
-  if (newId) {
-    try {
-      await playerStore.loadLyricsForSong?.(newId)
-    } catch (e) { /* ignore */ }
-  }
+  activeIndex.value = -1
+  smoothTime = 0
+  await ensureLyrics(newId)
   await nextTick()
-  if (lyricsLines.value.length > 0) {
-    buildLyricsCloud()
-  }
   loading.value = false
+  centerActive()
 })
 
-watch(() => lyricsLines.value.length, () => {
-  if (lyricsLines.value.length > 0 && loading.value) {
-    nextTick(() => {
-      buildLyricsCloud()
-      loading.value = false
-    })
-  }
-})
-
-// ========== 生命周期 ==========
-onMounted(async () => {
-  isMobile.value = window.innerWidth < 768
-  initThree()
-
-  // 主动加载歌词
-  if (currentSong.value?.id && lyricsLines.value.length === 0) {
-    try {
-      await playerStore.loadLyricsForSong?.(currentSong.value.id)
-    } catch (e) { /* ignore */ }
-  }
-
-  // 等待歌词加载
+watch(() => lyricsLines.value.length, async () => {
   if (lyricsLines.value.length > 0) {
-    buildLyricsCloud()
     loading.value = false
-  } else {
-    // 再等一下歌词加载
-    setTimeout(() => {
-      if (lyricsLines.value.length > 0) {
-        buildLyricsCloud()
-      }
-      loading.value = false
-    }, 1500)
+    await nextTick()
+    centerActive()
   }
+})
 
-  lastFrameTime = performance.now()
-  smoothTimeRaf = requestAnimationFrame(updateSmoothTime)
-  animationId = requestAnimationFrame(animate)
+onMounted(async () => {
+  await ensureLyrics(currentSong.value?.id)
+  await nextTick()
+
+  loading.value = false
+  centerActive()
+
+  // 从当前播放进度开始
+  smoothTime = playerStore.currentTime || 0
+  lastTs = 0
+  rafId = requestAnimationFrame(tick)
+
   window.addEventListener('resize', onResize)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', onResize)
-  if (animationId) cancelAnimationFrame(animationId)
-  if (smoothTimeRaf) cancelAnimationFrame(smoothTimeRaf)
-
-  lyricMeshes.forEach(m => {
-    m.geometry.dispose()
-    m.material.map?.dispose()
-    m.material.dispose()
-  })
-  if (renderer) {
-    renderer.dispose()
-    if (renderer.domElement.parentNode) {
-      renderer.domElement.parentNode.removeChild(renderer.domElement)
-    }
-  }
-  if (controls) controls.dispose()
+  if (rafId) cancelAnimationFrame(rafId)
 })
 </script>
 
 <style scoped>
-.lyrics-cloud-page {
+.lyrics-stage {
+  --cream: 240, 231, 216;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
   position: fixed;
   inset: 0;
-  background: #05051a;
-  overflow: hidden;
-  z-index: 2000;
-}
-
-.lc-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.bg-gradient {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--accent, #667eea) 20%, transparent) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(188, 78, 255, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(15, 15, 35, 0.5) 0%, #05051a 70%);
-}
-
-/* 顶部栏 */
-.top-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 20px 24px;
+  z-index: 1100;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  z-index: 10;
+  flex-direction: column;
+  background: #07070a;
+  color: rgba(var(--cream), 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 背景 ===== */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
-.top-bar > * {
-  pointer-events: auto;
+
+.bg-cover {
+  position: absolute;
+  inset: -10%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(72px) saturate(1.3) brightness(0.28);
+  transform: scale(1.15);
+  animation: bgDrift 40s ease-in-out infinite alternate;
 }
-.left {
+
+@keyframes bgDrift {
+  0% { transform: scale(1.12) translate(0, 0); }
+  100% { transform: scale(1.22) translate(-2%, -2%); }
+}
+
+.bg-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 24%, rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.18) 0%, transparent 58%),
+    linear-gradient(180deg, rgba(7, 7, 10, 0.5) 0%, rgba(7, 7, 10, 0.84) 62%, #07070a 100%);
+}
+
+.bg-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+
+.bg-scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* ===== 顶栏 ===== */
+.top-bar {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(var(--cream), 0.07);
 }
+
 .back-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  border: 1px solid rgba(var(--cream), 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(var(--cream), 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.3s;
 }
+
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.5);
+  color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 1);
 }
+
 .song-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
+  min-width: 0;
+  flex: 1;
 }
-.cover {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+
+.song-info .cover {
+  width: 38px;
+  height: 38px;
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(var(--cream), 0.1);
 }
-.cover img {
+
+.song-info .cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.text h1 {
-  font-size: 17px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 2px;
-}
-.text p {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-}
-.mode-tag {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+
+.song-info .text {
+  min-width: 0;
 }
 
-/* 底部控制栏 */
-.bottom-controls {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 90%;
-  max-width: 500px;
+.song-info h1 {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(var(--cream), 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.song-info p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(var(--cream), 0.38);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mode-tag {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.8);
+  flex-shrink: 0;
+}
+
+.mode-tag .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 1);
+  box-shadow: 0 0 8px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.9);
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== 歌词轨道 ===== */
+.rail-wrap {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.rail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 40vh 24px;
+  transition: transform 0.66s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* 行高固定，避免当前行字号变化导致 offsetTop 漂移、居中不准 */
+.line {
+  margin: 0 auto;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 820px;
+  text-align: center;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: rgba(var(--cream), 0.26);
+  transform: scale(0.94);
+  transition: color 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), font-size 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.line .fill {
+  display: inline;
+}
+
+.line.near {
+  color: rgba(var(--cream), 0.5);
+  transform: scale(0.975);
+}
+
+.line.active {
+  font-size: 25px;
+  font-weight: 600;
+  color: rgba(var(--cream), 0.28);
+  transform: scale(1);
+  cursor: default;
+}
+
+/* 逐字点亮：文字渐变裁切 */
+.line.active .fill {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent) calc(var(--p, 0) * 1%),
+    rgba(var(--cream), 0.3) calc(var(--p, 0) * 1%),
+    rgba(var(--cream), 0.3) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.35));
+}
+
+.line:hover:not(.active) {
+  color: rgba(var(--cream), 0.72);
+}
+
+/* ===== 底部控制 ===== */
+.controls {
+  position: relative;
+  z-index: 3;
+  padding: 14px 20px calc(18px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgba(var(--cream), 0.07);
+  background: linear-gradient(180deg, rgba(7, 7, 10, 0) 0%, rgba(7, 7, 10, 0.85) 60%);
+}
+
 .progress-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100%;
+  gap: 12px;
+  margin-bottom: 12px;
 }
+
 .time {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
-  min-width: 32px;
-  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(var(--cream), 0.32);
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
+
 .progress-bar {
   flex: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  height: 2px;
+  background: rgba(var(--cream), 0.12);
   cursor: pointer;
   position: relative;
 }
+
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #bc4eff);
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
-  transition: width 0.1s linear;
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 1);
+  box-shadow: 0 0 12px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.5);
+  transition: width 0.15s linear;
 }
-.control-btns {
+
+.btns {
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
+  gap: 26px;
 }
-.ctrl-btn {
-  background: transparent;
+
+.ctrl {
+  background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--cream), 0.5);
   cursor: pointer;
-  padding: 8px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: color 0.3s, transform 0.3s;
 }
-.ctrl-btn:hover {
-  color: #fff;
-  transform: scale(1.1);
+
+.ctrl:hover {
+  color: rgba(var(--cream), 0.95);
+  transform: scale(1.08);
 }
+
 .play-btn {
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
+  border: 1px solid rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.5);
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.1);
+  color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 1);
 }
+
 .play-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.18);
+  border-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.9);
 }
 
-/* 提示 */
-.tips {
-  position: absolute;
-  bottom: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-  z-index: 5;
-  pointer-events: none;
-  display: flex;
-  gap: 16px;
-}
-
-/* 暂无歌词 */
-.no-lyrics {
+/* ===== 空态 / 载入 ===== */
+.empty,
+.loading {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 16px;
-  z-index: 5;
-}
-
-/* 加载中 */
-.loading-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 5, 26, 0.9);
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  z-index: 100;
+  gap: 8px;
+  pointer-events: none;
 }
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #667eea;
+
+.empty p {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: rgba(var(--cream), 0.6);
+}
+
+.empty span {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(var(--cream), 0.25);
+}
+
+.loading p {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(var(--cream), 0.35);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  border: 1px solid rgba(var(--cream), 0.15);
+  border-top-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.9);
+  animation: spin 0.9s linear infinite;
 }
-.loading-overlay p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* 移动端 */
-@media (max-width: 767px) {
+/* ===== 平板 / 桌面 ===== */
+@media (min-width: 768px) {
   .top-bar {
-    padding: 14px 16px;
+    padding: 20px 40px;
+    gap: 18px;
   }
-  .cover {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
+
+  .mode-tag {
+    display: flex;
   }
-  .text h1 {
+
+  .song-info .cover {
+    width: 44px;
+    height: 44px;
+  }
+
+  .song-info h1 {
     font-size: 15px;
   }
-  .text p {
-    font-size: 12px;
+
+  .rail {
+    padding: 40vh 40px;
   }
-  .mode-tag {
-    display: none;
+
+  .line {
+    height: 60px;
+    font-size: 20px;
+    max-width: 960px;
   }
-  .bottom-controls {
-    bottom: 24px;
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
+
+  .line.active {
+    font-size: 36px;
   }
-  .play-btn {
-    width: 52px;
-    height: 52px;
+
+  .controls {
+    padding: 16px 40px calc(22px + env(safe-area-inset-bottom, 0px));
   }
-  .tips {
-    display: none;
+
+  .progress-row {
+    max-width: 720px;
+    margin: 0 auto 14px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .line.active {
+    font-size: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-cover,
+  .mode-tag .dot,
+  .spinner {
+    animation: none !important;
+  }
+  .rail {
+    transition: none;
   }
 }
 </style>
